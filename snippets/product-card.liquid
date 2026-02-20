@@ -10,7 +10,7 @@
         {{ product.images[1] | image_url: width: 600, height: 600, crop: 'center' | image_tag: loading: 'lazy', class: 'product-card__img product-card__img--secondary', alt: product.title | escape }}
       {% endif %}
     {% else %}
-      {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder' }}
+      <div class="product-card__placeholder" style="background-image: url('https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=600&h=600&fit=crop&auto=format'); background-size: cover; background-position: center;"></div>
     {% endif %}
     {% if show_badge and product.metafields.custom.badge == 'new' or product.tags contains 'new' %}
       <span class="product-card__badge">NEW</span>

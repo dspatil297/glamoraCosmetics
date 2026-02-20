@@ -5,7 +5,7 @@
       {% if section.settings.image != blank %}
         {{ section.settings.image | image_url: width: 800, height: 600, crop: 'center' | image_tag: loading: 'lazy', class: 'usp-banner__img', alt: section.settings.heading | escape }}
       {% else %}
-        <div class="usp-banner__placeholder"></div>
+        <div class="usp-banner__placeholder" style="background-image: url('https://images.unsplash.com/photo-1612817288484-6f916006741a?w=800&h=600&fit=crop&auto=format'); background-size: cover; background-position: center;"></div>
       {% endif %}
     </div>
     <div class="usp-banner__content">

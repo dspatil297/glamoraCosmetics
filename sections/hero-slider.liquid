@@ -8,7 +8,8 @@
             {% if block.settings.image != blank %}
               {{ block.settings.image | image_url: width: 1600, height: 800, crop: 'center' | image_tag: loading: 'lazy', class: 'hero__img', alt: block.settings.heading | escape }}
             {% else %}
-              <div class="hero__placeholder"></div>
+              {% assign hero_images = 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1600&h=800&fit=crop&auto=format,https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=1600&h=800&fit=crop&auto=format,https://images.unsplash.com/photo-1612817288484-6f916006741a?w=1600&h=800&fit=crop&auto=format,https://images.unsplash.com/photo-1571875257727-256c39da42af?w=1600&h=800&fit=crop&auto=format,https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?w=1600&h=800&fit=crop&auto=format' | split: ',' %}
+              <div class="hero__placeholder" style="background-image: url('{{ hero_images[forloop.index0] | default: hero_images[0] }}'); background-size: cover; background-position: center;"></div>
             {% endif %}
           </div>
           <div class="hero__content">

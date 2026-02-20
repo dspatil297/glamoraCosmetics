@@ -16,6 +16,7 @@ Shopify theme for **Glamora Cosmetics** (glamoracosmetics.in). This repository i
 | `GLAMORA-SHOPIFY-MULTI-PHASE-PLAN.md` | Full 8-phase development plan |
 | `PHASES-1-7-COMPLETE.md` | Master checklist: every Phase 1–7 task (theme done / Admin) |
 | `CONTACT-ABOUT-SETUP.md` | How to set up Contact and About Us pages |
+| `UNSPLASH-IMAGES.md` | Unsplash image URLs used in theme placeholders |
 | `glamora-shopify-build-guide.md` | Brand, design, pages, and content reference |
 | `policies/` | Policy page placeholder content (copy into Shopify **Settings → Legal**) |
 | `REMAINING-WORK.md` | What’s done in theme code vs what to do in Shopify Admin |

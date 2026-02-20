@@ -14,6 +14,9 @@
               <div class="ingredients-section__card-image">
                 {{ block.settings.image | image_url: width: 300, height: 200, crop: 'center' | image_tag: loading: 'lazy', alt: block.settings.title | escape }}
               </div>
+            {% else %}
+              {% assign ingredient_images = 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=300&h=200&fit=crop,https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=300&h=200&fit=crop,https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=300&h=200&fit=crop' | split: ',' %}
+              <div class="ingredients-section__card-image" style="background-image: url('{{ ingredient_images[forloop.index0] | default: ingredient_images[0] }}'); background-size: cover; background-position: center; aspect-ratio: 3/2; border-radius: 8px;"></div>
             {% endif %}
             <p class="ingredients-section__card-desc">{{ block.settings.description | default: 'Premium ingredients for visible, lasting results.' }}</p>
           </div>
