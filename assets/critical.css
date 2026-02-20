@@ -136,9 +136,15 @@ button[type="submit"].btn--primary {
   transform: scale(1.03);
 }
 
-/** Section padding */
+/** Section padding - responsive */
 .shopify-section {
-  padding-block: var(--section-padding-block);
+  padding-block: var(--section-padding-block-mobile);
+}
+
+@media (min-width: 769px) {
+  .shopify-section {
+    padding-block: var(--section-padding-block-desktop);
+  }
 }
 
 /** Dividers */

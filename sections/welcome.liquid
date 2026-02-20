@@ -11,12 +11,42 @@
 </div>
 
 {% stylesheet %}
-  .welcome-section { background: var(--color-background); padding: var(--section-padding-block) var(--page-margin); }
-  .welcome-section__inner { max-width: 42rem; margin: 0 auto; text-align: center; }
-  .welcome-section__line { display: block; width: 3rem; height: 3px; background: var(--color-accent); margin: 0 auto 1rem; }
-  .welcome-section__title { font-family: var(--font-heading); font-size: clamp(1.75rem, 3vw, 2.25rem); margin: 0 0 0.5rem; color: var(--color-foreground); }
-  .welcome-section__tagline { font-size: 1rem; color: var(--color-text-muted); margin: 0 0 1.5rem; font-style: italic; }
-  .welcome-section__body { font-size: 1rem; line-height: 1.7; color: var(--color-foreground); }
+  .welcome-section { 
+    background: var(--color-background); 
+    padding: var(--section-padding-block-mobile) clamp(1rem, 4vw, var(--page-margin)); 
+  }
+  @media (min-width: 769px) {
+    .welcome-section { padding: var(--section-padding-block-desktop) clamp(1rem, 4vw, var(--page-margin)); }
+  }
+  .welcome-section__inner { 
+    max-width: 42rem; 
+    margin: 0 auto; 
+    text-align: center; 
+  }
+  .welcome-section__line { 
+    display: block; 
+    width: 3rem; 
+    height: 3px; 
+    background: var(--color-accent); 
+    margin: 0 auto var(--spacing-md); 
+  }
+  .welcome-section__title { 
+    font-family: var(--font-heading); 
+    font-size: clamp(1.75rem, 3vw, 2.25rem); 
+    margin: 0 0 var(--spacing-xs); 
+    color: var(--color-foreground); 
+  }
+  .welcome-section__tagline { 
+    font-size: 1rem; 
+    color: var(--color-text-muted); 
+    margin: 0 0 var(--spacing-lg); 
+    font-style: italic; 
+  }
+  .welcome-section__body { 
+    font-size: 1rem; 
+    line-height: 1.7; 
+    color: var(--color-foreground); 
+  }
 {% endstylesheet %}
 
 {% schema %}
