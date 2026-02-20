@@ -17,6 +17,7 @@ Shopify theme for **Glamora Cosmetics** (glamoracosmetics.in). This repository i
 | `PHASES-1-7-COMPLETE.md` | Master checklist: every Phase 1–7 task (theme done / Admin) |
 | `CONTACT-ABOUT-SETUP.md` | How to set up Contact and About Us pages |
 | `UNSPLASH-IMAGES.md` | Unsplash image URLs used in theme placeholders |
+| `CONVERSION-OPTIMIZATION.md` | CRO improvements implemented (reviews, sticky CTA, trust signals) |
 | `glamora-shopify-build-guide.md` | Brand, design, pages, and content reference |
 | `policies/` | Policy page placeholder content (copy into Shopify **Settings → Legal**) |
 | `REMAINING-WORK.md` | What’s done in theme code vs what to do in Shopify Admin |

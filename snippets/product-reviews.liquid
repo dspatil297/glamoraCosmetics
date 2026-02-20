@@ -1,0 +1,34 @@
+{% comment %}
+  Product Reviews Display - Shows star rating and review count
+  Usage: {% render 'product-reviews', product: product %}
+{% endcomment %}
+{% if product.metafields.reviews.rating.value != blank %}
+  <div class="product-reviews">
+    <div class="product-reviews__stars">
+      {% assign rating = product.metafields.reviews.rating.value | times: 1.0 %}
+      {% for i in (1..5) %}
+        <span class="product-reviews__star {% if i <= rating %}product-reviews__star--filled{% endif %}">★</span>
+      {% endfor %}
+      <span class="product-reviews__count">({{ product.metafields.reviews.rating_count.value | default: '0' }} reviews)</span>
+    </div>
+  </div>
+{% elsif show_placeholder %}
+  <div class="product-reviews">
+    <div class="product-reviews__stars">
+      <span class="product-reviews__star product-reviews__star--filled">★</span>
+      <span class="product-reviews__star product-reviews__star--filled">★</span>
+      <span class="product-reviews__star product-reviews__star--filled">★</span>
+      <span class="product-reviews__star product-reviews__star--filled">★</span>
+      <span class="product-reviews__star product-reviews__star--filled">★</span>
+      <span class="product-reviews__count">(127 reviews)</span>
+    </div>
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .product-reviews { margin: 0.5rem 0; }
+  .product-reviews__stars { display: flex; align-items: center; gap: 0.125rem; }
+  .product-reviews__star { color: #ddd; font-size: 0.875rem; }
+  .product-reviews__star--filled { color: #ffa500; }
+  .product-reviews__count { font-size: 0.8125rem; color: var(--color-text-muted); margin-left: 0.5rem; }
+{% endstylesheet %}
