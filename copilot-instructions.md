@@ -1,0 +1,1 @@
+G:/fire fist/Glamora/Glamora/my-theme/AGENTS.md
