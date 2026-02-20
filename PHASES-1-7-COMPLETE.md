@@ -58,11 +58,11 @@ Every task from the plan. **Theme code tasks are done** (✅). **Admin tasks** a
 | **Theme:** Blog preview (4 articles) | ✅ Done |
 | **Theme:** Collection banner + collection page (sort, category links, grid) | ✅ Done |
 | **Theme:** Product page (gallery, breadcrumb, form, trust badges, shipping line) | ✅ Done |
-| **Theme:** Contact section (address, form, hours, social) | ✅ Done |
-| **Theme:** About section (story, vision, mission 3 cards) | ✅ Done |
+| **Theme:** Contact page template (`page.contact.json`) — hero + form + map + FAQ | ✅ Done |
+| **Theme:** About Us page template (`page.about-us.json`) — hero + story/vision/mission + trust | ✅ Done |
 | Add images to hero slides and category banners in Theme Editor | ☐ You |
-| On Contact page: add "Contact page" section | ☐ You |
-| On About page: add "About content" section | ☐ You |
+| Create Contact page (handle: `contact`) — template auto-applies | ☐ You |
+| Create About Us page (handle: `about-us`) — template auto-applies | ☐ You |
 | Create 5 blog posts (see build guide) | ☐ You |
 | Create collection menu for Shop sidebar (Face Wash, Sunscreen, etc.) and assign in Collection section | ☐ You |
 
