@@ -190,3 +190,31 @@ hr, .divider {
 .shopify-section > .full-width {
   grid-column: 1 / -1;
 }
+
+/* Header and Footer should be full-width with no side padding */
+.section-header,
+.section-footer,
+.section-header.shopify-section,
+.section-footer.shopify-section {
+  display: block !important;
+  grid-template-columns: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.section-header > *,
+.section-footer > * {
+  grid-column: unset !important;
+  width: 100% !important;
+}
+
+.section-header .header-holder,
+.section-footer .footer {
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}

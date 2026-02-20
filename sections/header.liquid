@@ -57,6 +57,25 @@
     position: sticky;
     top: 0;
     z-index: 100;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Override shopify-section grid padding */
+  .section-header,
+  .section-header.shopify-section {
+    display: block !important;
+    grid-template-columns: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  .section-header > * {
+    grid-column: unset !important;
+    width: 100% !important;
   }
 
   .header__announcement {
@@ -195,6 +214,8 @@
 {% schema %}
 {
   "name": "Header",
+  "tag": "section",
+  "class": "section-header",
   "settings": [
     {
       "type": "checkbox",
