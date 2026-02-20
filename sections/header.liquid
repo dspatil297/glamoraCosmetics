@@ -18,21 +18,38 @@
       </nav>
 
       <div class="header__icons">
+        <a href="{{ section.settings.wishlist_url | default: '#' }}" class="header__wishlist" aria-label="Wishlist">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </a>
         {% if shop.customer_accounts_enabled %}
           <a href="{{ routes.account_url }}" aria-label="Account">{{ 'icon-account.svg' | inline_asset_content }}</a>
         {% endif %}
         <a href="{{ routes.search_url }}" aria-label="Search">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
         </a>
-        <a href="{{ routes.cart_url }}" class="header__cart-link" aria-label="Cart">
+        <a href="{{ routes.cart_url }}" class="header__cart-link" id="header-cart-link" aria-label="Cart">
           {{ 'icon-cart.svg' | inline_asset_content }}
           {% if cart.item_count > 0 %}
             <span class="header__cart-count">{{ cart.item_count }}</span>
           {% endif %}
         </a>
+        <button type="button" class="header__hamburger" id="header-hamburger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </header>
+  <div class="header__drawer-overlay" id="header-drawer-overlay" aria-hidden="true"></div>
+  <div class="header__drawer" id="header-drawer" aria-hidden="true">
+    <div class="header__drawer-inner">
+      <button type="button" class="header__drawer-close" id="header-drawer-close" aria-label="Close menu">&times;</button>
+      <nav class="header__drawer-menu">
+        {% for link in section.settings.menu.links %}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+      </nav>
+    </div>
+  </div>
 </div>
 
 {% stylesheet %}
@@ -137,11 +154,38 @@
     justify-content: center;
   }
 
+  .header__hamburger { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; flex-direction: column; gap: 5px; }
+  .header__hamburger span { display: block; width: 22px; height: 2px; background: var(--color-foreground); }
+  .header__drawer { position: fixed; top: 0; right: -100%; width: 280px; max-width: 85vw; height: 100vh; background: var(--color-background); z-index: 101; box-shadow: -4px 0 20px rgba(0,0,0,0.1); transition: right 0.3s ease; overflow-y: auto; }
+  .header__drawer.is-open { right: 0; }
+  .header__drawer-inner { padding: 2rem 1.5rem; }
+  .header__drawer-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--color-foreground); }
+  .header__drawer-menu { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 2rem; }
+  .header__drawer-menu a { font-size: 1rem; text-decoration: none; color: var(--color-foreground); }
+  .header__drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .header__drawer-overlay.is-open { opacity: 1; pointer-events: auto; }
   @media (max-width: 768px) {
     .header__menu { display: none; }
+    .header__hamburger { display: flex; }
     .header__inner { padding-inline: 1rem; }
   }
 {% endstylesheet %}
+
+<script>
+  (function() {
+    var btn = document.getElementById('header-hamburger');
+    var drawer = document.getElementById('header-drawer');
+    var closeBtn = document.getElementById('header-drawer-close');
+    if (!btn || !drawer) return;
+    var overlay = document.getElementById('header-drawer-overlay');
+    function open() { drawer.setAttribute('aria-hidden', 'false'); drawer.classList.add('is-open'); overlay && (overlay.classList.add('is-open'), overlay.setAttribute('aria-hidden', 'false')); btn.setAttribute('aria-expanded', 'true'); }
+    function close() { drawer.setAttribute('aria-hidden', 'true'); drawer.classList.remove('is-open'); overlay && (overlay.classList.remove('is-open'), overlay.setAttribute('aria-hidden', 'true')); btn.setAttribute('aria-expanded', 'false'); }
+    btn.addEventListener('click', open);
+    closeBtn && closeBtn.addEventListener('click', close);
+    overlay && overlay.addEventListener('click', close);
+    drawer.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', close); });
+  })();
+</script>
 
 {% schema %}
 {
@@ -163,6 +207,12 @@
       "type": "link_list",
       "id": "menu",
       "label": "Menu"
+    },
+    {
+      "type": "url",
+      "id": "wishlist_url",
+      "label": "Wishlist link",
+      "info": "Link to wishlist page or app. Use # until you add Wishlist app."
     }
   ]
 }

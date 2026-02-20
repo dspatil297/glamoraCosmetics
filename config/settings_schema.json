@@ -151,5 +151,17 @@
         "default": 8
       }
     ]
+  },
+  {
+    "name": "Marketing",
+    "settings": [
+      {
+        "type": "text",
+        "id": "facebook_pixel_id",
+        "label": "Facebook Pixel ID",
+        "default": "4058893484256632",
+        "info": "From build guide. Or add via Settings → Customer events in Admin."
+      }
+    ]
   }
 ]

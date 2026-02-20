@@ -5,7 +5,8 @@
 
 **Phase 1:** Runbook → `PHASE-1-RUNBOOK.md` | Policy placeholders → `policies/` folder.  
 **Phase 2:** Brand & design system in theme; runbook → `PHASE-2-RUNBOOK.md`.  
-**Phases 3–7 (theme code):** Home (9 sections), Collection (banner + grid), Product, Contact/About sections, trust badges, WhatsApp, mobile bar, SEO. See `REMAINING-WORK.md` for what’s done in code vs Admin.
+**Phases 3–7 (theme code):** Home (9 sections), Collection (banner + grid), Product, Contact/About sections, trust badges, WhatsApp, mobile bar, SEO. See `REMAINING-WORK.md` for what’s done in code vs Admin.  
+**Phases 1–7 (theme):** All theme-code tasks are complete. See **`PHASES-1-7-COMPLETE.md`** for the full checklist (✅ = done in theme, ☐ = you do in Admin). **Phase 6 & 7 runbooks:** `PHASE-6-RUNBOOK.md`, `PHASE-7-RUNBOOK.md`.
 
 ---
 

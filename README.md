@@ -11,7 +11,10 @@ Shopify theme for **Glamora Cosmetics** (glamoracosmetics.in). This repository i
 | `layout/`, `sections/`, `snippets/`, `templates/`, `config/`, `assets/`, `locales/`, `blocks/` | Standard Shopify theme files (required for store) |
 | `PHASE-1-RUNBOOK.md` | Step-by-step Phase 1 setup (Admin + theme) |
 | `PHASE-2-RUNBOOK.md` | Phase 2 verify & tweak (brand & design in Theme Editor) |
+| `PHASE-6-RUNBOOK.md` | Phase 6 — Payments, shipping & legal (Admin steps) |
+| `PHASE-7-RUNBOOK.md` | Phase 7 — Polish, QA & launch (Pixel, QA, go-live) |
 | `GLAMORA-SHOPIFY-MULTI-PHASE-PLAN.md` | Full 8-phase development plan |
+| `PHASES-1-7-COMPLETE.md` | Master checklist: every Phase 1–7 task (theme done / Admin) |
 | `glamora-shopify-build-guide.md` | Brand, design, pages, and content reference |
 | `policies/` | Policy page placeholder content (copy into Shopify **Settings → Legal**) |
 | `REMAINING-WORK.md` | What’s done in theme code vs what to do in Shopify Admin |

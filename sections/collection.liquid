@@ -6,10 +6,18 @@
 <div class="collection-page shopify-section">
   <div class="collection-page__layout">
     <aside class="collection-page__sidebar">
-      <h2 class="collection-page__sidebar-title">Filters</h2>
+      <h2 class="collection-page__sidebar-title">Category</h2>
+      <nav class="collection-page__nav">
+        <a href="{{ routes.all_products_collection_url }}" class="collection-page__nav-link {% if collection.handle == 'all' %}is-active{% endif %}">All Products</a>
+        {% if section.settings.filter_menu != blank and linklists[section.settings.filter_menu].links.size > 0 %}
+          {% for col in linklists[section.settings.filter_menu].links %}
+            <a href="{{ col.url }}" class="collection-page__nav-link {% if collection.handle == col.object.handle %}is-active{% endif %}">{{ col.title }}</a>
+          {% endfor %}
+        {% endif %}
+      </nav>
+      <h2 class="collection-page__sidebar-title">Sort by</h2>
       <form class="collection-page__filters" id="collection-filters">
         <div class="collection-page__filter">
-          <label for="sort-by">Sort by</label>
           <select name="sort_by" id="sort-by" class="collection-page__select">
             {% for option in collection.sort_options %}
               <option value="{{ option.value }}" {% if collection.sort_by == option.value %}selected{% endif %}>{{ option.name }}</option>
@@ -63,5 +71,21 @@
     .collection-page__grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 480px) { .collection-page__grid { grid-template-columns: 1fr; } }
+  .collection-page__nav { display: flex; flex-direction: column; gap: 0.25rem; margin-bottom: 1rem; }
+  .collection-page__nav-link { font-size: 0.875rem; color: var(--color-foreground); text-decoration: none; }
+  .collection-page__nav-link:hover, .collection-page__nav-link.is-active { color: var(--color-primary); }
 {% endstylesheet %}
 
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "filter_menu",
+      "label": "Category menu",
+      "info": "Create a menu with links to collections (e.g. Face Wash, Sunscreen). Leave blank for All Products only."
+    }
+  ]
+}
+{% endschema %}

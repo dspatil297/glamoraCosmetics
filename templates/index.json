@@ -28,7 +28,11 @@
     },
     "featured-products": {
       "type": "featured-products",
-      "settings": { "heading": "Glamora Cosmetics", "subtitle": "Guard your skin against harmful UV rays and urban pollution.", "link_text": "VIEW ALL PRODUCTS →" }
+      "settings": { "heading": "Glamora Cosmetics", "subtitle": "Guard your skin against harmful UV rays and urban pollution.", "link_text": "VIEW ALL PRODUCTS →", "limit": 4 }
+    },
+    "product-row": {
+      "type": "featured-products",
+      "settings": { "heading": "Shop All", "subtitle": "Your daily dose of glamour.", "link_text": "VIEW ALL PRODUCTS →", "limit": 8 }
     },
     "usp-banner": {
       "type": "usp-banner",
@@ -59,5 +63,5 @@
       "settings": { "kicker": "Checkout Our Latest Blogs", "title": "OUR ARTICLES" }
     }
   },
-  "order": ["hero", "welcome", "category-banners", "featured-products", "usp-banner", "countdown-banner", "ingredients", "blog-preview"]
+  "order": ["hero", "welcome", "category-banners", "featured-products", "product-row", "usp-banner", "countdown-banner", "ingredients", "blog-preview"]
 }

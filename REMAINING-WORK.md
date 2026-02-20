@@ -25,8 +25,9 @@
 
 ### Phase 4 (Products & collections)
 - `snippets/product-card.liquid` — image hover swap, title, price, NEW badge, Add to cart link
-- Collection template: banner + sort + grid; product cards in grid
-- Product page: layout, form, trust line
+- Collection template: banner + sort + category nav + grid; product cards in grid
+- Product page: layout, form, trust line; **related products** section (4 cards)
+- **Cart drawer** — `snippets/cart-drawer.liquid`; opens when cart icon clicked (View cart / Checkout)
 
 ### Phase 5 (Trust & conversion)
 - `snippets/trust-badges.liquid` — Dermatologist Tested | Cruelty Free | Made in India | Paraben Free
@@ -36,6 +37,7 @@
 ### Phase 7 (Polish)
 - `snippets/mobile-bottom-bar.liquid` — Home, Shop, Search, Cart, Account (visible on mobile only), in `theme.liquid`
 - `snippets/meta-tags.liquid` — default meta description when `page_description` blank
+- **Facebook Pixel** — Theme settings → Marketing (facebook_pixel_id, default 4058893484256632); script in `theme.liquid`
 - Title, canonical, OG, Twitter cards already in meta-tags
 
 ---
