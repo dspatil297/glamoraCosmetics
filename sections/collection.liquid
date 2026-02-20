@@ -33,7 +33,7 @@
           <div class="collection-page__item">
             {% assign show_badge = false %}
             {% if product.tags contains 'new' or product.metafields.custom.badge == 'new' %}{% assign show_badge = true %}{% endif %}
-            {% render 'product-card', product: product, show_badge: show_badge %}
+            {% render 'product-card', product: product, show_badge: show_badge, show_placeholder_rating: true %}
           </div>
         {% endfor %}
       </div>

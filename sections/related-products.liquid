@@ -11,7 +11,7 @@
         <div class="related-products__item">
           {% assign show_badge = false %}
           {% if prod.tags contains 'new' %}{% assign show_badge = true %}{% endif %}
-          {% render 'product-card', product: prod, show_badge: show_badge %}
+          {% render 'product-card', product: prod, show_badge: show_badge, show_placeholder_rating: true %}
         </div>
       {% endif %}
     {% endfor %}
