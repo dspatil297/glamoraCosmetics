@@ -14,7 +14,11 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "menu": "",
+        "menu": "footer",
+        "show_contact": true,
+        "address": "38, Deputy Gunj, Moradabad - 244001, Uttar Pradesh, India",
+        "social_instagram": "",
+        "social_facebook": "",
         "show_payment_icons": true
       }
     }
