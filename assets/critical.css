@@ -71,11 +71,80 @@ p:empty {
   margin-block-end: 0;
 }
 
-/** Theme styles below */
+/** Theme styles below — Glamora Phase 2 */
 body {
-  font-family: var(--font-primary--family);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
   background-color: var(--color-background);
   color: var(--color-foreground);
+}
+
+/** Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--color-foreground);
+}
+h1 { font-size: clamp(2.25rem, 4vw, 3.5rem); }
+h2 { font-size: clamp(1.75rem, 2.5vw, 2.125rem); }
+h3 { font-size: clamp(1.25rem, 1.5vw, 1.5rem); }
+
+/** Buttons — 4px radius, uppercase, letter-spacing */
+.btn,
+button[type="submit"],
+.button {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: var(--style-border-radius-buttons);
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.btn--primary,
+button[type="submit"].btn--primary {
+  background-color: var(--color-button);
+  color: #fff;
+  border: none;
+}
+.btn--primary:hover {
+  background-color: var(--color-button-hover);
+}
+.btn--secondary {
+  background-color: transparent;
+  color: var(--color-button);
+  border: 2px solid var(--color-button);
+}
+.btn--secondary:hover {
+  background-color: var(--color-button);
+  color: #fff;
+}
+
+/** Cards — 8–12px radius, subtle shadow */
+.card {
+  border-radius: var(--style-border-radius-cards);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  background-color: var(--color-background);
+  overflow: hidden;
+}
+.card img {
+  transition: transform 0.3s ease;
+}
+.card:hover img {
+  transform: scale(1.03);
+}
+
+/** Section padding */
+.shopify-section {
+  padding-block: var(--section-padding-block);
+}
+
+/** Dividers */
+hr, .divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
 }
 
 /** Section layout utilities */

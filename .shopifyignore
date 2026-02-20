@@ -1,13 +1,12 @@
 # This file contains a list of files that will be excluded from Shopify CLI
 # operations such as push, pull, dev, etc.
 #
-# Examples:
-#
-# Ignore a specific file:
-#   templates/product.json
-#
-# Ignore templates with a wildcard pattern:
-#   templates/*.json
-#
-# Ignore templates and sections with a regular expression:
-#   /(templates|sections)/.*\.json/
+# Exclude docs and policy placeholders (they stay in repo for reference;
+# policies are pasted into Shopify Settings → Legal in Admin)
+README.md
+PHASE-1-RUNBOOK.md
+GLAMORA-SHOPIFY-MULTI-PHASE-PLAN.md
+glamora-shopify-build-guide.md
+PHASE-2-RUNBOOK.md
+REMAINING-WORK.md
+policies/

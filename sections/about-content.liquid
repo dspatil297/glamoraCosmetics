@@ -1,0 +1,90 @@
+{% comment %} Glamora About — brand story, vision, mission (for About page) {% endcomment %}
+<div class="about-content shopify-section">
+  <div class="about-content__block">
+    <div class="about-content__media">
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 600, height: 500, crop: 'center' | image_tag: loading: 'lazy', class: 'about-content__img', alt: 'Glamora' }}
+      {% else %}
+        <div class="about-content__placeholder"></div>
+      {% endif %}
+    </div>
+    <div class="about-content__text">
+      <h2 class="about-content__title">About our online store</h2>
+      <div class="about-content__body">
+        {{ section.settings.story | default: "At Glamora, we believe skincare is more than a routine – it's a ritual of self-love. Our journey began with a simple desire: to create products that truly care for your skin, not just protect it. Every formula we craft is designed to nourish, hydrate, and enhance your skin's natural beauty, leaving you feeling confident and radiant every day. Using advanced scientific research and premium natural extracts, we ensure that every product delivers visible results without compromising on luxury. We believe that glamour isn't just a look, it's a feeling – and Glamora is your daily dose of that feeling." }}
+      </div>
+    </div>
+  </div>
+
+  <div class="about-content__block about-content__block--reverse">
+    <div class="about-content__text">
+      <h2 class="about-content__title">Our Vision</h2>
+      <div class="about-content__body">
+        {{ section.settings.vision | default: "At Glamora, we envision a world where beauty and wellness go hand in hand. Our mission is to empower confidence and radiance by offering skincare that protects, enhances, and cares for your skin. With a commitment to effectiveness, luxury, and sustainability, we ensure your beauty routine supports both your skin and the planet. Our vision is to be the trusted choice for premium anti-pollution skincare, helping you glow every day, wherever life takes you." }}
+      </div>
+    </div>
+    <div class="about-content__media about-content__media--small">
+      <span class="about-content__icon" aria-hidden="true">✦</span>
+    </div>
+  </div>
+
+  <div class="about-content__mission">
+    <h2 class="about-content__title">Our Mission</h2>
+    <p class="about-content__mission-intro">At Glamora, we promise excellence in every product.</p>
+    <div class="about-content__mission-grid">
+      <div class="about-content__mission-card card">
+        <span class="about-content__mission-icon">★</span>
+        <h3>Premium Quality</h3>
+        <p>Crafted with finest ingredients for visible, lasting results.</p>
+      </div>
+      <div class="about-content__mission-card card">
+        <span class="about-content__mission-icon">🛡️</span>
+        <h3>Pollution Defense</h3>
+        <p>Advanced protection against pollution, UV rays, and environmental stressors.</p>
+      </div>
+      <div class="about-content__mission-card card">
+        <span class="about-content__mission-icon">💧</span>
+        <h3>Nourishing Care</h3>
+        <p>Hydrates, revitalizes, and repairs for radiant, healthy skin every day.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .about-content { padding: var(--section-padding-block) var(--page-margin); max-width: var(--page-width); margin: 0 auto; }
+  .about-content__block { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; margin-bottom: 3rem; }
+  .about-content__block--reverse .about-content__text { order: 1; }
+  .about-content__block--reverse .about-content__media { order: 0; }
+  .about-content__img { width: 100%; height: auto; border-radius: var(--style-border-radius-cards); }
+  .about-content__placeholder { aspect-ratio: 6/5; background: var(--color-background-alt); border-radius: var(--style-border-radius-cards); }
+  .about-content__media--small { display: flex; align-items: center; justify-content: center; }
+  .about-content__icon { font-size: 4rem; color: var(--color-accent); }
+  .about-content__title { font-family: var(--font-heading); font-size: 1.5rem; margin: 0 0 1rem; }
+  .about-content__body { line-height: 1.7; color: var(--color-foreground); }
+  .about-content__mission { text-align: center; margin-top: 3rem; }
+  .about-content__mission-intro { margin: 0 0 1.5rem; color: var(--color-text-muted); }
+  .about-content__mission-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; text-align: left; }
+  .about-content__mission-card { padding: 1.5rem; }
+  .about-content__mission-icon { font-size: 1.5rem; display: block; margin-bottom: 0.5rem; }
+  .about-content__mission-card h3 { font-family: var(--font-heading); font-size: 1rem; margin: 0 0 0.5rem; }
+  .about-content__mission-card p { font-size: 0.875rem; color: var(--color-text-muted); margin: 0; line-height: 1.5; }
+  @media (max-width: 768px) {
+    .about-content__block, .about-content__block--reverse { grid-template-columns: 1fr; }
+    .about-content__mission-grid { grid-template-columns: 1fr; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "About content",
+  "tag": "section",
+  "class": "section-about",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Story image" },
+    { "type": "richtext", "id": "story", "label": "Brand story" },
+    { "type": "richtext", "id": "vision", "label": "Vision" }
+  ],
+  "presets": [{ "name": "About content" }]
+}
+{% endschema %}

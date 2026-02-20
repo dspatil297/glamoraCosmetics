@@ -1,0 +1,37 @@
+{% comment %} Glamora Collection Banner — full-width image + title + subtitle {% endcomment %}
+<div class="collection-banner full-width">
+  <div class="collection-banner__bg">
+    {% if section.settings.image != blank %}
+      {{ section.settings.image | image_url: width: 1600, height: 400, crop: 'center' | image_tag: loading: 'eager', class: 'collection-banner__img', alt: collection.title | default: section.settings.title | escape }}
+    {% else %}
+      <div class="collection-banner__placeholder"></div>
+    {% endif %}
+  </div>
+  <div class="collection-banner__overlay">
+    <h1 class="collection-banner__title">{{ section.settings.title | default: collection.title | default: 'Shop Glamora' }}</h1>
+    <p class="collection-banner__subtitle">{{ section.settings.subtitle | default: 'Anti-Pollution Skincare for Urban Living' }}</p>
+  </div>
+</div>
+
+{% stylesheet %}
+  .collection-banner { position: relative; min-height: 280px; display: flex; align-items: center; justify-content: center; }
+  .collection-banner__bg { position: absolute; inset: 0; }
+  .collection-banner__img { width: 100%; height: 100%; object-fit: cover; }
+  .collection-banner__placeholder { width: 100%; height: 100%; background: var(--color-background-alt); }
+  .collection-banner__overlay { position: relative; z-index: 1; text-align: center; padding: var(--page-margin); color: var(--color-foreground); }
+  .collection-banner__title { font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 3rem); margin: 0 0 0.25rem; text-shadow: 0 1px 2px rgba(255,255,255,0.8); }
+  .collection-banner__subtitle { font-size: 1rem; opacity: 0.95; margin: 0; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection banner",
+  "tag": "section",
+  "class": "section-collection-banner",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Shop Glamora" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Anti-Pollution Skincare for Urban Living" }
+  ]
+}
+{% endschema %}

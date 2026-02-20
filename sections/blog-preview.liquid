@@ -1,0 +1,64 @@
+{% comment %} Glamora Blog Preview — 4 latest articles {% endcomment %}
+{% assign blog = blogs[section.settings.blog] | default: blogs.news %}
+<div class="blog-preview shopify-section">
+  <div class="blog-preview__inner">
+    <p class="blog-preview__kicker">{{ section.settings.kicker | default: 'Checkout Our Latest Blogs' }}</p>
+    <h2 class="blog-preview__title">{{ section.settings.title | default: 'OUR ARTICLES' }}</h2>
+    <div class="blog-preview__grid">
+      {% for article in blog.articles limit: section.settings.limit %}
+        <article class="blog-preview__card card">
+          <a href="{{ article.url }}" class="blog-preview__image-link">
+            <span class="blog-preview__date">{{ article.published_at | date: '%d %b' }}</span>
+            {% if article.image %}
+              {{ article.image | image_url: width: 500, height: 333, crop: 'center' | image_tag: loading: 'lazy', class: 'blog-preview__img', alt: article.title | escape }}
+            {% else %}
+              <div class="blog-preview__placeholder"></div>
+            {% endif %}
+          </a>
+          <div class="blog-preview__content">
+            <h3 class="blog-preview__card-title"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+            <p class="blog-preview__excerpt">{{ article.excerpt_or_content | strip_html | truncate: 100 }}</p>
+            <a href="{{ article.url }}" class="blog-preview__link">Continue reading →</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .blog-preview { padding: var(--section-padding-block) var(--page-margin); background: var(--color-background); }
+  .blog-preview__inner { max-width: var(--page-width); margin: 0 auto; }
+  .blog-preview__kicker { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-muted); margin: 0 0 0.25rem; }
+  .blog-preview__title { font-family: var(--font-heading); font-size: clamp(1.5rem, 2vw, 1.75rem); margin: 0 0 2rem; color: var(--color-foreground); }
+  .blog-preview__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  .blog-preview__card { overflow: hidden; }
+  .blog-preview__image-link { display: block; position: relative; aspect-ratio: 3/2; overflow: hidden; }
+  .blog-preview__date { position: absolute; top: 0.75rem; left: 0.75rem; background: var(--color-primary); color: #fff; font-size: 0.6875rem; font-weight: 700; padding: 0.25rem 0.5rem; z-index: 1; }
+  .blog-preview__img { width: 100%; height: 100%; object-fit: cover; }
+  .blog-preview__placeholder { width: 100%; height: 100%; background: var(--color-background-alt); }
+  .blog-preview__content { padding: 1rem; }
+  .blog-preview__card-title { font-family: var(--font-heading); font-size: 0.9375rem; margin: 0 0 0.5rem; }
+  .blog-preview__card-title a { color: var(--color-foreground); text-decoration: none; }
+  .blog-preview__card-title a:hover { color: var(--color-primary); }
+  .blog-preview__excerpt { font-size: 0.8125rem; color: var(--color-text-muted); margin: 0 0 0.5rem; line-height: 1.5; }
+  .blog-preview__link { font-size: 0.8125rem; color: var(--color-primary); text-decoration: none; }
+  .blog-preview__link:hover { text-decoration: underline; }
+  @media (max-width: 990px) { .blog-preview__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .blog-preview__grid { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Blog preview",
+  "tag": "section",
+  "class": "section-blog-preview",
+  "settings": [
+    { "type": "blog", "id": "blog", "label": "Blog" },
+    { "type": "range", "id": "limit", "min": 2, "max": 6, "step": 1, "default": 4, "label": "Posts to show" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Checkout Our Latest Blogs" },
+    { "type": "text", "id": "title", "label": "Title", "default": "OUR ARTICLES" }
+  ],
+  "presets": [{ "name": "Blog preview" }]
+}
+{% endschema %}

@@ -1,0 +1,85 @@
+{% comment %}
+  Glamora product card: image (hover swap), title, price, optional badge, Add to cart.
+  Usage: {% render 'product-card', product: product, show_badge: false %}
+{% endcomment %}
+<a href="{{ product.url }}" class="product-card card">
+  <div class="product-card__image-wrap">
+    {% if product.featured_image %}
+      {{ product.featured_image | image_url: width: 600, height: 600, crop: 'center' | image_tag: loading: 'lazy', class: 'product-card__img product-card__img--primary', alt: product.featured_image.alt | escape }}
+      {% if product.images[1] %}
+        {{ product.images[1] | image_url: width: 600, height: 600, crop: 'center' | image_tag: loading: 'lazy', class: 'product-card__img product-card__img--secondary', alt: product.title | escape }}
+      {% endif %}
+    {% else %}
+      {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder' }}
+    {% endif %}
+    {% if show_badge and product.metafields.custom.badge == 'new' or product.tags contains 'new' %}
+      <span class="product-card__badge">NEW</span>
+    {% endif %}
+  </div>
+  <div class="product-card__content">
+    <h3 class="product-card__title">{{ product.title }}</h3>
+    <p class="product-card__price">{{ product.price | money }}</p>
+    <span class="product-card__cta btn btn--primary">Add to cart</span>
+  </div>
+</a>
+
+{% stylesheet %}
+  .product-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .product-card__image-wrap {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: var(--style-border-radius-cards);
+    background: var(--color-background-alt);
+  }
+  .product-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+  .product-card__img--secondary {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+  .product-card:hover .product-card__img--primary { opacity: 0; }
+  .product-card:hover .product-card__img--secondary { opacity: 1; }
+  .product-card__placeholder { width: 100%; height: 100%; }
+  .product-card__badge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+  }
+  .product-card__content { padding: 1rem 0 0; }
+  .product-card__title {
+    font-family: var(--font-heading);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.25rem;
+    color: var(--color-foreground);
+  }
+  .product-card__price {
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+    color: var(--color-foreground);
+  }
+  .product-card__cta {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
+{% endstylesheet %}

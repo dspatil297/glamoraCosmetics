@@ -1,0 +1,108 @@
+{% comment %} Glamora Hero Slider — 5 slides, overlay text, CTAs {% endcomment %}
+<div class="hero full-width">
+  <div class="hero__slider" id="hero-slider">
+    {% for block in section.blocks %}
+      {% if block.type == 'slide' %}
+        <div class="hero__slide" {{ block.shopify_attributes }}>
+          <div class="hero__bg">
+            {% if block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 1600, height: 800, crop: 'center' | image_tag: loading: 'lazy', class: 'hero__img', alt: block.settings.heading | escape }}
+            {% else %}
+              <div class="hero__placeholder"></div>
+            {% endif %}
+          </div>
+          <div class="hero__content">
+            {% if block.settings.tagline != blank %}<p class="hero__tagline">{{ block.settings.tagline }}</p>{% endif %}
+            {% if block.settings.heading != blank %}<h1 class="hero__heading">{{ block.settings.heading }}</h1>{% endif %}
+            {% if block.settings.subtext != blank %}<p class="hero__subtext">{{ block.settings.subtext }}</p>{% endif %}
+            <div class="hero__ctas">
+              <a href="{{ block.settings.cta_url | default: routes.all_products_collection_url }}" class="btn btn--primary">{{ block.settings.cta_text | default: 'SHOP NOW' }}</a>
+              {% if block.settings.cta2_url != blank %}<a href="{{ block.settings.cta2_url }}" class="btn btn--secondary">{{ block.settings.cta2_text | default: 'READ MORE' }}</a>{% endif %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <div class="hero__dots" id="hero-dots" aria-hidden="true"></div>
+</div>
+
+{% stylesheet %}
+  .hero { position: relative; min-height: 70vh; }
+  .hero__slider { position: relative; height: 100%; }
+  .hero__slide { position: relative; min-height: 70vh; display: flex; align-items: center; }
+  .hero__bg { position: absolute; inset: 0; }
+  .hero__img { width: 100%; height: 100%; object-fit: cover; }
+  .hero__placeholder { width: 100%; height: 100%; background: var(--color-background-alt); }
+  .hero__content { position: relative; z-index: 1; max-width: var(--page-width); margin: 0 auto; padding: var(--page-margin); max-width: 50%; }
+  .hero__tagline { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-accent); margin: 0 0 0.5rem; }
+  .hero__heading { font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 3rem); font-weight: 600; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.3); margin: 0 0 0.5rem; line-height: 1.2; }
+  .hero__subtext { color: rgba(255,255,255,0.95); margin: 0 0 1.5rem; font-size: 1rem; }
+  .hero__ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .hero__ctas .btn { color: #fff; border-color: #fff; }
+  .hero__ctas .btn--primary { background: var(--color-button); border: none; }
+  .hero__ctas .btn--primary:hover { background: var(--color-button-hover); }
+  .hero__dots { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); display: flex; gap: 0.5rem; z-index: 2; }
+  .hero__dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.5); border: none; cursor: pointer; padding: 0; }
+  .hero__dot.is-active { background: #fff; }
+  .hero__slide { display: none; }
+  .hero__slide:first-child { display: flex; }
+  @media (max-width: 768px) { .hero__content { max-width: 100%; } }
+{% endstylesheet %}
+
+<script>
+  (function() {
+    var slides = document.querySelectorAll('#hero-slider .hero__slide');
+    var dotsContainer = document.getElementById('hero-dots');
+    if (slides.length === 0) return;
+    slides.forEach(function(_, i) {
+      var dot = document.createElement('button');
+      dot.className = 'hero__dot' + (i === 0 ? ' is-active' : '');
+      dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+      dot.addEventListener('click', function() { goTo(i); });
+      dotsContainer && dotsContainer.appendChild(dot);
+    });
+    var current = 0;
+    function goTo(i) {
+      slides[current].style.display = 'none';
+      current = (i + slides.length) % slides.length;
+      slides[current].style.display = 'flex';
+      document.querySelectorAll('.hero__dot').forEach(function(d, j) { d.classList.toggle('is-active', j === current); });
+    }
+    slides.forEach(function(s, i) { s.style.display = i === 0 ? 'flex' : 'none'; });
+    setInterval(function() { goTo(current + 1); }, 5000);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Hero slider",
+  "tag": "section",
+  "class": "section-hero",
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "tagline", "label": "Tagline", "default": "ANTI-POLLUTION SKINCARE" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Guard Your Skin Against Urban Pollution" },
+        { "type": "text", "id": "subtext", "label": "Subtext" },
+        { "type": "text", "id": "cta_text", "label": "Button text", "default": "SHOP NOW" },
+        { "type": "url", "id": "cta_url", "label": "Button link" },
+        { "type": "text", "id": "cta2_text", "label": "Second button text", "default": "READ MORE" },
+        { "type": "url", "id": "cta2_url", "label": "Second button link" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Hero slider", "blocks": [
+      { "type": "slide", "settings": { "tagline": "ANTI-POLLUTION SKINCARE", "heading": "Deep Cleanse. Daily Defend.", "subtext": "Anti-Pollution Foaming Face Wash" }},
+      { "type": "slide", "settings": { "tagline": "POLLUTION CONTROL", "heading": "Gentle on Skin. Tough on Pollution.", "subtext": "Pollution Control Face Wash" }},
+      { "type": "slide", "settings": { "tagline": "SUN PROTECTION", "heading": "Shield + Hydrate. All Day Protection.", "subtext": "Hybrid Sunscreen" }},
+      { "type": "slide", "settings": { "tagline": "MOISTURIZING", "heading": "Refresh. Revive. Radiate.", "subtext": "Moisturizing Spray" }},
+      { "type": "slide", "settings": { "tagline": "GLAMORA", "heading": "Your Daily Dose of Glamour.", "subtext": "Full Skincare Range" }}
+    ]}
+  ]
+}
+{% endschema %}

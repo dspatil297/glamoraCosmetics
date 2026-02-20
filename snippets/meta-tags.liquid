@@ -97,9 +97,4 @@
   href="{{ canonical_url }}"
 >
 
-{% if page_description %}
-  <meta
-    name="description"
-    content="{{ page_description | escape }}"
-  >
-{% endif %}
+<meta name="description" content="{% if page_description %}{{ page_description | escape }}{% elsif shop.description != blank %}{{ shop.description | escape }}{% else %}{{ shop.name }} — Anti-Pollution Skincare. Your daily dose of glamour.{% endif %}">

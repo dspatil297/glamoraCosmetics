@@ -1,0 +1,67 @@
+{% comment %} Glamora Organic Ingredients — 3 numbered cards {% endcomment %}
+<div class="ingredients-section shopify-section">
+  <div class="ingredients-section__inner">
+    <p class="ingredients-section__kicker">{{ section.settings.kicker | default: 'Commodo integer' }}</p>
+    <h2 class="ingredients-section__title">{{ section.settings.title | default: 'ORGANIC INGREDIENTS' }}</h2>
+    <p class="ingredients-section__intro">{{ section.settings.intro | default: 'Majority have suffered alteration in some form...' }}</p>
+    <div class="ingredients-section__grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'card' %}
+          <div class="ingredients-section__card card" {{ block.shopify_attributes }}>
+            <span class="ingredients-section__number">{{ forloop.index }}</span>
+            <h3 class="ingredients-section__card-title">{{ block.settings.title | default: 'SALTS & SUGARS' }}</h3>
+            {% if block.settings.image != blank %}
+              <div class="ingredients-section__card-image">
+                {{ block.settings.image | image_url: width: 300, height: 200, crop: 'center' | image_tag: loading: 'lazy', alt: block.settings.title | escape }}
+              </div>
+            {% endif %}
+            <p class="ingredients-section__card-desc">{{ block.settings.description | default: 'Premium ingredients for visible, lasting results.' }}</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .ingredients-section { padding: var(--section-padding-block) var(--page-margin); background: var(--color-background-alt); }
+  .ingredients-section__inner { max-width: var(--page-width); margin: 0 auto; text-align: center; }
+  .ingredients-section__kicker { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-muted); margin: 0 0 0.25rem; }
+  .ingredients-section__title { font-family: var(--font-heading); font-size: clamp(1.5rem, 2vw, 1.75rem); margin: 0 0 0.5rem; color: var(--color-foreground); }
+  .ingredients-section__intro { color: var(--color-text-muted); margin: 0 0 2rem; max-width: 36rem; margin-left: auto; margin-right: auto; }
+  .ingredients-section__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; text-align: left; }
+  .ingredients-section__card { padding: 1.5rem; }
+  .ingredients-section__number { display: inline-block; font-family: var(--font-heading); font-size: 2rem; font-weight: 700; color: var(--color-primary); margin-bottom: 0.5rem; }
+  .ingredients-section__card-title { font-size: 0.8125rem; letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 0.75rem; color: var(--color-foreground); }
+  .ingredients-section__card-image { margin-bottom: 0.75rem; border-radius: 8px; overflow: hidden; }
+  .ingredients-section__card-image img { width: 100%; height: auto; }
+  .ingredients-section__card-desc { font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.5; margin: 0; }
+  @media (max-width: 768px) { .ingredients-section__grid { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Ingredients",
+  "tag": "section",
+  "class": "section-ingredients",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Commodo integer" },
+    { "type": "text", "id": "title", "label": "Title", "default": "ORGANIC INGREDIENTS" },
+    { "type": "textarea", "id": "intro", "label": "Intro text" }
+  ],
+  "blocks": [
+    { "type": "card", "name": "Card", "settings": [
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "text", "id": "title", "label": "Title", "default": "SALTS & SUGARS" },
+      { "type": "textarea", "id": "description", "label": "Description" }
+    ]}
+  ],
+  "presets": [
+    { "name": "Ingredients", "blocks": [
+      { "type": "card", "settings": { "title": "SALTS & SUGARS", "description": "Premium ingredients for visible, lasting results." }},
+      { "type": "card", "settings": { "title": "NATURAL TINCTURES", "description": "Advanced protection against pollution and environmental stressors." }},
+      { "type": "card", "settings": { "title": "ESSENTIAL OILS", "description": "Hydrates, revitalizes, and repairs for radiant, healthy skin." }}
+    ]}
+  ]
+}
+{% endschema %}

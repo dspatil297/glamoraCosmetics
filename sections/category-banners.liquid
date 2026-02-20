@@ -1,0 +1,66 @@
+{% comment %} Glamora Category Promo Banners — 3 columns, hover zoom {% endcomment %}
+<div class="category-banners shopify-section">
+  <div class="category-banners__grid">
+    {% for block in section.blocks %}
+      {% if block.type == 'banner' %}
+        <a href="{{ block.settings.url | default: '#' }}" class="category-banners__card card" {{ block.shopify_attributes }}>
+          <div class="category-banners__image-wrap">
+            {% if block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 600, height: 400, crop: 'center' | image_tag: loading: 'lazy', class: 'category-banners__img', alt: block.settings.title | escape }}
+            {% else %}
+              <div class="category-banners__placeholder"></div>
+            {% endif %}
+          </div>
+          <div class="category-banners__content">
+            <h3 class="category-banners__title">{{ block.settings.title }}</h3>
+            <p class="category-banners__desc">{{ block.settings.description }}</p>
+            <span class="category-banners__cta">{{ block.settings.cta_text | default: 'SHOP →' }}</span>
+          </div>
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .category-banners { padding: var(--section-padding-block) var(--page-margin); background: var(--color-background-alt); }
+  .category-banners__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: var(--page-width); margin: 0 auto; }
+  .category-banners__card { text-decoration: none; color: inherit; display: block; overflow: hidden; }
+  .category-banners__image-wrap { aspect-ratio: 4/3; overflow: hidden; }
+  .category-banners__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+  .category-banners__card:hover .category-banners__img { transform: scale(1.05); }
+  .category-banners__placeholder { width: 100%; height: 100%; background: var(--color-border); }
+  .category-banners__content { padding: 1.25rem; background: var(--color-background); }
+  .category-banners__title { font-family: var(--font-heading); font-size: 1rem; margin: 0 0 0.5rem; color: var(--color-foreground); }
+  .category-banners__desc { font-size: 0.875rem; color: var(--color-text-muted); margin: 0 0 0.75rem; line-height: 1.5; }
+  .category-banners__cta { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-primary); }
+  @media (max-width: 768px) { .category-banners__grid { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Category banners",
+  "tag": "section",
+  "class": "section-category-banners",
+  "blocks": [
+    {
+      "type": "banner",
+      "name": "Banner",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Natural Skincare Solutions" },
+        { "type": "textarea", "id": "description", "label": "Description" },
+        { "type": "text", "id": "cta_text", "label": "Button text", "default": "SHOP SKINCARE →" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Category banners", "blocks": [
+      { "type": "banner", "settings": { "title": "Natural Skincare Solutions", "description": "Revitalize your skin with eco-friendly products free from harmful chemicals.", "cta_text": "SHOP SKINCARE →" }},
+      { "type": "banner", "settings": { "title": "Organic Hair Care", "description": "Strengthen and nourish your hair with organic, pollution-safe formulas.", "cta_text": "SHOP HAIR CARE →" }},
+      { "type": "banner", "settings": { "title": "Eco-Friendly Beauty", "description": "Achieve a flawless look with makeup that protects you and the environment.", "cta_text": "SHOP MAKEUP →" }}
+    ]}
+  ]
+}
+{% endschema %}

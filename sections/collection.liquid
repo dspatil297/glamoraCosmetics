@@ -1,47 +1,67 @@
 {% comment %}
-  This section is used in the collection template to render collection page
-  listing all products within a collection.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
+  Glamora Collection — banner + sidebar filters + product grid
+  Use with collection-banner above on collection template.
 {% endcomment %}
-
-<h1>{{ collection.title }}</h1>
-
-<div class="collection-products">
-  {% paginate collection.products by 20 %}
-    {% for product in collection.products %}
-      <div class="collection-product">
-        {% if product.featured_image %}
-          {% render 'image',
-            class: 'collection-product__image',
-            image: product.featured_image,
-            url: product.url,
-            width: 400,
-            height: 400,
-            crop: 'center'
-          %}
-        {% endif %}
-        <div class="collection-product__content">
-          <p>{{ product.title | escape | link_to: product.url }}</p>
-          <p>{{ product.price | money }}</p>
+{% paginate collection.products by 12 %}
+<div class="collection-page shopify-section">
+  <div class="collection-page__layout">
+    <aside class="collection-page__sidebar">
+      <h2 class="collection-page__sidebar-title">Filters</h2>
+      <form class="collection-page__filters" id="collection-filters">
+        <div class="collection-page__filter">
+          <label for="sort-by">Sort by</label>
+          <select name="sort_by" id="sort-by" class="collection-page__select">
+            {% for option in collection.sort_options %}
+              <option value="{{ option.value }}" {% if collection.sort_by == option.value %}selected{% endif %}>{{ option.name }}</option>
+            {% endfor %}
+          </select>
         </div>
+      </form>
+      <p class="collection-page__count">Showing {{ collection.products_count }} of {{ collection.all_products_count }} products</p>
+    </aside>
+    <div class="collection-page__main">
+      <div class="collection-page__grid">
+        {% for product in collection.products %}
+          <div class="collection-page__item">
+            {% assign show_badge = false %}
+            {% if product.tags contains 'new' or product.metafields.custom.badge == 'new' %}{% assign show_badge = true %}{% endif %}
+            {% render 'product-card', product: product, show_badge: show_badge %}
+          </div>
+        {% endfor %}
       </div>
-    {% endfor %}
-
-    {{ paginate | default_pagination }}
-  {% endpaginate %}
+      {% if paginate.pages > 1 %}
+        <div class="collection-page__pagination">
+          {{ paginate | default_pagination }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
 </div>
+{% endpaginate %}
+
+<script>
+  document.getElementById('sort-by') && document.getElementById('sort-by').addEventListener('change', function() {
+    var url = new URL(window.location.href);
+    url.searchParams.set('sort_by', this.value);
+    window.location.href = url.toString();
+  });
+</script>
 
 {% stylesheet %}
-  .collection-products {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  .collection-page { padding: var(--section-padding-block) var(--page-margin); }
+  .collection-page__layout { display: grid; grid-template-columns: 220px 1fr; gap: 2rem; max-width: var(--page-width); margin: 0 auto; }
+  .collection-page__sidebar-title { font-family: var(--font-heading); font-size: 1rem; margin: 0 0 1rem; }
+  .collection-page__filter { margin-bottom: 1rem; }
+  .collection-page__filter label { display: block; font-size: 0.8125rem; margin-bottom: 0.25rem; }
+  .collection-page__select { width: 100%; padding: 0.5rem; border: 1px solid var(--color-border); border-radius: var(--style-border-radius-inputs); background: var(--color-background); }
+  .collection-page__count { font-size: 0.8125rem; color: var(--color-text-muted); margin-top: 1rem; }
+  .collection-page__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .collection-page__pagination { margin-top: 2rem; }
+  @media (max-width: 768px) {
+    .collection-page__layout { grid-template-columns: 1fr; }
+    .collection-page__sidebar { order: 2; }
+    .collection-page__grid { grid-template-columns: repeat(2, 1fr); }
   }
+  @media (max-width: 480px) { .collection-page__grid { grid-template-columns: 1fr; } }
 {% endstylesheet %}
 
-{% schema %}
-{
-  "name": "t:general.collection",
-  "settings": []
-}
-{% endschema %}

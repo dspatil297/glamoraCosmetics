@@ -1,45 +1,114 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Skeleton",
+    "theme_name": "Glamora",
     "theme_version": "0.1.0",
-    "theme_author": "Shopify",
+    "theme_author": "Glamora Cosmetics",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://support.shopify.com/"
   },
   {
-    "name": "t:general.typography",
+    "name": "Glamora colors",
     "settings": [
       {
         "type": "header",
-        "content": "t:general.fonts"
+        "content": "Brand palette"
       },
       {
-        "type": "font_picker",
-        "id": "type_primary_font",
-        "default": "work_sans_n4",
-        "label": "t:general.primary"
+        "type": "color",
+        "id": "color_primary",
+        "default": "#C4896F",
+        "label": "Primary (Deep Rose Gold)"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "default": "#F2D4C8",
+        "label": "Secondary (Warm Blush)"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "default": "#D4AF87",
+        "label": "Accent (Champagne Gold)"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "default": "#FAF7F4",
+        "label": "Background (Cream White)"
+      },
+      {
+        "type": "color",
+        "id": "color_background_alt",
+        "default": "#F5EDE6",
+        "label": "Section alt (Soft Ivory)"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "default": "#2C2C2C",
+        "label": "Text (Charcoal)"
+      },
+      {
+        "type": "color",
+        "id": "color_text_muted",
+        "default": "#7A7A7A",
+        "label": "Text muted (Warm Gray)"
+      },
+      {
+        "type": "color",
+        "id": "color_button",
+        "default": "#A0614A",
+        "label": "CTA button (Dark Rose)"
+      },
+      {
+        "type": "color",
+        "id": "color_button_hover",
+        "default": "#7A3D2E",
+        "label": "CTA hover (Deep Burgundy)"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "default": "#E8D8CE",
+        "label": "Dividers / borders"
       }
     ]
   },
   {
-    "name": "t:general.layout",
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Fonts"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_primary_font",
+        "default": "lato_n4",
+        "label": "Body font"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_header_font",
+        "default": "assistant_n4",
+        "label": "Heading font"
+      }
+    ]
+  },
+  {
+    "name": "Layout",
     "settings": [
       {
         "type": "select",
         "id": "max_page_width",
-        "label": "t:labels.page_width",
+        "label": "Page width",
         "options": [
-          {
-            "value": "90rem",
-            "label": "t:options.page_width.narrow"
-          },
-          {
-            "value": "110rem",
-            "label": "t:options.page_width.wide"
-          }
+          { "value": "90rem", "label": "Narrow" },
+          { "value": "110rem", "label": "Wide" }
         ],
-        "default": "90rem"
+        "default": "110rem"
       },
       {
         "type": "range",
@@ -48,25 +117,8 @@
         "max": 100,
         "step": 1,
         "unit": "px",
-        "label": "t:labels.page_margin",
+        "label": "Page margin",
         "default": 20
-      }
-    ]
-  },
-  {
-    "name": "t:general.colors",
-    "settings": [
-      {
-        "type": "color",
-        "id": "background_color",
-        "default": "#FFFFFF",
-        "label": "t:labels.background"
-      },
-      {
-        "type": "color",
-        "id": "foreground_color",
-        "default": "#333333",
-        "label": "t:labels.foreground"
       },
       {
         "type": "range",
@@ -75,8 +127,28 @@
         "max": 10,
         "step": 1,
         "unit": "px",
-        "label": "t:labels.input_corner_radius",
+        "label": "Input corner radius",
         "default": 4
+      },
+      {
+        "type": "range",
+        "id": "buttons_border_radius",
+        "min": 0,
+        "max": 16,
+        "step": 2,
+        "unit": "px",
+        "label": "Button border radius",
+        "default": 4
+      },
+      {
+        "type": "range",
+        "id": "card_corner_radius",
+        "min": 0,
+        "max": 24,
+        "step": 2,
+        "unit": "px",
+        "label": "Card corner radius",
+        "default": 8
       }
     ]
   }

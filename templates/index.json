@@ -1,20 +1,63 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "hello-world",
+    "hero": {
+      "type": "hero-slider",
+      "settings": {},
+      "block_order": ["slide-1", "slide-2", "slide-3", "slide-4", "slide-5"],
+      "blocks": {
+        "slide-1": { "type": "slide", "settings": { "tagline": "ANTI-POLLUTION SKINCARE", "heading": "Deep Cleanse. Daily Defend.", "subtext": "Anti-Pollution Foaming Face Wash", "cta_text": "SHOP NOW", "cta2_text": "READ MORE" }},
+        "slide-2": { "type": "slide", "settings": { "tagline": "POLLUTION CONTROL", "heading": "Gentle on Skin. Tough on Pollution.", "subtext": "Pollution Control Face Wash", "cta_text": "SHOP NOW" }},
+        "slide-3": { "type": "slide", "settings": { "tagline": "SUN PROTECTION", "heading": "Shield + Hydrate. All Day Protection.", "subtext": "Hybrid Sunscreen", "cta_text": "SHOP NOW" }},
+        "slide-4": { "type": "slide", "settings": { "tagline": "MOISTURIZING", "heading": "Refresh. Revive. Radiate.", "subtext": "Moisturizing Spray", "cta_text": "SHOP NOW" }},
+        "slide-5": { "type": "slide", "settings": { "tagline": "GLAMORA", "heading": "Your Daily Dose of Glamour.", "subtext": "Full Skincare Range", "cta_text": "SHOP NOW" }}
+      }
+    },
+    "welcome": {
+      "type": "welcome",
       "settings": {}
+    },
+    "category-banners": {
+      "type": "category-banners",
+      "settings": {},
+      "block_order": ["banner-1", "banner-2", "banner-3"],
+      "blocks": {
+        "banner-1": { "type": "banner", "settings": { "title": "Natural Skincare Solutions", "description": "Revitalize your skin with eco-friendly products free from harmful chemicals.", "cta_text": "SHOP SKINCARE →" }},
+        "banner-2": { "type": "banner", "settings": { "title": "Organic Hair Care", "description": "Strengthen and nourish your hair with organic, pollution-safe formulas.", "cta_text": "SHOP HAIR CARE →" }},
+        "banner-3": { "type": "banner", "settings": { "title": "Eco-Friendly Beauty", "description": "Achieve a flawless look with makeup that protects you and the environment.", "cta_text": "SHOP MAKEUP →" }}
+      }
+    },
+    "featured-products": {
+      "type": "featured-products",
+      "settings": { "heading": "Glamora Cosmetics", "subtitle": "Guard your skin against harmful UV rays and urban pollution.", "link_text": "VIEW ALL PRODUCTS →" }
+    },
+    "usp-banner": {
+      "type": "usp-banner",
+      "settings": { "heading": "Discover a beautiful you", "subheading": "with our new Makeup Essentials", "cta_text": "SHOP NOW", "cta2_text": "READ MORE" },
+      "block_order": ["f1", "f2", "f3"],
+      "blocks": {
+        "f1": { "type": "feature", "settings": { "icon": "🧪", "text": "Lasting Formulas" }},
+        "f2": { "type": "feature", "settings": { "icon": "🛡️", "text": "Face Skin Protection" }},
+        "f3": { "type": "feature", "settings": { "icon": "💧", "text": "Eye Care Products" }}
+      }
+    },
+    "countdown-banner": {
+      "type": "countdown-banner",
+      "settings": { "heading": "Enjoy the best quality cosmetics", "end_date": "2026-12-31T23:59:59", "cta_text": "SHOP NOW", "cta2_text": "READ MORE" }
+    },
+    "ingredients": {
+      "type": "ingredients",
+      "settings": { "kicker": "Commodo integer", "title": "ORGANIC INGREDIENTS", "intro": "Majority have suffered alteration in some form..." },
+      "block_order": ["c1", "c2", "c3"],
+      "blocks": {
+        "c1": { "type": "card", "settings": { "title": "SALTS & SUGARS", "description": "Premium ingredients for visible, lasting results." }},
+        "c2": { "type": "card", "settings": { "title": "NATURAL TINCTURES", "description": "Advanced protection against pollution and environmental stressors." }},
+        "c3": { "type": "card", "settings": { "title": "ESSENTIAL OILS", "description": "Hydrates, revitalizes, and repairs for radiant, healthy skin." }}
+      }
+    },
+    "blog-preview": {
+      "type": "blog-preview",
+      "settings": { "kicker": "Checkout Our Latest Blogs", "title": "OUR ARTICLES" }
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["hero", "welcome", "category-banners", "featured-products", "usp-banner", "countdown-banner", "ingredients", "blog-preview"]
 }
