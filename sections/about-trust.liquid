@@ -1,0 +1,47 @@
+{% comment %} About page trust badges section {% endcomment %}
+<div class="about-trust shopify-section">
+  <div class="about-trust__inner">
+    <h2 class="about-trust__title">Why Trust Glamora</h2>
+    <div class="about-trust__badges">
+      {% render 'trust-badges' %}
+    </div>
+    <div class="about-trust__grid">
+      <div class="about-trust__card card">
+        <span class="about-trust__icon">✓</span>
+        <h3>Dermatologist Tested</h3>
+        <p>All products are tested by dermatologists to ensure safety and effectiveness.</p>
+      </div>
+      <div class="about-trust__card card">
+        <span class="about-trust__icon">🌿</span>
+        <h3>Cruelty Free</h3>
+        <p>We never test on animals. Our commitment to ethical beauty is unwavering.</p>
+      </div>
+      <div class="about-trust__card card">
+        <span class="about-trust__icon">🇮🇳</span>
+        <h3>Made in India</h3>
+        <p>Proudly manufactured in India with premium ingredients sourced responsibly.</p>
+      </div>
+      <div class="about-trust__card card">
+        <span class="about-trust__icon">✨</span>
+        <h3>Paraben Free</h3>
+        <p>Free from harmful parabens, sulfates, and other harsh chemicals.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% stylesheet %}
+  .about-trust { padding: var(--section-padding-block) var(--page-margin); background: var(--color-background-alt); }
+  .about-trust__inner { max-width: var(--page-width); margin: 0 auto; }
+  .about-trust__title { font-family: var(--font-heading); font-size: 1.75rem; text-align: center; margin: 0 0 1rem; }
+  .about-trust__badges { margin-bottom: 2rem; }
+  .about-trust__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  .about-trust__card { padding: 1.5rem; text-align: center; }
+  .about-trust__icon { font-size: 2rem; display: block; margin-bottom: 0.75rem; }
+  .about-trust__card h3 { font-family: var(--font-heading); font-size: 1rem; margin: 0 0 0.5rem; }
+  .about-trust__card p { font-size: 0.875rem; color: var(--color-text-muted); margin: 0; line-height: 1.5; }
+  @media (max-width: 768px) { .about-trust__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .about-trust__grid { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+{% schema %}
+{ "name": "About trust", "tag": "section", "settings": [] }
+{% endschema %}

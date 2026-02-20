@@ -2,7 +2,7 @@
 <div class="contact-page shopify-section">
   <div class="contact-page__grid">
     <div class="contact-page__info">
-      <h2 class="contact-page__title">Contact us</h2>
+      <h2 class="contact-page__title">Get in touch</h2>
       <p class="contact-page__address">📍 {{ section.settings.address | default: '38, Deputy Gunj, Moradabad - 244001, Uttar Pradesh, India' }}</p>
       <p class="contact-page__phone">📞 <a href="tel:+918650751707">{{ section.settings.phone | default: '+91 86507 51707' }}</a></p>
       <p class="contact-page__email">📧 <a href="mailto:support@glamoracosmetics.in">{{ section.settings.email | default: 'support@glamoracosmetics.in' }}</a></p>
@@ -43,19 +43,47 @@
       {% endform %}
     </div>
   </div>
+  {% if section.settings.show_faq %}
+    <div class="contact-page__faq">
+      <h2 class="contact-page__faq-title">Frequently Asked Questions</h2>
+      <div class="contact-page__faq-list">
+        {% for block in section.blocks %}
+          {% if block.type == 'faq' %}
+            <details class="contact-page__faq-item" {{ block.shopify_attributes }}>
+              <summary class="contact-page__faq-question">{{ block.settings.question }}</summary>
+              <div class="contact-page__faq-answer">{{ block.settings.answer }}</div>
+            </details>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
 </div>
 
 {% stylesheet %}
   .contact-page { padding: var(--section-padding-block) var(--page-margin); max-width: var(--page-width); margin: 0 auto; }
   .contact-page__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
   .contact-page__title { font-family: var(--font-heading); font-size: 1.5rem; margin: 0 0 1rem; }
-  .contact-page__address, .contact-page__phone, .contact-page__email, .contact-page__hours { margin: 0 0 0.75rem; color: var(--color-foreground); }
-  .contact-page__address a, .contact-page__phone a, .contact-page__email a { color: var(--color-primary); text-decoration: none; }
-  .contact-page__social { margin-top: 1rem; display: flex; gap: 1rem; }
-  .contact-form label { display: block; font-size: 0.875rem; margin: 1rem 0 0.25rem; }
-  .contact-form input, .contact-form select, .contact-form textarea { width: 100%; padding: 0.5rem; border: 1px solid var(--color-border); border-radius: var(--style-border-radius-inputs); margin-bottom: 0.25rem; }
+  .contact-page__address, .contact-page__phone, .contact-page__email, .contact-page__hours { margin: 0 0 0.75rem; color: var(--color-foreground); line-height: 1.6; }
+  .contact-page__address a, .contact-page__phone a, .contact-page__email a { color: var(--color-primary); text-decoration: none; font-weight: 500; }
+  .contact-page__address a:hover, .contact-page__phone a:hover, .contact-page__email a:hover { text-decoration: underline; }
+  .contact-page__social { margin-top: 1.5rem; display: flex; gap: 1rem; }
+  .contact-page__social a { color: var(--color-primary); text-decoration: none; font-size: 0.875rem; }
+  .contact-page__social a:hover { text-decoration: underline; }
+  .contact-form label { display: block; font-size: 0.875rem; font-weight: 500; margin: 1rem 0 0.25rem; color: var(--color-foreground); }
+  .contact-form input, .contact-form select, .contact-form textarea { width: 100%; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: var(--style-border-radius-inputs); margin-bottom: 0.5rem; font-family: var(--font-body); font-size: 0.9375rem; background: var(--color-background); color: var(--color-foreground); }
+  .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { outline: none; border-color: var(--color-primary); }
   .contact-form__success { color: var(--color-primary); margin-bottom: 1rem; }
   .contact-form__errors { color: #c00; margin-bottom: 1rem; }
+  .contact-page__faq { margin-top: 3rem; padding-top: 3rem; border-top: 1px solid var(--color-border); }
+  .contact-page__faq-title { font-family: var(--font-heading); font-size: 1.5rem; margin: 0 0 1.5rem; }
+  .contact-page__faq-list { display: flex; flex-direction: column; gap: 0.75rem; }
+  .contact-page__faq-item { border: 1px solid var(--color-border); border-radius: var(--style-border-radius-inputs); padding: 1rem; }
+  .contact-page__faq-question { font-weight: 600; cursor: pointer; list-style: none; padding-right: 1.5rem; position: relative; }
+  .contact-page__faq-question::-webkit-details-marker { display: none; }
+  .contact-page__faq-question::after { content: '+'; position: absolute; right: 0; font-size: 1.25rem; }
+  .contact-page__faq-item[open] .contact-page__faq-question::after { content: '−'; }
+  .contact-page__faq-answer { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--color-border); color: var(--color-text-muted); line-height: 1.6; }
   @media (max-width: 768px) { .contact-page__grid { grid-template-columns: 1fr; } }
 {% endstylesheet %}
 
@@ -70,8 +98,28 @@
     { "type": "text", "id": "email", "label": "Email", "default": "support@glamoracosmetics.in" },
     { "type": "text", "id": "hours", "label": "Hours", "default": "Mon–Sat, 10:00 AM – 6:00 PM" },
     { "type": "url", "id": "instagram", "label": "Instagram URL" },
-    { "type": "url", "id": "facebook", "label": "Facebook URL" }
+    { "type": "url", "id": "facebook", "label": "Facebook URL" },
+    { "type": "checkbox", "id": "show_faq", "label": "Show FAQ", "default": true }
   ],
-  "presets": [{ "name": "Contact page" }]
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact page",
+      "blocks": [
+        { "type": "faq", "settings": { "question": "What is your return policy?", "answer": "We accept returns within 14 days of delivery for unused, unopened products. See our Refund & Returns Policy for details." }},
+        { "type": "faq", "settings": { "question": "Do you ship internationally?", "answer": "Currently we ship within India. International shipping may be available soon." }},
+        { "type": "faq", "settings": { "question": "How long does shipping take?", "answer": "Standard shipping takes 3-5 business days. Free shipping is available on orders above ₹999." }}
+      ]
+    }
+  ]
 }
 {% endschema %}

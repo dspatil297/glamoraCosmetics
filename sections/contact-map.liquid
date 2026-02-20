@@ -1,0 +1,29 @@
+{% comment %} Google Maps embed for Moradabad location {% endcomment %}
+<div class="contact-map shopify-section">
+  <h2 class="contact-map__title">Find us</h2>
+  <div class="contact-map__embed">
+    {% if section.settings.map_embed_code != blank %}
+      {{ section.settings.map_embed_code }}
+    {% else %}
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.5!2d78.7739!3d28.8381!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390b8b8c8c8c8c8d%3A0x8c8c8c8c8c8c8c8c!2sDeputy%20Gunj%2C%20Moradabad%2C%20Uttar%20Pradesh%20244001!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Glamora Cosmetics Location"></iframe>
+    {% endif %}
+  </div>
+  <p class="contact-map__address">{{ section.settings.address | default: '38, Deputy Gunj, Moradabad - 244001, Uttar Pradesh, India' }}</p>
+</div>
+{% stylesheet %}
+  .contact-map { padding: var(--section-padding-block) var(--page-margin); max-width: var(--page-width); margin: 0 auto; }
+  .contact-map__title { font-family: var(--font-heading); font-size: 1.5rem; margin: 0 0 1.5rem; text-align: center; }
+  .contact-map__embed { border-radius: var(--style-border-radius-cards); overflow: hidden; margin-bottom: 1rem; }
+  .contact-map__embed iframe { width: 100%; height: 400px; border: none; }
+  .contact-map__address { text-align: center; color: var(--color-text-muted); margin: 0; }
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "Contact map",
+  "tag": "section",
+  "settings": [
+    { "type": "html", "id": "map_embed_code", "label": "Google Maps embed code", "info": "Paste iframe code from Google Maps. Or leave blank to use default Moradabad location." },
+    { "type": "textarea", "id": "address", "label": "Address", "default": "38, Deputy Gunj, Moradabad - 244001, Uttar Pradesh, India" }
+  ]
+}
+{% endschema %}

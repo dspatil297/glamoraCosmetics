@@ -1,0 +1,15 @@
+{% comment %} About page hero banner {% endcomment %}
+<div class="about-hero full-width">
+  <div class="about-hero__content">
+    <h1 class="about-hero__title">About Glamora</h1>
+    <p class="about-hero__subtitle">Your Daily Dose of Glamour</p>
+  </div>
+</div>
+{% stylesheet %}
+  .about-hero { background: var(--color-background-alt); padding: 4rem var(--page-margin); text-align: center; }
+  .about-hero__title { font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 3rem); margin: 0 0 0.5rem; color: var(--color-foreground); }
+  .about-hero__subtitle { font-size: 1rem; color: var(--color-text-muted); margin: 0; font-style: italic; }
+{% endstylesheet %}
+{% schema %}
+{ "name": "About hero", "tag": "section", "settings": [] }
+{% endschema %}

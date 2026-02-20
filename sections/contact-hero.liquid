@@ -1,0 +1,15 @@
+{% comment %} Contact page hero banner {% endcomment %}
+<div class="contact-hero full-width">
+  <div class="contact-hero__content">
+    <h1 class="contact-hero__title">Contact Us</h1>
+    <p class="contact-hero__subtitle">We'd love to hear from you. Get in touch with us.</p>
+  </div>
+</div>
+{% stylesheet %}
+  .contact-hero { background: var(--color-background-alt); padding: 4rem var(--page-margin); text-align: center; }
+  .contact-hero__title { font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 3rem); margin: 0 0 0.5rem; color: var(--color-foreground); }
+  .contact-hero__subtitle { font-size: 1rem; color: var(--color-text-muted); margin: 0; }
+{% endstylesheet %}
+{% schema %}
+{ "name": "Contact hero", "tag": "section", "settings": [] }
+{% endschema %}

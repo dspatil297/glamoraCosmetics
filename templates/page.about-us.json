@@ -1,0 +1,20 @@
+{
+  "sections": {
+    "about-hero": {
+      "type": "about-hero",
+      "settings": {}
+    },
+    "about-main": {
+      "type": "about-content",
+      "settings": {
+        "story": "<p>At Glamora, we believe skincare is more than a routine – it's a ritual of self-love. Our journey began with a simple desire: to create products that truly care for your skin, not just protect it. Every formula we craft is designed to nourish, hydrate, and enhance your skin's natural beauty, leaving you feeling confident and radiant every day.</p><p>Using advanced scientific research and premium natural extracts, we ensure that every product delivers visible results without compromising on luxury. We believe that glamour isn't just a look, it's a feeling – and Glamora is your daily dose of that feeling.</p>",
+        "vision": "<p>At Glamora, we envision a world where beauty and wellness go hand in hand. Our mission is to empower confidence and radiance by offering skincare that protects, enhances, and cares for your skin. With a commitment to effectiveness, luxury, and sustainability, we ensure your beauty routine supports both your skin and the planet.</p><p>Our vision is to be the trusted choice for premium anti-pollution skincare, helping you glow every day, wherever life takes you.</p>"
+      }
+    },
+    "about-trust": {
+      "type": "about-trust",
+      "settings": {}
+    }
+  },
+  "order": ["about-hero", "about-main", "about-trust"]
+}
