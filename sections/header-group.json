@@ -13,10 +13,15 @@
   "sections": {
     "header": {
       "type": "header",
-      "settings": {}
+      "settings": {
+        "announcement_enable": true,
+        "announcement_text": "Free shipping on orders above ₹999 | Anti-Pollution Skincare",
+        "menu": "main-menu",
+        "wishlist_url": ""
+      }
     }
   },
   "order": [
     "header"
-  ],
+  ]
 }
