@@ -47,7 +47,7 @@
         </div>
       {% endif %}
       
-      <div class="product-card__price">
+        <div class="product-card__price">
         <div class="product-card__price-row">
           {% if product.compare_at_price > product.price %}
             <span class="product-card__price--compare">{{ product.compare_at_price | money }}</span>
@@ -55,10 +55,10 @@
           <span class="product-card__price--current">{{ product.price | money }}</span>
         </div>
         <div class="product-card__price-meta">
-          <span class="product-card__price--gst">Incl. GST</span>
+          <span class="product-card__price--gst">Inclusive of all taxes</span>
         </div>
         {% if product.tags contains 'gst-5' %}
-          <span class="product-card__price--gst-note">GST 5% for fruit and vegetables Dehydrated products.</span>
+          <span class="product-card__price--gst-note">5% GST applies to this product.</span>
         {% endif %}
       </div>
     </div>

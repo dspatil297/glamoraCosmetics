@@ -140,7 +140,7 @@
             <path d="M1 3h15v13H1V3zm16 8h4l3 3v4h-7v-7z"/>
             <path d="M5 21a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm12 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
           </svg>
-          Free Shipping above ₹500
+          Free shipping on orders above ₹999
         </span>
       </div>
       
@@ -194,9 +194,9 @@
             <span class="price-value">{{ product.price | money }}</span>
           </div>
         {% endif %}
-        <span class="price-gst">Incl. GST</span>
+        <span class="price-gst">Inclusive of all taxes</span>
         {% if product.tags contains 'gst-5' %}
-          <span class="price-gst-note">GST 5% for fruit and vegetables Dehydrated products.</span>
+          <span class="price-gst-note">5% GST applies to this product.</span>
         {% endif %}
       </div>
       
@@ -1959,16 +1959,16 @@
       var priceSection = document.querySelector('.product-price-section');
       if (!priceSection) return;
       var gstNote = isGst5
-        ? '<span class="price-gst-note">GST 5% for fruit and vegetables Dehydrated products.</span>'
+        ? '<span class="price-gst-note">5% GST applies to this product.</span>'
         : '';
       var priceNum = parseInt(price, 10) / 100;
       var comparePriceNum = comparePrice ? parseInt(comparePrice, 10) / 100 : null;
-      if (comparePriceNum && comparePriceNum > priceNum) {
+        if (comparePriceNum && comparePriceNum > priceNum) {
         var savings = comparePriceNum - priceNum;
-        priceSection.innerHTML = '<div class="price-original"><span class="price-label">Was:</span><span class="price-value price-value--old">' + formatMoney(comparePrice) + '</span></div><div class="price-current"><span class="price-label">Now:</span><span class="price-value price-value--sale">' + formatMoney(price) + '</span><span class="price-savings">Save ' + formatMoney(savings * 100) + '</span></div><span class="price-gst">Incl. GST</span>' + gstNote;
-      } else {
-        priceSection.innerHTML = '<div class="price-current"><span class="price-value">' + formatMoney(price) + '</span></div><span class="price-gst">Incl. GST</span>' + gstNote;
-      }
+        priceSection.innerHTML = '<div class="price-original"><span class="price-label">Was:</span><span class="price-value price-value--old">' + formatMoney(comparePrice) + '</span></div><div class="price-current"><span class="price-label">Now:</span><span class="price-value price-value--sale">' + formatMoney(price) + '</span><span class="price-savings">Save ' + formatMoney(savings * 100) + '</span></div><span class="price-gst">Inclusive of all taxes</span>' + gstNote;
+        } else {
+        priceSection.innerHTML = '<div class="price-current"><span class="price-value">' + formatMoney(price) + '</span></div><span class="price-gst">Inclusive of all taxes</span>' + gstNote;
+        }
       var stickyPrice = document.querySelector('.sticky-cart-bar__price .price-current');
       if (stickyPrice) {
         stickyPrice.textContent = formatMoney(price);
