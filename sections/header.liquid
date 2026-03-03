@@ -32,7 +32,7 @@
         </li>
         {% for link in section.settings.menu.links %}
           {% assign link_title_plain = link.title | strip %}
-          {% if link_title_plain == 'Products' or link_title_plain == 'Catalog' or link.url contains '/collections' %}
+          {% if link_title_plain == 'Products' or link_title_plain == 'Catalog' or link_title_plain == 'Shop' or link.url contains '/collections' %}
             {% assign products_link = link %}
             {% break %}
           {% endif %}
@@ -41,7 +41,7 @@
           {% assign products_href = products_link.url %}
           {% if products_href == routes.collections_url %}{% assign products_href = routes.all_products_collection_url %}{% endif %}
           <li class="nav-item {% if products_link.links != blank %}has-dropdown{% endif %}">
-            <a href="{{ products_href }}" class="nav-link {% if products_link.active %}active{% endif %}">Products</a>
+            <a href="{{ products_href }}" class="nav-link {% if products_link.active %}active{% endif %}">Shop</a>
             {% if products_link.links != blank %}
               <ul class="nav-dropdown">
                 {% for childlink in products_link.links %}
@@ -56,11 +56,14 @@
           </li>
         {% else %}
           <li class="nav-item">
-            <a href="{{ routes.all_products_collection_url }}" class="nav-link {% if request.path contains '/collections' %}active{% endif %}">Products</a>
+            <a href="{{ routes.all_products_collection_url }}" class="nav-link {% if request.path contains '/collections' %}active{% endif %}">Shop</a>
           </li>
         {% endif %}
         <li class="nav-item">
-          <a href="/pages/recipes" class="nav-link {% if request.path == '/pages/recipes' %}active{% endif %}">Recipes</a>
+          <a href="/pages/about-us" class="nav-link {% if request.path == '/pages/about-us' %}active{% endif %}">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a href="/blogs/news" class="nav-link {% if request.path contains '/blogs' %}active{% endif %}">Blog</a>
         </li>
         {% for link in section.settings.menu.links %}
           {% if link.title == 'Contact' or link.url contains 'contact' %}
@@ -148,7 +151,7 @@
           </li>
           {% for link in section.settings.menu.links %}
             {% assign link_title_plain = link.title | strip %}
-            {% if link_title_plain == 'Products' or link_title_plain == 'Catalog' or link.url contains '/collections' %}
+          {% if link_title_plain == 'Products' or link_title_plain == 'Catalog' or link_title_plain == 'Shop' or link.url contains '/collections' %}
               {% assign products_link_mob = link %}
               {% break %}
             {% endif %}
@@ -157,7 +160,7 @@
             {% assign products_href_mob = products_link_mob.url %}
             {% if products_href_mob == routes.collections_url %}{% assign products_href_mob = routes.all_products_collection_url %}{% endif %}
             <li class="mobile-nav-item {% if products_link_mob.links != blank %}has-children{% endif %}">
-              <a href="{{ products_href_mob }}" class="mobile-nav-link {% if products_link_mob.active %}active{% endif %}">Products</a>
+              <a href="{{ products_href_mob }}" class="mobile-nav-link {% if products_link_mob.active %}active{% endif %}">Shop</a>
               {% if products_link_mob.links != blank %}
                 <button type="button" class="mobile-nav-toggle" aria-label="Toggle Products submenu" aria-expanded="false">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -177,11 +180,14 @@
             </li>
           {% else %}
             <li class="mobile-nav-item">
-              <a href="{{ routes.all_products_collection_url }}" class="mobile-nav-link {% if request.path contains '/collections' %}active{% endif %}">Products</a>
+              <a href="{{ routes.all_products_collection_url }}" class="mobile-nav-link {% if request.path contains '/collections' %}active{% endif %}">Shop</a>
             </li>
           {% endif %}
           <li class="mobile-nav-item">
-            <a href="/pages/recipes" class="mobile-nav-link {% if request.path == '/pages/recipes' %}active{% endif %}">Recipes</a>
+            <a href="/pages/about-us" class="mobile-nav-link {% if request.path == '/pages/about-us' %}active{% endif %}">About Us</a>
+          </li>
+          <li class="mobile-nav-item">
+            <a href="/blogs/news" class="mobile-nav-link {% if request.path contains '/blogs' %}active{% endif %}">Blog</a>
           </li>
           {% for link in section.settings.menu.links %}
             {% if link.title == 'Contact' or link.url contains 'contact' %}

@@ -3,9 +3,9 @@
   <section class="footer-cta" aria-label="Call to action">
     <div class="footer-cta__bg"></div>
     <div class="footer-cta__inner">
-      <h2 class="footer-cta__title">{{ section.settings.cta_headline | default: "Start Your Wellness Journey Today" }}</h2>
-      <p class="footer-cta__subtitle">{{ section.settings.cta_subtitle | default: "Join thousands who have transformed their health with SARVITAL" }}</p>
-      <a href="{{ section.settings.cta_button_url | default: routes.all_products_collection_url }}" class="footer-cta__btn">{{ section.settings.cta_button_text | default: "Order Now" }}</a>
+      <h2 class="footer-cta__title">{{ section.settings.cta_headline | default: "Enjoy the best quality cosmetics" }}</h2>
+      <p class="footer-cta__subtitle">{{ section.settings.cta_subtitle | default: "Discover Glamora\u2019s anti-pollution skincare, hybrid sunscreens, and moisturizing sprays crafted for everyday urban living." }}</p>
+      <a href="{{ section.settings.cta_button_url | default: routes.all_products_collection_url }}" class="footer-cta__btn">{{ section.settings.cta_button_text | default: "Shop Now" }}</a>
       <div class="footer-cta__trust">
         <span class="footer-cta__trust-item">✓ Secure Checkout</span>
         <span class="footer-cta__trust-item">✓ Fast Delivery</span>
@@ -20,7 +20,7 @@
     <div class="footer__grid">
       <div class="footer__col footer__about">
         <h4 class="footer__col-title">About {{ shop.name | upcase }}</h4>
-        <p class="footer__about-text">{{ section.settings.company_description | default: "SARVITAL brings you premium, nature-backed wellness products crafted with care. We are committed to quality, purity, and your wellbeing—helping you live healthier, naturally." }}</p>
+        <p class="footer__about-text">{{ section.settings.company_description | default: "Glamora Cosmetics creates modern, anti-pollution skincare designed to protect, hydrate, and enhance your natural glow. Our science-backed formulas are crafted for everyday urban life, so your skin feels radiant, refreshed, and confident." }}</p>
       </div>
 
       <div class="footer__col footer__policies">
@@ -70,8 +70,8 @@
             </li>
           {% endif %}
         </ul>
-        {%- assign instagram_url = section.settings.instagram_url | default: 'https://www.instagram.com/sarvital_foodtech' -%}
-        {%- assign facebook_url = section.settings.facebook_url | default: 'https://www.facebook.com/share/1Dpad1S1np/' -%}
+        {%- assign instagram_url = section.settings.instagram_url | default: 'https://www.instagram.com/glamoracosmetics.official' -%}
+        {%- assign facebook_url = section.settings.facebook_url | default: 'https://www.facebook.com/glamoracosmetics' -%}
         <div class="footer__social">
           <span class="footer__social-label">Follow Us</span>
           <div class="footer__social-links">
@@ -157,11 +157,11 @@
 
 {% stylesheet %}
   :root {
-    --footer-bg: #1a1f1a;
+    --footer-bg: #4c5564; /* Dark slate from Glamora palette */
     --footer-text: rgba(255, 255, 255, 0.9);
     --footer-text-muted: rgba(255, 255, 255, 0.75);
-    --footer-cta-bg: #2d3d2d;
-    --footer-disclaimer-bg: #222a22;
+    --footer-cta-bg: #15736d; /* Primary teal */
+    --footer-disclaimer-bg: #459592; /* Secondary teal */
     --footer-disclaimer-border: rgba(255, 255, 255, 0.25);
   }
 

@@ -49,13 +49,13 @@
       ],
       "settings": {
         "hero_image": "shopify://shop_images/WhatsApp_Image_2026-01-30_at_11.50.09.jpg",
-        "heading": "Transform Your Health with Nature's Finest",
-        "subheading": "Premium natural fruit & vegetable powders. Lab-tested, sustainably sourced, and packed with natural goodness.",
-        "cta_text": "Shop Now",
+        "heading": "Advanced anti-pollution skincare for naturally radiant, protected, everyday glowing skin.",
+        "subheading": "Hybrid sunscreens, foaming face washes, and moisturizing sprays crafted to defend your skin from urban pollution.",
+        "cta_text": "Shop Skincare",
         "cta_link": "/collections/all",
-        "secondary_cta_text": "Learn More",
-        "secondary_cta_link": "/pages/contact",
-        "carousel_speed": 3,
+        "secondary_cta_text": "Discover Glamora",
+        "secondary_cta_link": "/pages/about-us",
+        "carousel_speed": 5,
         "transition_duration": 800,
         "overlay_opacity": 85
       }
@@ -67,32 +67,32 @@
           "type": "usp_item",
           "settings": {
             "icon_name": "lab-test",
-            "title": "Lab-Tested Quality",
-            "description": "Every product undergoes rigorous lab testing to ensure purity and quality."
+            "title": "Dermatologist Tested",
+            "description": "All Glamora formulas are clinically tested for safety, tolerance, and visible results on Indian skin."
           }
         },
         "usp_2": {
           "type": "usp_item",
           "settings": {
-            "icon_name": "sustainable",
-            "title": "Sustainable Sourcing",
-            "description": "We partner with local farmers to source the freshest ingredients sustainably."
+            "icon_name": "shield",
+            "title": "Anti-Pollution Protection",
+            "description": "Active anti-pollution complexes shield your skin from dust, smog, and urban environmental stressors."
           }
         },
         "usp_3": {
           "type": "usp_item",
           "settings": {
             "icon_name": "natural",
-            "title": "100% Natural",
-            "description": "Pure, additive-free formulations with no artificial ingredients or preservatives."
+            "title": "Clean, Conscious Formulas",
+            "description": "No harsh sulfates, mineral oil, or parabens—just carefully balanced actives and skin-loving ingredients."
           }
         },
         "usp_4": {
           "type": "usp_item",
           "settings": {
-            "icon_name": "farmer",
-            "title": "Local Farmer Support",
-            "description": "Supporting local communities and empowering farmers through fair trade practices."
+            "icon_name": "glow",
+            "title": "Made for Urban Lifestyles",
+            "description": "Lightweight textures and non-greasy finishes designed for everyday wear in humid, high-pollution cities."
           }
         }
       },
@@ -103,14 +103,14 @@
         "usp_4"
       ],
       "settings": {
-        "title": "Why Choose Sarvital"
+        "title": "Why Choose Glamora"
       }
     },
     "featured_products": {
       "type": "product-grid",
       "settings": {
-        "title": "Our Premium Powders",
-        "description": "Discover our range of premium fruit and vegetable powders, carefully crafted for your wellness journey.",
+        "title": "Glamora Cosmetics",
+        "description": "Hybrid sunscreens, foaming face washes, and moisturizing sprays that protect your skin from pollution while keeping it soft, hydrated, and radiant.",
         "layout": "carousel",
         "carousel_auto_scroll": true,
         "carousel_auto_scroll_interval": 6,
@@ -184,9 +184,9 @@
         "feature_4"
       ],
       "settings": {
-        "title": "Transform Your Daily Routine",
-        "description": "Our premium powders seamlessly integrate into your lifestyle, whether you're starting your day with a nutritious smoothie or adding a health boost to your favorite recipes.",
-        "cta_text": "Discover Your Perfect Match",
+        "title": "Discover a Beautiful You",
+        "description": "Build a simple, effective routine with Glamora\u2019s cleansers, sunscreens, and moisturizing sprays to keep your skin fresh and protected all day.",
+        "cta_text": "Shop Routine Essentials",
         "cta_link": "/collections/all"
       }
     },
@@ -233,9 +233,9 @@
         "badge_4"
       ],
       "settings": {
-        "title": "Quality You Can Trust",
-        "description": "We're committed to delivering the highest quality products through rigorous testing and quality assurance.",
-        "promise_text": "Every product is lab-tested, certified, and guaranteed to meet our premium quality standards."
+        "title": "Quality You Can See & Feel",
+        "description": "From pollution-control face washes to hybrid sunscreens, each Glamora product is formulated with high-performance actives and tested for real-world results.",
+        "promise_text": "Effective, comfortable-to-wear skincare that helps your skin stay clear, protected, and glowing\u2014every single day."
       }
     },
     "176943494681be9f0a": {
