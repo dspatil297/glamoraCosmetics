@@ -1,3 +1,116 @@
+# Glamora Cosmetics (Dawn) — Multiphase Development Plan (beminimalist structure)
+
+This plan implements the page structure documented in `beminimalist-page-structures.md` (global announcement bar + header/footer shell, and the homepage section order/blocks), while keeping Shopify/Dawn core functionality intact.
+
+## 🎯 Project Overview
+
+**Brand**: Glamora Cosmetics  
+**Industry**: Cosmetics / Skincare  
+**Theme foundation**: Shopify Dawn (Liquid + JSON templates + sections)  
+**Primary goal (current)**: Match beminimalist-style structure + design first (content + sections), keep functionality stable.
+
+---
+
+## 📋 Phase 1: Brand System + Global Tokens (Design Foundation)
+
+- [ ] **Fonts + typography**: confirm brandkit fonts across the theme (headings + body).
+- [ ] **Theme tokens**: CSS variables for primary/secondary/accent, text, borders, radii, shadows.
+- [ ] **Global spacing/layout**: container widths, section padding rhythm, mobile breakpoints.
+- [ ] **Component baseline**: buttons, chips, cards, inputs (so collection + PDP match later).
+
+**Definition of Done**
+- Site looks consistently Glamora across all pages (even before page-specific polish).
+
+---
+
+## 📋 Phase 2: Global Layout Shell (match beminimalist global UI)
+
+Based on `beminimalist-page-structures.md` “GLOBAL LAYOUT” + “GLOBAL UI OVERLAYS”.
+
+- [x] **Announcement bar (rotating)**: `sections/announcement-bar.liquid` wired into `sections/header-group.json`.
+- [ ] **Header nav structure**:
+  - Desktop: logo + nav links + search + account + cart count
+  - Mobile: left slide-in menu with nested levels
+- [ ] **Search overlay**: full-screen, popular searches, quick results.
+- [ ] **Cart drawer**: right slide-in, free-gift/progress messaging, subtotal + checkout CTA.
+- [ ] **Country selector modal** (later): only if you truly need multi-country.
+- [ ] **Cookie banner** (later): only if legally required for your target markets.
+
+**Definition of Done**
+- Global shell matches the beminimalist interaction model on desktop + mobile.
+
+---
+
+## 📋 Phase 3: Homepage (match beminimalist section order)
+
+Based on `beminimalist-page-structures.md` “HOMEPAGE `/`”.
+
+### Section order (implemented in `templates/index.json`)
+- [x] **Hero banner carousel** (image-first): `sections/hero-banner.liquid` (added `show_content` toggle for image-only hero)
+- [x] **Our Best Sellers** (carousel): `sections/product-grid.liquid`
+- [x] **Bundle promo banner** (full-width image): `sections/promo-banner.liquid`
+- [x] **AI split banner** (two clickable images): `sections/split-banner.liquid`
+- [x] **Shop by Category** (tiles): `sections/tiles-grid.liquid`
+- [x] **Shop by Concerns** (tiles): `sections/tiles-grid.liquid`
+- [x] **New Launches** (carousel): `sections/product-grid.liquid` (collection handle: `new-launches`)
+- [x] **Brand values strip** (4 cards): `sections/values-strip.liquid`
+- [x] **Loyalty program banner**: `sections/loyalty-banner.liquid`
+- [x] **App download banner**: `sections/promo-banner.liquid`
+- [x] **Notice strip** (GST/info): `sections/notice-strip.liquid`
+
+### Content wiring checklist (Theme Editor)
+- [ ] Upload banner images for **bundle / AI / loyalty / app** sections
+- [ ] Point tile links to real **collections** (Skin, Hair, etc.) and **concern collections**
+- [ ] Create collections with the expected handles (ex: `new-launches`, `best-sellers`) or change handles in Theme Editor
+
+**Definition of Done**
+- Homepage visually and structurally matches beminimalist (order + blocks), with Glamora brand styling.
+
+---
+
+## 📋 Phase 4: Collection Pages (beminimalist layout + Dawn filtering)
+
+Based on `beminimalist-page-structures.md` “ALL COLLECTIONS” + “COLLECTION / CATEGORY”.
+
+- [ ] **/collections**: category grid tiles (collection-list style)
+- [ ] **/collections/[handle]**:
+  - Toolbar row (filter/sort)
+  - Desktop filter sidebar (Dawn facets)
+  - Product grid: 4-col desktop / 2-col mobile
+  - Pagination or load-more (keep Dawn behavior)
+
+---
+
+## 📋 Phase 5: Product Detail Page (PDP)
+
+Based on `beminimalist-page-structures.md` “PRODUCT DETAIL PAGE”.
+
+- [ ] Gallery + thumbnails polish
+- [ ] Variant selection styled as “chips”
+- [ ] Trust badges row (shipping, authenticity, etc.)
+- [ ] Accordions for details (what it is, ingredients, how to use, FAQs)
+- [ ] Mobile sticky bottom bar for price + Add to cart
+- [ ] “You might also like” carousel
+
+---
+
+## 📋 Phase 6: Content Pages (Knowledge/Blog + Policies)
+
+- [ ] **Blog listing**: card grid layout (featured article + grid) per beminimalist “KNOWLEDGE”
+- [ ] **Policy pages**: typography polish + optional sticky ToC on desktop
+
+---
+
+## 📋 Phase 7: QA + Performance
+
+- [ ] Lighthouse pass (mobile-first)
+- [ ] Image sizing + lazy loading checks
+- [ ] Accessibility pass for nav, overlays, sliders
+
+---
+
+## Archived (original Sarvital plan)
+
 # Sarvital Shopify Website - Multiphase Development Plan
 
 ## 🎯 Project Overview

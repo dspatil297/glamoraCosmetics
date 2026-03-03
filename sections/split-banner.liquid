@@ -1,0 +1,97 @@
+{%- comment -%} Two-up clickable banners (AI split banner style) {%- endcomment -%}
+
+<section class="split-banner" id="split-banner-{{ section.id }}">
+  <div class="split-banner__grid">
+    {%- for i in (1..2) -%}
+      {%- assign img_key = 'image_' | append: i -%}
+      {%- assign m_key = 'mobile_image_' | append: i -%}
+      {%- assign href_key = 'href_' | append: i -%}
+      {%- assign alt_key = 'alt_' | append: i -%}
+      {%- assign img = section.settings[img_key] -%}
+      {%- if img != blank -%}
+        {%- assign mobile_img = section.settings[m_key] | default: img -%}
+        {%- assign href = section.settings[href_key] -%}
+        <div class="split-banner__item">
+          {%- if href != blank -%}<a class="split-banner__link" href="{{ href }}">{%- endif -%}
+            <picture class="split-banner__picture">
+              <source
+                media="(max-width: 768px)"
+                srcset="
+                  {{ mobile_img | image_url: width: 480 }} 480w,
+                  {{ mobile_img | image_url: width: 768 }} 768w,
+                  {{ mobile_img | image_url: width: 1024 }} 1024w
+                "
+                sizes="100vw"
+              >
+              <img
+                class="split-banner__img"
+                src="{{ img | image_url: width: 1400 }}"
+                srcset="
+                  {{ img | image_url: width: 800 }} 800w,
+                  {{ img | image_url: width: 1100 }} 1100w,
+                  {{ img | image_url: width: 1400 }} 1400w
+                "
+                sizes="(min-width: 900px) 50vw, 100vw"
+                alt="{{ section.settings[alt_key] | escape }}"
+                loading="lazy"
+              >
+            </picture>
+          {%- if href != blank -%}</a>{%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .split-banner__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+    box-sizing: border-box;
+  }
+  .split-banner__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  .split-banner__picture,
+  .split-banner__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  }
+  @media (max-width: 900px) {
+    .split-banner__grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Split banner (2 images)",
+  "settings": [
+    { "type": "image_picker", "id": "image_1", "label": "Left image (desktop)" },
+    { "type": "image_picker", "id": "mobile_image_1", "label": "Left image (mobile, optional)" },
+    { "type": "url", "id": "href_1", "label": "Left link (optional)" },
+    { "type": "text", "id": "alt_1", "label": "Left alt text", "default": "Banner" },
+
+    { "type": "image_picker", "id": "image_2", "label": "Right image (desktop)" },
+    { "type": "image_picker", "id": "mobile_image_2", "label": "Right image (mobile, optional)" },
+    { "type": "url", "id": "href_2", "label": "Right link (optional)" },
+    { "type": "text", "id": "alt_2", "label": "Right alt text", "default": "Banner" }
+  ],
+  "presets": [
+    { "name": "Split banner (2 images)" }
+  ]
+}
+{% endschema %}
+

@@ -1,0 +1,145 @@
+{%- comment -%} Brand values strip (4 icons + titles + 1-line text) {%- endcomment -%}
+
+<section class="values-strip" id="values-strip-{{ section.id }}">
+  <div class="values-strip__inner">
+    <div class="values-strip__intro">
+      {%- if section.settings.title != blank -%}
+        <h2 class="values-strip__title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subtitle != blank -%}
+        <p class="values-strip__subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="values-strip__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'value' -%}
+          <div class="values-strip__item" {{ block.shopify_attributes }}>
+            <div class="values-strip__icon" aria-hidden="true">{{ block.settings.icon }}</div>
+            <div class="values-strip__name">{{ block.settings.title }}</div>
+            <div class="values-strip__desc">{{ block.settings.description }}</div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .values-strip {
+    background: rgba(69, 149, 146, 0.08);
+    border-top: 1px solid rgba(76, 85, 100, 0.14);
+    border-bottom: 1px solid rgba(76, 85, 100, 0.14);
+  }
+
+  .values-strip__inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 64px var(--container-padding);
+    box-sizing: border-box;
+  }
+
+  .values-strip__intro {
+    max-width: 820px;
+    margin: 0 auto 28px auto;
+    text-align: center;
+  }
+
+  .values-strip__title {
+    margin: 0 0 10px 0;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  .values-strip__subtitle {
+    margin: 0;
+    color: rgba(76, 85, 100, 0.85);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .values-strip__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .values-strip__item {
+    background: #fff;
+    border: 1px solid rgba(76, 85, 100, 0.16);
+    border-radius: 14px;
+    padding: 18px 16px;
+    text-align: center;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+  }
+
+  .values-strip__icon {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  .values-strip__name {
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .values-strip__desc {
+    font-size: 14px;
+    color: rgba(76, 85, 100, 0.9);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 990px) {
+    .values-strip__inner {
+      padding: 48px var(--container-padding);
+    }
+    .values-strip__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 520px) {
+    .values-strip__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Values strip",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Heading", "default": "The future of skincare is here" },
+    { "type": "textarea", "id": "subtitle", "label": "Subheading", "default": "Science-backed, urban-first skincare designed for real life\u2014simple, effective, and transparent." }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon (emoji)", "default": "🧪" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Transparency" },
+        { "type": "text", "id": "description", "label": "Description", "default": "Clear actives, clear results\u2014no fluff." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Values strip",
+      "blocks": [
+        { "type": "value", "settings": { "icon": "🔍", "title": "Transparency", "description": "Full disclosure of actives and why they\u2019re used." } },
+        { "type": "value", "settings": { "icon": "⚗️", "title": "Efficacy", "description": "Formulas designed for visible, measurable results." } },
+        { "type": "value", "settings": { "icon": "💡", "title": "Accessible", "description": "Premium skincare that stays within reach." } },
+        { "type": "value", "settings": { "icon": "🌍", "title": "Best Sourcing", "description": "Ingredients chosen for performance and safety." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

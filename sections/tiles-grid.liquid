@@ -1,0 +1,159 @@
+{%- comment -%}
+  Image tiles grid (used for "Shop by Category" and "Shop by Concerns")
+{%- endcomment -%}
+
+<section class="tiles-grid" id="tiles-grid-{{ section.id }}">
+  {%- if section.settings.title != blank -%}
+    <div class="tiles-grid__header">
+      <h2 class="tiles-grid__title">{{ section.settings.title }}</h2>
+    </div>
+  {%- endif -%}
+
+  <div class="tiles-grid__wrap">
+    <div class="tiles-grid__grid" style="--tiles-cols: {{ section.settings.columns }};">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'tile' -%}
+          {%- assign href = block.settings.href -%}
+          <div class="tiles-grid__item" {{ block.shopify_attributes }}>
+            {%- if href != blank -%}<a class="tiles-grid__link" href="{{ href }}">{%- endif -%}
+              {%- if block.settings.image != blank -%}
+                <div class="tiles-grid__media">
+                  <img
+                    src="{{ block.settings.image | image_url: width: 600 }}"
+                    srcset="
+                      {{ block.settings.image | image_url: width: 300 }} 300w,
+                      {{ block.settings.image | image_url: width: 450 }} 450w,
+                      {{ block.settings.image | image_url: width: 600 }} 600w
+                    "
+                    sizes="(min-width: 990px) 220px, (min-width: 750px) 180px, 44vw"
+                    alt="{{ block.settings.label | escape }}"
+                    loading="lazy"
+                    class="tiles-grid__img"
+                  >
+                </div>
+              {%- else -%}
+                <div class="tiles-grid__media tiles-grid__media--placeholder"></div>
+              {%- endif -%}
+              <div class="tiles-grid__label">{{ block.settings.label }}</div>
+            {%- if href != blank -%}</a>{%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .tiles-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 64px var(--container-padding);
+    box-sizing: border-box;
+  }
+
+  .tiles-grid__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+
+  .tiles-grid__title {
+    margin: 0;
+    font-size: 26px;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  .tiles-grid__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--tiles-cols, 5), minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .tiles-grid__item {
+    text-align: center;
+  }
+
+  .tiles-grid__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .tiles-grid__media {
+    aspect-ratio: 1 / 1;
+    border-radius: 14px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.03);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  }
+
+  .tiles-grid__media--placeholder {
+    background: rgba(0,0,0,0.04);
+  }
+
+  .tiles-grid__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 260ms ease;
+  }
+
+  .tiles-grid__link:hover .tiles-grid__img {
+    transform: scale(1.03);
+  }
+
+  .tiles-grid__label {
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  @media (max-width: 990px) {
+    .tiles-grid {
+      padding: 48px var(--container-padding);
+    }
+    .tiles-grid__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .tiles-grid__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Tiles grid",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Heading", "default": "Shop by Category" },
+    { "type": "range", "id": "columns", "label": "Columns (desktop)", "min": 2, "max": 6, "step": 1, "default": 5 }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Skin" },
+        { "type": "url", "id": "href", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tiles grid"
+    }
+  ]
+}
+{% endschema %}
+

@@ -1,0 +1,71 @@
+{%- comment -%} Full-width image banner (desktop + mobile) {%- endcomment -%}
+
+{%- if section.settings.image != blank -%}
+  {%- assign mobile_img = section.settings.mobile_image | default: section.settings.image -%}
+  {%- assign href = section.settings.href -%}
+  <section class="promo-banner" id="promo-banner-{{ section.id }}">
+    {%- if href != blank -%}
+      <a class="promo-banner__link" href="{{ href }}">
+    {%- endif -%}
+      <picture class="promo-banner__picture">
+        <source
+          media="(max-width: 768px)"
+          srcset="
+            {{ mobile_img | image_url: width: 480 }} 480w,
+            {{ mobile_img | image_url: width: 768 }} 768w,
+            {{ mobile_img | image_url: width: 1024 }} 1024w
+          "
+          sizes="100vw"
+        >
+        <img
+          class="promo-banner__img"
+          src="{{ section.settings.image | image_url: width: 2000 }}"
+          srcset="
+            {{ section.settings.image | image_url: width: 1000 }} 1000w,
+            {{ section.settings.image | image_url: width: 1400 }} 1400w,
+            {{ section.settings.image | image_url: width: 2000 }} 2000w
+          "
+          sizes="100vw"
+          alt="{{ section.settings.alt | escape }}"
+          loading="lazy"
+        >
+      </picture>
+    {%- if href != blank -%}
+      </a>
+    {%- endif -%}
+  </section>
+{%- endif -%}
+
+{% stylesheet %}
+  .promo-banner {
+    width: 100%;
+    margin: 0;
+  }
+  .promo-banner__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  .promo-banner__picture,
+  .promo-banner__img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Promo banner (image)",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Desktop image" },
+    { "type": "image_picker", "id": "mobile_image", "label": "Mobile image (optional)" },
+    { "type": "url", "id": "href", "label": "Link (optional)" },
+    { "type": "text", "id": "alt", "label": "Alt text", "default": "Promotion" }
+  ],
+  "presets": [
+    { "name": "Promo banner (image)" }
+  ]
+}
+{% endschema %}
+

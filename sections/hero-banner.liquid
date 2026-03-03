@@ -103,64 +103,66 @@
     <div class="hero-banner__gradient-ornament"></div>
   </div>
   
-  <div class="hero-banner__content">
-    <div class="hero-banner__text">
-      {% if section.settings.heading != blank %}
-        <h1 class="hero-banner__heading">
-          <span class="hero-banner__heading-line">{{ section.settings.heading }}</span>
-        </h1>
-      {% endif %}
-      
-      {% if section.settings.subheading != blank %}
-        <p class="hero-banner__subheading">{{ section.settings.subheading }}</p>
-      {% endif %}
-
-      <div class="hero-banner__trust-badges">
-        <span class="trust-badge">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 2L12 7L17 7.5L13.5 11L14.5 16L10 13.5L5.5 16L6.5 11L3 7.5L8 7L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          Premium Quality
-        </span>
-        <span class="trust-badge">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18Z" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M7 10L9 12L13 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          100% Natural
-        </span>
-        <span class="trust-badge">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 2L12 7L17 7.5L13.5 11L14.5 16L10 13.5L5.5 16L6.5 11L3 7.5L8 7L10 2Z" fill="currentColor"/>
-          </svg>
-          Lab Tested
-        </span>
-      </div>
-      
-      <div class="hero-banner__ctas">
-        {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
-          <a href="{{ section.settings.cta_link }}" class="btn btn-primary btn-large hero-banner__cta-primary">
-            <span>{{ section.settings.cta_text }}</span>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
+  <div class="hero-banner__content{% unless section.settings.show_content %} hero-banner__content--minimal{% endunless %}">
+    {%- if section.settings.show_content -%}
+      <div class="hero-banner__text">
+        {% if section.settings.heading != blank %}
+          <h1 class="hero-banner__heading">
+            <span class="hero-banner__heading-line">{{ section.settings.heading }}</span>
+          </h1>
         {% endif %}
         
-        {% if section.settings.secondary_cta_text != blank and section.settings.secondary_cta_link != blank %}
-          <a href="{{ section.settings.secondary_cta_link }}" class="btn btn-outline btn-large hero-banner__cta-secondary">
-            {{ section.settings.secondary_cta_text }}
-          </a>
+        {% if section.settings.subheading != blank %}
+          <p class="hero-banner__subheading">{{ section.settings.subheading }}</p>
         {% endif %}
+
+        <div class="hero-banner__trust-badges">
+          <span class="trust-badge">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 2L12 7L17 7.5L13.5 11L14.5 16L10 13.5L5.5 16L6.5 11L3 7.5L8 7L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Dermatologist Tested
+          </span>
+          <span class="trust-badge">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18Z" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M7 10L9 12L13 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Clean, Conscious Formulas
+          </span>
+          <span class="trust-badge">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 2L12 7L17 7.5L13.5 11L14.5 16L10 13.5L5.5 16L6.5 11L3 7.5L8 7L10 2Z" fill="currentColor"/>
+            </svg>
+            Anti-Pollution Protection
+          </span>
+        </div>
+        
+        <div class="hero-banner__ctas">
+          {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
+            <a href="{{ section.settings.cta_link }}" class="btn btn-primary btn-large hero-banner__cta-primary">
+              <span>{{ section.settings.cta_text }}</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          {% endif %}
+          
+          {% if section.settings.secondary_cta_text != blank and section.settings.secondary_cta_link != blank %}
+            <a href="{{ section.settings.secondary_cta_link }}" class="btn btn-outline btn-large hero-banner__cta-secondary">
+              {{ section.settings.secondary_cta_text }}
+            </a>
+          {% endif %}
+        </div>
       </div>
-    </div>
-    
-    <div class="hero-banner__scroll-indicator">
-      <span>Scroll</span>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
+      
+      <div class="hero-banner__scroll-indicator">
+        <span>Scroll</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    {%- endif -%}
 
     {%- if has_carousel_slides and slide_blocks.size > 1 -%}
       <div class="hero-banner__carousel-controls" role="group" aria-label="Carousel controls">
@@ -200,6 +202,11 @@
     padding: 0;
     box-sizing: border-box;
     isolation: isolate;
+  }
+
+  .hero-banner__content--minimal {
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
   .hero-banner__image {
@@ -871,6 +878,12 @@
       "type": "image_picker",
       "id": "hero_image",
       "label": "Hero image (fallback when no slides)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_content",
+      "label": "Show text, trust badges & CTAs",
+      "default": true
     },
     {
       "type": "text",

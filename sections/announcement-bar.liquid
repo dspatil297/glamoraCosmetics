@@ -1,0 +1,184 @@
+{%- comment -%}
+  Announcement Bar (rotating promo strip)
+  - Design-only: lightweight rotation, no impact on cart/search/nav functionality
+{%- endcomment -%}
+
+{%- liquid
+  assign blocks = section.blocks | where: 'type', 'message'
+  assign has_messages = false
+  if blocks.size > 0
+    assign has_messages = true
+  endif
+-%}
+
+{%- if section.settings.enabled and has_messages -%}
+  <div
+    class="announcement-bar"
+    role="region"
+    aria-label="Announcements"
+    data-announcement-bar
+    data-interval="{{ section.settings.interval }}"
+  >
+    <div class="announcement-bar__inner">
+      <div class="announcement-bar__viewport" aria-live="polite">
+        {%- for block in blocks -%}
+          {%- assign href = block.settings.href | default: '' -%}
+          {%- assign is_first = forloop.first -%}
+          <div class="announcement-bar__slide{% if is_first %} is-active{% endif %}" data-slide-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+            {%- if href != blank -%}
+              <a class="announcement-bar__link" href="{{ href }}">{{ block.settings.text }}</a>
+            {%- else -%}
+              <span class="announcement-bar__text">{{ block.settings.text }}</span>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-announcement-bar]');
+      if (!root) return;
+      if (root.dataset.inited === '1') return;
+      root.dataset.inited = '1';
+
+      var slides = root.querySelectorAll('.announcement-bar__slide');
+      slides = Array.prototype.slice.call(slides);
+      if (!slides || slides.length < 2) return;
+
+      var intervalSec = parseFloat(root.getAttribute('data-interval')) || 3;
+      var intervalMs = Math.max(1500, Math.round(intervalSec * 1000));
+      var idx = 0;
+      var timer = null;
+
+      function setActive(next) {
+        idx = (next % slides.length + slides.length) % slides.length;
+        for (var i = 0; i < slides.length; i++) {
+          slides[i].classList.toggle('is-active', i === idx);
+        }
+      }
+
+      function start() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(function () { setActive(idx + 1); }, intervalMs);
+      }
+
+      root.addEventListener('mouseenter', function () { if (timer) clearInterval(timer); });
+      root.addEventListener('mouseleave', start);
+
+      start();
+    })();
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .announcement-bar {
+    width: 100%;
+    background: var(--forest-green);
+    color: #ffffff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .announcement-bar__inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 8px var(--container-padding);
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .announcement-bar__viewport {
+    width: 100%;
+    max-width: 1100px;
+    position: relative;
+    text-align: center;
+  }
+
+  .announcement-bar__slide {
+    display: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+  }
+
+  .announcement-bar__slide.is-active {
+    display: block;
+  }
+
+  .announcement-bar__link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .announcement-bar__link:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .announcement-bar__inner {
+      padding: 6px var(--container-padding);
+      min-height: 32px;
+    }
+    .announcement-bar__slide {
+      font-size: 12px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Enable announcement bar",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "interval",
+      "label": "Rotation interval (seconds)",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 3
+    }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Free shipping on orders above ₹999"
+        },
+        {
+          "type": "url",
+          "id": "href",
+          "label": "Link (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar",
+      "blocks": [
+        { "type": "message", "settings": { "text": "Free shipping on orders above ₹999" } },
+        { "type": "message", "settings": { "text": "Anti-pollution skincare made for everyday urban living" } },
+        { "type": "message", "settings": { "text": "New Launches: Discover what\u2019s new at Glamora" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

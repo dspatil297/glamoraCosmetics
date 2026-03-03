@@ -49,12 +49,13 @@
       ],
       "settings": {
         "hero_image": "shopify://shop_images/WhatsApp_Image_2026-01-30_at_11.50.09.jpg",
-        "heading": "Advanced anti-pollution skincare for naturally radiant, protected, everyday glowing skin.",
-        "subheading": "Hybrid sunscreens, foaming face washes, and moisturizing sprays crafted to defend your skin from urban pollution.",
-        "cta_text": "Shop Skincare",
-        "cta_link": "/collections/all",
-        "secondary_cta_text": "Discover Glamora",
-        "secondary_cta_link": "/pages/about-us",
+        "show_content": false,
+        "heading": "",
+        "subheading": "",
+        "cta_text": "",
+        "cta_link": "",
+        "secondary_cta_text": "",
+        "secondary_cta_link": "",
         "carousel_speed": 5,
         "transition_duration": 800,
         "overlay_opacity": 85
@@ -109,15 +110,118 @@
     "featured_products": {
       "type": "product-grid",
       "settings": {
-        "title": "Glamora Cosmetics",
-        "description": "Hybrid sunscreens, foaming face washes, and moisturizing sprays that protect your skin from pollution while keeping it soft, hydrated, and radiant.",
+        "title": "Our Best Sellers",
+        "description": "",
         "layout": "carousel",
         "carousel_auto_scroll": true,
         "carousel_auto_scroll_interval": 6,
         "collection": "frontpage",
-        "products_to_show": 4,
+        "products_to_show": 6,
         "show_view_all": true,
         "view_all_text": "View All Products"
+      }
+    },
+    "bundle_promo": {
+      "type": "promo-banner",
+      "settings": {
+        "image": "",
+        "mobile_image": "",
+        "href": "/collections/all",
+        "alt": "Bundle promotion"
+      }
+    },
+    "ai_split_banner": {
+      "type": "split-banner",
+      "settings": {
+        "image_1": "",
+        "mobile_image_1": "",
+        "href_1": "/pages/skin-insights",
+        "alt_1": "Skin insights",
+        "image_2": "",
+        "mobile_image_2": "",
+        "href_2": "/pages/minimalist-ai-assistant",
+        "alt_2": "AI assistant"
+      }
+    },
+    "shop_by_category": {
+      "type": "tiles-grid",
+      "blocks": {
+        "cat_1": { "type": "tile", "settings": { "image": "", "label": "Skin", "href": "/collections/all" } },
+        "cat_2": { "type": "tile", "settings": { "image": "", "label": "Hair", "href": "/collections/all" } },
+        "cat_3": { "type": "tile", "settings": { "image": "", "label": "Bath & Body", "href": "/collections/all" } },
+        "cat_4": { "type": "tile", "settings": { "image": "", "label": "Lip", "href": "/collections/all" } },
+        "cat_5": { "type": "tile", "settings": { "image": "", "label": "Eye", "href": "/collections/all" } }
+      },
+      "block_order": ["cat_1","cat_2","cat_3","cat_4","cat_5"],
+      "settings": { "title": "Shop by Category", "columns": 5 }
+    },
+    "shop_by_concerns": {
+      "type": "tiles-grid",
+      "blocks": {
+        "con_1": { "type": "tile", "settings": { "image": "", "label": "Uneven Tone", "href": "/collections/all" } },
+        "con_2": { "type": "tile", "settings": { "image": "", "label": "Acne Control", "href": "/collections/all" } },
+        "con_3": { "type": "tile", "settings": { "image": "", "label": "Oiliness", "href": "/collections/all" } },
+        "con_4": { "type": "tile", "settings": { "image": "", "label": "Fine Lines / Wrinkles", "href": "/collections/all" } },
+        "con_5": { "type": "tile", "settings": { "image": "", "label": "Dryness", "href": "/collections/all" } },
+        "con_6": { "type": "tile", "settings": { "image": "", "label": "Hair Fall", "href": "/collections/all" } },
+        "con_7": { "type": "tile", "settings": { "image": "", "label": "Anti-Dandruff", "href": "/collections/all" } }
+      },
+      "block_order": ["con_1","con_2","con_3","con_4","con_5","con_6","con_7"],
+      "settings": { "title": "Shop by Concerns", "columns": 4 }
+    },
+    "new_launches": {
+      "type": "product-grid",
+      "settings": {
+        "title": "New Launches",
+        "description": "",
+        "layout": "carousel",
+        "carousel_auto_scroll": true,
+        "carousel_auto_scroll_interval": 6,
+        "collection": "new-launches",
+        "products_to_show": 6,
+        "show_view_all": true,
+        "view_all_text": "View All Products"
+      }
+    },
+    "brand_values": {
+      "type": "values-strip",
+      "blocks": {
+        "val_1": { "type": "value", "settings": { "icon": "🔍", "title": "Transparency", "description": "Full disclosure of actives and why they\u2019re used." } },
+        "val_2": { "type": "value", "settings": { "icon": "⚗️", "title": "Efficacy", "description": "Formulas designed for visible, measurable results." } },
+        "val_3": { "type": "value", "settings": { "icon": "💡", "title": "Accessible", "description": "Premium skincare that stays within reach." } },
+        "val_4": { "type": "value", "settings": { "icon": "🌍", "title": "Best Sourcing", "description": "Ingredients chosen for performance and safety." } }
+      },
+      "block_order": ["val_1","val_2","val_3","val_4"],
+      "settings": {
+        "title": "The future of skincare is here",
+        "subtitle": "Urban-first skincare where each element is chosen for its scientific merit."
+      }
+    },
+    "loyalty_program": {
+      "type": "loyalty-banner",
+      "settings": {
+        "image": "",
+        "title": "Glamora Glow Circle",
+        "subtitle": "Earn & redeem rewards on every purchase.",
+        "cta_text": "Show more",
+        "cta_link": "/pages/rewards-1"
+      }
+    },
+    "app_download": {
+      "type": "promo-banner",
+      "settings": {
+        "image": "",
+        "mobile_image": "",
+        "href": "/pages/download-app",
+        "alt": "Download our app"
+      }
+    },
+    "gst_notice": {
+      "type": "notice-strip",
+      "settings": {
+        "text": "<p><strong>Notice:</strong> Stay updated on launches, offers, and routine tips.</p>",
+        "link_text": "Know More",
+        "link_url": "/blogs/news"
       }
     },
     "lifestyle_usage": {
@@ -287,11 +391,15 @@
   },
   "order": [
     "hero_banner",
-    "usp_icons",
     "featured_products",
-    "lifestyle_usage",
-    "quality_assurance",
-    "176943494681be9f0a",
-    "home_faq"
+    "bundle_promo",
+    "ai_split_banner",
+    "shop_by_category",
+    "shop_by_concerns",
+    "new_launches",
+    "brand_values",
+    "loyalty_program",
+    "app_download",
+    "gst_notice"
   ]
 }

@@ -1,0 +1,111 @@
+{%- comment -%} Loyalty banner: image + subtext + CTA link {%- endcomment -%}
+
+{%- if section.settings.image != blank -%}
+  <section class="loyalty-banner" id="loyalty-banner-{{ section.id }}">
+    <div class="loyalty-banner__inner">
+      <div class="loyalty-banner__card">
+        <div class="loyalty-banner__media">
+          <img
+            src="{{ section.settings.image | image_url: width: 1400 }}"
+            srcset="
+              {{ section.settings.image | image_url: width: 800 }} 800w,
+              {{ section.settings.image | image_url: width: 1100 }} 1100w,
+              {{ section.settings.image | image_url: width: 1400 }} 1400w
+            "
+            sizes="100vw"
+            alt="{{ section.settings.title | escape }}"
+            loading="lazy"
+          >
+        </div>
+        <div class="loyalty-banner__content">
+          {%- if section.settings.title != blank -%}<h3 class="loyalty-banner__title">{{ section.settings.title }}</h3>{%- endif -%}
+          {%- if section.settings.subtitle != blank -%}<p class="loyalty-banner__subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
+          {%- if section.settings.cta_text != blank and section.settings.cta_link != blank -%}
+            <a class="loyalty-banner__cta" href="{{ section.settings.cta_link }}">{{ section.settings.cta_text }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% stylesheet %}
+  .loyalty-banner__inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 56px var(--container-padding);
+    box-sizing: border-box;
+  }
+  .loyalty-banner__card {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(76, 85, 100, 0.16);
+    box-shadow: 0 10px 34px rgba(0,0,0,0.08);
+    background: #fff;
+  }
+  .loyalty-banner__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .loyalty-banner__content {
+    padding: 22px 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .loyalty-banner__title {
+    margin: 0 0 8px 0;
+    font-size: 22px;
+    color: var(--text);
+  }
+  .loyalty-banner__subtitle {
+    margin: 0 0 12px 0;
+    color: rgba(76, 85, 100, 0.88);
+    line-height: 1.6;
+  }
+  .loyalty-banner__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--forest-green);
+    text-decoration: none;
+  }
+  .loyalty-banner__cta:hover {
+    text-decoration: underline;
+  }
+  @media (max-width: 900px) {
+    .loyalty-banner__card {
+      grid-template-columns: 1fr;
+    }
+    .loyalty-banner__content {
+      padding: 18px 16px 20px 16px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Loyalty banner",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "Glamora Glow Circle" },
+    { "type": "text", "id": "subtitle", "label": "Subtext", "default": "Earn & redeem rewards on every purchase." },
+    { "type": "text", "id": "cta_text", "label": "CTA text", "default": "Show more" },
+    { "type": "url", "id": "cta_link", "label": "CTA link" }
+  ],
+  "presets": [
+    { "name": "Loyalty banner" }
+  ]
+}
+{% endschema %}
+
