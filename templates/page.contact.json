@@ -3,18 +3,18 @@
     "contact_form": {
       "type": "contact-form",
       "settings": {
-        "title": "Get in Touch",
-        "description": "Have a question or want to learn more? We'd love to hear from you.",
+        "title": "Get in Touch with Glamora",
+        "description": "Questions about Glamora\u2019s products, your order, or skincare routine? Share a few details and we\u2019ll respond as soon as possible.",
         "show_phone": true,
         "show_subject": true,
-        "subject_options": "General Inquiry, Product Question, Order Support, Partnership"
+        "subject_options": "Product Inquiry, Order Support, Returns & Refunds, Partnership, General Question"
       }
     },
     "contact_info": {
       "type": "contact-info",
       "settings": {
         "title": "Contact Information",
-        "support_hours": "Monday - Friday: 9:00 AM - 6:00 PM",
+        "support_hours": "Mon\u2013Sat, 10:00 AM &ndash; 6:00 PM",
         "show_social": true
       }
     }
