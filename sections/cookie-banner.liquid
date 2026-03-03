@@ -28,22 +28,44 @@
 </div>
 
 <script>
-(function() {
-  var key = 'glamora_cookie_consent';
-  var banner = document.getElementById('cookie-banner');
-  if (!banner || !banner.dataset.cookieBanner) return;
-  if (localStorage.getItem(key)) {
-    banner.style.display = 'none';
-    return;
-  }
-  var accept = banner.querySelector('[data-cookie-accept]');
-  var decline = banner.querySelector('[data-cookie-decline]');
-  function hide() { banner.style.display = 'none'; }
-  function acceptAll() { localStorage.setItem(key, 'accept'); hide(); }
-  function declineAll() { localStorage.setItem(key, 'decline'); hide(); }
-  if (accept) accept.addEventListener('click', acceptAll);
-  if (decline) decline.addEventListener('click', declineAll);
-})();
+  (function() {
+    var key = 'glamora_cookie_consent';
+    var banner = document.getElementById('cookie-banner');
+    if (!banner) return;
+
+    try {
+      if (window.localStorage && localStorage.getItem(key)) {
+        banner.style.display = 'none';
+        return;
+      }
+    } catch (e) {
+      // If localStorage is unavailable (private mode, blocked), just fall back to session-only hide.
+    }
+
+    var accept = banner.querySelector('[data-cookie-accept]');
+    var decline = banner.querySelector('[data-cookie-decline]');
+
+    function hide() {
+      banner.style.display = 'none';
+    }
+
+    function acceptAll() {
+      try {
+        if (window.localStorage) localStorage.setItem(key, 'accept');
+      } catch (e) {}
+      hide();
+    }
+
+    function declineAll() {
+      try {
+        if (window.localStorage) localStorage.setItem(key, 'decline');
+      } catch (e) {}
+      hide();
+    }
+
+    if (accept) accept.addEventListener('click', acceptAll);
+    if (decline) decline.addEventListener('click', declineAll);
+  })();
 </script>
 
 {% stylesheet %}
