@@ -85,12 +85,12 @@ Based on `beminimalist-page-structures.md` “ALL COLLECTIONS” + “COLLECTION
 
 Based on `beminimalist-page-structures.md` “PRODUCT DETAIL PAGE”.
 
-- [ ] Gallery + thumbnails polish
-- [ ] Variant selection styled as “chips”
-- [ ] Trust badges row (shipping, authenticity, etc.)
-- [ ] Accordions for details (what it is, ingredients, how to use, FAQs)
-- [ ] Mobile sticky bottom bar for price + Add to cart
-- [ ] “You might also like” carousel
+- [x] Gallery + thumbnails polish
+- [x] Variant selection styled as “chips”
+- [x] Trust badges row (shipping, authenticity, etc.)
+- [x] Accordions for details (what it is, ingredients, how to use, FAQs)
+- [x] Mobile sticky bottom bar for price + Add to cart
+- [x] “You might also like” carousel
 
 ---
 
