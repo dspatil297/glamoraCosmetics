@@ -7,34 +7,35 @@
 
   :root {
     /* ============================================
-       SARVITAL DESIGN SYSTEM - CSS VARIABLES
+       GLAMORA COSMETICS DESIGN SYSTEM - CSS VARIABLES
        ============================================ */
     
-    /* Font Families */
+    /* Font Families (Glamora brandkit: Playfair Display + Inter) */
     --font-primary--family: {{ settings.type_primary_font.family }}, {{ settings.type_primary_font.fallback_families }};
     --font-primary--style: {{ settings.type_primary_font.style }};
     --font-primary--weight: {{ settings.type_primary_font.weight }};
-    --font-heading: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-heading: 'Playfair Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     
-    /* Primary Colors - Brand Palette (Logo: Green & White) */
-    --forest-green: #2d5016;      /* Primary brand color - headers, nav, footer */
-    --sage-green: #4a7c2c;        /* Secondary green - accents, hover states */
-    --green-accent: #4a7c2c;      /* Accent - green only palette */
-    --gold: #4a7c2c;              /* Alias for green-accent (backward compat, was gold) */
+    /* Glamora Brand Palette (teal, slate, white) */
+    /* We keep legacy variable names for compatibility with existing CSS */
+    --forest-green: #15736d;      /* Primary teal */
+    --sage-green: #459592;        /* Secondary teal */
+    --green-accent: #4c5564;      /* Dark slate accent */
+    --gold: #4c5564;              /* Alias for accent */
     
     /* Neutral Colors */
-    --bg: #f8faf8;                /* Background - light green-white tint */
-    --text: #1a1a1a;              /* Primary text - body copy (black, unchanged) */
+    --bg: #ffffff;                /* White background */
+    --text: #4c5564;              /* Slate text */
     --white: #ffffff;             /* White - cards, sections, overlays */
     
     /* Semantic Color Usage */
-    --primary-cta: var(--forest-green);
-    --secondary-cta: var(--sage-green);
+    --primary-cta: var(--forest-green);   /* Primary CTA */
+    --secondary-cta: var(--sage-green);   /* Secondary CTA */
     --text-on-dark: var(--white);
     --text-on-light: var(--text);
-    --border-color: rgba(74, 124, 44, 0.18);
-    --shadow-color: rgba(45, 80, 22, 0.1);
+    --border-color: rgba(76, 85, 100, 0.2);  /* Soft slate border */
+    --shadow-color: rgba(0, 0, 0, 0.07);
     
     /* Legacy Support (from settings) */
     --color-background: var(--bg);

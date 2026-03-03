@@ -882,3 +882,162 @@
 **Project Timeline**: 11-12 weeks  
 **Team**: Development Team
 
+---
+
+## 📋 Glamora Cosmetics – Phase 1: Brand & Theme Setup (Dawn)
+
+> This section adapts the existing multiphase plan for the Glamora Cosmetics Shopify theme using the Dawn base theme. It focuses on design-only changes so existing functionality remains intact.
+
+### 1.1 Load Glamora Fonts in `theme.liquid`
+
+- [ ] Open `layout/theme.liquid` and, inside the `<head>` tag, add the Glamora font imports:
+
+```liquid
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Lato:wght@300;400;500;700&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+```
+
+### 1.2 Add Glamora Theme Settings in `config/settings_schema.json`
+
+- [ ] In `config/settings_schema.json`, add Glamora-specific color settings inside the main `"settings"` array:
+
+```json
+{
+  "name": "Glamora Theme",
+  "settings": [
+    {
+      "type": "color",
+      "id": "glamora_primary",
+      "label": "Glamora primary (rose gold)",
+      "default": "#C4896F"
+    },
+    {
+      "type": "color",
+      "id": "glamora_secondary",
+      "label": "Glamora secondary (warm blush)",
+      "default": "#F2D4C8"
+    },
+    {
+      "type": "color",
+      "id": "glamora_accent",
+      "label": "Glamora accent (champagne gold)",
+      "default": "#D4AF87"
+    },
+    {
+      "type": "color",
+      "id": "glamora_bg",
+      "label": "Background (cream white)",
+      "default": "#FAF7F4"
+    },
+    {
+      "type": "color",
+      "id": "glamora_alt_bg",
+      "label": "Alt section background (soft ivory)",
+      "default": "#F5EDE6"
+    },
+    {
+      "type": "color",
+      "id": "glamora_text",
+      "label": "Text (charcoal)",
+      "default": "#2C2C2C"
+    },
+    {
+      "type": "color",
+      "id": "glamora_text_muted",
+      "label": "Muted text (warm gray)",
+      "default": "#7A7A7A"
+    },
+    {
+      "type": "color",
+      "id": "glamora_button",
+      "label": "CTA button (dark rose)",
+      "default": "#A0614A"
+    },
+    {
+      "type": "color",
+      "id": "glamora_button_hover",
+      "label": "CTA hover (deep burgundy)",
+      "default": "#7A3D2E"
+    }
+  ]
+}
+```
+
+> Note: merge these into your existing theme section; do not duplicate `"settings"` roots.
+
+### 1.3 Wire Glamora Tokens into Global CSS (`assets/base.css` or `theme.css`)
+
+- [ ] Near the top of your main CSS asset, define Glamora variables using the new settings:
+
+```css
+:root {
+  --glamora-primary: {{ settings.glamora_primary }};
+  --glamora-secondary: {{ settings.glamora_secondary }};
+  --glamora-accent: {{ settings.glamora_accent }};
+  --glamora-bg: {{ settings.glamora_bg }};
+  --glamora-alt-bg: {{ settings.glamora_alt_bg }};
+  --glamora-text: {{ settings.glamora_text }};
+  --glamora-text-muted: {{ settings.glamora_text_muted }};
+  --glamora-button: {{ settings.glamora_button }};
+  --glamora-button-hover: {{ settings.glamora_button_hover }};
+
+  --glamora-radius-button: 4px;
+  --glamora-radius-card: 10px;
+  --glamora-shadow-card: 0 4px 20px rgba(0,0,0,0.07);
+
+  --glamora-font-heading: "Cormorant Garamond", serif;
+  --glamora-font-body: "Lato", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --glamora-font-label: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  background-color: var(--glamora-bg);
+  color: var(--glamora-text);
+  font-family: var(--glamora-font-body);
+  line-height: 1.7;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--glamora-font-heading);
+  color: var(--glamora-text);
+}
+
+.button,
+.button--primary,
+.shopify-payment-button__button {
+  background-color: var(--glamora-button);
+  color: #fff;
+  border-radius: var(--glamora-radius-button);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: var(--glamora-font-label);
+}
+
+.button:hover,
+.button--primary:hover,
+.shopify-payment-button__button:hover {
+  background-color: var(--glamora-button-hover);
+}
+
+.card,
+.product-card,
+.collection-card {
+  border-radius: var(--glamora-radius-card);
+  box-shadow: var(--glamora-shadow-card);
+  background-color: #fff;
+}
+
+.section {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+```
+
+### 1.4 Phase 1 Deliverables (Glamora)
+
+- ✅ Glamora fonts loaded globally via `theme.liquid`.
+- ✅ Glamora color and typography tokens available as theme settings.
+- ✅ Global CSS updated to use Glamora variables for background, text, buttons, and cards.
+- ✅ Base layout spacing adjusted to Glamora’s generous section padding.
+
