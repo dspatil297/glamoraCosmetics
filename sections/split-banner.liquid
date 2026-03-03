@@ -8,11 +8,10 @@
       {%- assign href_key = 'href_' | append: i -%}
       {%- assign alt_key = 'alt_' | append: i -%}
       {%- assign img = section.settings[img_key] -%}
-      {%- assign has_image = img != blank -%}
       {%- assign href = section.settings[href_key] -%}
       <div class="split-banner__item">
         {%- if href != blank -%}<a class="split-banner__link" href="{{ href }}">{%- endif -%}
-          {%- if has_image -%}
+          {%- if img != blank -%}
             {%- assign mobile_img = section.settings[m_key] | default: img -%}
             <picture class="split-banner__picture">
               <source
