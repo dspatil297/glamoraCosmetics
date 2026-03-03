@@ -6,7 +6,7 @@
   <div class="cart-page__container">
     {% if cart.item_count > 0 %}
       <div class="cart-page__header">
-        <h1 class="cart-page__title">Shopping Cart</h1>
+        <h1 class="cart-page__title">Your Cart ({{ cart.item_count }})</h1>
         <p class="cart-page__item-count">{{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}</p>
       </div>
 
@@ -118,6 +118,19 @@
             <div class="cart-summary">
               <h2 class="cart-summary__title">Order Summary</h2>
               
+              {% assign free_shipping_threshold = section.settings.free_shipping_threshold | default: 999 %}
+              {% if cart.total_price < free_shipping_threshold %}
+                {% assign amount_remaining = free_shipping_threshold | minus: cart.total_price %}
+                <div class="cart-summary__progress" role="status" aria-live="polite">
+                  <p class="cart-summary__progress-text">Add <strong>{{ amount_remaining | money }}</strong> more for free shipping</p>
+                  <div class="cart-summary__progress-bar" aria-hidden="true">
+                    <div class="cart-summary__progress-fill" style="width: {{ cart.total_price | times: 100 | divided_by: free_shipping_threshold }}%;"></div>
+                  </div>
+                </div>
+              {% else %}
+                <p class="cart-summary__progress-success">You've unlocked free shipping!</p>
+              {% endif %}
+              
               <div class="cart-summary__totals">
                 <div class="cart-summary__row">
                   <span>Subtotal</span>
@@ -134,7 +147,7 @@
                 <div class="cart-summary__row cart-summary__row--shipping">
                   <span>Shipping</span>
                   <span class="cart-summary__shipping-value">
-                    {% if cart.total_price >= 50000 %}
+                    {% if cart.total_price >= free_shipping_threshold %}
                       <span class="cart-summary__free-shipping">Free Shipping</span>
                     {% else %}
                       Calculated at checkout
@@ -149,7 +162,7 @@
 
                 {% if cart_has_gst5 %}
                   <div class="cart-summary__gst-note">
-                    GST 5% for fruit and vegetables Dehydrated products.
+                    Inclusive of applicable taxes. 5% GST may apply to select products.
                   </div>
                 {% endif %}
               </div>
@@ -171,7 +184,7 @@
                 </div>
               {% endif %}
               
-              <p class="cart-summary__free-shipping-note">Free Shipping above ₹500</p>
+              <p class="cart-summary__free-shipping-note">Free shipping on orders above ₹999</p>
               
               {% comment %} Delivery date will be shown on order confirmation page {% endcomment %}
               
@@ -506,6 +519,38 @@
     font-weight: 700;
     color: var(--forest-green);
     margin-bottom: var(--spacing-xl);
+  }
+
+  .cart-summary__progress {
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background: rgba(21, 115, 109, 0.08);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(21, 115, 109, 0.2);
+  }
+  .cart-summary__progress-text {
+    margin: 0 0 var(--spacing-sm) 0;
+    font-size: var(--body-small);
+    color: var(--text);
+  }
+  .cart-summary__progress-bar {
+    height: 6px;
+    background: rgba(21, 115, 109, 0.2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .cart-summary__progress-fill {
+    height: 100%;
+    background: #15736d;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+  }
+  .cart-summary__progress-success {
+    margin: 0 0 var(--spacing-lg) 0;
+    font-size: var(--body-small);
+    font-weight: 600;
+    color: #15736d;
+    padding: var(--spacing-sm) 0;
   }
 
   .cart-summary__totals {
@@ -879,6 +924,13 @@
       "id": "recommended_collection",
       "label": "Recommended Collection",
       "info": "Leave blank to use all products"
+    },
+    {
+      "type": "number",
+      "id": "free_shipping_threshold",
+      "label": "Free shipping threshold (store currency)",
+      "default": 999,
+      "info": "Orders at or above this amount show free shipping progress as unlocked"
     }
   ],
   "presets": [

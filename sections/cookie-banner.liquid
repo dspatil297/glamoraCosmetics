@@ -1,0 +1,121 @@
+{% comment %}
+  Cookie banner – bottom bar, per beminimalist "GLOBAL UI OVERLAYS".
+  Dismissible via localStorage; no backend.
+{% endcomment %}
+
+<div
+  class="cookie-banner"
+  id="cookie-banner"
+  role="dialog"
+  aria-label="Cookie notice"
+  aria-live="polite"
+  data-cookie-banner
+  {% unless section.settings.enabled %}style="display: none !important;"{% endunless %}
+>
+  <div class="cookie-banner__inner">
+    <p class="cookie-banner__text">
+      {{ section.settings.message | default: "This website uses cookies to ensure you get the best experience on your device." }}
+    </p>
+    <div class="cookie-banner__actions">
+      <button type="button" class="cookie-banner__btn cookie-banner__btn--accept" data-cookie-accept aria-label="Accept all cookies">
+        {{ section.settings.accept_text | default: "Accept all cookies" }}
+      </button>
+      <button type="button" class="cookie-banner__btn cookie-banner__btn--decline" data-cookie-decline aria-label="Decline all cookies">
+        {{ section.settings.decline_text | default: "Decline all" }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var key = 'glamora_cookie_consent';
+  var banner = document.getElementById('cookie-banner');
+  if (!banner || !banner.dataset.cookieBanner) return;
+  if (localStorage.getItem(key)) {
+    banner.style.display = 'none';
+    return;
+  }
+  var accept = banner.querySelector('[data-cookie-accept]');
+  var decline = banner.querySelector('[data-cookie-decline]');
+  function hide() { banner.style.display = 'none'; }
+  function acceptAll() { localStorage.setItem(key, 'accept'); hide(); }
+  function declineAll() { localStorage.setItem(key, 'decline'); hide(); }
+  if (accept) accept.addEventListener('click', acceptAll);
+  if (decline) decline.addEventListener('click', declineAll);
+})();
+</script>
+
+{% stylesheet %}
+  .cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99999;
+    background: #fff;
+    border-top: 1px solid rgba(76, 85, 100, 0.15);
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.08);
+    padding: 14px var(--container-padding);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cookie-banner__inner {
+    max-width: 1000px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .cookie-banner__text {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+    flex: 1;
+    min-width: 200px;
+  }
+  .cookie-banner__actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .cookie-banner__btn {
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s;
+  }
+  .cookie-banner__btn:hover { opacity: 0.9; }
+  .cookie-banner__btn--accept {
+    background: #15736d;
+    color: #fff;
+  }
+  .cookie-banner__btn--decline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid rgba(76, 85, 100, 0.3);
+  }
+  @media (max-width: 768px) {
+    .cookie-banner__inner { flex-direction: column; align-items: stretch; text-align: center; }
+    .cookie-banner__actions { justify-content: center; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Cookie banner",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Show cookie banner", "default": true },
+    { "type": "textarea", "id": "message", "label": "Message", "default": "This website uses cookies to ensure you get the best experience on your device." },
+    { "type": "text", "id": "accept_text", "label": "Accept button text", "default": "Accept all cookies" },
+    { "type": "text", "id": "decline_text", "label": "Decline button text", "default": "Decline all" }
+  ]
+}
+{% endschema %}

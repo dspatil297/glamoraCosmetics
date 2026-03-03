@@ -115,14 +115,14 @@ Based on `beminimalist-page-structures.md` sections:
 - “BEST SELLERS PAGE `/collections/best-sellers`”
 - “NEW LAUNCHES PAGE `/collections/new-launches`”
 
-- [ ] **Best Sellers collection page**
+- [x] **Best Sellers collection page**
   - Create dedicated template for `/collections/best-sellers` (re-using `collection.json` base).
   - Page header: breadcrumb + title “Best Sellers” + optional description.
   - Toolbar row: filter dropdown (optional) + sort by (Featured, Price, Newest, Best Selling).
   - Product grid: 4-col desktop / 2-col mobile with existing `product-card` snippet.
   - Pagination: numbered or “Load more” using existing pagination component.
 
-- [ ] **New Launches collection page**
+- [x] **New Launches collection page**
   - Template for `/collections/new-launches` (can share layout with Best Sellers, different copy).
   - Optional hero banner at top (full-width new-launch hero).
   - Page header: title “New Launches”, subtext “Fresh from our labs”.
@@ -136,15 +136,15 @@ Based on:
 - “SEARCH PAGE `/search`”
 - “GLOBAL UI OVERLAYS” (search overlay, cart drawer, mobile nav, cookie banner)
 
-- [ ] **Search results page**
+- [x] **Search results page**
   - Large centered search bar with placeholder “Search for products, ingredients…”.
   - Before typing: “Popular searches” chips (Niacinamide, Vitamin C, SPF, etc.).
   - After search: result count + filter/sort row + product grid reusing collection grid.
   - “No results” state with suggestions and a link to Best Sellers.
 
-- [ ] **Search overlay (global)**
-  - Full-screen overlay with close icon, search input, popular search chips, and quick results list.
-  - Triggered from header search icon.
+- [x] **Search overlay (global)**
+  - Full-screen overlay with close icon, search input, popular search chips, and quick results list (`sections/header.liquid` search overlay block).
+  - Triggered from header search icon in the header actions row.
 
 - [ ] **Cart drawer (global)**
   - Right slide-in cart with:
@@ -158,8 +158,8 @@ Based on:
     - Top-level: Shop, Best Sellers, category groups, AI Assistants, Track Order, Account.
     - Nested level for Skin & Body (Shop by Concern, Ingredient, etc.).
 
-- [ ] **Cookie banner**
-  - Simple bottom bar with text + “Accept all” / “Decline all” buttons.
+- [x] **Cookie banner**
+  - Simple bottom bar with text + “Accept all” / “Decline all” buttons (`sections/cookie-banner.liquid`, rendered in `layout/theme.liquid`).
 
 ---
 
@@ -169,9 +169,9 @@ Based on:
 - “CART PAGE `/cart`”
 - “ACCOUNT LOGIN `/account/login`” + “ACCOUNT DASHBOARD `/account`”
 
-- [ ] **Cart page**
+- [x] **Cart page**
   - Two-column layout: Cart items (left) + order summary (right).
-  - Free gift progress bar + trust/secure checkout badges.
+  - Free shipping progress bar (configurable threshold, default ₹999) + trust/secure checkout badges.
   - “You might also like” product recommendations row below.
 
 - [ ] **Account login**

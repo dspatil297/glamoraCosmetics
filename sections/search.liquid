@@ -13,7 +13,7 @@
             type="search"
             name="q"
             value="{{ search.terms | escape }}"
-            placeholder="Search for products..."
+            placeholder="Search for products, ingredients..."
             class="search-page__input"
             autocomplete="off"
           >
@@ -125,8 +125,8 @@
             </div>
           {% endif %}
           
-          <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary btn-large">
-            Browse All Products
+          <a href="{{ routes.collections_url }}/best-sellers" class="btn btn-primary btn-large">
+            Browse Best Sellers
           </a>
         </div>
       {% endif %}
