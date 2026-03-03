@@ -1,10 +1,10 @@
 {%- comment -%} Loyalty banner: image + subtext + CTA link {%- endcomment -%}
 
-{%- if section.settings.image != blank -%}
-  <section class="loyalty-banner" id="loyalty-banner-{{ section.id }}">
-    <div class="loyalty-banner__inner">
-      <div class="loyalty-banner__card">
-        <div class="loyalty-banner__media">
+<section class="loyalty-banner" id="loyalty-banner-{{ section.id }}">
+  <div class="loyalty-banner__inner">
+    <div class="loyalty-banner__card">
+      <div class="loyalty-banner__media">
+        {%- if section.settings.image != blank -%}
           <img
             src="{{ section.settings.image | image_url: width: 1400 }}"
             srcset="
@@ -16,18 +16,22 @@
             alt="{{ section.settings.title | escape }}"
             loading="lazy"
           >
-        </div>
-        <div class="loyalty-banner__content">
-          {%- if section.settings.title != blank -%}<h3 class="loyalty-banner__title">{{ section.settings.title }}</h3>{%- endif -%}
-          {%- if section.settings.subtitle != blank -%}<p class="loyalty-banner__subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
-          {%- if section.settings.cta_text != blank and section.settings.cta_link != blank -%}
-            <a class="loyalty-banner__cta" href="{{ section.settings.cta_link }}">{{ section.settings.cta_text }}</a>
-          {%- endif -%}
-        </div>
+        {%- else -%}
+          <div class="loyalty-banner__placeholder">
+            <p>Add a loyalty program image in Theme Customizer.</p>
+          </div>
+        {%- endif -%}
+      </div>
+      <div class="loyalty-banner__content">
+        {%- if section.settings.title != blank -%}<h3 class="loyalty-banner__title">{{ section.settings.title }}</h3>{%- endif -%}
+        {%- if section.settings.subtitle != blank -%}<p class="loyalty-banner__subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
+        {%- if section.settings.cta_text != blank and section.settings.cta_link != blank -%}
+          <a class="loyalty-banner__cta" href="{{ section.settings.cta_link }}">{{ section.settings.cta_text }}</a>
+        {%- endif -%}
       </div>
     </div>
-  </section>
-{%- endif -%}
+  </div>
+</section>
 
 {% stylesheet %}
   .loyalty-banner__inner {
@@ -51,6 +55,20 @@
     height: 100%;
     object-fit: cover;
     display: block;
+  }
+  .loyalty-banner__placeholder {
+    width: 100%;
+    min-height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid rgba(76, 85, 100, 0.16);
+    background: rgba(0, 0, 0, 0.02);
+    color: rgba(76, 85, 100, 0.75);
+    font-size: 13px;
+    text-align: center;
+    padding: 16px;
+    box-sizing: border-box;
   }
   .loyalty-banner__content {
     padding: 22px 22px;

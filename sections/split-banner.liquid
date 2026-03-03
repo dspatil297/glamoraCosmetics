@@ -8,11 +8,12 @@
       {%- assign href_key = 'href_' | append: i -%}
       {%- assign alt_key = 'alt_' | append: i -%}
       {%- assign img = section.settings[img_key] -%}
-      {%- if img != blank -%}
-        {%- assign mobile_img = section.settings[m_key] | default: img -%}
-        {%- assign href = section.settings[href_key] -%}
-        <div class="split-banner__item">
-          {%- if href != blank -%}<a class="split-banner__link" href="{{ href }}">{%- endif -%}
+      {%- assign has_image = img != blank -%}
+      {%- assign href = section.settings[href_key] -%}
+      <div class="split-banner__item">
+        {%- if href != blank -%}<a class="split-banner__link" href="{{ href }}">{%- endif -%}
+          {%- if has_image -%}
+            {%- assign mobile_img = section.settings[m_key] | default: img -%}
             <picture class="split-banner__picture">
               <source
                 media="(max-width: 768px)"
@@ -36,9 +37,13 @@
                 loading="lazy"
               >
             </picture>
-          {%- if href != blank -%}</a>{%- endif -%}
-        </div>
-      {%- endif -%}
+          {%- else -%}
+            <div class="split-banner__placeholder">
+              <p>Add an image for this banner in Theme Customizer.</p>
+            </div>
+          {%- endif -%}
+        {%- if href != blank -%}</a>{%- endif -%}
+      </div>
     {%- endfor -%}
   </div>
 </section>
@@ -66,6 +71,21 @@
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  }
+  .split-banner__placeholder {
+    width: 100%;
+    min-height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 1px dashed rgba(76, 85, 100, 0.35);
+    background: rgba(0, 0, 0, 0.02);
+    color: rgba(76, 85, 100, 0.75);
+    font-size: 13px;
+    text-align: center;
+    padding: 16px;
+    box-sizing: border-box;
   }
   @media (max-width: 900px) {
     .split-banner__grid {
