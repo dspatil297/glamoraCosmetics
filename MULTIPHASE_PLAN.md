@@ -109,6 +109,111 @@ Based on `beminimalist-page-structures.md` “PRODUCT DETAIL PAGE”.
 
 ---
 
+## 📋 Phase 8: Marketing Collections – Best Sellers & New Launches
+
+Based on `beminimalist-page-structures.md` sections:
+- “BEST SELLERS PAGE `/collections/best-sellers`”
+- “NEW LAUNCHES PAGE `/collections/new-launches`”
+
+- [ ] **Best Sellers collection page**
+  - Create dedicated template for `/collections/best-sellers` (re-using `collection.json` base).
+  - Page header: breadcrumb + title “Best Sellers” + optional description.
+  - Toolbar row: filter dropdown (optional) + sort by (Featured, Price, Newest, Best Selling).
+  - Product grid: 4-col desktop / 2-col mobile with existing `product-card` snippet.
+  - Pagination: numbered or “Load more” using existing pagination component.
+
+- [ ] **New Launches collection page**
+  - Template for `/collections/new-launches` (can share layout with Best Sellers, different copy).
+  - Optional hero banner at top (full-width new-launch hero).
+  - Page header: title “New Launches”, subtext “Fresh from our labs”.
+  - Product grid: 4-col desktop / 2-col mobile, sorted by newest first.
+
+---
+
+## 📋 Phase 9: Search & Global Overlays
+
+Based on:
+- “SEARCH PAGE `/search`”
+- “GLOBAL UI OVERLAYS” (search overlay, cart drawer, mobile nav, cookie banner)
+
+- [ ] **Search results page**
+  - Large centered search bar with placeholder “Search for products, ingredients…”.
+  - Before typing: “Popular searches” chips (Niacinamide, Vitamin C, SPF, etc.).
+  - After search: result count + filter/sort row + product grid reusing collection grid.
+  - “No results” state with suggestions and a link to Best Sellers.
+
+- [ ] **Search overlay (global)**
+  - Full-screen overlay with close icon, search input, popular search chips, and quick results list.
+  - Triggered from header search icon.
+
+- [ ] **Cart drawer (global)**
+  - Right slide-in cart with:
+    - Free gift / threshold progress bar.
+    - Line items with quantity controls and remove icon.
+    - Subtotal, savings (if any), and primary Checkout CTA.
+  - Re-use existing cart logic; theme changes are layout/markup only.
+
+- [ ] **Mobile navigation sidebar**
+  - Left slide-in nav matching beminimalist structure:
+    - Top-level: Shop, Best Sellers, category groups, AI Assistants, Track Order, Account.
+    - Nested level for Skin & Body (Shop by Concern, Ingredient, etc.).
+
+- [ ] **Cookie banner**
+  - Simple bottom bar with text + “Accept all” / “Decline all” buttons.
+
+---
+
+## 📋 Phase 10: Cart & Account Experience
+
+Based on:
+- “CART PAGE `/cart`”
+- “ACCOUNT LOGIN `/account/login`” + “ACCOUNT DASHBOARD `/account`”
+
+- [ ] **Cart page**
+  - Two-column layout: Cart items (left) + order summary (right).
+  - Free gift progress bar + trust/secure checkout badges.
+  - “You might also like” product recommendations row below.
+
+- [ ] **Account login**
+  - Centered card with:
+    - Brand logo, copy “Sign in to your account”.
+    - Email / mobile field + “Send OTP” (or standard Shopify login form styling).
+    - Optional “Continue with Google” CTA (visual only unless app is installed).
+
+- [ ] **Account dashboard**
+  - Layout with left sidebar navigation (Orders, Profile, Addresses, etc.) and content panel.
+  - Orders list with cards showing date, status, amount; empty state for new users.
+
+---
+
+## 📋 Phase 11: AI & Rewards Landing Pages (Marketing Layer)
+
+Based on:
+- “AI SKIN INSIGHTS `/pages/skin-insights`”
+- “CLARE AI ASSISTANT `/pages/minimalist-ai-assistant`”
+- “REWARDS / TRUST CIRCLE `/pages/rewards-1`”
+- “APP DOWNLOAD `/pages/download-app-ios-android`”
+
+- [ ] **AI Skin Insights landing**
+  - Hero section explaining the (future) image analyzer.
+  - Upload card UI (dropzone / “upload photo”) wired as a marketing placeholder until a real app is added.
+  - “How it works” 3-step section and recommended products grid using `product-card`.
+
+- [ ] **AI Assistant landing**
+  - Chat-style marketing page describing Glamora’s future AI assistant.
+  - Static chat bubbles, quick prompt chips, and embedded product cards example.
+
+- [ ] **Rewards / loyalty**
+  - Hero explaining Glamora rewards program.
+  - Three-step “How it works”, earning rules table, balance card (shown only if customer logged in when data is available later).
+
+- [ ] **App download page**
+  - Hero with app mockup, copy for “Download the Glamora App”.
+  - Store badge buttons (App Store / Google Play) pointing to external URLs when available.
+  - Features list + QR code image slot.
+
+---
+
 ## Archived (original Sarvital plan)
 
 # Sarvital Shopify Website - Multiphase Development Plan
