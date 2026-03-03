@@ -31,6 +31,9 @@
           data-slide-index="{{ forloop.index0 }}"
           {{ block.shopify_attributes }}
         >
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="hero-banner__slide-link" aria-label="{{ block.settings.image.alt | default: 'View' }}"></a>
+          {%- endif -%}
           {%- if block.settings.image != blank -%}
             {%- assign mobile_img = block.settings.mobile_image | default: block.settings.image -%}
             <picture class="hero-banner__slide-picture">
@@ -103,67 +106,7 @@
     <div class="hero-banner__gradient-ornament"></div>
   </div>
   
-  <div class="hero-banner__content{% unless section.settings.show_content %} hero-banner__content--minimal{% endunless %}">
-    {%- if section.settings.show_content -%}
-      <div class="hero-banner__text">
-        {% if section.settings.heading != blank %}
-          <h1 class="hero-banner__heading">
-            <span class="hero-banner__heading-line">{{ section.settings.heading }}</span>
-          </h1>
-        {% endif %}
-        
-        {% if section.settings.subheading != blank %}
-          <p class="hero-banner__subheading">{{ section.settings.subheading }}</p>
-        {% endif %}
-
-        <div class="hero-banner__trust-badges">
-          <span class="trust-badge">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 2L12 7L17 7.5L13.5 11L14.5 16L10 13.5L5.5 16L6.5 11L3 7.5L8 7L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Dermatologist Tested
-          </span>
-          <span class="trust-badge">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18Z" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M7 10L9 12L13 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Clean, Conscious Formulas
-          </span>
-          <span class="trust-badge">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 2L12 7L17 7.5L13.5 11L14.5 16L10 13.5L5.5 16L6.5 11L3 7.5L8 7L10 2Z" fill="currentColor"/>
-            </svg>
-            Anti-Pollution Protection
-          </span>
-        </div>
-        
-        <div class="hero-banner__ctas">
-          {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
-            <a href="{{ section.settings.cta_link }}" class="btn btn-primary btn-large hero-banner__cta-primary">
-              <span>{{ section.settings.cta_text }}</span>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-          {% endif %}
-          
-          {% if section.settings.secondary_cta_text != blank and section.settings.secondary_cta_link != blank %}
-            <a href="{{ section.settings.secondary_cta_link }}" class="btn btn-outline btn-large hero-banner__cta-secondary">
-              {{ section.settings.secondary_cta_text }}
-            </a>
-          {% endif %}
-        </div>
-      </div>
-      
-      <div class="hero-banner__scroll-indicator">
-        <span>Scroll</span>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-    {%- endif -%}
-
+  <div class="hero-banner__content hero-banner__content--minimal">
     {%- if has_carousel_slides and slide_blocks.size > 1 -%}
       <div class="hero-banner__carousel-controls" role="group" aria-label="Carousel controls">
         <div class="hero-banner__carousel-dots" role="tablist" aria-label="Slide navigation">
@@ -219,6 +162,13 @@
     height: 100%;
     z-index: 1;
     overflow: hidden;
+  }
+
+  .hero-banner--carousel .hero-banner__image {
+    pointer-events: auto;
+  }
+
+  .hero-banner--carousel .hero-banner__overlay {
     pointer-events: none;
   }
 
@@ -232,8 +182,22 @@
     height: 100%;
     opacity: 0;
     transition: opacity var(--hero-transition-duration, 800ms) ease-in-out;
-    pointer-events: none;
     overflow: hidden;
+  }
+
+  .hero-banner--carousel .hero-banner__slide {
+    pointer-events: none;
+  }
+
+  .hero-banner--carousel .hero-banner__slide--active {
+    pointer-events: auto;
+  }
+
+  .hero-banner__slide-link {
+    position: absolute;
+    inset: 0;
+    z-index: 15;
+    display: block;
   }
 
   .hero-banner__slide:not(.hero-banner__slide--empty) {
@@ -973,6 +937,12 @@
           "type": "image_picker",
           "id": "mobile_image",
           "label": "Slide image (mobile)"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)",
+          "info": "Where to go when the customer clicks this slide. Leave blank for no link."
         }
       ]
     }
