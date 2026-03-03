@@ -1,6 +1,6 @@
 {% comment %}
   Policy Page Section - Renders Terms, Privacy, Shipping, or Cancellation policy content.
-  Content sourced from sarvital.com policy pages.
+  Updated for Glamora: two-column layout with sticky desktop ToC (per beminimalist policy pages).
 {% endcomment %}
 
 {% assign policy_type = section.settings.policy_type | default: 'terms' %}
@@ -8,56 +8,141 @@
 <section class="policy-page" aria-label="{{ section.settings.title }}">
   <div class="policy-page__container">
     <header class="policy-page__header">
+      <nav class="policy-page__breadcrumbs" aria-label="Breadcrumb">
+        <a href="{{ routes.root_url }}" class="policy-page__breadcrumb-link">Home</a>
+        <span class="policy-page__breadcrumb-separator">›</span>
+        <span class="policy-page__breadcrumb-current">{{ section.settings.title }}</span>
+      </nav>
       <h1 class="policy-page__title">{{ section.settings.title }}</h1>
       {% if section.settings.last_updated != blank %}
         <p class="policy-page__updated"><strong>Last Updated:</strong> {{ section.settings.last_updated }}</p>
       {% endif %}
     </header>
 
-    <div class="policy-page__content rte">
-      {% case policy_type %}
-        {% when 'terms' %}
-          {% render 'policy-content-terms' %}
-        {% when 'privacy' %}
-          {% render 'policy-content-privacy' %}
-        {% when 'shipping' %}
-          {% render 'policy-content-shipping' %}
-        {% when 'cancellation' %}
-          {% render 'policy-content-cancellation' %}
-        {% else %}
-          {% render 'policy-content-terms' %}
-      {% endcase %}
+    <div class="policy-page__layout">
+      <aside class="policy-page__toc" aria-label="Policy sections">
+        {% if section.blocks.size > 0 %}
+          <div class="policy-page__toc-inner">
+            <p class="policy-page__toc-title">On this page</p>
+            <ul class="policy-page__toc-list">
+              {% for block in section.blocks %}
+                {% if block.type == 'section_link' and block.settings.anchor_id != blank %}
+                  <li class="policy-page__toc-item" {{ block.shopify_attributes }}>
+                    <a href="#{{ block.settings.anchor_id | escape }}" class="policy-page__toc-link">
+                      {{ block.settings.label }}
+                    </a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      </aside>
+
+      <div class="policy-page__content rte">
+        {% case policy_type %}
+          {% when 'terms' %}
+            {% render 'policy-content-terms' %}
+          {% when 'privacy' %}
+            {% render 'policy-content-privacy' %}
+          {% when 'shipping' %}
+            {% render 'policy-content-shipping' %}
+          {% when 'cancellation' %}
+            {% render 'policy-content-cancellation' %}
+          {% else %}
+            {% render 'policy-content-terms' %}
+        {% endcase %}
+      </div>
     </div>
   </div>
 </section>
 
 {% stylesheet %}
   .policy-page {
-    padding: var(--spacing-2xl) var(--container-padding);
-    max-width: var(--container-max-width);
-    margin: 0 auto;
+    padding: var(--spacing-3xl) 0 var(--spacing-4xl) 0;
   }
   .policy-page__container {
-    max-width: 720px;
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 0 var(--container-padding);
+    box-sizing: border-box;
   }
   .policy-page__header {
     margin-bottom: var(--spacing-2xl);
-    padding-bottom: var(--spacing-xl);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .policy-page__breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: rgba(76, 85, 100, 0.9);
+    margin-bottom: var(--spacing-xs);
+  }
+  .policy-page__breadcrumb-link {
+    color: inherit;
+    text-decoration: none;
+  }
+  .policy-page__breadcrumb-link:hover {
+    text-decoration: underline;
+  }
+  .policy-page__breadcrumb-current {
+    color: rgba(76, 85, 100, 1);
   }
   .policy-page__title {
     font-family: var(--font-heading);
     font-size: clamp(1.75rem, 4vw, 2.25rem);
     font-weight: 700;
-    color: var(--forest-green);
-    margin: 0 0 var(--spacing-sm);
+    color: var(--text);
+    margin: 0 0 var(--spacing-xs);
   }
   .policy-page__updated {
     font-size: var(--body-small);
     color: var(--text-muted);
     margin: 0;
   }
+  .policy-page__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+    gap: var(--spacing-3xl);
+  }
+
+  .policy-page__toc {
+    position: relative;
+  }
+  .policy-page__toc-inner {
+    position: sticky;
+    top: 100px;
+    padding: var(--spacing-lg);
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+    border: 1px solid rgba(76, 85, 100, 0.14);
+  }
+  .policy-page__toc-title {
+    margin: 0 0 var(--spacing-sm) 0;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(76, 85, 100, 0.9);
+  }
+  .policy-page__toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .policy-page__toc-item + .policy-page__toc-item {
+    margin-top: 6px;
+  }
+  .policy-page__toc-link {
+    font-size: 14px;
+    color: rgba(76, 85, 100, 0.95);
+    text-decoration: none;
+  }
+  .policy-page__toc-link:hover {
+    text-decoration: underline;
+  }
+
   .policy-page__content {
     font-size: var(--body-normal);
     line-height: 1.7;
@@ -67,7 +152,7 @@
     font-family: var(--font-heading);
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--forest-green);
+    color: var(--text);
     margin: var(--spacing-xl) 0 var(--spacing-md);
   }
   .policy-page__content h2:first-child {
@@ -89,11 +174,21 @@
     margin-bottom: var(--spacing-xs);
   }
   .policy-page__content a {
-    color: var(--sage-green);
+    color: #15736d;
     text-decoration: underline;
   }
   .policy-page__content a:hover {
-    color: var(--forest-green);
+    color: #15736d;
+  }
+
+  @media (max-width: 900px) {
+    .policy-page__layout {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--spacing-2xl);
+    }
+    .policy-page__toc-inner {
+      position: static;
+    }
   }
 {% endstylesheet %}
 
@@ -124,6 +219,26 @@
         { "value": "cancellation", "label": "Cancellation and Refunds" }
       ],
       "default": "terms"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "section_link",
+      "name": "Section link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Target section ID (matches h2 id in content)",
+          "info": "Example: shipping-timeframes, eligible-areas, tracking-orders"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Section title"
+        }
+      ]
     }
   ]
 }

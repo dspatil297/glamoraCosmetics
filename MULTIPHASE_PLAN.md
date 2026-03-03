@@ -96,8 +96,8 @@ Based on `beminimalist-page-structures.md` “PRODUCT DETAIL PAGE”.
 
 ## 📋 Phase 6: Content Pages (Knowledge/Blog + Policies)
 
-- [ ] **Blog listing**: card grid layout (featured article + grid) per beminimalist “KNOWLEDGE”
-- [ ] **Policy pages**: typography polish + optional sticky ToC on desktop
+- [x] **Blog listing**: card grid layout (featured article + grid) per beminimalist “KNOWLEDGE”
+- [x] **Policy pages**: typography polish + optional sticky ToC on desktop
 
 ---
 
