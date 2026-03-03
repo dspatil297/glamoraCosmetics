@@ -1,0 +1,506 @@
+{% comment %}
+  Customer account dashboard
+  - Two-column layout: sidebar nav + main content
+  - Orders list with cards and empty state
+  - Profile + default address summary
+{% endcomment %}
+
+{% if customer %}
+<section class="account">
+  <div class="account__container">
+    <div class="account__sidebar">
+      <div class="account__sidebar-header">
+        <h1 class="account__title">My account</h1>
+        <p class="account__subtitle">Welcome back, {{ customer.first_name | default: customer.email }}.</p>
+      </div>
+      <nav class="account__nav" aria-label="Account navigation">
+        <button type="button" class="account__nav-link account__nav-link--active" data-account-tab="orders">
+          <span>Orders</span>
+        </button>
+        <button type="button" class="account__nav-link" data-account-tab="profile">
+          <span>Profile</span>
+        </button>
+        <button type="button" class="account__nav-link" data-account-tab="addresses">
+          <span>Addresses</span>
+        </button>
+        <a href="{{ routes.account_logout_url }}" class="account__nav-link account__nav-link--logout">
+          <span>Log out</span>
+        </a>
+      </nav>
+      <div class="account__help">
+        <p>Need help? <a href="/pages/contact">Contact support</a></p>
+      </div>
+    </div>
+
+    <div class="account__content">
+      <div class="account__panel account__panel--active" data-account-panel="orders">
+        <div class="account__panel-header">
+          <h2>Order history</h2>
+          {% if customer.orders_count > 0 %}
+            <p>{{ customer.orders_count }} {{ customer.orders_count | pluralize: 'order', 'orders' }} placed</p>
+          {% else %}
+            <p>No orders yet. Start your Glamora ritual today.</p>
+          {% endif %}
+        </div>
+
+        {% if customer.orders_count > 0 %}
+          <div class="account-orders">
+            {% paginate customer.orders by 10 %}
+              {% for order in customer.orders %}
+                <article class="account-order">
+                  <header class="account-order__header">
+                    <div>
+                      <p class="account-order__number">Order {{ order.name }}</p>
+                      <p class="account-order__date">
+                        Placed on {{ order.created_at | date: format: 'date' }}
+                      </p>
+                    </div>
+                    <div class="account-order__status">
+                      <span class="account-order__pill">
+                        {{ order.financial_status_label }}
+                      </span>
+                      <span class="account-order__pill account-order__pill--muted">
+                        {{ order.fulfillment_status_label | default: 'Unfulfilled' }}
+                      </span>
+                    </div>
+                  </header>
+
+                  <div class="account-order__body">
+                    <div class="account-order__summary">
+                      <p class="account-order__total-label">Total</p>
+                      <p class="account-order__total">{{ order.total_price | money }}</p>
+                      <p class="account-order__items">
+                        {{ order.line_items.size }} {{ order.line_items.size | pluralize: 'item', 'items' }}
+                      </p>
+                    </div>
+                    <div class="account-order__actions">
+                      <a href="{{ order.customer_url }}" class="btn btn-outline btn-small">View details</a>
+                      {% if order.order_status_url %}
+                        <a href="{{ order.order_status_url }}" class="account-order__link">Track order</a>
+                      {% endif %}
+                    </div>
+                  </div>
+                </article>
+              {% endfor %}
+
+              {% if paginate.pages > 1 %}
+                <div class="account-pagination">
+                  {{ paginate | default_pagination }}
+                </div>
+              {% endif %}
+            {% endpaginate %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="account__panel" data-account-panel="profile">
+        <div class="account__panel-header">
+          <h2>Profile</h2>
+          <p>Manage the details associated with your Glamora account.</p>
+        </div>
+        <div class="account-profile">
+          <div class="account-profile__item">
+            <p class="account-profile__label">Name</p>
+            <p class="account-profile__value">
+              {% if customer.first_name or customer.last_name %}
+                {{ customer.first_name }} {{ customer.last_name }}
+              {% else %}
+                Not set
+              {% endif %}
+            </p>
+          </div>
+          <div class="account-profile__item">
+            <p class="account-profile__label">Email</p>
+            <p class="account-profile__value">{{ customer.email }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="account__panel" data-account-panel="addresses">
+        <div class="account__panel-header">
+          <h2>Addresses</h2>
+          <p>Default shipping details for your next order.</p>
+        </div>
+        <div class="account-addresses">
+          {% if customer.default_address %}
+            <div class="account-address">
+              <p class="account-address__name">
+                {{ customer.default_address.name | default: customer.name }}
+              </p>
+              <p class="account-address__line">
+                {{ customer.default_address.address1 }}{% if customer.default_address.address2 %}, {{ customer.default_address.address2 }}{% endif %}
+              </p>
+              <p class="account-address__line">
+                {{ customer.default_address.city }}{% if customer.default_address.province %}, {{ customer.default_address.province }}{% endif %}
+              </p>
+              <p class="account-address__line">
+                {{ customer.default_address.zip }}{% if customer.default_address.country %}, {{ customer.default_address.country }}{% endif %}
+              </p>
+              {% if customer.default_address.phone %}
+                <p class="account-address__line">Phone: {{ customer.default_address.phone }}</p>
+              {% endif %}
+              <a href="{{ routes.account_addresses_url }}" class="account-address__link">
+                Manage all addresses
+              </a>
+            </div>
+          {% else %}
+            <p class="account-addresses__empty">
+              No address saved yet.
+              <a href="{{ routes.account_addresses_url }}">Add a new address</a>
+            </p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% else %}
+  <section class="account account--guest">
+    <div class="account__container">
+      <div class="account__content account__content--full">
+        <h1 class="account__title">Please sign in</h1>
+        <p class="account__subtitle">
+          You need to be logged in to view your Glamora account.
+        </p>
+        <a href="{{ routes.account_login_url }}" class="btn btn-primary">
+          Go to login
+        </a>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+<style>
+  .account {
+    width: 100%;
+    max-width: 100%;
+    padding: var(--spacing-5xl) var(--spacing-lg);
+    background: linear-gradient(180deg, var(--white) 0%, rgba(248, 250, 252, 0.9) 100%);
+    box-sizing: border-box;
+  }
+  .account__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+    gap: var(--spacing-3xl);
+  }
+  .account__sidebar {
+    background: #ffffff;
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    padding: var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+  }
+  .account__sidebar-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  .account__title {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(26px, 3vw, 32px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #0f172a;
+  }
+  .account__subtitle {
+    margin: 0;
+    font-size: var(--body-small);
+    color: #64748b;
+  }
+  .account__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .account__nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: var(--body-small);
+    color: #0f172a;
+    text-align: left;
+    text-decoration: none;
+  }
+  .account__nav-link--active {
+    background: rgba(21, 115, 109, 0.08);
+    color: #15736d;
+    font-weight: 600;
+  }
+  .account__nav-link--logout {
+    margin-top: var(--spacing-sm);
+    color: #b91c1c;
+  }
+  .account__nav-link--logout:hover {
+    background: rgba(248, 113, 113, 0.06);
+  }
+  .account__help {
+    margin-top: auto;
+    font-size: var(--body-xs);
+    color: #6b7280;
+  }
+  .account__help a {
+    color: #15736d;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .account__help a:hover {
+    text-decoration: underline;
+  }
+  .account__content {
+    background: #ffffff;
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    padding: var(--spacing-2xl);
+    min-height: 320px;
+  }
+  .account__content--full {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+  .account__panel {
+    display: none;
+  }
+  .account__panel--active {
+    display: block;
+  }
+  .account__panel-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+  }
+  .account__panel-header h2 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: var(--h4-size);
+    color: #0f172a;
+  }
+  .account__panel-header p {
+    margin: 0;
+    font-size: var(--body-small);
+    color: #6b7280;
+  }
+
+  .account-orders {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+  .account-order {
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    background: radial-gradient(circle at top left, rgba(21, 115, 109, 0.04), #ffffff);
+  }
+  .account-order__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+  }
+  .account-order__number {
+    margin: 0;
+    font-weight: 600;
+    font-size: var(--body-normal);
+    color: #0f172a;
+  }
+  .account-order__date {
+    margin: 4px 0 0 0;
+    font-size: var(--body-xs);
+    color: #6b7280;
+  }
+  .account-order__status {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: flex-end;
+  }
+  .account-order__pill {
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    line-height: 1.2;
+    background: rgba(21, 115, 109, 0.08);
+    color: #15736d;
+    font-weight: 600;
+  }
+  .account-order__pill--muted {
+    background: rgba(148, 163, 184, 0.16);
+    color: #475569;
+  }
+  .account-order__body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-md);
+  }
+  .account-order__total-label {
+    margin: 0;
+    font-size: var(--body-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #6b7280;
+  }
+  .account-order__total {
+    margin: 4px 0 0 0;
+    font-size: var(--body-large);
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .account-order__items {
+    margin: 4px 0 0 0;
+    font-size: var(--body-xs);
+    color: #6b7280;
+  }
+  .account-order__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+  .account-order__link {
+    font-size: var(--body-xs);
+    color: #15736d;
+    text-decoration: none;
+  }
+  .account-order__link:hover {
+    text-decoration: underline;
+  }
+
+  .account-pagination {
+    margin-top: var(--spacing-xl);
+  }
+
+  .account-profile {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--spacing-xl);
+  }
+  .account-profile__item {
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    background: #f9fafb;
+  }
+  .account-profile__label {
+    margin: 0 0 4px 0;
+    font-size: var(--body-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #6b7280;
+  }
+  .account-profile__value {
+    margin: 0;
+    font-size: var(--body-normal);
+    color: #0f172a;
+  }
+
+  .account-addresses {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  .account-address {
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    background: #f9fafb;
+  }
+  .account-address__name {
+    margin: 0 0 4px 0;
+    font-weight: 600;
+    color: #0f172a;
+  }
+  .account-address__line {
+    margin: 0;
+    font-size: var(--body-small);
+    color: #4b5563;
+  }
+  .account-address__line + .account-address__line {
+    margin-top: 2px;
+  }
+  .account-address__link {
+    display: inline-block;
+    margin-top: var(--spacing-sm);
+    font-size: var(--body-xs);
+    color: #15736d;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .account-address__link:hover {
+    text-decoration: underline;
+  }
+  .account-addresses__empty {
+    font-size: var(--body-small);
+    color: #6b7280;
+  }
+  .account-addresses__empty a {
+    color: #15736d;
+    text-decoration: none;
+  }
+  .account-addresses__empty a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 900px) {
+    .account__container {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .account__sidebar {
+      order: 1;
+    }
+    .account__content {
+      order: 2;
+      padding: var(--spacing-xl);
+    }
+    .account-order__body {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .account-order__actions {
+      align-items: flex-start;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    function initAccountTabs() {
+      var navLinks = document.querySelectorAll('.account__nav-link[data-account-tab]');
+      var panels = document.querySelectorAll('.account__panel[data-account-panel]');
+      if (!navLinks.length || !panels.length) return;
+
+      navLinks.forEach(function(link) {
+        link.addEventListener('click', function() {
+          var tab = link.getAttribute('data-account-tab');
+          navLinks.forEach(function(l) { l.classList.remove('account__nav-link--active'); });
+          panels.forEach(function(p) {
+            p.classList.toggle('account__panel--active', p.getAttribute('data-account-panel') === tab);
+          });
+          link.classList.add('account__nav-link--active');
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAccountTabs);
+    } else {
+      initAccountTabs();
+    }
+  })();
+</script>
+

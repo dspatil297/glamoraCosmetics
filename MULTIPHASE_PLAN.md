@@ -174,15 +174,14 @@ Based on:
   - Free shipping progress bar (configurable threshold, default ₹999) + trust/secure checkout badges.
   - “You might also like” product recommendations row below.
 
-- [ ] **Account login**
-  - Centered card with:
-    - Brand logo, copy “Sign in to your account”.
-    - Email / mobile field + “Send OTP” (or standard Shopify login form styling).
-    - Optional “Continue with Google” CTA (visual only unless app is installed).
+- [x] **Account login**
+  - Centered card using `sections/main-login.liquid` with Glamora copy (“Sign in to your Glamora account”) and optional Google note.
+  - Standard Shopify email/password login retained for stability; CTA “Create account” and guest checkout supported when available.
 
-- [ ] **Account dashboard**
-  - Layout with left sidebar navigation (Orders, Profile, Addresses, etc.) and content panel.
-  - Orders list with cards showing date, status, amount; empty state for new users.
+- [x] **Account dashboard**
+  - Layout with left sidebar navigation (Orders, Profile, Addresses, Logout) and main content panel (`templates/customers/account.liquid`).
+  - Orders list with cards showing date, status, amount, and links to details/track order; empty state for new users.
+  - Profile and default address summary blocks styled with Glamora UI (teal accents, rounded cards).
 
 ---
 
