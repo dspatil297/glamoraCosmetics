@@ -1,7 +1,7 @@
 {%- comment -%} Two-up clickable banners (AI split banner style) {%- endcomment -%}
 
-<section class="split-banner" id="split-banner-{{ section.id }}">
-  <div class="split-banner__grid">
+<section class="double-banner" id="double-banner-{{ section.id }}">
+  <div class="double-banner__grid">
     {%- for i in (1..2) -%}
       {%- assign img_key = 'image_' | append: i -%}
       {%- assign m_key = 'mobile_image_' | append: i -%}
@@ -9,11 +9,11 @@
       {%- assign alt_key = 'alt_' | append: i -%}
       {%- assign img = section.settings[img_key] -%}
       {%- assign href = section.settings[href_key] -%}
-      <div class="split-banner__item">
-        {%- if href != blank -%}<a class="split-banner__link" href="{{ href }}">{%- endif -%}
+      <div class="double-banner__item">
+        {%- if href != blank -%}<a class="double-banner__link" href="{{ href }}">{%- endif -%}
           {%- if img != blank -%}
             {%- assign mobile_img = section.settings[m_key] | default: img -%}
-            <picture class="split-banner__picture">
+            <picture class="double-banner__picture">
               <source
                 media="(max-width: 768px)"
                 srcset="
@@ -24,7 +24,7 @@
                 sizes="100vw"
               >
               <img
-                class="split-banner__img"
+                class="double-banner__img"
                 src="{{ img | image_url: width: 1400 }}"
                 srcset="
                   {{ img | image_url: width: 800 }} 800w,
@@ -37,7 +37,7 @@
               >
             </picture>
           {%- else -%}
-            <div class="split-banner__placeholder">
+            <div class="double-banner__placeholder">
               <p>Add an image for this banner in Theme Customizer.</p>
             </div>
           {%- endif -%}
@@ -48,7 +48,7 @@
 </section>
 
 {% stylesheet %}
-  .split-banner__grid {
+  .double-banner__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
@@ -57,13 +57,13 @@
     padding: 0 var(--container-padding);
     box-sizing: border-box;
   }
-  .split-banner__link {
+  .double-banner__link {
     display: block;
     text-decoration: none;
     color: inherit;
   }
-  .split-banner__picture,
-  .split-banner__img {
+  .double-banner__picture,
+  .double-banner__img {
     display: block;
     width: 100%;
     height: auto;
@@ -71,7 +71,7 @@
     overflow: hidden;
     box-shadow: 0 6px 24px rgba(0,0,0,0.08);
   }
-  .split-banner__placeholder {
+  .double-banner__placeholder {
     width: 100%;
     min-height: 160px;
     display: flex;
@@ -87,7 +87,7 @@
     box-sizing: border-box;
   }
   @media (max-width: 900px) {
-    .split-banner__grid {
+    .double-banner__grid {
       grid-template-columns: 1fr;
       gap: 12px;
     }
@@ -96,7 +96,7 @@
 
 {% schema %}
 {
-  "name": "Split banner (2 images)",
+  "name": "Double banner (2 images)",
   "settings": [
     { "type": "image_picker", "id": "image_1", "label": "Left image (desktop)" },
     { "type": "image_picker", "id": "mobile_image_1", "label": "Left image (mobile, optional)" },
@@ -109,7 +109,7 @@
     { "type": "text", "id": "alt_2", "label": "Right alt text", "default": "Banner" }
   ],
   "presets": [
-    { "name": "Split banner (2 images)" }
+    { "name": "Double banner (2 images)" }
   ]
 }
 {% endschema %}

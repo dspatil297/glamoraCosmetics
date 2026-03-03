@@ -131,7 +131,7 @@
       }
     },
     "ai_split_banner": {
-      "type": "split-banner",
+      "type": "double-banner",
       "settings": {
         "image_1": "",
         "mobile_image_1": "",
