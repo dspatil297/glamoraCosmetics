@@ -14,18 +14,17 @@
         media="(max-width: 768px)"
         srcset="
           {{ mobile_img | image_url: width: 480 }} 480w,
-          {{ mobile_img | image_url: width: 768 }} 768w,
-          {{ mobile_img | image_url: width: 1024 }} 1024w
+          {{ mobile_img | image_url: width: 768 }} 768w
         "
         sizes="100vw"
       >
       <img
         class="promo-banner__img"
-        src="{{ section.settings.image | image_url: width: 2000 }}"
+        src="{{ section.settings.image | image_url: width: 1280 }}"
         srcset="
-          {{ section.settings.image | image_url: width: 1000 }} 1000w,
-          {{ section.settings.image | image_url: width: 1400 }} 1400w,
-          {{ section.settings.image | image_url: width: 2000 }} 2000w
+          {{ section.settings.image | image_url: width: 960 }} 960w,
+          {{ section.settings.image | image_url: width: 1280 }} 1280w,
+          {{ section.settings.image | image_url: width: 1440 }} 1440w
         "
         sizes="100vw"
         alt="{{ section.settings.alt | escape }}"
@@ -34,7 +33,7 @@
     </picture>
   {%- else -%}
     <div class="promo-banner__placeholder promo-banner__placeholder--img">
-      {% render 'unsplash-placeholder', type: 'banner', width: 2000, class: 'promo-banner__img', loading: 'lazy', alt: 'Banner placeholder' %}
+      {% render 'unsplash-placeholder', type: 'banner', width: 1280, class: 'promo-banner__img', loading: 'lazy', alt: 'Banner placeholder' %}
     </div>
   {%- endif -%}
 
@@ -57,7 +56,11 @@
   .promo-banner__img {
     display: block;
     width: 100%;
+    max-width: 100%;
     height: auto;
+    max-height: 420px;
+    object-fit: cover;
+    object-position: center;
   }
 
   .promo-banner__placeholder {
@@ -76,7 +79,8 @@
   }
 
   .promo-banner__placeholder--img {
-    min-height: 280px;
+    min-height: 200px;
+    max-height: 420px;
     padding: 0;
     overflow: hidden;
   }
@@ -84,7 +88,8 @@
   .promo-banner__placeholder--img img {
     width: 100%;
     height: 100%;
-    min-height: 280px;
+    min-height: 200px;
+    max-height: 420px;
     object-fit: cover;
   }
 {% endstylesheet %}

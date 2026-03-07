@@ -6,19 +6,19 @@
       <div class="loyalty-banner__media">
         {%- if section.settings.image != blank -%}
           <img
-            src="{{ section.settings.image | image_url: width: 1400 }}"
+            src="{{ section.settings.image | image_url: width: 900 }}"
             srcset="
-              {{ section.settings.image | image_url: width: 800 }} 800w,
-              {{ section.settings.image | image_url: width: 1100 }} 1100w,
-              {{ section.settings.image | image_url: width: 1400 }} 1400w
+              {{ section.settings.image | image_url: width: 600 }} 600w,
+              {{ section.settings.image | image_url: width: 900 }} 900w,
+              {{ section.settings.image | image_url: width: 1100 }} 1100w
             "
-            sizes="100vw"
+            sizes="(min-width: 990px) 60vw, 100vw"
             alt="{{ section.settings.title | escape }}"
             loading="lazy"
           >
         {%- else -%}
           <div class="loyalty-banner__placeholder loyalty-banner__placeholder--img">
-            {% render 'unsplash-placeholder', type: 'banner', width: 1400, class: 'loyalty-banner__img', loading: 'lazy', alt: section.settings.title | default: 'Loyalty placeholder' %}
+            {% render 'unsplash-placeholder', type: 'banner', width: 900, class: 'loyalty-banner__img', loading: 'lazy', alt: section.settings.title | default: 'Loyalty placeholder' %}
           </div>
         {%- endif -%}
       </div>

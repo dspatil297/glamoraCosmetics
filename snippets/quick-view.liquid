@@ -18,7 +18,7 @@
         {% assign quick_view_image = product.images.first %}
         {% if quick_view_image %}
           <img 
-            src="{{ quick_view_image | image_url: width: 600 }}" 
+            src="{{ quick_view_image | image_url: width: 500 }}" 
             alt="{{ quick_view_image.alt | default: product.title | escape }}"
             loading="eager"
             width="600"

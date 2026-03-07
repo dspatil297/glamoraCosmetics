@@ -26,13 +26,11 @@
               {% for image in product.images %}
                 <div class="product-carousel-slide" data-index="{{ forloop.index0 }}">
                   <img
-                    src="{{ image | image_url: width: 1200 }}"
+                    src="{{ image | image_url: width: 800 }}"
                     srcset="
-                      {{ image | image_url: width: 300 }} 300w,
+                      {{ image | image_url: width: 400 }} 400w,
                       {{ image | image_url: width: 600 }} 600w,
-                      {{ image | image_url: width: 900 }} 900w,
-                      {{ image | image_url: width: 1200 }} 1200w,
-                      {{ image | image_url: width: 1500 }} 1500w
+                      {{ image | image_url: width: 800 }} 800w
                     "
                     sizes="(max-width: 768px) 100vw, 50vw"
                     alt="{{ image.alt | default: product.title }}"
@@ -153,7 +151,7 @@
         {% endif %}
       {% else %}
         <div class="product-image-placeholder">
-          {% render 'unsplash-placeholder', type: 'product', width: 800, class: 'product-image-placeholder__img', loading: 'eager', alt: product.title | default: 'Product' %}
+          {% render 'unsplash-placeholder', type: 'product', width: 600, class: 'product-image-placeholder__img', loading: 'eager', alt: product.title | default: 'Product' %}
         </div>
       {% endif %}
     </div>

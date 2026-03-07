@@ -18,18 +18,17 @@
                 media="(max-width: 768px)"
                 srcset="
                   {{ mobile_img | image_url: width: 480 }} 480w,
-                  {{ mobile_img | image_url: width: 768 }} 768w,
-                  {{ mobile_img | image_url: width: 1024 }} 1024w
+                  {{ mobile_img | image_url: width: 768 }} 768w
                 "
                 sizes="100vw"
               >
               <img
                 class="double-banner__img"
-                src="{{ img | image_url: width: 1400 }}"
+                src="{{ img | image_url: width: 800 }}"
                 srcset="
+                  {{ img | image_url: width: 600 }} 600w,
                   {{ img | image_url: width: 800 }} 800w,
-                  {{ img | image_url: width: 1100 }} 1100w,
-                  {{ img | image_url: width: 1400 }} 1400w
+                  {{ img | image_url: width: 1000 }} 1000w
                 "
                 sizes="(min-width: 900px) 50vw, 100vw"
                 alt="{{ section.settings[alt_key] | escape }}"
@@ -38,7 +37,7 @@
             </picture>
           {%- else -%}
             <div class="double-banner__placeholder double-banner__placeholder--img">
-              {% render 'unsplash-placeholder', type: 'banner', width: 1400, class: 'double-banner__img', loading: 'lazy', alt: 'Banner placeholder' %}
+              {% render 'unsplash-placeholder', type: 'banner', width: 800, class: 'double-banner__img', loading: 'lazy', alt: 'Banner placeholder' %}
             </div>
           {%- endif -%}
         {%- if href != blank -%}</a>{%- endif -%}
