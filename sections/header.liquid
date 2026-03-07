@@ -303,15 +303,14 @@
     padding: 0;
     background-color: #ffffff;
     border-bottom: 1px solid var(--border-color);
-    position: relative;
+    position: sticky;
+    top: 0;
     z-index: 9998;
     transition: all var(--transition-base);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   }
 
   .site-header.sticky {
-    position: sticky;
-    top: 0;
     box-shadow: var(--shadow-sm);
   }
 
@@ -968,13 +967,7 @@
       var searchInput = searchOverlay ? searchOverlay.querySelector('[data-search-input]') : null;
 
     if (header && header.getAttribute('data-sticky-header') === 'true') {
-      window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 100) {
-          header.classList.add('sticky');
-        } else {
-          header.classList.remove('sticky');
-        }
-      });
+      header.classList.add('sticky');
     }
 
     function openMobileMenu() {
