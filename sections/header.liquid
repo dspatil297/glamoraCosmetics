@@ -24,11 +24,11 @@
       </a>
     </div>
 
-    <!-- Desktop Navigation (hidden on mobile via CSS) - Order: Home, Products, Recipes, Contact -->
+    <!-- Desktop Navigation (hidden on mobile via CSS) - Order: Home, Shop, About, Blog, Contact -->
     <nav class="header__nav header__nav--desktop" aria-label="Main navigation">
       <ul class="nav-menu">
         <li class="nav-item">
-          <a href="{{ routes.root_url }}" class="nav-link {% if request.path == '/' %}active{% endif %}">Home</a>
+          <a href="{{ routes.root_url }}" class="nav-link {% if request.path == '/' %}active{% endif %}">{{ section.settings.nav_label_home | default: 'Home' }}</a>
         </li>
         {% for link in section.settings.menu.links %}
           {% assign link_title_plain = link.title | strip %}
@@ -41,7 +41,7 @@
           {% assign products_href = products_link.url %}
           {% if products_href == routes.collections_url %}{% assign products_href = routes.all_products_collection_url %}{% endif %}
           <li class="nav-item {% if products_link.links != blank %}has-dropdown{% endif %}">
-            <a href="{{ products_href }}" class="nav-link {% if products_link.active %}active{% endif %}">Shop</a>
+            <a href="{{ products_href }}" class="nav-link {% if products_link.active %}active{% endif %}">{{ section.settings.nav_label_shop | default: 'Shop' }}</a>
             {% if products_link.links != blank %}
               <ul class="nav-dropdown">
                 {% for childlink in products_link.links %}
@@ -56,14 +56,14 @@
           </li>
         {% else %}
           <li class="nav-item">
-            <a href="{{ routes.all_products_collection_url }}" class="nav-link {% if request.path contains '/collections' %}active{% endif %}">Shop</a>
+            <a href="{{ routes.all_products_collection_url }}" class="nav-link {% if request.path contains '/collections' %}active{% endif %}">{{ section.settings.nav_label_shop | default: 'Shop' }}</a>
           </li>
         {% endif %}
         <li class="nav-item">
-          <a href="/pages/about-us" class="nav-link {% if request.path == '/pages/about-us' %}active{% endif %}">About Us</a>
+          <a href="{{ section.settings.link_about | default: '/pages/about-us' }}" class="nav-link {% if request.path == '/pages/about-us' %}active{% endif %}">{{ section.settings.nav_label_about | default: 'About Us' }}</a>
         </li>
         <li class="nav-item">
-          <a href="/blogs/news" class="nav-link {% if request.path contains '/blogs' %}active{% endif %}">Blog</a>
+          <a href="{{ section.settings.link_blog | default: '/blogs/news' }}" class="nav-link {% if request.path contains '/blogs' %}active{% endif %}">{{ section.settings.nav_label_blog | default: 'Blog' }}</a>
         </li>
         {% for link in section.settings.menu.links %}
           {% if link.title == 'Contact' or link.url contains 'contact' %}
@@ -73,11 +73,11 @@
         {% endfor %}
         {% if contact_link %}
           <li class="nav-item">
-            <a href="{{ contact_link.url }}" class="nav-link {% if contact_link.active %}active{% endif %}">Contact</a>
+            <a href="{{ contact_link.url }}" class="nav-link {% if contact_link.active %}active{% endif %}">{{ section.settings.nav_label_contact | default: 'Contact' }}</a>
           </li>
         {% else %}
           <li class="nav-item">
-            <a href="/pages/contact" class="nav-link {% if request.path == '/pages/contact' %}active{% endif %}">Contact</a>
+            <a href="{{ section.settings.link_contact | default: '/pages/contact' }}" class="nav-link {% if request.path == '/pages/contact' %}active{% endif %}">{{ section.settings.nav_label_contact | default: 'Contact' }}</a>
           </li>
         {% endif %}
       </ul>
@@ -149,7 +149,7 @@
     <div class="mobile-menu-overlay" data-mobile-menu-close></div>
     <div class="mobile-menu-content">
       <div class="mobile-menu-header">
-        <h2>Menu</h2>
+        <h2>{{ section.settings.mobile_menu_heading | default: 'Menu' }}</h2>
         <button type="button" class="mobile-menu-close" data-mobile-menu-close aria-label="Close menu">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -159,7 +159,7 @@
       <nav class="mobile-nav" aria-label="Mobile navigation">
         <ul class="mobile-nav-menu">
           <li class="mobile-nav-item">
-            <a href="{{ routes.root_url }}" class="mobile-nav-link {% if request.path == '/' %}active{% endif %}">Home</a>
+            <a href="{{ routes.root_url }}" class="mobile-nav-link {% if request.path == '/' %}active{% endif %}">{{ section.settings.nav_label_home | default: 'Home' }}</a>
           </li>
           {% for link in section.settings.menu.links %}
             {% assign link_title_plain = link.title | strip %}
@@ -172,7 +172,7 @@
             {% assign products_href_mob = products_link_mob.url %}
             {% if products_href_mob == routes.collections_url %}{% assign products_href_mob = routes.all_products_collection_url %}{% endif %}
             <li class="mobile-nav-item {% if products_link_mob.links != blank %}has-children{% endif %}">
-              <a href="{{ products_href_mob }}" class="mobile-nav-link {% if products_link_mob.active %}active{% endif %}">Shop</a>
+              <a href="{{ products_href_mob }}" class="mobile-nav-link {% if products_link_mob.active %}active{% endif %}">{{ section.settings.nav_label_shop | default: 'Shop' }}</a>
               {% if products_link_mob.links != blank %}
                 <button type="button" class="mobile-nav-toggle" aria-label="Toggle Products submenu" aria-expanded="false">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -192,14 +192,14 @@
             </li>
           {% else %}
             <li class="mobile-nav-item">
-              <a href="{{ routes.all_products_collection_url }}" class="mobile-nav-link {% if request.path contains '/collections' %}active{% endif %}">Shop</a>
+              <a href="{{ routes.all_products_collection_url }}" class="mobile-nav-link {% if request.path contains '/collections' %}active{% endif %}">{{ section.settings.nav_label_shop | default: 'Shop' }}</a>
             </li>
           {% endif %}
           <li class="mobile-nav-item">
-            <a href="/pages/about-us" class="mobile-nav-link {% if request.path == '/pages/about-us' %}active{% endif %}">About Us</a>
+            <a href="{{ section.settings.link_about | default: '/pages/about-us' }}" class="mobile-nav-link {% if request.path == '/pages/about-us' %}active{% endif %}">{{ section.settings.nav_label_about | default: 'About Us' }}</a>
           </li>
           <li class="mobile-nav-item">
-            <a href="/blogs/news" class="mobile-nav-link {% if request.path contains '/blogs' %}active{% endif %}">Blog</a>
+            <a href="{{ section.settings.link_blog | default: '/blogs/news' }}" class="mobile-nav-link {% if request.path contains '/blogs' %}active{% endif %}">{{ section.settings.nav_label_blog | default: 'Blog' }}</a>
           </li>
           {% for link in section.settings.menu.links %}
             {% if link.title == 'Contact' or link.url contains 'contact' %}
@@ -209,11 +209,11 @@
           {% endfor %}
           {% if contact_link_mob %}
             <li class="mobile-nav-item">
-              <a href="{{ contact_link_mob.url }}" class="mobile-nav-link {% if contact_link_mob.active %}active{% endif %}">Contact</a>
+              <a href="{{ contact_link_mob.url }}" class="mobile-nav-link {% if contact_link_mob.active %}active{% endif %}">{{ section.settings.nav_label_contact | default: 'Contact' }}</a>
             </li>
           {% else %}
             <li class="mobile-nav-item">
-              <a href="/pages/contact" class="mobile-nav-link {% if request.path == '/pages/contact' %}active{% endif %}">Contact</a>
+              <a href="{{ section.settings.link_contact | default: '/pages/contact' }}" class="mobile-nav-link {% if request.path == '/pages/contact' %}active{% endif %}">{{ section.settings.nav_label_contact | default: 'Contact' }}</a>
             </li>
           {% endif %}
         </ul>
@@ -221,9 +221,9 @@
       {% if shop.customer_accounts_enabled %}
         <div class="mobile-menu-footer">
           {% if customer %}
-            <a href="{{ routes.account_url }}" class="btn btn-outline">Account</a>
+            <a href="{{ routes.account_url }}" class="btn btn-outline">{{ section.settings.mobile_label_account | default: 'Account' }}</a>
           {% else %}
-            <a href="/customer_authentication/login?return_to={{ '/' | url_encode }}" class="btn btn-outline">Login</a>
+            <a href="/customer_authentication/login?return_to={{ '/' | url_encode }}" class="btn btn-outline">{{ section.settings.mobile_label_login | default: 'Login' }}</a>
           {% endif %}
         </div>
       {% endif %}
@@ -244,7 +244,7 @@
   <div class="search-overlay__backdrop" data-search-overlay-close></div>
   <div class="search-overlay__panel">
     <div class="search-overlay__header">
-      <h2 class="search-overlay__title">Search</h2>
+      <h2 class="search-overlay__title">{{ section.settings.search_overlay_title | default: 'Search' }}</h2>
       <button
         type="button"
         class="search-overlay__close"
@@ -266,23 +266,30 @@
           type="search"
           name="q"
           value="{{ search.terms | default: '' | escape }}"
-          placeholder="Search for products, ingredients…"
+          placeholder="{{ section.settings.search_placeholder | default: 'Search for products, ingredients…' }}"
           class="search-overlay__input"
           autocomplete="off"
           data-search-input
         >
         <input type="hidden" name="type" value="product">
       </div>
-      <p class="search-overlay__hint">Press Enter to see all results</p>
+      <p class="search-overlay__hint">{{ section.settings.search_hint | default: 'Press Enter to see all results' }}</p>
     </form>
 
+    {% assign search_chips = section.blocks | where: 'type', 'search_chip' %}
     <div class="search-overlay__popular">
-      <p class="search-overlay__popular-label">Popular searches</p>
+      <p class="search-overlay__popular-label">{{ section.settings.search_popular_label | default: 'Popular searches' }}</p>
       <div class="search-overlay__chips">
-        <a href="{{ routes.search_url }}?q=Serum&type=product" class="search-overlay__chip">Serum</a>
-        <a href="{{ routes.search_url }}?q=Moisturizer&type=product" class="search-overlay__chip">Moisturizer</a>
-        <a href="{{ routes.search_url }}?q=Sunscreen&type=product" class="search-overlay__chip">Sunscreen</a>
-        <a href="{{ routes.search_url }}?q=Lip%20care&type=product" class="search-overlay__chip">Lip care</a>
+        {% if search_chips.size > 0 %}
+          {% for block in search_chips %}
+            <a href="{{ routes.search_url }}?q={{ block.settings.query | url_param_escape }}&type=product" class="search-overlay__chip" {{ block.shopify_attributes }}>{{ block.settings.label | default: block.settings.query }}</a>
+          {% endfor %}
+        {% else %}
+          <a href="{{ routes.search_url }}?q=Serum&type=product" class="search-overlay__chip">Serum</a>
+          <a href="{{ routes.search_url }}?q=Moisturizer&type=product" class="search-overlay__chip">Moisturizer</a>
+          <a href="{{ routes.search_url }}?q=Sunscreen&type=product" class="search-overlay__chip">Sunscreen</a>
+          <a href="{{ routes.search_url }}?q=Lip%20care&type=product" class="search-overlay__chip">Lip care</a>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -1119,6 +1126,125 @@
       "id": "enable_sticky_header",
       "label": "Enable sticky header",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Navigation labels"
+    },
+    {
+      "type": "text",
+      "id": "nav_label_home",
+      "label": "Home label",
+      "default": "Home"
+    },
+    {
+      "type": "text",
+      "id": "nav_label_shop",
+      "label": "Shop label",
+      "default": "Shop"
+    },
+    {
+      "type": "text",
+      "id": "nav_label_about",
+      "label": "About label",
+      "default": "About Us"
+    },
+    {
+      "type": "url",
+      "id": "link_about",
+      "label": "About link"
+    },
+    {
+      "type": "text",
+      "id": "nav_label_blog",
+      "label": "Blog label",
+      "default": "Blog"
+    },
+    {
+      "type": "url",
+      "id": "link_blog",
+      "label": "Blog link"
+    },
+    {
+      "type": "text",
+      "id": "nav_label_contact",
+      "label": "Contact label",
+      "default": "Contact"
+    },
+    {
+      "type": "url",
+      "id": "link_contact",
+      "label": "Contact link"
+    },
+    {
+      "type": "header",
+      "content": "Mobile menu"
+    },
+    {
+      "type": "text",
+      "id": "mobile_menu_heading",
+      "label": "Mobile menu heading",
+      "default": "Menu"
+    },
+    {
+      "type": "text",
+      "id": "mobile_label_account",
+      "label": "Account button label",
+      "default": "Account"
+    },
+    {
+      "type": "text",
+      "id": "mobile_label_login",
+      "label": "Login button label",
+      "default": "Login"
+    },
+    {
+      "type": "header",
+      "content": "Search overlay"
+    },
+    {
+      "type": "text",
+      "id": "search_overlay_title",
+      "label": "Search overlay title",
+      "default": "Search"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search input placeholder",
+      "default": "Search for products, ingredients…"
+    },
+    {
+      "type": "text",
+      "id": "search_hint",
+      "label": "Search hint text",
+      "default": "Press Enter to see all results"
+    },
+    {
+      "type": "text",
+      "id": "search_popular_label",
+      "label": "Popular searches heading",
+      "default": "Popular searches"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "search_chip",
+      "name": "Popular search",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "info": "Text shown on the chip"
+        },
+        {
+          "type": "text",
+          "id": "query",
+          "label": "Search query",
+          "info": "Keyword used when the chip is clicked"
+        }
+      ]
     }
   ]
 }

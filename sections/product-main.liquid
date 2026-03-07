@@ -4,8 +4,19 @@
 {% endcomment %}
 
 <section class="product-hero" id="product-hero">
+  {%- comment -%} Breadcrumb: Home > Collection > Product (beminimalist PDP) {%- endcomment -%}
+  <nav class="product-hero__breadcrumb" aria-label="Breadcrumb">
+    <a href="{{ routes.root_url }}" class="product-hero__breadcrumb-link">{{ section.settings.breadcrumb_home | default: 'Home' }}</a>
+    <span class="product-hero__breadcrumb-sep">›</span>
+    {%- if product.collection -%}
+      <a href="{{ product.collection.url }}" class="product-hero__breadcrumb-link">{{ product.collection.title }}</a>
+      <span class="product-hero__breadcrumb-sep">›</span>
+    {%- endif -%}
+    <span class="product-hero__breadcrumb-current">{{ product.title }}</span>
+  </nav>
+
   <div class="product-hero__container">
-    <!-- Left Column - Product Images (carousel: slide to view) -->
+    <!-- Left Column - Image gallery: main image + thumbnails (beminimalist) -->
     <div class="product-images fade-in-up" style="animation-delay: 0.1s;">
       {% if product.featured_image or product.images.size > 0 %}
         <div class="product-image-main product-image-carousel-wrapper">
@@ -41,11 +52,12 @@
             <button type="button" class="product-carousel-btn product-carousel-next" aria-label="Next image">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
             </button>
+            <p class="product-image-zoom-hint">{{ section.settings.zoom_hint | default: 'Click to zoom' }}</p>
             <div class="product-carousel-dots" id="product-carousel-dots" aria-hidden="true"></div>
           {% endif %}
           {% if product.compare_at_price > product.price %}
             <div class="product-badge-sale">
-              <span class="badge-sale__text">Save {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%</span>
+              <span class="badge-sale__text">{{ section.settings.sale_badge_prefix | default: 'Save' }} {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%</span>
             </div>
           {% endif %}
           <button type="button" class="product-image-zoom" id="product-image-zoom-btn" aria-label="Zoom product image">
@@ -56,11 +68,21 @@
           </button>
         </div>
         {% if product.images.size > 1 %}
+          <div class="product-thumbnails" id="product-thumbnails" role="tablist" aria-label="Image thumbnails">
+            {% for image in product.images %}
+              <button type="button" class="product-thumbnail{% if forloop.first %} product-thumbnail--active{% endif %}" data-index="{{ forloop.index0 }}" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="Image {{ forloop.index }}">
+                <img src="{{ image | image_url: width: 120 }}" alt="{{ image.alt | default: product.title }}" width="120" height="120" loading="lazy">
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% if product.images.size > 1 %}
           <script>
             (function() {
               var carousel = document.getElementById('product-image-carousel');
               var track = document.getElementById('product-carousel-track');
               var dotsEl = document.getElementById('product-carousel-dots');
+              var thumbsEl = document.getElementById('product-thumbnails');
               if (!carousel || !track) return;
               var slides = track.querySelectorAll('.product-carousel-slide');
               var total = slides.length;
@@ -72,6 +94,13 @@
                 if (dotsEl) {
                   var dots = dotsEl.querySelectorAll('.product-carousel-dot');
                   for (var i = 0; i < dots.length; i++) dots[i].classList.toggle('active', i === current);
+                }
+                if (thumbsEl) {
+                  var thumbs = thumbsEl.querySelectorAll('.product-thumbnail');
+                  for (var j = 0; j < thumbs.length; j++) {
+                    thumbs[j].classList.toggle('product-thumbnail--active', j === current);
+                    thumbs[j].setAttribute('aria-selected', j === current);
+                  }
                 }
               }
               var wrapper = carousel.closest('.product-image-carousel-wrapper');
@@ -89,6 +118,12 @@
                   dot.setAttribute('aria-label', 'Go to image ' + (i + 1));
                   dot.addEventListener('click', function(ix) { return function() { goTo(ix); }; }(i));
                   dotsEl.appendChild(dot);
+                }
+              }
+              if (thumbsEl) {
+                var thumbBtns = thumbsEl.querySelectorAll('.product-thumbnail');
+                for (var t = 0; t < thumbBtns.length; t++) {
+                  thumbBtns[t].addEventListener('click', function(ix) { return function() { goTo(ix); }; }(t));
                 }
               }
               var touchStartX = 0;
@@ -122,30 +157,22 @@
       {% endif %}
     </div>
     
-    <!-- Right Column - Product Info & CTA -->
+    <!-- Right Column - Product info (beminimalist order: title → concern → rating → price → size → CTAs → trust) -->
     <div class="product-info fade-in-up" style="animation-delay: 0.2s;">
-      <!-- Trust Badge -->
-      <div class="product-trust-badges">
-        {% if product.metafields.custom.certificates %}
-          <span class="trust-badge">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              <path d="M9 12l2 2 4-4"/>
-            </svg>
-            {{ product.metafields.custom.certificates }}
-          </span>
-        {% endif %}
-        <span class="trust-badge trust-badge--shipping">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M1 3h15v13H1V3zm16 8h4l3 3v4h-7v-7z"/>
-            <path d="M5 21a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm12 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
-          </svg>
-          Free shipping on orders above ₹999
-        </span>
-      </div>
-      
-      <!-- Product Title -->
+      <!-- Product Title (h1) -->
       <h1 class="product-title">{{ product.title }}</h1>
+
+      <!-- Concern / category tag (muted, beminimalist) -->
+      {% assign show_tags = '' %}
+      {% for tag in product.tags %}
+        {% if tag != 'gst-5' %}
+          {% if show_tags != '' %}{% assign show_tags = show_tags | append: ', ' %}{% endif %}
+          {% assign show_tags = show_tags | append: tag | replace: '-', ' ' %}
+        {% endif %}
+      {% endfor %}
+      {% if show_tags != '' %}
+        <p class="product-concern-tag">{{ show_tags }}</p>
+      {% endif %}
       
       <!-- Star Rating & Review Count -->
       <div class="product-rating-summary">
@@ -181,22 +208,22 @@
       <div class="product-price-section">
         {% if product.compare_at_price > product.price %}
           <div class="price-original">
-            <span class="price-label">Was:</span>
+            <span class="price-label">{{ section.settings.label_was | default: 'Was' }}:</span>
             <span class="price-value price-value--old">{{ product.compare_at_price | money }}</span>
           </div>
           <div class="price-current">
-            <span class="price-label">Now:</span>
+            <span class="price-label">{{ section.settings.label_now | default: 'Now' }}:</span>
             <span class="price-value price-value--sale">{{ product.price | money }}</span>
-            <span class="price-savings">Save {{ product.compare_at_price | minus: product.price | money }}</span>
+            <span class="price-savings">{{ section.settings.label_save | default: 'Save' }} {{ product.compare_at_price | minus: product.price | money }}</span>
           </div>
         {% else %}
           <div class="price-current">
             <span class="price-value">{{ product.price | money }}</span>
           </div>
         {% endif %}
-        <span class="price-gst">Inclusive of all taxes</span>
+        <span class="price-gst">{{ section.settings.price_tax_note | default: 'Inclusive of all taxes' }}</span>
         {% if product.tags contains 'gst-5' %}
-          <span class="price-gst-note">5% GST applies to this product.</span>
+          <span class="price-gst-note">{{ section.settings.gst_note | default: '5% GST applies to this product.' }}</span>
         {% endif %}
       </div>
       
@@ -208,7 +235,7 @@
             <line x1="12" y1="8" x2="12" y2="12"/>
             <line x1="12" y1="16" x2="12.01" y2="16"/>
           </svg>
-          <span>Only {{ product.selected_or_first_available_variant.inventory_quantity }} left in stock!</span>
+          <span>{{ section.settings.stock_low_prefix | default: 'Only' }} {{ product.selected_or_first_available_variant.inventory_quantity }} {{ section.settings.stock_low_suffix | default: 'left in stock!' }}</span>
         </div>
       {% elsif product.selected_or_first_available_variant.available %}
         <div class="product-stock-available">
@@ -245,7 +272,7 @@
                       {% unless variant.available %}disabled{% endunless %}
                     >
                       {{ value }}
-                      {% unless variant.available %}<span class="variant-unavailable">Sold Out</span>{% endunless %}
+                      {% unless variant.available %}<span class="variant-unavailable">{{ section.settings.label_sold_out | default: 'Sold Out' }}</span>{% endunless %}
                     </button>
                   {% endfor %}
                 </div>
@@ -272,7 +299,7 @@
         
         <!-- Quantity Selector -->
         <div class="product-quantity">
-          <label for="quantity-select" class="quantity-label">Quantity</label>
+          <label for="quantity-select" class="quantity-label">{{ section.settings.label_quantity | default: 'Quantity' }}</label>
           <div class="quantity-selector">
             <button type="button" class="quantity-btn" data-action="decrease" aria-label="Decrease quantity">−</button>
             <input type="number" id="quantity-select" name="quantity" value="1" min="1" max="10" class="quantity-input">
@@ -297,9 +324,9 @@
           </span>
           <span class="cta-button__text">
             {% if product.selected_or_first_available_variant.available %}
-              Add to Cart - {{ product.price | money }}
+              {{ section.settings.add_to_cart_text | default: 'Add to Cart' }} - {{ product.price | money }}
             {% else %}
-              Sold Out
+              {{ section.settings.label_sold_out | default: 'Sold Out' }}
             {% endif %}
           </span>
         </button>
@@ -311,7 +338,7 @@
             class="cta-button cta-button--secondary"
             id="buy-now-btn"
           >
-            Buy Now
+            {{ section.settings.buy_now_text | default: 'Buy Now' }}
           </button>
         {% endif %}
       {% endform %}
@@ -340,10 +367,34 @@
                 <line x1="10" y1="14" x2="21" y2="3"/>
               </svg>
             </span>
-            <span class="cta-button__text">Buy On Amazon</span>
+            <span class="cta-button__text">{{ section.settings.buy_on_amazon_text | default: 'Buy On Amazon' }}</span>
           </a>
         {% endif %}
       {% endif %}
+
+      <!-- Trust badges (below CTAs, beminimalist) -->
+      <div class="product-trust-badges">
+        {% if product.metafields.custom.certificates %}
+          <span class="trust-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+            {{ product.metafields.custom.certificates }}
+          </span>
+        {% endif %}
+        <span class="trust-badge trust-badge--shipping">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 3h15v13H1V3zm16 8h4l3 3v4h-7v-7z"/>
+            <path d="M5 21a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm12 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+          </svg>
+          {{ section.settings.trust_free_shipping | default: 'Free shipping on orders above ₹999' }}
+        </span>
+        <span class="trust-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          {{ section.settings.trust_authentic | default: '100% Authentic' }}
+        </span>
+      </div>
 
       <!-- Trust Message -->
       <div class="product-trust-message">
@@ -351,28 +402,28 @@
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
         </svg>
         <div>
-          <strong>100% Secure Checkout</strong>
-          <span>SSL encrypted & secure payment</span>
+<strong>{{ section.settings.trust_secure_title | default: '100% Secure Checkout' }}</strong>
+        <span>{{ section.settings.trust_secure_subtitle | default: 'SSL encrypted & secure payment' }}</span>
         </div>
       </div>
 
       <!-- Delivery Estimator (pincode-based, pan-India) -->
       <div class="delivery-estimator"{% if product %} data-product-id="{{ product.id }}"{% endif %}>
-        <label for="delivery-estimator-pincode" class="delivery-estimator__label">Check delivery time</label>
+        <label for="delivery-estimator-pincode" class="delivery-estimator__label">{{ section.settings.delivery_label | default: 'Check delivery time' }}</label>
         <div class="delivery-estimator__wrapper">
           <input
             type="text"
             id="delivery-estimator-pincode"
             class="delivery-estimator__input"
-            placeholder="Enter 6-digit pincode"
+            placeholder="{{ section.settings.delivery_placeholder | default: 'Enter 6-digit pincode' }}"
             maxlength="6"
             pattern="[0-9]{6}"
             inputmode="numeric"
             autocomplete="postal-code"
             aria-describedby="delivery-estimator-result"
           >
-          <button type="button" id="delivery-estimator-check" class="delivery-estimator__btn" aria-label="Check delivery">
-            Check
+          <button type="button" id="delivery-estimator-check" class="delivery-estimator__btn" aria-label="{{ section.settings.delivery_button_label | default: 'Check' }}">
+            {{ section.settings.delivery_button_text | default: 'Check' }}
           </button>
         </div>
         <div id="delivery-estimator-result" class="delivery-estimator__result" aria-live="polite"></div>
@@ -390,7 +441,7 @@
   <section class="product-description-section" id="product-description">
     <div class="product-description-section__container">
       <div class="product-description-content">
-        <h2 class="product-description-title">Product Description</h2>
+        <h2 class="product-description-title">{{ section.settings.description_heading | default: 'Product Description' }}</h2>
         <div class="product-description-text">
           {{ product.description }}
         </div>
@@ -431,7 +482,7 @@
       </div>
     </div>
     <button type="submit" form="product-form" name="add" class="sticky-cart-bar__button" id="sticky-add-to-cart" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
-      Add to Cart
+      {{ section.settings.sticky_add_to_cart_text | default: 'Add to Cart' }}
     </button>
   </div>
 </div>
@@ -458,9 +509,37 @@
   .product-hero {
     width: 100%;
     max-width: 100%;
-    padding: 30px 40px;
+    padding: 24px 24px 40px;
     background: var(--white);
     box-sizing: border-box;
+  }
+
+  .product-hero__breadcrumb {
+    max-width: 1400px;
+    margin: 0 auto 20px;
+    padding: 0 0 12px;
+    font-size: 14px;
+    color: rgba(76, 85, 100, 0.85);
+  }
+
+  .product-hero__breadcrumb-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .product-hero__breadcrumb-link:hover {
+    text-decoration: underline;
+    color: #15736d;
+  }
+
+  .product-hero__breadcrumb-sep {
+    margin: 0 6px;
+    color: rgba(76, 85, 100, 0.6);
+  }
+
+  .product-hero__breadcrumb-current {
+    color: var(--text);
+    font-weight: 500;
   }
 
   .product-hero__container {
@@ -468,8 +547,64 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
+    gap: 48px 60px;
     align-items: start;
+  }
+
+  .product-concern-tag {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    color: rgba(76, 85, 100, 0.75);
+    line-height: 1.4;
+  }
+
+  .product-image-zoom-hint {
+    position: absolute;
+    bottom: 48px;
+    right: 20px;
+    margin: 0;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .product-thumbnails {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+    justify-content: flex-start;
+  }
+
+  .product-thumbnail {
+    width: 56px;
+    height: 56px;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: border-color 0.2s, opacity 0.2s;
+  }
+
+  .product-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .product-thumbnail:hover {
+    opacity: 0.9;
+  }
+
+  .product-thumbnail--active {
+    border-color: #15736d;
+    box-shadow: 0 0 0 1px #15736d;
   }
 
   /* Product Images */
@@ -836,14 +971,14 @@
   }
 
   .variant-option-btn {
-    padding: 12px 24px;
-    border: 2px solid var(--border-color);
+    padding: 10px 20px;
+    border: 1px solid rgba(76, 85, 100, 0.3);
     background: var(--white);
-    border-radius: 8px;
+    border-radius: 999px;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     position: relative;
   }
 
@@ -853,8 +988,8 @@
   }
 
   .variant-option-btn.active {
-    border-color: var(--forest-green);
-    background: var(--forest-green);
+    border-color: #15736d;
+    background: #15736d;
     color: var(--white);
   }
 
@@ -2089,7 +2224,41 @@
 {% schema %}
 {
   "name": "Product Main",
-  "settings": [],
+  "settings": [
+    { "type": "header", "content": "Breadcrumb & gallery" },
+    { "type": "text", "id": "breadcrumb_home", "label": "Breadcrumb Home label", "default": "Home" },
+    { "type": "text", "id": "zoom_hint", "label": "Zoom hint text", "default": "Click to zoom" },
+    { "type": "text", "id": "sale_badge_prefix", "label": "Sale badge prefix", "default": "Save" },
+    { "type": "header", "content": "Price labels" },
+    { "type": "text", "id": "label_was", "label": "Price Was label", "default": "Was" },
+    { "type": "text", "id": "label_now", "label": "Price Now label", "default": "Now" },
+    { "type": "text", "id": "label_save", "label": "Price Save label", "default": "Save" },
+    { "type": "text", "id": "price_tax_note", "label": "Tax inclusive note", "default": "Inclusive of all taxes" },
+    { "type": "text", "id": "gst_note", "label": "GST note (when applicable)", "default": "5% GST applies to this product." },
+    { "type": "header", "content": "Stock" },
+    { "type": "text", "id": "stock_low_prefix", "label": "Low stock prefix", "default": "Only" },
+    { "type": "text", "id": "stock_low_suffix", "label": "Low stock suffix", "default": "left in stock!" },
+    { "type": "text", "id": "stock_available_text", "label": "In stock text", "default": "In Stock - Ready to Ship" },
+    { "type": "text", "id": "label_sold_out", "label": "Sold out label", "default": "Sold Out" },
+    { "type": "header", "content": "Form" },
+    { "type": "text", "id": "label_quantity", "label": "Quantity label", "default": "Quantity" },
+    { "type": "text", "id": "add_to_cart_text", "label": "Add to Cart button text", "default": "Add to Cart" },
+    { "type": "text", "id": "buy_now_text", "label": "Buy Now button text", "default": "Buy Now" },
+    { "type": "text", "id": "buy_on_amazon_text", "label": "Buy on Amazon button text", "default": "Buy On Amazon" },
+    { "type": "text", "id": "sticky_add_to_cart_text", "label": "Sticky bar Add to Cart text", "default": "Add to Cart" },
+    { "type": "header", "content": "Trust badges" },
+    { "type": "text", "id": "trust_free_shipping", "label": "Free shipping trust text", "default": "Free shipping on orders above ₹999" },
+    { "type": "text", "id": "trust_authentic", "label": "Authentic trust text", "default": "100% Authentic" },
+    { "type": "text", "id": "trust_secure_title", "label": "Secure checkout title", "default": "100% Secure Checkout" },
+    { "type": "text", "id": "trust_secure_subtitle", "label": "Secure checkout subtitle", "default": "SSL encrypted & secure payment" },
+    { "type": "header", "content": "Delivery estimator" },
+    { "type": "text", "id": "delivery_label", "label": "Delivery label", "default": "Check delivery time" },
+    { "type": "text", "id": "delivery_placeholder", "label": "Pincode placeholder", "default": "Enter 6-digit pincode" },
+    { "type": "text", "id": "delivery_button_text", "label": "Check button text", "default": "Check" },
+    { "type": "text", "id": "delivery_button_label", "label": "Check button (accessibility)", "default": "Check" },
+    { "type": "header", "content": "Description" },
+    { "type": "text", "id": "description_heading", "label": "Description section heading", "default": "Product Description" }
+  ],
   "presets": [
     {
       "name": "Product Main"

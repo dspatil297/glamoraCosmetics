@@ -5,7 +5,7 @@
 <section class="search-page">
   <div class="search-page__container">
     <div class="search-page__header">
-      <h1 class="search-page__title">Search Results</h1>
+      <h1 class="search-page__title">{{ section.settings.page_title | default: 'Search Results' }}</h1>
       
       <form action="{{ routes.search_url }}" method="get" role="search" class="search-page__form">
         <div class="search-page__input-wrapper">
@@ -13,7 +13,7 @@
             type="search"
             name="q"
             value="{{ search.terms | escape }}"
-            placeholder="Search for products, ingredients..."
+            placeholder="{{ section.settings.search_placeholder | default: 'Search for products, ingredients...' }}"
             class="search-page__input"
             autocomplete="off"
           >
@@ -37,7 +37,7 @@
           
           {% if section.settings.show_sort %}
             <div class="search-page__sort">
-              <label for="search-sort" class="search-page__sort-label">Sort by:</label>
+              <label for="search-sort" class="search-page__sort-label">{{ section.settings.sort_label | default: 'Sort by:' }}</label>
               <select id="search-sort" class="search-page__sort-select" data-search-sort>
                 <option value="relevance">Relevance</option>
                 <option value="price-ascending">Price: Low to High</option>
@@ -106,14 +106,14 @@
               <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-          <h2 class="search-page__empty-title">No results found</h2>
+          <h2 class="search-page__empty-title">{{ section.settings.empty_title | default: 'No results found' }}</h2>
           <p class="search-page__empty-text">
-            We couldn't find any results for "<strong>{{ search.terms }}</strong>". Try different keywords or browse our collections.
+            {{ section.settings.empty_text_before | default: "We couldn't find any results for" }} "<strong>{{ search.terms }}</strong>"{{ section.settings.empty_text_after | default: '. Try different keywords or browse our collections.' }}
           </p>
           
           {% if section.settings.show_suggestions %}
             <div class="search-page__suggestions">
-              <h3>Popular Searches:</h3>
+              <h3>{{ section.settings.suggestions_heading | default: 'Popular Searches:' }}</h3>
               <div class="search-page__suggestion-tags">
                 {% assign suggestions = section.settings.suggestion_tags | split: ',' %}
                 {% for suggestion in suggestions limit: 8 %}
@@ -125,8 +125,8 @@
             </div>
           {% endif %}
           
-          <a href="{{ routes.collections_url }}/best-sellers" class="btn btn-primary btn-large">
-            Browse Best Sellers
+          <a href="{{ routes.collections_url }}{{ section.settings.empty_cta_path | default: '/best-sellers' }}" class="btn btn-primary btn-large">
+            {{ section.settings.empty_cta_text | default: 'Browse Best Sellers' }}
           </a>
         </div>
       {% endif %}
@@ -137,8 +137,8 @@
             <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <h2 class="search-page__initial-title">Start Your Search</h2>
-        <p class="search-page__initial-text">Enter keywords above to find products, articles, or pages.</p>
+        <h2 class="search-page__initial-title">{{ section.settings.initial_title | default: 'Start Your Search' }}</h2>
+        <p class="search-page__initial-text">{{ section.settings.initial_text | default: 'Enter keywords above to find products, articles, or pages.' }}</p>
       </div>
     {% endif %}
   </div>
@@ -622,7 +622,22 @@
       "label": "Suggestion Tags",
       "default": "natural, vegan, gluten-free, smoothie, wellness",
       "info": "Comma-separated list of popular search terms"
-    }
+    },
+    {
+      "type": "header",
+      "content": "Labels (editable)"
+    },
+    { "type": "text", "id": "page_title", "label": "Page title", "default": "Search Results" },
+    { "type": "text", "id": "search_placeholder", "label": "Search input placeholder", "default": "Search for products, ingredients..." },
+    { "type": "text", "id": "sort_label", "label": "Sort by label", "default": "Sort by:" },
+    { "type": "text", "id": "empty_title", "label": "No results title", "default": "No results found" },
+    { "type": "text", "id": "empty_text_before", "label": "No results text (before query)", "default": "We couldn't find any results for" },
+    { "type": "text", "id": "empty_text_after", "label": "No results text (after query)", "default": ". Try different keywords or browse our collections." },
+    { "type": "text", "id": "suggestions_heading", "label": "Popular searches heading", "default": "Popular Searches:" },
+    { "type": "text", "id": "empty_cta_text", "label": "No results CTA button text", "default": "Browse Best Sellers" },
+    { "type": "text", "id": "empty_cta_path", "label": "No results CTA path (e.g. /best-sellers)", "default": "/best-sellers" },
+    { "type": "text", "id": "initial_title", "label": "Initial state title", "default": "Start Your Search" },
+    { "type": "text", "id": "initial_text", "label": "Initial state description", "default": "Enter keywords above to find products, articles, or pages." }
   ],
   "presets": [
     {

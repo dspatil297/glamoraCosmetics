@@ -7,8 +7,8 @@
       <p class="footer-cta__subtitle">{{ section.settings.cta_subtitle | default: "Discover Glamora\u2019s anti-pollution skincare, hybrid sunscreens, and moisturizing sprays crafted for everyday urban living." }}</p>
       <a href="{{ section.settings.cta_button_url | default: routes.all_products_collection_url }}" class="footer-cta__btn">{{ section.settings.cta_button_text | default: "Shop Now" }}</a>
       <div class="footer-cta__trust">
-        <span class="footer-cta__trust-item">✓ Secure Checkout</span>
-        <span class="footer-cta__trust-item">✓ Fast Delivery</span>
+        {% if section.settings.cta_trust_1 != blank %}<span class="footer-cta__trust-item">{{ section.settings.cta_trust_1 }}</span>{% endif %}
+        {% if section.settings.cta_trust_2 != blank %}<span class="footer-cta__trust-item">{{ section.settings.cta_trust_2 }}</span>{% endif %}
       </div>
     </div>
   </section>
@@ -19,31 +19,34 @@
     {%- comment -%} Four columns: About, Quick links, Contact Us, Legal {%- endcomment -%}
     <div class="footer__grid">
       <div class="footer__col footer__about">
-        <h4 class="footer__col-title">About {{ shop.name | upcase }}</h4>
+        <h4 class="footer__col-title">{{ section.settings.col_title_about | default: 'About' }} {{ shop.name | upcase }}</h4>
         <p class="footer__about-text">{{ section.settings.company_description | default: "Glamora Cosmetics creates modern, anti-pollution skincare designed to protect, hydrate, and enhance your natural glow. Our science-backed formulas are crafted for everyday urban life, so your skin feels radiant, refreshed, and confident." }}</p>
       </div>
 
       <div class="footer__col footer__policies">
-        <h4 class="footer__col-title">Quick links</h4>
+        <h4 class="footer__col-title">{{ section.settings.col_title_quick_links | default: 'Quick links' }}</h4>
         <ul class="footer__list">
-          <li><a href="/pages/recipes">Recipes</a></li>
           {% if section.settings.policies_menu != blank %}
             {% for link in linklists[section.settings.policies_menu].links %}
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
             {% endfor %}
+          {% elsif section.settings.footer_default_menu != blank %}
+            {% for link in linklists[section.settings.footer_default_menu].links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
           {% else %}
-            <li><a href="{{ routes.root_url }}">Home</a></li>
-            <li><a href="/pages/terms-and-conditions">Terms and Conditions</a></li>
-            <li><a href="/pages/privacy-policy">Privacy Policy</a></li>
-            <li><a href="/pages/shipping-policy">Shipping Policy</a></li>
-            <li><a href="/pages/cancellation-and-refunds">Cancellation and Refunds</a></li>
-            <li><a href="/pages/contact">Contact Us</a></li>
+            <li><a href="{{ routes.root_url }}">{{ section.settings.default_link_home | default: 'Home' }}</a></li>
+            <li><a href="/pages/terms-and-conditions">{{ section.settings.default_link_terms | default: 'Terms and Conditions' }}</a></li>
+            <li><a href="/pages/privacy-policy">{{ section.settings.default_link_privacy | default: 'Privacy Policy' }}</a></li>
+            <li><a href="/pages/shipping-policy">{{ section.settings.default_link_shipping | default: 'Shipping Policy' }}</a></li>
+            <li><a href="/pages/cancellation-and-refunds">{{ section.settings.default_link_refunds | default: 'Cancellation and Refunds' }}</a></li>
+            <li><a href="/pages/contact">{{ section.settings.default_link_contact | default: 'Contact Us' }}</a></li>
           {% endif %}
         </ul>
       </div>
 
       <div class="footer__col footer__contact">
-        <h4 class="footer__col-title">Contact Us</h4>
+        <h4 class="footer__col-title">{{ section.settings.col_title_contact | default: 'Contact Us' }}</h4>
         <ul class="footer__contact-list">
           {% if section.settings.email != blank %}
             <li class="footer__contact-row">
@@ -71,9 +74,9 @@
           {% endif %}
         </ul>
         {%- assign instagram_url = section.settings.instagram_url | default: 'https://www.instagram.com/glamoracosmetics.official' -%}
-        {%- assign facebook_url = section.settings.facebook_url | default: 'https://www.facebook.com/glamoracosmetics' -%}
+        {%- assign facebook_url = section.settings.facebook_url | default: 'https://www.facebook.com/share/17GZRJKQPd/' -%}
         <div class="footer__social">
-          <span class="footer__social-label">Follow Us</span>
+          <span class="footer__social-label">{{ section.settings.social_label | default: 'Follow Us' }}</span>
           <div class="footer__social-links">
             <a href="{{ instagram_url }}" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Instagram">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
@@ -86,29 +89,29 @@
       </div>
 
       <div class="footer__col footer__legal-col">
-        <h4 class="footer__col-title">Legal</h4>
+        <h4 class="footer__col-title">{{ section.settings.col_title_legal | default: 'Legal' }}</h4>
         <dl class="footer__legal-list">
           {% if section.settings.legal_manufacturer != blank %}
             <div class="footer__legal-row">
-              <dt>Manufacturer:</dt>
+              <dt>{{ section.settings.legal_label_manufacturer | default: 'Manufacturer' }}:</dt>
               <dd>{{ section.settings.legal_manufacturer }}</dd>
             </div>
           {% endif %}
           {% if section.settings.legal_mfg != blank %}
             <div class="footer__legal-row">
-              <dt>MFG:</dt>
+              <dt>{{ section.settings.legal_label_mfg | default: 'MFG' }}:</dt>
               <dd>{{ section.settings.legal_mfg }}</dd>
             </div>
           {% endif %}
           {% if section.settings.legal_origin != blank %}
             <div class="footer__legal-row">
-              <dt>Origin:</dt>
+              <dt>{{ section.settings.legal_label_origin | default: 'Origin' }}:</dt>
               <dd>{{ section.settings.legal_origin }}</dd>
             </div>
           {% endif %}
           {% if section.settings.legal_expiry != blank %}
             <div class="footer__legal-row">
-              <dt>Expiry:</dt>
+              <dt>{{ section.settings.legal_label_expiry | default: 'Expiry' }}:</dt>
               <dd>{{ section.settings.legal_expiry }}</dd>
             </div>
           {% endif %}
@@ -134,12 +137,12 @@
 
 {%- comment -%} Floating action buttons {%- endcomment -%}
 {% if section.settings.show_scroll_top %}
-  <button type="button" class="footer-fab footer-fab--scroll" aria-label="Scroll to top" id="footer-scroll-top">
+  <button type="button" class="footer-fab footer-fab--scroll" aria-label="{{ section.settings.fab_scroll_label | default: 'Scroll to top' }}" id="footer-scroll-top">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
 {% endif %}
 {% if section.settings.show_chat and section.settings.chat_url != blank %}
-  <a href="{{ section.settings.chat_url }}" class="footer-fab footer-fab--chat" aria-label="Chat" target="_blank" rel="noopener noreferrer">
+  <a href="{{ section.settings.chat_url }}" class="footer-fab footer-fab--chat" aria-label="{{ section.settings.fab_chat_label | default: 'Chat' }}" target="_blank" rel="noopener noreferrer">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
   </a>
 {% endif %}
@@ -559,8 +562,26 @@
       "label": "Button link"
     },
     {
+      "type": "text",
+      "id": "cta_trust_1",
+      "label": "CTA trust item 1",
+      "default": "✓ Secure Checkout"
+    },
+    {
+      "type": "text",
+      "id": "cta_trust_2",
+      "label": "CTA trust item 2",
+      "default": "✓ Fast Delivery"
+    },
+    {
       "type": "header",
       "content": "About"
+    },
+    {
+      "type": "text",
+      "id": "col_title_about",
+      "label": "About column title",
+      "default": "About"
     },
     {
       "type": "textarea",
@@ -575,11 +596,64 @@
     {
       "type": "link_list",
       "id": "policies_menu",
-      "label": "Quick links menu (blank = default links)"
+      "label": "Quick links menu (blank = default links below)"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_default_menu",
+      "label": "Default links menu (when Quick links menu is blank, use this menu instead of built-in links)"
+    },
+    {
+      "type": "text",
+      "id": "col_title_quick_links",
+      "label": "Quick links column title",
+      "default": "Quick links"
+    },
+    {
+      "type": "text",
+      "id": "default_link_home",
+      "label": "Default: Home link text",
+      "default": "Home"
+    },
+    {
+      "type": "text",
+      "id": "default_link_terms",
+      "label": "Default: Terms link text",
+      "default": "Terms and Conditions"
+    },
+    {
+      "type": "text",
+      "id": "default_link_privacy",
+      "label": "Default: Privacy link text",
+      "default": "Privacy Policy"
+    },
+    {
+      "type": "text",
+      "id": "default_link_shipping",
+      "label": "Default: Shipping link text",
+      "default": "Shipping Policy"
+    },
+    {
+      "type": "text",
+      "id": "default_link_refunds",
+      "label": "Default: Refunds link text",
+      "default": "Cancellation and Refunds"
+    },
+    {
+      "type": "text",
+      "id": "default_link_contact",
+      "label": "Default: Contact link text",
+      "default": "Contact Us"
     },
     {
       "type": "header",
       "content": "Contact Us"
+    },
+    {
+      "type": "text",
+      "id": "col_title_contact",
+      "label": "Contact column title",
+      "default": "Contact Us"
     },
     {
       "type": "text",
@@ -605,17 +679,53 @@
       "type": "text",
       "id": "instagram_url",
       "label": "Instagram URL",
-      "default": "https://www.instagram.com/sarvital_foodtech"
+      "default": "https://www.instagram.com/glamoracosmetics.official"
     },
     {
       "type": "text",
       "id": "facebook_url",
       "label": "Facebook URL",
-      "default": "https://www.facebook.com/share/1Dpad1S1np/"
+      "default": "https://www.facebook.com/share/17GZRJKQPd/"
+    },
+    {
+      "type": "text",
+      "id": "social_label",
+      "label": "Social links heading",
+      "default": "Follow Us"
     },
     {
       "type": "header",
       "content": "Legal"
+    },
+    {
+      "type": "text",
+      "id": "col_title_legal",
+      "label": "Legal column title",
+      "default": "Legal"
+    },
+    {
+      "type": "text",
+      "id": "legal_label_manufacturer",
+      "label": "Legal: Manufacturer label",
+      "default": "Manufacturer"
+    },
+    {
+      "type": "text",
+      "id": "legal_label_mfg",
+      "label": "Legal: MFG label",
+      "default": "MFG"
+    },
+    {
+      "type": "text",
+      "id": "legal_label_origin",
+      "label": "Legal: Origin label",
+      "default": "Origin"
+    },
+    {
+      "type": "text",
+      "id": "legal_label_expiry",
+      "label": "Legal: Expiry label",
+      "default": "Expiry"
     },
     {
       "type": "text",
@@ -679,6 +789,18 @@
       "type": "url",
       "id": "chat_url",
       "label": "Chat link (WhatsApp, live chat, etc.)"
+    },
+    {
+      "type": "text",
+      "id": "fab_scroll_label",
+      "label": "Scroll to top button (accessibility label)",
+      "default": "Scroll to top"
+    },
+    {
+      "type": "text",
+      "id": "fab_chat_label",
+      "label": "Chat button (accessibility label)",
+      "default": "Chat"
     }
   ]
 }

@@ -9,13 +9,13 @@
   <div class="policy-page__container">
     <header class="policy-page__header">
       <nav class="policy-page__breadcrumbs" aria-label="Breadcrumb">
-        <a href="{{ routes.root_url }}" class="policy-page__breadcrumb-link">Home</a>
+        <a href="{{ routes.root_url }}" class="policy-page__breadcrumb-link">{{ section.settings.breadcrumb_home | default: 'Home' }}</a>
         <span class="policy-page__breadcrumb-separator">›</span>
         <span class="policy-page__breadcrumb-current">{{ section.settings.title }}</span>
       </nav>
       <h1 class="policy-page__title">{{ section.settings.title }}</h1>
       {% if section.settings.last_updated != blank %}
-        <p class="policy-page__updated"><strong>Last Updated:</strong> {{ section.settings.last_updated }}</p>
+        <p class="policy-page__updated"><strong>{{ section.settings.last_updated_label | default: 'Last Updated' }}:</strong> {{ section.settings.last_updated }}</p>
       {% endif %}
     </header>
 
@@ -23,7 +23,7 @@
       <aside class="policy-page__toc" aria-label="Policy sections">
         {% if section.blocks.size > 0 %}
           <div class="policy-page__toc-inner">
-            <p class="policy-page__toc-title">On this page</p>
+            <p class="policy-page__toc-title">{{ section.settings.toc_title | default: 'On this page' }}</p>
             <ul class="policy-page__toc-list">
               {% for block in section.blocks %}
                 {% if block.type == 'section_link' and block.settings.anchor_id != blank %}
@@ -207,6 +207,24 @@
       "id": "last_updated",
       "label": "Last updated",
       "default": "January 2024"
+    },
+    {
+      "type": "text",
+      "id": "breadcrumb_home",
+      "label": "Breadcrumb Home label",
+      "default": "Home"
+    },
+    {
+      "type": "text",
+      "id": "last_updated_label",
+      "label": "Last updated label",
+      "default": "Last Updated"
+    },
+    {
+      "type": "text",
+      "id": "toc_title",
+      "label": "Table of contents title",
+      "default": "On this page"
     },
     {
       "type": "select",
