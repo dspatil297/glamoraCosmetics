@@ -25,7 +25,7 @@
             <path d="M8 13h8M8 17h8M8 21h4"/>
           </svg>
         </div>
-        <h2 class="section-title">Nutrition Facts</h2>
+        <h2 class="section-title">{{ section.settings.section_title | default: 'Nutrition Facts' }}</h2>
       </div>
       
       <div class="nutrition-table-wrapper">
@@ -34,9 +34,9 @@
                {% if nutrition_value %}data-nutrition-json="{{ nutrition_value | json | escape }}"{% endif %}>
           <thead>
             <tr>
-              <th>Nutrient</th>
-              <th>Per 100 g</th>
-              <th>% RDA per Serve</th>
+              <th>{{ section.settings.table_header_1 | default: 'Nutrient' }}</th>
+              <th>{{ section.settings.table_header_2 | default: 'Per 100 g' }}</th>
+              <th>{{ section.settings.table_header_3 | default: '% RDA per Serve' }}</th>
             </tr>
           </thead>
           <tbody>
@@ -906,8 +906,33 @@
 
 {% schema %}
 {
-  "name": "Nutrition Facts",
-  "settings": [],
+  "name": "Key Ingredients / Nutrition",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section heading",
+      "default": "Nutrition Facts"
+    },
+    {
+      "type": "text",
+      "id": "table_header_1",
+      "label": "Table column 1 header",
+      "default": "Nutrient"
+    },
+    {
+      "type": "text",
+      "id": "table_header_2",
+      "label": "Table column 2 header",
+      "default": "Per 100 g"
+    },
+    {
+      "type": "text",
+      "id": "table_header_3",
+      "label": "Table column 3 header",
+      "default": "% RDA per Serve"
+    }
+  ],
   "presets": [
     {
       "name": "Nutrition Facts"

@@ -161,7 +161,7 @@
           <line x1="12" y1="17" x2="12.01" y2="17"/>
         </svg>
       </div>
-      <h2 class="product-faq__title">Frequently Asked Questions</h2>
+      <h2 class="product-faq__title">{{ section.settings.section_title | default: 'Frequently Asked Questions' }}</h2>
     </div>
     
     <div class="product-faq__accordion">
@@ -185,7 +185,7 @@
                 {% if answer != blank %}
                   {{ answer | newline_to_br }}
                 {% else %}
-                  <p>No answer provided.</p>
+                  <p>{{ section.settings.empty_answer_text | default: 'No answer provided.' }}</p>
                 {% endif %}
               </div>
             </div>
@@ -649,7 +649,20 @@
 {% schema %}
 {
   "name": "Product FAQ",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "text",
+      "id": "empty_answer_text",
+      "label": "Text when answer is missing",
+      "default": "No answer provided."
+    }
+  ],
   "presets": [
     {
       "name": "Product FAQ"

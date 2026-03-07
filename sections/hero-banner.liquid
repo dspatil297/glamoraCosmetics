@@ -66,7 +66,7 @@
               >
             </picture>
           {%- else -%}
-            <span class="hero-banner__slide-placeholder">Select image in Theme Customizer → click this slide → Slide image</span>
+            <span class="hero-banner__slide-placeholder">{{ section.settings.slide_placeholder_text | default: 'Select image in Theme Customizer → click this slide → Slide image' }}</span>
           {%- endif -%}
         </div>
       {%- endfor -%}
@@ -94,7 +94,7 @@
       {% else %}
         <div class="hero-banner__slide hero-banner__slide--active">
           <div class="hero-banner__slide-placeholder">
-            <p>Add a hero image in Theme Customizer</p>
+            <p>{{ section.settings.hero_placeholder_text | default: 'Add a hero image in Theme Customizer' }}</p>
           </div>
         </div>
       {% endif %}
@@ -916,6 +916,18 @@
       "step": 5,
       "default": 50,
       "unit": "%"
+    },
+    {
+      "type": "text",
+      "id": "slide_placeholder_text",
+      "label": "Carousel slide placeholder (no image)",
+      "default": "Select image in Theme Customizer → click this slide → Slide image"
+    },
+    {
+      "type": "text",
+      "id": "hero_placeholder_text",
+      "label": "Single hero placeholder (no image)",
+      "default": "Add a hero image in Theme Customizer"
     }
   ],
   "blocks": [

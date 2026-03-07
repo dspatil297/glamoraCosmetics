@@ -34,7 +34,7 @@
     </picture>
   {%- else -%}
     <div class="promo-banner__placeholder">
-      <p>Add a banner image in Theme Customizer for this section.</p>
+      <p>{{ section.settings.placeholder_text | default: 'Add a banner image in Theme Customizer for this section.' }}</p>
     </div>
   {%- endif -%}
 
@@ -83,7 +83,8 @@
     { "type": "image_picker", "id": "image", "label": "Desktop image" },
     { "type": "image_picker", "id": "mobile_image", "label": "Mobile image (optional)" },
     { "type": "url", "id": "href", "label": "Link (optional)" },
-    { "type": "text", "id": "alt", "label": "Alt text", "default": "Promotion" }
+    { "type": "text", "id": "alt", "label": "Alt text", "default": "Promotion" },
+    { "type": "text", "id": "placeholder_text", "label": "Placeholder (no image)", "default": "Add a banner image in Theme Customizer for this section." }
   ],
   "presets": [
     { "name": "Promo banner (image)" }

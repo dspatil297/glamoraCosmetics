@@ -39,11 +39,11 @@
             <div class="search-page__sort">
               <label for="search-sort" class="search-page__sort-label">{{ section.settings.sort_label | default: 'Sort by:' }}</label>
               <select id="search-sort" class="search-page__sort-select" data-search-sort>
-                <option value="relevance">Relevance</option>
-                <option value="price-ascending">Price: Low to High</option>
-                <option value="price-descending">Price: High to Low</option>
-                <option value="title-ascending">Name: A-Z</option>
-                <option value="title-descending">Name: Z-A</option>
+                <option value="relevance">{{ section.settings.sort_relevance | default: 'Relevance' }}</option>
+                <option value="price-ascending">{{ section.settings.sort_price_asc | default: 'Price: Low to High' }}</option>
+                <option value="price-descending">{{ section.settings.sort_price_desc | default: 'Price: High to Low' }}</option>
+                <option value="title-ascending">{{ section.settings.sort_name_az | default: 'Name: A-Z' }}</option>
+                <option value="title-descending">{{ section.settings.sort_name_za | default: 'Name: Z-A' }}</option>
               </select>
             </div>
           {% endif %}
@@ -630,6 +630,11 @@
     { "type": "text", "id": "page_title", "label": "Page title", "default": "Search Results" },
     { "type": "text", "id": "search_placeholder", "label": "Search input placeholder", "default": "Search for products, ingredients..." },
     { "type": "text", "id": "sort_label", "label": "Sort by label", "default": "Sort by:" },
+    { "type": "text", "id": "sort_relevance", "label": "Sort: Relevance", "default": "Relevance" },
+    { "type": "text", "id": "sort_price_asc", "label": "Sort: Price low to high", "default": "Price: Low to High" },
+    { "type": "text", "id": "sort_price_desc", "label": "Sort: Price high to low", "default": "Price: High to Low" },
+    { "type": "text", "id": "sort_name_az", "label": "Sort: Name A-Z", "default": "Name: A-Z" },
+    { "type": "text", "id": "sort_name_za", "label": "Sort: Name Z-A", "default": "Name: Z-A" },
     { "type": "text", "id": "empty_title", "label": "No results title", "default": "No results found" },
     { "type": "text", "id": "empty_text_before", "label": "No results text (before query)", "default": "We couldn't find any results for" },
     { "type": "text", "id": "empty_text_after", "label": "No results text (after query)", "default": ". Try different keywords or browse our collections." },

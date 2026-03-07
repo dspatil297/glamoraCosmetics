@@ -39,8 +39,8 @@
         {% if section.settings.show_privacy_link %}
           <p class="newsletter-cta__privacy">
             <small>
-              By subscribing, you agree to our 
-              <a href="{{ section.settings.privacy_link | default: '/pages/privacy-policy' }}" target="_blank">Privacy Policy</a>
+              {{ section.settings.privacy_prefix | default: 'By subscribing, you agree to our' }}
+              <a href="{{ section.settings.privacy_link | default: '/pages/privacy-policy' }}" target="_blank">{{ section.settings.privacy_link_text | default: 'Privacy Policy' }}</a>
             </small>
           </p>
         {% endif %}
@@ -213,6 +213,18 @@
       "type": "url",
       "id": "privacy_link",
       "label": "Privacy Policy Link"
+    },
+    {
+      "type": "text",
+      "id": "privacy_prefix",
+      "label": "Privacy text (before link)",
+      "default": "By subscribing, you agree to our"
+    },
+    {
+      "type": "text",
+      "id": "privacy_link_text",
+      "label": "Privacy link label",
+      "default": "Privacy Policy"
     }
   ],
   "presets": [
