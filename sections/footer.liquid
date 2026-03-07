@@ -3,8 +3,8 @@
   <section class="footer-cta" aria-label="Call to action">
     <div class="footer-cta__bg"></div>
     <div class="footer-cta__inner">
-      <h2 class="footer-cta__title">{{ section.settings.cta_headline | default: "Enjoy the best quality cosmetics" }}</h2>
-      <p class="footer-cta__subtitle">{{ section.settings.cta_subtitle | default: "Discover Glamora\u2019s anti-pollution skincare, hybrid sunscreens, and moisturizing sprays crafted for everyday urban living." }}</p>
+      <h2 class="footer-cta__title">{{ section.settings.cta_headline | default: "Ready for healthier-looking skin?" }}</h2>
+      <p class="footer-cta__subtitle">{{ section.settings.cta_subtitle | default: "Discover cleansers, sunscreens and moisturizers that protect and nourish. Free shipping on orders above ₹999." }}</p>
       <a href="{{ section.settings.cta_button_url | default: routes.all_products_collection_url }}" class="footer-cta__btn">{{ section.settings.cta_button_text | default: "Shop Now" }}</a>
       <div class="footer-cta__trust">
         {% if section.settings.cta_trust_1 != blank %}<span class="footer-cta__trust-item">{{ section.settings.cta_trust_1 }}</span>{% endif %}
@@ -542,19 +542,19 @@
       "type": "text",
       "id": "cta_headline",
       "label": "Headline",
-      "default": "Start Your Wellness Journey Today"
+      "default": "Ready for healthier-looking skin?"
     },
     {
       "type": "text",
       "id": "cta_subtitle",
       "label": "Subtitle",
-      "default": "Join thousands who have transformed their health with SARVITAL"
+      "default": "Discover cleansers, sunscreens and moisturizers that protect and nourish. Free shipping on orders above ₹999."
     },
     {
       "type": "text",
       "id": "cta_button_text",
       "label": "Button text",
-      "default": "Order Now"
+      "default": "Shop Now"
     },
     {
       "type": "url",
@@ -587,7 +587,7 @@
       "type": "textarea",
       "id": "company_description",
       "label": "About text",
-      "default": "SARVITAL brings you premium, nature-backed wellness products crafted with care. We are committed to quality, purity, and your wellbeing—helping you live healthier, naturally."
+      "default": "Glamora creates anti-pollution skincare designed to protect, hydrate and enhance your natural glow. Science-backed formulas for everyday urban life — so your skin feels radiant, refreshed and confident."
     },
     {
       "type": "header",
@@ -731,7 +731,7 @@
       "type": "text",
       "id": "legal_manufacturer",
       "label": "Manufacturer",
-      "default": "Sarvital Sarvadnya Foodtech Pvt Ltd"
+      "default": ""
     },
     {
       "type": "text",
@@ -757,7 +757,7 @@
       "type": "textarea",
       "id": "disclaimer_text",
       "label": "Disclaimer text",
-      "default": "Disclaimer: This product is a health supplement and is not for medicinal use. Not intended to diagnose, treat, cure, or prevent any disease. Consult your healthcare provider if pregnant, nursing, or on medication."
+      "default": "For external use only. Store in a cool, dry place. Keep out of reach of children. Patch test recommended before first use. Discontinue if irritation occurs."
     },
     {
       "type": "header",
@@ -767,7 +767,7 @@
       "type": "text",
       "id": "company_legal_name",
       "label": "Company legal name (after ©)",
-      "default": "Sarvital Sarvadnya Foodtech Pvt Ltd"
+      "default": ""
     },
     {
       "type": "header",
