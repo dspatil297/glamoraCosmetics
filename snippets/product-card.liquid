@@ -16,7 +16,7 @@
         >
       {% else %}
         <div class="product-card__image-placeholder">
-          {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+          {% render 'unsplash-placeholder', type: 'product', width: 600, class: 'product-card__image', loading: 'lazy', alt: product.title | default: 'Product' %}
         </div>
       {% endif %}
       

@@ -35,7 +35,7 @@
                         height="200"
                       >
                     {% else %}
-                      {{ 'product-1' | placeholder_svg_tag: 'cart-item-row__image-placeholder' }}
+                      {% render 'unsplash-placeholder', type: 'product', width: 200, class: 'cart-item-row__image-placeholder-img', loading: 'lazy', alt: item.product.title | default: 'Product' %}
                     {% endif %}
                   </a>
                 </div>

@@ -1,0 +1,41 @@
+{%- comment -%}
+  Unsplash placeholder images for design preview when no theme image is set.
+  Uses Unsplash CDN (hotlinking allowed per Unsplash guidelines).
+  Types: hero, product, banner, tile, avatar
+{%- endcomment -%}
+{%- assign type = type | default: 'banner' -%}
+{%- assign width = width | default: 1200 -%}
+{%- assign class = class | default: '' -%}
+{%- assign loading = loading | default: 'lazy' -%}
+{%- assign alt = alt | default: 'Placeholder image' -%}
+
+{%- case type -%}
+  {%- when 'hero' -%}
+    {%- assign url = 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop' -%}
+    {%- assign w = width | default: 1920 -%}
+  {%- when 'product' -%}
+    {%- assign url = 'https://images.unsplash.com/photo-1556228720-dcaaec605fab?auto=format&fit=crop' -%}
+    {%- assign w = width | default: 600 -%}
+  {%- when 'banner' -%}
+    {%- assign url = 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop' -%}
+    {%- assign w = width | default: 1400 -%}
+  {%- when 'tile' -%}
+    {%- assign url = 'https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop' -%}
+    {%- assign w = width | default: 600 -%}
+  {%- when 'avatar' -%}
+    {%- assign url = 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop' -%}
+    {%- assign w = width | default: 120 -%}
+  {%- else -%}
+    {%- assign url = 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop' -%}
+    {%- assign w = width | default: 1200 -%}
+{%- endcase -%}
+
+<img
+  src="{{ url }}&w={{ w }}"
+  alt="{{ alt }}"
+  class="{{ class }}"
+  loading="{{ loading }}"
+  width="{{ w }}"
+  height="{{ w | divided_by: 1.5 | round }}"
+  style="object-fit: cover; width: 100%; height: 100%; display: block;"
+>

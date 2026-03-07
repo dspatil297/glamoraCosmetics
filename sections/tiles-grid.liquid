@@ -32,7 +32,9 @@
                   >
                 </div>
               {%- else -%}
-                <div class="tiles-grid__media tiles-grid__media--placeholder"></div>
+                <div class="tiles-grid__media tiles-grid__media--placeholder">
+                  {% render 'unsplash-placeholder', type: 'tile', width: 600, class: 'tiles-grid__img', loading: 'lazy', alt: block.settings.label | default: 'Category' %}
+                </div>
               {%- endif -%}
               <div class="tiles-grid__label">{{ block.settings.label }}</div>
             {%- if href != blank -%}</a>{%- endif -%}
