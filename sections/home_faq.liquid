@@ -9,19 +9,19 @@
 {% assign faq_meta = shop.metafields.custom.site_faqs %}
 {% assign faq_items = '' | split: '' %}
 
-{% comment %} Get raw text from metafield (multi_line_text_field = .value; rich_text_field = metafield_text) {% endcomment %}
-{% assign faq_text = nil %}
-{% if faq_meta.value != blank %}
-  {% assign faq_text = faq_meta.value %}
-{% endif %}
-{% if faq_text == blank and faq_meta != blank %}
+{% comment %} Use plain text only: Rich text metafields must use metafield_text to avoid outputting raw JSON/hash. Multi-line text .value is a string. {% endcomment %}
+{% assign faq_text = '' %}
+{% if faq_meta != blank %}
   {% assign faq_text = faq_meta | metafield_text %}
+  {% if faq_text == blank and faq_meta.value != blank %}
+    {% assign faq_text = faq_meta.value %}
+  {% endif %}
 {% endif %}
 {% if faq_text != blank %}
-  {% assign faq_text = faq_text | strip %}
+  {% assign faq_text = faq_text | replace: '\r', '' | strip %}
 {% endif %}
 
-{% comment %} Parse Q: / A: format line-by-line so "Q:" in the middle of an answer doesn't start a new FAQ {% endcomment %}
+{% comment %} Parse Q: / A: format — split by newline (normalize via newline_to_br) {% endcomment %}
 {% if faq_text != blank %}
   {% assign faq_items_string = '' %}
   {% assign lines = faq_text | newline_to_br | split: '<br />' %}
@@ -104,7 +104,31 @@
   {% endif %}
 {% endif %}
 
-{% if faq_items.size > 0 %}
+{% comment %} Fallback: if no items from line parse, try simple "Q: ... A: ..." split {% endcomment %}
+{% if faq_items.size == 0 and faq_text != blank %}
+  {% assign faq_items_string = '' %}
+  {% assign blocks = faq_text | split: 'Q:' %}
+  {% for block in blocks %}
+    {% assign block_stripped = block | strip %}
+    {% if block_stripped != blank %}
+      {% assign parts = block_stripped | split: 'A:' %}
+      {% if parts.size >= 2 %}
+        {% assign q = parts[0] | strip %}
+        {% assign a = parts[1] | strip %}
+        {% if q != blank %}
+          {% if faq_items_string != blank %}
+            {% assign faq_items_string = faq_items_string | append: '###FAQ###' %}
+          {% endif %}
+          {% assign faq_items_string = faq_items_string | append: q | append: '|||' | append: a %}
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+  {% if faq_items_string != blank %}
+    {% assign faq_items = faq_items_string | split: '###FAQ###' %}
+  {% endif %}
+{% endif %}
+
 <section class="home-faq" id="home-faq" {{ section.shopify_attributes }}>
   <div class="home-faq__container">
     <div class="home-faq__header">
@@ -118,6 +142,7 @@
       <h2 class="home-faq__title">{{ section.settings.title | default: 'Frequently Asked Questions' }}</h2>
     </div>
 
+    {% if faq_items.size > 0 %}
     <div class="home-faq__accordion">
       {% for item in faq_items %}
         {% assign qa_parts = item | split: '|||' %}
@@ -147,9 +172,15 @@
         {% endif %}
       {% endfor %}
     </div>
+    {% else %}
+    <div class="home-faq__empty">
+      <p class="home-faq__empty-text">{{ section.settings.empty_state_text | default: 'Add FAQs in Shopify: Settings → Custom data → Shop → Metafields. Create a metafield with namespace "custom" and key "site_faqs" (Multi-line text), then use the format: Q: Your question? A: Your answer.' }}</p>
+    </div>
+    {% endif %}
   </div>
 </section>
 
+{% if faq_items.size > 0 %}
 <script>
 (function() {
   function handleHomeFaqClick(e) {
@@ -289,6 +320,21 @@
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
+  }
+
+  .home-faq__empty {
+    padding: var(--spacing-xl) 0;
+    text-align: center;
+  }
+
+  .home-faq__empty-text {
+    font-size: var(--body-normal);
+    line-height: 1.65;
+    color: rgba(76, 85, 100, 0.85);
+    margin: 0;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .home-faq-item {
@@ -450,6 +496,12 @@
       "id": "empty_answer_text",
       "label": "Text when answer is missing",
       "default": "No answer provided."
+    },
+    {
+      "type": "textarea",
+      "id": "empty_state_text",
+      "label": "Empty state (no FAQs from metafield)",
+      "default": "FAQs will appear here once you add them in Shopify: Settings → Custom data → Shop. Create a metafield with namespace \"custom\" and key \"site_faqs\" (Multi-line text). Use the format: Q: Your question? A: Your answer."
     }
   ],
   "presets": [
