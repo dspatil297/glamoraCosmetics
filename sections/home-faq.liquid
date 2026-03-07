@@ -1,126 +1,96 @@
 {% comment %}
-  Home FAQ Section
-  Displays FAQs from shop.metafields.custom.site_faqs.
-  Supports: rich_text_field (use metafield_text for plain text) or multi-line text.
-  Format: Q: Question text / A: Answer text (block-based parsing).
+  Home FAQ Section — shop.metafields.custom.site_faqs
+  Format (one FAQ per block, blank lines optional):
+    Q: What is your shipping policy?
+    A: We offer free shipping on all orders above ₹500 within India. Orders are typically processed within 1-2 business days...
+  Parsed into accordion items.
 {% endcomment %}
 
 {% assign faq_meta = shop.metafields.custom.site_faqs %}
 {% assign faq_items = '' | split: '' %}
 
-{% comment %} Get plain text: rich text metafields must use metafield_text to avoid rendering object/hash {% endcomment %}
-{% assign faq_text = faq_meta | metafield_text %}
-{% if faq_text == blank and faq_meta.value != blank %}
+{% comment %} Get raw text from metafield (multi_line_text_field = .value; rich_text_field = metafield_text) {% endcomment %}
+{% assign faq_text = nil %}
+{% if faq_meta.value != blank %}
   {% assign faq_text = faq_meta.value %}
 {% endif %}
 {% if faq_text == blank and faq_meta != blank %}
-  {% assign faq_text = faq_meta %}
+  {% assign faq_text = faq_meta | metafield_text %}
 {% endif %}
 {% if faq_text != blank %}
   {% assign faq_text = faq_text | strip %}
 {% endif %}
 
-{% comment %} Parse Q: / A: blocks into pairs. Split by "Q:" then each block by "A:" for question/answer. {% endcomment %}
-{% if faq_text != blank and faq_text.size > 0 %}
+{% comment %} Parse Q: / A: format line-by-line so "Q:" in the middle of an answer doesn't start a new FAQ {% endcomment %}
+{% if faq_text != blank %}
   {% assign faq_items_string = '' %}
-  {% assign blocks = faq_text | split: 'Q:' %}
-  {% for block in blocks %}
-    {% assign block_stripped = block | strip %}
-    {% if block_stripped != blank %}
-      {% assign question_part = '' %}
-      {% assign answer_part = '' %}
-      {% assign by_a = block_stripped | split: 'A:' %}
-      {% if by_a.size >= 2 %}
-        {% assign question_part = by_a[0] | strip %}
-        {% assign answer_part = by_a[1] | strip %}
-        {% if by_a.size > 2 %}
-          {% for extra in by_a %}
-            {% if forloop.index0 > 1 %}
-              {% assign answer_part = answer_part | append: ' A: ' | append: extra | strip %}
-            {% endif %}
-          {% endfor %}
-        {% endif %}
-      {% else %}
-        {% assign by_a_lower = block_stripped | split: 'a:' %}
-        {% if by_a_lower.size >= 2 %}
-          {% assign question_part = by_a_lower[0] | strip %}
-          {% assign answer_part = by_a_lower[1] | strip %}
-        {% else %}
-          {% assign question_part = block_stripped %}
-        {% endif %}
+  {% assign lines = faq_text | newline_to_br | split: '<br />' %}
+  {% assign current_q = '' %}
+  {% assign current_a = '' %}
+  {% assign in_answer = false %}
+
+  {% for line in lines %}
+    {% assign trimmed = line | strip %}
+    {% assign lower = trimmed | downcase %}
+
+    {% if lower == '' or trimmed == '' %}
+      {% comment %} Blank line: if we're in answer, keep collecting; else ignore {% endcomment %}
+      {% if in_answer and current_a != '' %}
+        {% assign current_a = current_a | append: ' ' %}
       {% endif %}
-      {% if question_part != blank %}
-        {% assign qa_pair = question_part | append: '|||' | append: answer_part %}
+    {% elsif trimmed.size >= 2 and trimmed | slice: 0, 2 | downcase == 'q:' %}
+      {% comment %} Line starts with Q: — save previous pair and start new question {% endcomment %}
+      {% if current_q != '' %}
+        {% assign pair = current_q | append: '|||' | append: current_a %}
         {% if faq_items_string != blank %}
           {% assign faq_items_string = faq_items_string | append: '###FAQ###' %}
         {% endif %}
-        {% assign faq_items_string = faq_items_string | append: qa_pair %}
+        {% assign faq_items_string = faq_items_string | append: pair %}
+      {% endif %}
+      {% assign q_parts = trimmed | split: ':' %}
+      {% assign current_q = '' %}
+      {% for qp in q_parts %}
+        {% if forloop.index0 == 1 %}
+          {% assign current_q = qp | strip %}
+        {% elsif forloop.index0 > 1 %}
+          {% assign current_q = current_q | append: ':' | append: qp %}
+        {% endif %}
+      {% endfor %}
+      {% assign current_q = current_q | strip %}
+      {% assign current_a = '' %}
+      {% assign in_answer = false %}
+    {% elsif trimmed.size >= 2 and trimmed | slice: 0, 2 | downcase == 'a:' and in_answer == false %}
+      {% comment %} First A: after a Q: — start answer (strip "A:" from this line only) {% endcomment %}
+      {% assign a_parts = trimmed | split: ':' %}
+      {% assign current_a = '' %}
+      {% for ap in a_parts %}
+        {% if forloop.index0 == 1 %}
+          {% assign current_a = ap | strip %}
+        {% elsif forloop.index0 > 1 %}
+          {% assign current_a = current_a | append: ':' | append: ap %}
+        {% endif %}
+      {% endfor %}
+      {% assign current_a = current_a | strip %}
+      {% assign in_answer = true %}
+    {% else %}
+      {% comment %} Continuation line: part of current answer or orphan (treat as answer) {% endcomment %}
+      {% if current_q != '' %}
+        {% if current_a != '' %}
+          {% assign current_a = current_a | append: ' ' | append: trimmed %}
+        {% else %}
+          {% assign current_a = trimmed %}
+        {% endif %}
+        {% assign in_answer = true %}
       {% endif %}
     {% endif %}
   {% endfor %}
 
-  {% comment %} Alternative: line-by-line parse if block parse didn't work (e.g. no "Q:" in text) {% endcomment %}
-  {% if faq_items_string == blank %}
-    {% assign all_lines = faq_text | newline_to_br | split: '<br />' %}
-    {% assign current_question = '' %}
-    {% assign current_answer = '' %}
-    {% assign non_empty_line_count = 0 %}
-    {% for line in all_lines %}
-      {% assign clean_line = line | strip %}
-      {% if clean_line != blank %}
-        {% assign non_empty_line_count = non_empty_line_count | plus: 1 %}
-        {% assign line_lower = clean_line | downcase %}
-        {% if line_lower contains 'q:' %}
-          {% if current_question != blank %}
-            {% assign qa_pair = current_question | append: '|||' | append: current_answer %}
-            {% if faq_items_string != blank %}
-              {% assign faq_items_string = faq_items_string | append: '###FAQ###' %}
-            {% endif %}
-            {% assign faq_items_string = faq_items_string | append: qa_pair %}
-          {% endif %}
-          {% assign after_q = clean_line | split: ':' | size %}
-          {% if after_q >= 2 %}
-            {% assign current_question = clean_line | replace: 'Q:', '' | replace: 'q:', '' | strip %}
-          {% else %}
-            {% assign current_question = clean_line %}
-          {% endif %}
-          {% assign current_answer = '' %}
-        {% elsif line_lower contains 'a:' %}
-          {% assign answer_text = clean_line | replace: 'A:', '' | replace: 'a:', '' | strip %}
-          {% if current_answer != blank %}
-            {% assign current_answer = current_answer | append: ' ' | append: answer_text %}
-          {% else %}
-            {% assign current_answer = answer_text %}
-          {% endif %}
-        {% else %}
-          {% assign is_q = non_empty_line_count | modulo: 2 %}
-          {% if is_q == 1 %}
-            {% if current_question != blank %}
-              {% assign qa_pair = current_question | append: '|||' | append: current_answer %}
-              {% if faq_items_string != blank %}
-                {% assign faq_items_string = faq_items_string | append: '###FAQ###' %}
-              {% endif %}
-              {% assign faq_items_string = faq_items_string | append: qa_pair %}
-            {% endif %}
-            {% assign current_question = clean_line %}
-            {% assign current_answer = '' %}
-          {% else %}
-            {% if current_answer != blank %}
-              {% assign current_answer = current_answer | append: ' ' | append: clean_line %}
-            {% else %}
-              {% assign current_answer = clean_line %}
-            {% endif %}
-          {% endif %}
-        {% endif %}
-      {% endif %}
-    {% endfor %}
-    {% if current_question != blank %}
-      {% assign qa_pair = current_question | append: '|||' | append: current_answer %}
-      {% if faq_items_string != blank %}
-        {% assign faq_items_string = faq_items_string | append: '###FAQ###' %}
-      {% endif %}
-      {% assign faq_items_string = faq_items_string | append: qa_pair %}
+  {% if current_q != '' %}
+    {% assign pair = current_q | append: '|||' | append: current_a %}
+    {% if faq_items_string != blank %}
+      {% assign faq_items_string = faq_items_string | append: '###FAQ###' %}
     {% endif %}
+    {% assign faq_items_string = faq_items_string | append: pair %}
   {% endif %}
 
   {% if faq_items_string != blank %}

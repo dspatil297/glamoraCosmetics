@@ -170,6 +170,13 @@
         "alt": "Download our app"
       }
     },
+    "home_faq": {
+      "type": "home-faq",
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "empty_answer_text": "No answer provided."
+      }
+    },
     "gst_notice": {
       "type": "notice-strip",
       "settings": {
@@ -190,6 +197,7 @@
     "brand_values",
     "loyalty_program",
     "app_download",
+    "home_faq",
     "gst_notice"
   ]
 }
