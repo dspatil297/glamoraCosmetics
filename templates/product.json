@@ -31,6 +31,10 @@
         "view_all_text": "View All Products"
       }
     },
+    "product_reviews_judge": {
+      "type": "product-reviews-judge",
+      "settings": {}
+    },
     "product_faq": {
       "type": "product-faq",
       "settings": {}
@@ -44,6 +48,7 @@
     "product_main",
     "product_how_to_use",
     "related_products",
+    "product_reviews_judge",
     "product_faq",
     "1769418164e60d6e16"
   ]
