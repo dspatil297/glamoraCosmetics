@@ -15,29 +15,25 @@
         "slide_Nq893k": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-01-30_at_11.50.09.jpg",
-            "mobile_image": "shopify://shop_images/WhatsApp_Image_2026-01-30_at_11.50.09_1f4d78e9-90f0-40ab-8e56-190e431adecf.jpg"
+            "link": ""
           }
         },
         "slide_4NXNRf": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-01-31_at_13.44.35.jpg",
-            "mobile_image": "shopify://shop_images/WhatsApp_Image_2026-01-31_at_13.44.35_06cef7b8-8227-4568-a326-2bfd3b461eec.jpg"
+            "link": ""
           }
         },
         "slide_hMhcUm": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-01-31_at_13.44.35_1.jpg",
-            "mobile_image": "shopify://shop_images/WhatsApp_Image_2026-01-31_at_13.44.35_1_4cb17f7c-1ee6-44e8-ae16-afe36b9bb64e.jpg"
+            "link": ""
           }
         },
         "slide_knjxEJ": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-01-31_at_13.44.34.jpg",
-            "mobile_image": "shopify://shop_images/WhatsApp_Image_2026-01-31_at_13.44.34_81636a0b-d116-4848-b962-35e323b6fec7.jpg"
+            "link": ""
           }
         }
       },
@@ -48,7 +44,6 @@
         "slide_knjxEJ"
       ],
       "settings": {
-        "hero_image": "shopify://shop_images/WhatsApp_Image_2026-01-30_at_11.50.09.jpg",
         "show_content": true,
         "heading": "Advanced anti-pollution skincare for naturally radiant, protected, everyday glowing skin.",
         "subheading": "Hybrid sunscreens, foaming face washes, and moisturizing sprays crafted to defend your skin from urban pollution.",
@@ -58,7 +53,9 @@
         "secondary_cta_link": "/pages/about-us",
         "carousel_speed": 5,
         "transition_duration": 800,
-        "overlay_opacity": 85
+        "overlay_opacity": 85,
+        "slide_placeholder_text": "Select image in Theme Customizer → click this slide → Slide image",
+        "hero_placeholder_text": "Add a hero image in Theme Customizer"
       }
     },
     "featured_products": {
@@ -72,27 +69,24 @@
         "collection": "frontpage",
         "products_to_show": 6,
         "show_view_all": true,
-        "view_all_text": "View All Products"
+        "view_all_text": "View All Products",
+        "empty_message_no_products": "No products found in this collection.",
+        "empty_message_no_collection": "Please select a collection to display products."
       }
     },
     "bundle_promo": {
       "type": "promo-banner",
       "settings": {
-        "image": "",
-        "mobile_image": "",
         "href": "/collections/all",
-        "alt": "Bundle promotion"
+        "alt": "Bundle promotion",
+        "placeholder_text": "Add a banner image in Theme Customizer for this section."
       }
     },
     "ai_split_banner": {
       "type": "double-banner",
       "settings": {
-        "image_1": "",
-        "mobile_image_1": "",
         "href_1": "/pages/skin-insights",
         "alt_1": "Skin insights",
-        "image_2": "",
-        "mobile_image_2": "",
         "href_2": "/pages/minimalist-ai-assistant",
         "alt_2": "AI assistant"
       }
@@ -100,28 +94,120 @@
     "shop_by_category": {
       "type": "tiles-grid",
       "blocks": {
-        "cat_1": { "type": "tile", "settings": { "image": "", "label": "Skin", "href": "/collections/all" } },
-        "cat_2": { "type": "tile", "settings": { "image": "", "label": "Hair", "href": "/collections/all" } },
-        "cat_3": { "type": "tile", "settings": { "image": "", "label": "Bath & Body", "href": "/collections/all" } },
-        "cat_4": { "type": "tile", "settings": { "image": "", "label": "Lip", "href": "/collections/all" } },
-        "cat_5": { "type": "tile", "settings": { "image": "", "label": "Eye", "href": "/collections/all" } }
+        "cat_1": {
+          "type": "tile",
+          "settings": {
+            "label": "Skin",
+            "href": "/collections/all"
+          }
+        },
+        "cat_2": {
+          "type": "tile",
+          "settings": {
+            "label": "Hair",
+            "href": "/collections/all"
+          }
+        },
+        "cat_3": {
+          "type": "tile",
+          "settings": {
+            "label": "Bath & Body",
+            "href": "/collections/all"
+          }
+        },
+        "cat_4": {
+          "type": "tile",
+          "settings": {
+            "label": "Lip",
+            "href": "/collections/all"
+          }
+        },
+        "cat_5": {
+          "type": "tile",
+          "settings": {
+            "label": "Eye",
+            "href": "/collections/all"
+          }
+        }
       },
-      "block_order": ["cat_1","cat_2","cat_3","cat_4","cat_5"],
-      "settings": { "title": "Shop by Category", "columns": 5 }
+      "block_order": [
+        "cat_1",
+        "cat_2",
+        "cat_3",
+        "cat_4",
+        "cat_5"
+      ],
+      "settings": {
+        "title": "Shop by Category",
+        "columns": 5
+      }
     },
     "shop_by_concerns": {
       "type": "tiles-grid",
       "blocks": {
-        "con_1": { "type": "tile", "settings": { "image": "", "label": "Uneven Tone", "href": "/collections/all" } },
-        "con_2": { "type": "tile", "settings": { "image": "", "label": "Acne Control", "href": "/collections/all" } },
-        "con_3": { "type": "tile", "settings": { "image": "", "label": "Oiliness", "href": "/collections/all" } },
-        "con_4": { "type": "tile", "settings": { "image": "", "label": "Fine Lines / Wrinkles", "href": "/collections/all" } },
-        "con_5": { "type": "tile", "settings": { "image": "", "label": "Dryness", "href": "/collections/all" } },
-        "con_6": { "type": "tile", "settings": { "image": "", "label": "Hair Fall", "href": "/collections/all" } },
-        "con_7": { "type": "tile", "settings": { "image": "", "label": "Anti-Dandruff", "href": "/collections/all" } }
+        "con_1": {
+          "type": "tile",
+          "settings": {
+            "label": "Uneven Tone",
+            "href": "/collections/all"
+          }
+        },
+        "con_2": {
+          "type": "tile",
+          "settings": {
+            "label": "Acne Control",
+            "href": "/collections/all"
+          }
+        },
+        "con_3": {
+          "type": "tile",
+          "settings": {
+            "label": "Oiliness",
+            "href": "/collections/all"
+          }
+        },
+        "con_4": {
+          "type": "tile",
+          "settings": {
+            "label": "Fine Lines / Wrinkles",
+            "href": "/collections/all"
+          }
+        },
+        "con_5": {
+          "type": "tile",
+          "settings": {
+            "label": "Dryness",
+            "href": "/collections/all"
+          }
+        },
+        "con_6": {
+          "type": "tile",
+          "settings": {
+            "label": "Hair Fall",
+            "href": "/collections/all"
+          }
+        },
+        "con_7": {
+          "type": "tile",
+          "settings": {
+            "label": "Anti-Dandruff",
+            "href": "/collections/all"
+          }
+        }
       },
-      "block_order": ["con_1","con_2","con_3","con_4","con_5","con_6","con_7"],
-      "settings": { "title": "Shop by Concerns", "columns": 4 }
+      "block_order": [
+        "con_1",
+        "con_2",
+        "con_3",
+        "con_4",
+        "con_5",
+        "con_6",
+        "con_7"
+      ],
+      "settings": {
+        "title": "Shop by Concerns",
+        "columns": 4
+      }
     },
     "new_launches": {
       "type": "product-grid",
@@ -134,18 +220,57 @@
         "collection": "new-launches",
         "products_to_show": 6,
         "show_view_all": true,
-        "view_all_text": "View All Products"
+        "view_all_text": "View All Products",
+        "empty_message_no_products": "No products found in this collection.",
+        "empty_message_no_collection": "Please select a collection to display products."
       }
     },
     "brand_values": {
       "type": "values-strip",
       "blocks": {
-        "val_1": { "type": "value", "settings": { "icon_key": "transparency", "title": "Transparency", "description": "Full disclosure of ingredients used & their concentration." } },
-        "val_2": { "type": "value", "settings": { "icon_key": "efficacy", "title": "Efficacy", "description": "Formulations developed with science-backed, effective ingredients." } },
-        "val_3": { "type": "value", "settings": { "icon_key": "affordable", "title": "Affordable", "description": "Skincare, accessible to all." } },
-        "val_4": { "type": "value", "settings": { "icon_key": "globe", "title": "Only the best", "description": "Ingredients sourced from across the world." } }
+        "val_1": {
+          "type": "value",
+          "settings": {
+            "icon_key": "transparency",
+            "icon": "",
+            "title": "Transparency",
+            "description": "Full disclosure of ingredients used & their concentration."
+          }
+        },
+        "val_2": {
+          "type": "value",
+          "settings": {
+            "icon_key": "efficacy",
+            "icon": "",
+            "title": "Efficacy",
+            "description": "Formulations developed with science-backed, effective ingredients."
+          }
+        },
+        "val_3": {
+          "type": "value",
+          "settings": {
+            "icon_key": "affordable",
+            "icon": "",
+            "title": "Affordable",
+            "description": "Skincare, accessible to all."
+          }
+        },
+        "val_4": {
+          "type": "value",
+          "settings": {
+            "icon_key": "globe",
+            "icon": "",
+            "title": "Only the best",
+            "description": "Ingredients sourced from across the world."
+          }
+        }
       },
-      "block_order": ["val_1","val_2","val_3","val_4"],
+      "block_order": [
+        "val_1",
+        "val_2",
+        "val_3",
+        "val_4"
+      ],
       "settings": {
         "title": "The future of personal care is here",
         "subtitle": "Embrace Glamora, where each element is chosen for its scientific merit, offering you authentic, effective skincare solutions."
@@ -154,21 +279,37 @@
     "loyalty_program": {
       "type": "loyalty-banner",
       "settings": {
-        "image": "",
         "title": "Glamora Glow Circle",
         "subtitle": "Earn & redeem rewards on every purchase.",
         "cta_text": "Show more",
-        "cta_link": "/pages/rewards-1"
+        "cta_link": "/pages/rewards-1",
+        "placeholder_text": "Add a loyalty program image in Theme Customizer."
       }
     },
     "app_download": {
       "type": "promo-banner",
       "settings": {
-        "image": "",
-        "mobile_image": "",
         "href": "/pages/download-app",
-        "alt": "Download our app"
+        "alt": "Download our app",
+        "placeholder_text": "Add a banner image in Theme Customizer for this section."
       }
+    },
+    "177287695271a8ad79": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_homepage_EFPz9P": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget_homepage/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "product": "",
+            "review_data": "real_data",
+            "max_width": 1200
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_homepage_EFPz9P"
+      ],
+      "settings": {}
     },
     "home_faq": {
       "type": "home_faq",
@@ -184,7 +325,7 @@
         "link_text": "Know More",
         "link_url": "/blogs/news"
       }
-    },
+    }
   },
   "order": [
     "hero_banner",
@@ -197,6 +338,7 @@
     "brand_values",
     "loyalty_program",
     "app_download",
+    "177287695271a8ad79",
     "home_faq",
     "gst_notice"
   ]
