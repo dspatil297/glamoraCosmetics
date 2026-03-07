@@ -13,11 +13,6 @@
       "type": "product-main",
       "settings": {}
     },
-    "product_ingredients_nutrition_y7n8pk": {
-      "type": "product-ingredients-nutrition",
-      "name": "Key Ingredients",
-      "settings": {}
-    },
     "product_how_to_use": {
       "type": "product-how-to-use-compact",
       "settings": {}
@@ -47,7 +42,6 @@
   },
   "order": [
     "product_main",
-    "product_ingredients_nutrition_y7n8pk",
     "product_how_to_use",
     "related_products",
     "product_faq",
