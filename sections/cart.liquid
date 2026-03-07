@@ -6,7 +6,7 @@
   <div class="cart-page__container">
     {% if cart.item_count > 0 %}
       <div class="cart-page__header">
-        <h1 class="cart-page__title">Your Cart ({{ cart.item_count }})</h1>
+        <h1 class="cart-page__title">{{ section.settings.cart_title | default: 'Your Cart' }} ({{ cart.item_count }})</h1>
         <p class="cart-page__item-count">{{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}</p>
       </div>
 
@@ -68,7 +68,7 @@
                 </div>
                 
                 <div class="cart-item-row__quantity">
-                  <label for="quantity-{{ item.key }}" class="cart-item-row__quantity-label">Quantity</label>
+                  <label for="quantity-{{ item.key }}" class="cart-item-row__quantity-label">{{ section.settings.label_quantity | default: 'Quantity' }}</label>
                   <div class="cart-item-row__quantity-controls">
                     <button 
                       type="button" 
@@ -94,7 +94,7 @@
                 </div>
                 
                 <div class="cart-item-row__total">
-                  <span class="cart-item-row__total-label">Total</span>
+                  <span class="cart-item-row__total-label">{{ section.settings.label_total | default: 'Total' }}</span>
                   <span class="cart-item-row__total-price">{{ item.final_line_price | money }}</span>
                 </div>
                 
@@ -116,53 +116,53 @@
           
           <div class="cart-page__sidebar">
             <div class="cart-summary">
-              <h2 class="cart-summary__title">Order Summary</h2>
+              <h2 class="cart-summary__title">{{ section.settings.summary_title | default: 'Order Summary' }}</h2>
               
               {% assign free_shipping_threshold = section.settings.free_shipping_threshold | default: 999 %}
               {% if cart.total_price < free_shipping_threshold %}
                 {% assign amount_remaining = free_shipping_threshold | minus: cart.total_price %}
                 <div class="cart-summary__progress" role="status" aria-live="polite">
-                  <p class="cart-summary__progress-text">Add <strong>{{ amount_remaining | money }}</strong> more for free shipping</p>
+                  <p class="cart-summary__progress-text">{{ section.settings.progress_text_before | default: 'Add' }} <strong>{{ amount_remaining | money }}</strong> {{ section.settings.progress_text_after | default: 'more for free shipping' }}</p>
                   <div class="cart-summary__progress-bar" aria-hidden="true">
                     <div class="cart-summary__progress-fill" style="width: {{ cart.total_price | times: 100 | divided_by: free_shipping_threshold }}%;"></div>
                   </div>
                 </div>
               {% else %}
-                <p class="cart-summary__progress-success">You've unlocked free shipping!</p>
+                <p class="cart-summary__progress-success">{{ section.settings.progress_success_text | default: "You've unlocked free shipping!" }}</p>
               {% endif %}
               
               <div class="cart-summary__totals">
                 <div class="cart-summary__row">
-                  <span>Subtotal</span>
+                  <span>{{ section.settings.label_subtotal | default: 'Subtotal' }}</span>
                   <span>{{ cart.items_subtotal_price | money }}</span>
                 </div>
                 
                 {% if cart.cart_level_discount_applications.size > 0 %}
                   <div class="cart-summary__row cart-summary__row--discount">
-                    <span>Discount</span>
+                    <span>{{ section.settings.label_discount | default: 'Discount' }}</span>
                     <span>-{{ cart.total_discount | money }}</span>
                   </div>
                 {% endif %}
                 
                 <div class="cart-summary__row cart-summary__row--shipping">
-                  <span>Shipping</span>
+                  <span>{{ section.settings.label_shipping | default: 'Shipping' }}</span>
                   <span class="cart-summary__shipping-value">
                     {% if cart.total_price >= free_shipping_threshold %}
-                      <span class="cart-summary__free-shipping">Free Shipping</span>
+                      <span class="cart-summary__free-shipping">{{ section.settings.label_free_shipping | default: 'Free Shipping' }}</span>
                     {% else %}
-                      Calculated at checkout
+                      {{ section.settings.label_shipping_calculated | default: 'Calculated at checkout' }}
                     {% endif %}
                   </span>
                 </div>
                 
                 <div class="cart-summary__row cart-summary__row--total">
-                  <span>Total</span>
+                  <span>{{ section.settings.label_total | default: 'Total' }}</span>
                   <span>{{ cart.total_price | money }}</span>
                 </div>
 
                 {% if cart_has_gst5 %}
                   <div class="cart-summary__gst-note">
-                    Inclusive of applicable taxes. 5% GST may apply to select products.
+                    {{ section.settings.gst_note | default: 'Inclusive of applicable taxes. 5% GST may apply to select products.' }}
                   </div>
                 {% endif %}
               </div>
@@ -170,30 +170,30 @@
               {% if section.settings.show_discount_code %}
                 <div class="cart-summary__discount">
                   <button type="button" class="cart-summary__discount-toggle" data-discount-toggle>
-                    Have a discount code?
+                    {{ section.settings.discount_toggle_text | default: 'Have a discount code?' }}
                   </button>
                   <div class="cart-summary__discount-form" data-discount-form>
                     <input 
                       type="text" 
                       name="discount" 
-                      placeholder="Enter discount code"
+                      placeholder="{{ section.settings.discount_placeholder | default: 'Enter discount code' }}"
                       class="cart-summary__discount-input"
                     >
-                    <button type="submit" class="btn btn-outline btn-small">Apply</button>
+                    <button type="submit" class="btn btn-outline btn-small">{{ section.settings.discount_apply_text | default: 'Apply' }}</button>
                   </div>
                 </div>
               {% endif %}
               
-              <p class="cart-summary__free-shipping-note">Free shipping on orders above ₹999</p>
+              <p class="cart-summary__free-shipping-note">{{ section.settings.free_shipping_note | default: 'Free shipping on orders above ₹999' }}</p>
               
               {% comment %} Delivery date will be shown on order confirmation page {% endcomment %}
               
               <div class="cart-summary__actions">
                 <button type="submit" name="checkout" class="btn btn-primary btn-large cart-summary__checkout">
-                  Proceed to Checkout
+                  {{ section.settings.checkout_button_text | default: 'Proceed to Checkout' }}
                 </button>
                 <a href="{{ routes.all_products_collection_url }}" class="cart-summary__continue">
-                  Continue Shopping
+                  {{ section.settings.continue_shopping_text | default: 'Continue Shopping' }}
                 </a>
               </div>
               
@@ -203,7 +203,7 @@
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                       <path d="M5 13L9 17L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <span>Secure Checkout</span>
+                    <span>{{ section.settings.trust_badge_text | default: 'Secure Checkout' }}</span>
                   </div>
                 </div>
               {% endif %}
@@ -214,7 +214,7 @@
       
       {% if section.settings.show_recommended %}
         <div class="cart-page__recommended">
-          <h2 class="cart-page__recommended-title">You May Also Like</h2>
+          <h2 class="cart-page__recommended-title">{{ section.settings.recommended_title | default: 'You May Also Like' }}</h2>
           <div class="cart-page__recommended-grid">
             {% assign recommended_collection = collections[section.settings.recommended_collection] | default: collections.all %}
             {% for product in recommended_collection.products limit: 4 %}
@@ -232,10 +232,10 @@
             <circle cx="90" cy="90" r="6" fill="currentColor"/>
           </svg>
         </div>
-        <h2 class="cart-page__empty-title">Your cart is empty</h2>
-        <p class="cart-page__empty-text">Looks like you haven't added anything to your cart yet.</p>
+        <h2 class="cart-page__empty-title">{{ section.settings.empty_title | default: 'Your cart is empty' }}</h2>
+        <p class="cart-page__empty-text">{{ section.settings.empty_text | default: "Looks like you haven't added anything to your cart yet." }}</p>
         <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary btn-large">
-          Start Shopping
+          {{ section.settings.empty_button_text | default: 'Start Shopping' }}
         </a>
       </div>
     {% endif %}
@@ -931,7 +931,35 @@
       "label": "Free shipping threshold (store currency)",
       "default": 999,
       "info": "Orders at or above this amount show free shipping progress as unlocked"
-    }
+    },
+    {
+      "type": "header",
+      "content": "Labels (editable in Theme Editor)"
+    },
+    { "type": "text", "id": "cart_title", "label": "Cart page title", "default": "Your Cart" },
+    { "type": "text", "id": "summary_title", "label": "Order summary heading", "default": "Order Summary" },
+    { "type": "text", "id": "progress_text_before", "label": "Progress bar text (before amount)", "default": "Add" },
+    { "type": "text", "id": "progress_text_after", "label": "Progress bar text (after amount)", "default": "more for free shipping" },
+    { "type": "text", "id": "progress_success_text", "label": "Free shipping unlocked text", "default": "You've unlocked free shipping!" },
+    { "type": "text", "id": "label_subtotal", "label": "Subtotal label", "default": "Subtotal" },
+    { "type": "text", "id": "label_discount", "label": "Discount label", "default": "Discount" },
+    { "type": "text", "id": "label_shipping", "label": "Shipping label", "default": "Shipping" },
+    { "type": "text", "id": "label_free_shipping", "label": "Free shipping label", "default": "Free Shipping" },
+    { "type": "text", "id": "label_shipping_calculated", "label": "Shipping calculated at checkout", "default": "Calculated at checkout" },
+    { "type": "text", "id": "label_total", "label": "Total label", "default": "Total" },
+    { "type": "text", "id": "label_quantity", "label": "Quantity label", "default": "Quantity" },
+    { "type": "textarea", "id": "gst_note", "label": "GST / tax note", "default": "Inclusive of applicable taxes. 5% GST may apply to select products." },
+    { "type": "text", "id": "discount_toggle_text", "label": "Discount code toggle text", "default": "Have a discount code?" },
+    { "type": "text", "id": "discount_placeholder", "label": "Discount code placeholder", "default": "Enter discount code" },
+    { "type": "text", "id": "discount_apply_text", "label": "Apply button text", "default": "Apply" },
+    { "type": "text", "id": "free_shipping_note", "label": "Free shipping note below summary", "default": "Free shipping on orders above ₹999" },
+    { "type": "text", "id": "checkout_button_text", "label": "Checkout button text", "default": "Proceed to Checkout" },
+    { "type": "text", "id": "continue_shopping_text", "label": "Continue shopping link text", "default": "Continue Shopping" },
+    { "type": "text", "id": "trust_badge_text", "label": "Trust badge text", "default": "Secure Checkout" },
+    { "type": "text", "id": "recommended_title", "label": "Recommended products heading", "default": "You May Also Like" },
+    { "type": "text", "id": "empty_title", "label": "Empty cart title", "default": "Your cart is empty" },
+    { "type": "textarea", "id": "empty_text", "label": "Empty cart description", "default": "Looks like you haven't added anything to your cart yet." },
+    { "type": "text", "id": "empty_button_text", "label": "Empty cart button text", "default": "Start Shopping" }
   ],
   "presets": [
     {

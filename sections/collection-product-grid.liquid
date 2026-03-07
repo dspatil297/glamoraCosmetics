@@ -19,9 +19,9 @@
               <path d="M60 15L15 30V54C15 69 25.5 84 39 90C52.5 84 63 69 63 54V30L60 15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M45 60L52.5 67.5L75 45" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <h2 class="empty-state__title">No products found</h2>
-            <p class="empty-state__message">This collection is currently empty. Check back soon for new products!</p>
-            <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">Browse All Collections</a>
+            <h2 class="empty-state__title">{{ section.settings.empty_title | default: 'No products found' }}</h2>
+            <p class="empty-state__message">{{ section.settings.empty_message | default: 'This collection is currently empty. Check back soon for new products!' }}</p>
+            <a href="{{ section.settings.empty_cta_url | default: routes.all_products_collection_url }}" class="btn btn-primary">{{ section.settings.empty_cta_text | default: 'Browse All Collections' }}</a>
           </div>
         </div>
       {% endif %}
@@ -151,7 +151,15 @@
       "max": 48,
       "step": 12,
       "default": 24
-    }
+    },
+    {
+      "type": "header",
+      "content": "Empty state"
+    },
+    { "type": "text", "id": "empty_title", "label": "Empty state title", "default": "No products found" },
+    { "type": "textarea", "id": "empty_message", "label": "Empty state message", "default": "This collection is currently empty. Check back soon for new products!" },
+    { "type": "text", "id": "empty_cta_text", "label": "Empty state button text", "default": "Browse All Collections" },
+    { "type": "url", "id": "empty_cta_url", "label": "Empty state button link" }
   ]
 }
 {% endschema %}

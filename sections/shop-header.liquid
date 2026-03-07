@@ -15,7 +15,7 @@
   <div class="shop-header__container">
     <div class="shop-header__content">
       <nav class="shop-header__breadcrumbs" aria-label="Breadcrumb">
-        <a href="{{ routes.root_url }}" class="shop-header__breadcrumb-link">Home</a>
+        <a href="{{ routes.root_url }}" class="shop-header__breadcrumb-link">{{ section.settings.breadcrumb_home | default: 'Home' }}</a>
         <span class="shop-header__breadcrumb-separator">›</span>
         <span class="shop-header__breadcrumb-current">{{ collection.title }}</span>
       </nav>
@@ -167,6 +167,12 @@
       "type": "image_picker",
       "id": "background_image",
       "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "breadcrumb_home",
+      "label": "Breadcrumb Home label",
+      "default": "Home"
     }
   ],
   "presets": [

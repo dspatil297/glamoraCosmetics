@@ -18,7 +18,7 @@
           >
         {%- else -%}
           <div class="loyalty-banner__placeholder">
-            <p>Add a loyalty program image in Theme Customizer.</p>
+            <p>{{ section.settings.placeholder_text | default: 'Add a loyalty program image in Theme Customizer.' }}</p>
           </div>
         {%- endif -%}
       </div>
@@ -119,7 +119,8 @@
     { "type": "text", "id": "title", "label": "Heading", "default": "Glamora Glow Circle" },
     { "type": "text", "id": "subtitle", "label": "Subtext", "default": "Earn & redeem rewards on every purchase." },
     { "type": "text", "id": "cta_text", "label": "CTA text", "default": "Show more" },
-    { "type": "url", "id": "cta_link", "label": "CTA link" }
+    { "type": "url", "id": "cta_link", "label": "CTA link" },
+    { "type": "text", "id": "placeholder_text", "label": "Placeholder text (when no image)", "default": "Add a loyalty program image in Theme Customizer." }
   ],
   "presets": [
     { "name": "Loyalty banner" }
