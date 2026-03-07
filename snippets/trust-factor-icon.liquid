@@ -1,0 +1,22 @@
+{%- comment -%} Line-art style icons for trust factor blocks. name: transparency | efficacy | affordable | globe {%- endcomment -%}
+{%- assign name = name | default: 'transparency' -%}
+<svg class="trust-factor-icon trust-factor-icon--{{ name }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  {%- case name -%}
+    {%- when 'transparency' -%}
+      <circle cx="18" cy="24" r="9"/>
+      <circle cx="30" cy="24" r="9"/>
+      <path d="M21.5 24a5.5 5.5 0 0 1 5.5-5.5 5.5 5.5 0 0 1 0 11 5.5 5.5 0 0 1-5.5-5.5Z" fill="currentColor" fill-opacity="0.2" stroke="currentColor"/>
+    {%- when 'efficacy' -%}
+      <path d="M20 38V20l6-8 6 8v18H20z"/>
+      <circle cx="26" cy="26" r="2.5"/>
+    {%- when 'affordable' -%}
+      <path d="M20 12v24M20 12l4-3 4 3v24l-4 3-4-3V12Z"/>
+      <path d="M22 18h4M22 22h4M22 26h4"/>
+    {%- when 'globe' -%}
+      <circle cx="24" cy="24" r="14"/>
+      <ellipse cx="24" cy="24" rx="14" ry="4" transform="rotate(-60 24 24)"/>
+      <path d="M10 24h28"/>
+    {%- else -%}
+      <circle cx="24" cy="24" r="10"/>
+  {%- endcase -%}
+</svg>

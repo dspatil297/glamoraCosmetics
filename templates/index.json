@@ -140,15 +140,15 @@
     "brand_values": {
       "type": "values-strip",
       "blocks": {
-        "val_1": { "type": "value", "settings": { "icon": "🔍", "title": "Transparency", "description": "Full disclosure of actives and why they\u2019re used." } },
-        "val_2": { "type": "value", "settings": { "icon": "⚗️", "title": "Efficacy", "description": "Formulas designed for visible, measurable results." } },
-        "val_3": { "type": "value", "settings": { "icon": "💡", "title": "Accessible", "description": "Premium skincare that stays within reach." } },
-        "val_4": { "type": "value", "settings": { "icon": "🌍", "title": "Best Sourcing", "description": "Ingredients chosen for performance and safety." } }
+        "val_1": { "type": "value", "settings": { "icon_key": "transparency", "title": "Transparency", "description": "Full disclosure of ingredients used & their concentration." } },
+        "val_2": { "type": "value", "settings": { "icon_key": "efficacy", "title": "Efficacy", "description": "Formulations developed with science-backed, effective ingredients." } },
+        "val_3": { "type": "value", "settings": { "icon_key": "affordable", "title": "Affordable", "description": "Skincare, accessible to all." } },
+        "val_4": { "type": "value", "settings": { "icon_key": "globe", "title": "Only the best", "description": "Ingredients sourced from across the world." } }
       },
       "block_order": ["val_1","val_2","val_3","val_4"],
       "settings": {
-        "title": "The future of skincare is here",
-        "subtitle": "Urban-first skincare where each element is chosen for its scientific merit."
+        "title": "The future of personal care is here",
+        "subtitle": "Embrace Glamora, where each element is chosen for its scientific merit, offering you authentic, effective skincare solutions."
       }
     },
     "loyalty_program": {
