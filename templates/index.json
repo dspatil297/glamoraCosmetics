@@ -171,7 +171,7 @@
       }
     },
     "home_faq": {
-      "type": "home-faq",
+      "type": "home_faq",
       "settings": {
         "title": "Frequently Asked Questions",
         "empty_answer_text": "No answer provided."

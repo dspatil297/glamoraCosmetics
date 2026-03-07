@@ -32,14 +32,22 @@
   {% for line in lines %}
     {% assign trimmed = line | strip %}
     {% assign lower = trimmed | downcase %}
+    {% assign first_two = trimmed | slice: 0, 2 | downcase %}
+    {% assign line_starts_q = false %}
+    {% assign line_starts_a = false %}
+    {% if trimmed.size >= 2 %}
+      {% if first_two == 'q:' %}
+        {% assign line_starts_q = true %}
+      {% elsif first_two == 'a:' %}
+        {% assign line_starts_a = true %}
+      {% endif %}
+    {% endif %}
 
     {% if lower == '' or trimmed == '' %}
-      {% comment %} Blank line: if we're in answer, keep collecting; else ignore {% endcomment %}
       {% if in_answer and current_a != '' %}
         {% assign current_a = current_a | append: ' ' %}
       {% endif %}
-    {% elsif trimmed.size >= 2 and trimmed | slice: 0, 2 | downcase == 'q:' %}
-      {% comment %} Line starts with Q: — save previous pair and start new question {% endcomment %}
+    {% elsif line_starts_q %}
       {% if current_q != '' %}
         {% assign pair = current_q | append: '|||' | append: current_a %}
         {% if faq_items_string != blank %}
@@ -59,8 +67,7 @@
       {% assign current_q = current_q | strip %}
       {% assign current_a = '' %}
       {% assign in_answer = false %}
-    {% elsif trimmed.size >= 2 and trimmed | slice: 0, 2 | downcase == 'a:' and in_answer == false %}
-      {% comment %} First A: after a Q: — start answer (strip "A:" from this line only) {% endcomment %}
+    {% elsif line_starts_a and in_answer == false %}
       {% assign a_parts = trimmed | split: ':' %}
       {% assign current_a = '' %}
       {% for ap in a_parts %}
@@ -73,7 +80,6 @@
       {% assign current_a = current_a | strip %}
       {% assign in_answer = true %}
     {% else %}
-      {% comment %} Continuation line: part of current answer or orphan (treat as answer) {% endcomment %}
       {% if current_q != '' %}
         {% if current_a != '' %}
           {% assign current_a = current_a | append: ' ' | append: trimmed %}
