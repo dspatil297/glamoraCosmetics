@@ -15,7 +15,7 @@
   role="region"
   aria-label="{{ section.settings.heading | default: 'Hero' }}"
   style="
-    --hero-image-fit: {{ section.settings.image_fit | default: 'cover' }};
+    --hero-image-fit: {{ section.settings.image_fit | default: 'contain' }};
     --hero-image-bg: {{ section.settings.image_bg | default: '#ffffff' }};
   "
   {% if has_carousel_slides %}
