@@ -56,7 +56,7 @@
           "type": "ctas",
           "settings": {
             "atc_text": "Add to Cart",
-            "show_buy_now": true
+            "show_buy_now": false
           }
         },
         "trust": {
