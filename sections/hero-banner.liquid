@@ -36,35 +36,35 @@
           {%- endif -%}
           {%- if block.settings.image != blank -%}
             {%- assign mobile_img = block.settings.mobile_image | default: block.settings.image -%}
-            <picture class="hero-banner__slide-picture">
-              <source
-                media="(max-width: 768px)"
-                srcset="
-                  {{ mobile_img | image_url: width: 480 }} 480w,
-                  {{ mobile_img | image_url: width: 768 }} 768w,
-                  {{ mobile_img | image_url: width: 1024 }} 1024w
-                "
-                sizes="100vw"
-              >
-              <img
-                class="hero-banner__slide-img"
-                src="{{ block.settings.image | image_url: width: 1280 }}"
-                srcset="
-                  {{ block.settings.image | image_url: width: 960 }} 960w,
-                  {{ block.settings.image | image_url: width: 1280 }} 1280w,
-                  {{ block.settings.image | image_url: width: 1440 }} 1440w
-                "
-                sizes="100vw"
-                alt="{{ block.settings.image.alt | default: '' }}"
-                width="1280"
-                height="720"
-                loading="eager"
-                fetchpriority="{% if forloop.first %}high{% else %}low{% endif %}"
-                onerror="this.classList.add('image-error'); this.alt='Image failed to load';"
-              >
-            </picture>
+            <div class="hero-banner__slide-img-wrap">
+              <picture class="hero-banner__slide-picture">
+                <source
+                  media="(max-width: 768px)"
+                  srcset="
+                    {{ mobile_img | image_url: width: 480 }} 480w,
+                    {{ mobile_img | image_url: width: 768 }} 768w,
+                    {{ mobile_img | image_url: width: 1024 }} 1024w
+                  "
+                  sizes="100vw"
+                >
+                <img
+                  class="hero-banner__slide-img"
+                  src="{{ block.settings.image | image_url: width: 1280 }}"
+                  srcset="
+                    {{ block.settings.image | image_url: width: 960 }} 960w,
+                    {{ block.settings.image | image_url: width: 1280 }} 1280w,
+                    {{ block.settings.image | image_url: width: 1440 }} 1440w
+                  "
+                  sizes="100vw"
+                  alt="{{ block.settings.image.alt | default: '' }}"
+                  loading="eager"
+                  fetchpriority="{% if forloop.first %}high{% else %}low{% endif %}"
+                  onerror="this.classList.add('image-error'); this.alt='Image failed to load';"
+                >
+              </picture>
+            </div>
           {%- else -%}
-            <div class="hero-banner__slide-placeholder-img">
+            <div class="hero-banner__slide-img-wrap hero-banner__slide-placeholder-img">
               {% render 'unsplash-placeholder', type: 'hero', width: 1280, class: 'hero-banner__slide-img', loading: 'lazy', alt: 'Hero placeholder' %}
             </div>
           {%- endif -%}
@@ -73,26 +73,26 @@
     {% else %}
       {% if section.settings.hero_image %}
         <div class="hero-banner__slide hero-banner__slide--active">
-          <img
-            class="hero-banner__slide-img"
-            src="{{ section.settings.hero_image | image_url: width: 1280 }}"
-            srcset="
-              {{ section.settings.hero_image | image_url: width: 960 }} 960w,
-              {{ section.settings.hero_image | image_url: width: 1280 }} 1280w,
-              {{ section.settings.hero_image | image_url: width: 1440 }} 1440w
-            "
-            sizes="100vw"
-            alt="{{ section.settings.hero_image.alt | default: section.settings.heading }}"
-            width="1280"
-            height="720"
-            loading="eager"
-            fetchpriority="high"
-            onerror="this.classList.add('image-error'); this.alt='Image failed to load';"
-          >
+          <div class="hero-banner__slide-img-wrap">
+            <img
+              class="hero-banner__slide-img"
+              src="{{ section.settings.hero_image | image_url: width: 1280 }}"
+              srcset="
+                {{ section.settings.hero_image | image_url: width: 960 }} 960w,
+                {{ section.settings.hero_image | image_url: width: 1280 }} 1280w,
+                {{ section.settings.hero_image | image_url: width: 1440 }} 1440w
+              "
+              sizes="100vw"
+              alt="{{ section.settings.hero_image.alt | default: section.settings.heading }}"
+              loading="eager"
+              fetchpriority="high"
+              onerror="this.classList.add('image-error'); this.alt='Image failed to load';"
+            >
+          </div>
         </div>
       {% else %}
         <div class="hero-banner__slide hero-banner__slide--active">
-          <div class="hero-banner__slide-placeholder-img">
+          <div class="hero-banner__slide-img-wrap hero-banner__slide-placeholder-img">
             {% render 'unsplash-placeholder', type: 'hero', width: 1280, class: 'hero-banner__slide-img', loading: 'eager', alt: 'Hero placeholder' %}
           </div>
         </div>
@@ -216,6 +216,16 @@
     display: none;
   }
 
+  .hero-banner__slide-img-wrap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
   .hero-banner__slide-picture {
     position: absolute;
     inset: 0;
@@ -224,19 +234,19 @@
     margin: 0;
     padding: 0;
     display: block;
+    overflow: hidden;
   }
 
   .hero-banner__slide-picture img,
   .hero-banner__image img,
+  .hero-banner__slide-img-wrap img,
   .hero-banner__slide img {
     position: absolute;
-    inset: 0;
-    width: 100% !important;
-    height: 100% !important;
-    min-width: 100%;
-    min-height: 100%;
-    max-width: none;
-    max-height: none;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
     object-fit: cover;
     object-position: center;
     display: block;
@@ -264,15 +274,16 @@
     inset: 0;
     width: 100%;
     height: 100%;
+    overflow: hidden;
   }
 
   .hero-banner__slide-placeholder-img .hero-banner__slide-img {
     position: absolute;
-    inset: 0;
-    width: 100% !important;
-    height: 100% !important;
-    min-width: 100%;
-    min-height: 100%;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
     object-fit: cover;
     object-position: center;
   }
