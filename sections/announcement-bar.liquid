@@ -74,7 +74,14 @@
 
 {% stylesheet %}
   :root {
-    --announcement-bar-height: 52px;
+    --announcement-bar-height: calc(52px + env(safe-area-inset-top, 0));
+  }
+
+  /* Remove gap above sticky announcement bar: section wrapper must not add top spacing */
+  .shopify-section:has(> .announcement-bar) {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 0 !important;
   }
 
   .announcement-bar {
@@ -84,6 +91,8 @@
     right: 0;
     width: 100%;
     z-index: 10000;
+    margin: 0 !important;
+    padding-top: env(safe-area-inset-top, 0);
     background: var(--forest-green);
     color: #ffffff;
     border-bottom: 1px solid rgba(255, 255, 255, 0.18);
