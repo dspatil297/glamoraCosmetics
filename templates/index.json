@@ -15,24 +15,28 @@
         "slide_Nq893k": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-03-07_at_16.15.59_1.jpg",
             "link": ""
           }
         },
         "slide_4NXNRf": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-03-07_at_16.15.59_2.jpg",
             "link": ""
           }
         },
         "slide_hMhcUm": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-03-07_at_16.15.59.jpg",
             "link": ""
           }
         },
         "slide_knjxEJ": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-03-07_at_16.16.00.jpg",
             "link": ""
           }
         }
@@ -315,7 +319,8 @@
       "type": "home_faq",
       "settings": {
         "title": "Frequently Asked Questions",
-        "empty_answer_text": "No answer provided."
+        "empty_answer_text": "No answer provided.",
+        "empty_state_text": "FAQs will appear here once you add them in Shopify: Settings → Custom data → Shop. Create a metafield with namespace \"custom\" and key \"site_faqs\" (Multi-line text). Use the format: Q: Your question? A: Your answer."
       }
     },
     "gst_notice": {
