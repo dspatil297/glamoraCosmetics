@@ -110,7 +110,9 @@
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when 'product_title' -%}
-                <div class="pdp__block" {{ block.shopify_attributes }}>
+                {%- assign title_size = block.settings.title_font_size | default: section.settings.title_font_size | default: 52 -%}
+                {%- assign title_weight = block.settings.title_font_weight | default: section.settings.title_font_weight | default: 400 -%}
+                <div class="pdp__block pdp__title-wrap" {{ block.shopify_attributes }} style="--pdp-title-size: {{ title_size }}px; --pdp-title-weight: {{ title_weight }};">
                   <h1 class="pdp__title">{{ product.title }}</h1>
                 </div>
 
@@ -504,11 +506,12 @@
   .pdp__thumb.is-active { border-color: rgba(0,0,0,0.7); }
   .pdp__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+  .pdp__title-wrap { display: block; }
   .pdp__title {
     margin: 0 0 6px;
     font-size: var(--pdp-title-size, 52px);
     line-height: 1.15;
-    font-weight: 400;
+    font-weight: var(--pdp-title-weight, 400);
     font-family: 'ProximaNovaRegular', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
   }
   .pdp__concern {
@@ -893,7 +896,29 @@
       "type": "product_title",
       "name": "Product title",
       "limit": 1,
-      "settings": []
+      "settings": [
+        {
+          "type": "range",
+          "id": "title_font_size",
+          "label": "Title font size (px)",
+          "min": 32,
+          "max": 72,
+          "step": 1,
+          "default": 52
+        },
+        {
+          "type": "select",
+          "id": "title_font_weight",
+          "label": "Title font weight",
+          "options": [
+            { "value": "400", "label": "Regular (400)" },
+            { "value": "500", "label": "Medium (500)" },
+            { "value": "600", "label": "Semi-bold (600)" },
+            { "value": "700", "label": "Bold (700)" }
+          ],
+          "default": "400"
+        }
+      ]
     },
     {
       "type": "concern",
