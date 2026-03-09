@@ -39,6 +39,11 @@
   </head>
 
   <body class="template-{{ request.page_type | handle }}">
+    <style>
+      /* Remove any gap above sticky announcement bar and header */
+      html, body { padding-top: 0 !important; margin-top: 0 !important; }
+      body > [id^="shopify-section"] { margin-top: 0 !important; padding-top: 0 !important; transform: none !important; }
+    </style>
     {%- if request.page_type == 'index' -%}
     <style>
       /* Hide Judge.me floating overlay on home so it doesn't sit on hero */
