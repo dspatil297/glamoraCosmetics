@@ -74,8 +74,8 @@
 
 {% stylesheet %}
   :root {
-    /* 52px content + 1px border so header sits flush under bar */
-    --announcement-bar-height: calc(53px + env(safe-area-inset-top, 0));
+    /* Inner is 36px (box-sizing: border-box) + 1px border so header sits flush */
+    --announcement-bar-height: calc(37px + env(safe-area-inset-top, 0));
   }
 
   /* Remove gap: section wrapper and all ancestors must not add top spacing or transform */
