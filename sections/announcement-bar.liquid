@@ -73,8 +73,17 @@
 {%- endif -%}
 
 {% stylesheet %}
+  :root {
+    --announcement-bar-height: 52px;
+  }
+
   .announcement-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     width: 100%;
+    z-index: 10000;
     background: var(--forest-green);
     color: #ffffff;
     border-bottom: 1px solid rgba(255, 255, 255, 0.18);

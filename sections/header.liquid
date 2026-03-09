@@ -304,7 +304,7 @@
     background-color: #ffffff;
     border-bottom: 1px solid var(--border-color);
     position: fixed;
-    top: 0;
+    top: var(--announcement-bar-height, 0);
     left: 0;
     right: 0;
     z-index: 9998;
@@ -312,9 +312,9 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   }
 
-  /* Reserve space so main content is not hidden under the fixed header */
+  /* Reserve space so main content is not hidden under announcement bar + header */
   #main-content {
-    padding-top: 80px;
+    padding-top: calc(80px + var(--announcement-bar-height, 0));
   }
 
   .site-header.sticky {
