@@ -150,6 +150,16 @@
     isolation: isolate;
   }
 
+  /* If your hero images are 9:16 (portrait), this makes the hero container
+     a 9:16 frame on mobile so "cover" behaves predictably. */
+  @media (max-width: 768px) {
+    .hero-banner {
+      height: min(100svh, calc(100vw * 16 / 9));
+      min-height: 0;
+      max-height: none;
+    }
+  }
+
   .hero-banner__content--minimal {
     padding-top: 0;
     padding-bottom: 0;
