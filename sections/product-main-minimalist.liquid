@@ -36,6 +36,7 @@
     --pdp-compare-size: {{ section.settings.compare_font_size | default: 14 }}px;
     --pdp-badge-size: {{ section.settings.badge_font_size | default: 12 }}px;
     --pdp-button-font-size: {{ section.settings.button_font_size | default: 14 }}px;
+    --base-headings-primary-size: 60;
   "
   {{ section.shopify_attributes }}
 >
@@ -430,8 +431,9 @@
 
   .pdp__title {
     margin: 0 0 6px;
-    font-size: var(--pdp-title-size, 26px);
+    font-size: calc(50px / 60 * var(--base-headings-primary-size));
     line-height: 1.15;
+    font-family: 'ProximaNovaRegular', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
   }
   .pdp__concern {
     font-size: var(--pdp-body-size, 14px);
