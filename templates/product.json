@@ -46,6 +46,10 @@
       "type": "product-how-to-use-compact",
       "settings": {}
     },
+    "product_reviews_judge": {
+      "type": "product-reviews-judge",
+      "settings": {}
+    },
     "related_products": {
       "type": "product-grid",
       "settings": {
@@ -60,13 +64,12 @@
         "view_all_text": "View All Products"
       }
     },
-    "product_reviews_judge": {
-      "type": "product-reviews-judge",
-      "settings": {}
-    },
-    "1769418164e60d6e16": {
-      "type": "apps",
-      "settings": {}
+    "product_faq": {
+      "type": "product-faq",
+      "settings": {
+        "section_title": "Frequently Asked Questions",
+        "empty_answer_text": "No answer provided."
+      }
     }
   },
   "order": [
@@ -75,6 +78,6 @@
     "product_how_to_use",
     "product_reviews_judge",
     "related_products",
-    "1769418164e60d6e16"
+    "product_faq"
   ]
 }
