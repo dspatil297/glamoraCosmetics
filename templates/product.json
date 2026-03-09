@@ -10,11 +10,15 @@
 {
   "sections": {
     "product_main": {
-      "type": "product-main",
+      "type": "product-main-minimalist",
+      "settings": {}
+    },
+    "product_ingredients": {
+      "type": "product-ingredient-highlights",
       "settings": {}
     },
     "product_how_to_use": {
-      "type": "product-how-to-use-compact",
+      "type": "product-how-to-use-minimalist",
       "settings": {}
     },
     "related_products": {
@@ -35,10 +39,6 @@
       "type": "product-reviews-judge",
       "settings": {}
     },
-    "product_faq": {
-      "type": "product-faq",
-      "settings": {}
-    },
     "1769418164e60d6e16": {
       "type": "apps",
       "settings": {}
@@ -46,10 +46,10 @@
   },
   "order": [
     "product_main",
+    "product_ingredients",
     "product_how_to_use",
-    "related_products",
     "product_reviews_judge",
-    "product_faq",
+    "related_products",
     "1769418164e60d6e16"
   ]
 }
