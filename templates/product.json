@@ -28,15 +28,10 @@
             "badge_4": "100% Authentic"
           }
         },
-        "acc_1": { "type": "accordion", "settings": { "title": "What is it?", "content": "<p>Add content (connect metafields later).</p>", "open_by_default": false } },
-        "acc_2": { "type": "accordion", "settings": { "title": "Key Ingredients", "content": "<p>Add content (connect metafields later).</p>", "open_by_default": false } },
-        "acc_3": { "type": "accordion", "settings": { "title": "Who is it for?", "content": "<p>Add content (connect metafields later).</p>", "open_by_default": false } },
-        "acc_4": { "type": "accordion", "settings": { "title": "How to use?", "content": "<p>Add content (connect metafields later).</p>", "open_by_default": false } },
-        "acc_5": { "type": "accordion", "settings": { "title": "Full Ingredient List", "content": "<p>Add content (connect metafields later).</p>", "open_by_default": false } },
-        "acc_6": { "type": "accordion", "settings": { "title": "FAQs", "content": "<p>Add content (connect metafields later).</p>", "open_by_default": false } },
+        "pdp_faq": { "type": "product_faq_accordion", "settings": {} },
         "sticky": { "type": "mobile_sticky_bar", "settings": { "atc_text": "Add to Cart" } }
       },
-      "block_order": ["product_title","concern","rating","description","price","variants","ctas","trust","acc_1","acc_2","acc_3","acc_4","acc_5","acc_6","sticky"],
+      "block_order": ["product_title","concern","rating","description","price","variants","ctas","trust","pdp_faq","sticky"],
       "settings": {}
     },
     "product_ingredients": {
@@ -66,10 +61,9 @@
       }
     },
     "product_faq": {
-      "type": "product-faq",
+      "type": "product-faq-accordion",
       "settings": {
-        "section_title": "Frequently Asked Questions",
-        "empty_answer_text": "No answer provided."
+        "heading": "Frequently Asked Questions"
       }
     }
   },

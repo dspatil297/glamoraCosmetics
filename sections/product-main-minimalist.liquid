@@ -30,7 +30,7 @@
     --pdp-padding-top: {{ section.settings.padding_top | default: 40 }}px;
     --pdp-padding-bottom: {{ section.settings.padding_bottom | default: 40 }}px;
     --pdp-grid-gap: {{ section.settings.content_gap | default: 40 }}px;
-    --pdp-title-size: {{ section.settings.title_font_size | default: 26 }}px;
+    --pdp-title-size: {{ section.settings.title_font_size | default: 52 }}px;
     --pdp-body-size: {{ section.settings.body_font_size | default: 14 }}px;
     --pdp-price-size: {{ section.settings.price_font_size | default: 22 }}px;
     --pdp-compare-size: {{ section.settings.compare_font_size | default: 14 }}px;
@@ -139,12 +139,30 @@
                 {%- endif -%}
 
               {%- when 'price' -%}
-                <div class="pdp__block" {{ block.shopify_attributes }}>
-                  <div class="pdp__price-row">
-                    <span class="pdp__price" data-pdp-price>{{ current_variant.price | money }}</span>
-                    {%- if current_variant.compare_at_price > current_variant.price -%}
-                      <span class="pdp__compare" data-pdp-compare>{{ current_variant.compare_at_price | money }}</span>
-                      <span class="pdp__badge">{{ block.settings.sale_badge | default: 'On Sale' }}</span>
+                {%- liquid
+                  assign compare = current_variant.compare_at_price
+                  assign price = current_variant.price
+                  assign has_discount = false
+                  assign discount_pct = 0
+                  if compare != blank and compare > price
+                    assign has_discount = true
+                    assign discount_pct = compare | minus: price | times: 100 | divided_by: compare | round
+                  endif
+                -%}
+                <div class="pdp__block pdp__price-block" {{ block.shopify_attributes }}>
+                  <span class="pdp__price-section-label">{{ block.settings.price_label | default: 'PRICE' }}</span>
+                  <div class="pdp__price-card">
+                    <div class="pdp__price-line1">
+                      <span class="pdp__price-mrp">MRP</span>
+                      <span class="pdp__compare{% unless has_discount %} pdp__compare--hidden{% endunless %}" data-pdp-compare>{% if has_discount %}{{ compare | money }}{% endif %}</span>
+                      <span class="pdp__price" data-pdp-price>{{ price | money }}</span>
+                      <span class="pdp__price-badge{% unless has_discount %} pdp__price-badge--hidden{% endunless %}" data-pdp-discount-badge>{% if has_discount %}{{ discount_pct }}% Off{% endif %}</span>
+                      {%- if block.settings.show_price_info_icon -%}
+                        <span class="pdp__price-info-icon" aria-label="Price information">ⓘ</span>
+                      {%- endif -%}
+                    </div>
+                    {%- if block.settings.tax_text != blank -%}
+                      <div class="pdp__price-tax">{{ block.settings.tax_text }}</div>
                     {%- endif -%}
                   </div>
                 </div>
@@ -218,6 +236,37 @@
                   </ul>
                 </div>
 
+              {%- when 'product_faq_accordion' -%}
+                {%- liquid
+                  assign faq_questions = shop.metafields.custom.product_faq_question.value
+                  assign faq_answers_meta = product.metafields.custom.product_faq
+                  assign faq_answer_lines = ''
+                  if faq_answers_meta != blank
+                    assign faq_answers_text = faq_answers_meta | metafield_text | strip
+                    if faq_answers_text != blank
+                      assign faq_answer_lines = faq_answers_text | newline_to_br | split: '<br />'
+                    endif
+                  endif
+                -%}
+                {%- if faq_questions != blank and faq_answer_lines != blank -%}
+                  <div class="pdp__block pdp__faq-accordion-wrap" {{ block.shopify_attributes }}>
+                    {%- for question in faq_questions -%}
+                      {%- assign q_text = question | strip -%}
+                      {%- assign a_raw = faq_answer_lines[forloop.index0] | default: '' -%}
+                      {%- assign a_text = a_raw | strip -%}
+                      {%- if q_text != blank -%}
+                        <details class="pdp__acc">
+                          <summary class="pdp__acc-sum">
+                            <span>{{ q_text }}</span>
+                            <span class="pdp__acc-ico" aria-hidden="true">+</span>
+                          </summary>
+                          <div class="pdp__acc-body rte">{{ a_text }}</div>
+                        </details>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+
               {%- when 'accordion' -%}
                 <div class="pdp__block" {{ block.shopify_attributes }}>
                   <details class="pdp__acc" {% if block.settings.open_by_default %}open{% endif %}>
@@ -237,14 +286,30 @@
             {%- endcase -%}
           {%- endfor -%}
         {%- else -%}
+          {%- liquid
+            assign compare = current_variant.compare_at_price
+            assign price = current_variant.price
+            assign has_discount = false
+            assign discount_pct = 0
+            if compare != blank and compare > price
+              assign has_discount = true
+              assign discount_pct = compare | minus: price | times: 100 | divided_by: compare | round
+            endif
+          -%}
           <div class="pdp__block">
             <h1 class="pdp__title">{{ product.title }}</h1>
-            <div class="pdp__price-row">
-              <span class="pdp__price" data-pdp-price>{{ current_variant.price | money }}</span>
-              {%- if current_variant.compare_at_price > current_variant.price -%}
-                <span class="pdp__compare" data-pdp-compare>{{ current_variant.compare_at_price | money }}</span>
-                <span class="pdp__badge">On Sale</span>
-              {%- endif -%}
+            <div class="pdp__block pdp__price-block">
+              <span class="pdp__price-section-label">PRICE</span>
+              <div class="pdp__price-card">
+                <div class="pdp__price-line1">
+                  <span class="pdp__price-mrp">MRP</span>
+                  <span class="pdp__compare{% unless has_discount %} pdp__compare--hidden{% endunless %}" data-pdp-compare>{% if has_discount %}{{ compare | money }}{% endif %}</span>
+                  <span class="pdp__price" data-pdp-price>{{ price | money }}</span>
+                  <span class="pdp__price-badge{% unless has_discount %} pdp__price-badge--hidden{% endunless %}" data-pdp-discount-badge>{% if has_discount %}{{ discount_pct }}% Off{% endif %}</span>
+                  <span class="pdp__price-info-icon" aria-label="Price information">ⓘ</span>
+                </div>
+                <div class="pdp__price-tax">(incl. of all taxes)</div>
+              </div>
             </div>
           </div>
           <div class="pdp__block">
@@ -297,6 +362,7 @@
     var variantSelect = root.querySelector('[data-pdp-variant-select]');
     var priceEl = root.querySelector('[data-pdp-price]');
     var compareEl = root.querySelector('[data-pdp-compare]');
+    var discountBadgeEl = root.querySelector('[data-pdp-discount-badge]');
     var stickyPriceEl = root.querySelector('[data-pdp-sticky-price]');
 
     function moneyFromCents(cents) {
@@ -309,14 +375,26 @@
       if (!opt) return;
       var price = opt.getAttribute('data-price');
       var compare = opt.getAttribute('data-compare');
+      var priceNum = parseInt(price, 10);
+      var compareNum = compare ? parseInt(compare, 10) : 0;
+      var hasDiscount = compareNum > priceNum;
       if (priceEl) priceEl.textContent = moneyFromCents(price);
       if (stickyPriceEl) stickyPriceEl.textContent = moneyFromCents(price);
       if (compareEl) {
-        if (compare && parseInt(compare, 10) > parseInt(price, 10)) {
+        if (hasDiscount) {
           compareEl.textContent = moneyFromCents(compare);
-          compareEl.style.display = '';
+          compareEl.classList.remove('pdp__compare--hidden');
         } else {
-          compareEl.style.display = 'none';
+          compareEl.classList.add('pdp__compare--hidden');
+        }
+      }
+      if (discountBadgeEl) {
+        if (hasDiscount) {
+          var pct = Math.round((compareNum - priceNum) / compareNum * 100);
+          discountBadgeEl.textContent = pct + '% Off';
+          discountBadgeEl.classList.remove('pdp__price-badge--hidden');
+        } else {
+          discountBadgeEl.classList.add('pdp__price-badge--hidden');
         }
       }
     }
@@ -428,8 +506,9 @@
 
   .pdp__title {
     margin: 0 0 6px;
-    font-size: calc(50px / 60 * var(--base-headings-primary-size));
+    font-size: var(--pdp-title-size, 52px);
     line-height: 1.15;
+    font-weight: 400;
     font-family: 'ProximaNovaRegular', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
   }
   .pdp__concern {
@@ -441,7 +520,7 @@
     display: flex;
     gap: 10px;
     align-items: center;
-    font-size: var(--pdp-body-size, 14px);
+    font-size: 30px;
     color: rgba(0,0,0,0.75);
   }
   .pdp__stars { letter-spacing: 0.08em; }
@@ -460,14 +539,62 @@
     margin-top: 12px;
   }
 
+  .pdp__price-section-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: rgba(0,0,0,0.5);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .pdp__price-card {
+    background: #fff;
+    border-radius: 4px;
+    border-top: 1px solid rgba(0,0,0,0.12);
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+    padding: 14px 0;
+  }
+  .pdp__price-line1 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 12px;
+  }
+  .pdp__price-mrp {
+    font-size: var(--pdp-compare-size, 14px);
+    font-weight: 600;
+    color: #000;
+  }
+  .pdp__price { font-size: var(--pdp-price-size, 22px); font-weight: 800; color: #000; }
+  .pdp__compare { font-size: var(--pdp-compare-size, 14px); color: rgba(0,0,0,0.55); text-decoration: line-through; }
+  .pdp__compare--hidden { display: none !important; }
+  .pdp__price-badge {
+    font-size: var(--pdp-badge-size, 12px);
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: #000;
+    color: #fff;
+    font-weight: 600;
+  }
+  .pdp__price-badge--hidden { display: none !important; }
+  .pdp__price-info-icon {
+    font-size: 14px;
+    color: rgba(0,0,0,0.5);
+    cursor: help;
+    line-height: 1;
+  }
+  .pdp__price-tax {
+    font-size: 12px;
+    color: rgba(0,0,0,0.5);
+    margin-top: 6px;
+  }
   .pdp__price-row {
     display: flex;
     gap: 12px;
     align-items: baseline;
     margin-top: 10px;
   }
-  .pdp__price { font-size: var(--pdp-price-size, 22px); font-weight: 800; }
-  .pdp__compare { font-size: var(--pdp-compare-size, 14px); color: rgba(0,0,0,0.55); text-decoration: line-through; }
   .pdp__badge {
     font-size: var(--pdp-badge-size, 12px);
     padding: 4px 10px;
@@ -803,7 +930,9 @@
       "name": "Price",
       "limit": 1,
       "settings": [
-        { "type": "text", "id": "sale_badge", "label": "Sale badge text", "default": "On Sale" }
+        { "type": "text", "id": "price_label", "label": "Price section label", "default": "PRICE" },
+        { "type": "text", "id": "tax_text", "label": "Tax note (below price)", "default": "(incl. of all taxes)" },
+        { "type": "checkbox", "id": "show_price_info_icon", "label": "Show price info icon", "default": true }
       ]
     },
     {
@@ -835,6 +964,12 @@
       ]
     },
     {
+      "type": "product_faq_accordion",
+      "name": "FAQ accordion",
+      "limit": 1,
+      "settings": []
+    },
+    {
       "type": "accordion",
       "name": "Info accordion item",
       "settings": [
@@ -864,12 +999,7 @@
         { "type": "variants" },
         { "type": "ctas" },
         { "type": "trust_badges" },
-        { "type": "accordion", "settings": { "title": "What is it?" } },
-        { "type": "accordion", "settings": { "title": "Key Ingredients" } },
-        { "type": "accordion", "settings": { "title": "Who is it for?" } },
-        { "type": "accordion", "settings": { "title": "How to use?" } },
-        { "type": "accordion", "settings": { "title": "Full Ingredient List" } },
-        { "type": "accordion", "settings": { "title": "FAQs" } },
+        { "type": "product_faq_accordion" },
         { "type": "mobile_sticky_bar" }
       ]
     }
