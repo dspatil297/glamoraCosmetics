@@ -1,298 +1,102 @@
-{% comment %}
-  How to Use Section - Compact Premium Design
-{% endcomment %}
+{%- comment -%}
+  How to use section (Minimalist)
+  Uses blocks for fully editable steps (metafield mapping later).
+{%- endcomment -%}
 
-<section class="product-how-to-use-compact fade-in-up" id="product-how-to-use" style="animation-delay: 0.6s;">
-  <div class="product-how-to-use-compact__container">
-    <h2 class="how-to-use-title">{{ section.settings.section_title | default: 'How to Use' }}</h2>
-    <div class="usage-grid">
-      {% assign usage_blocks = section.blocks | where: 'type', 'usage_step' %}
-      {% if usage_blocks.size > 0 %}
-        {% for block in usage_blocks %}
-          <div class="usage-item" {{ block.shopify_attributes }}>
-            <div class="usage-number">{{ forloop.index }}</div>
-            <div class="usage-content">
-              <h3 class="usage-title">{{ block.settings.step_title | default: 'Step' }}</h3>
-              <p class="usage-text">{{ block.settings.step_text | default: '' }}</p>
-            </div>
+<section class="pdp-how" id="pdp-how-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="pdp-how__inner">
+    {%- if section.settings.title != blank -%}
+      <h2 class="pdp-how__title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subtitle != blank -%}
+      <div class="pdp-how__subtitle rte">{{ section.settings.subtitle }}</div>
+    {%- endif -%}
+
+    <ol class="pdp-how__steps">
+      {%- for block in section.blocks -%}
+        <li class="pdp-how__step" {{ block.shopify_attributes }}>
+          <div class="pdp-how__step-num">{{ forloop.index }}</div>
+          <div class="pdp-how__step-body">
+            <div class="pdp-how__step-title">{{ block.settings.title }}</div>
+            <div class="pdp-how__step-text">{{ block.settings.text }}</div>
           </div>
-        {% endfor %}
-      {% else %}
-        <div class="usage-item">
-          <div class="usage-number">1</div>
-          <div class="usage-content">
-            <h3 class="usage-title">{{ section.settings.step1_title | default: 'Add to Smoothies' }}</h3>
-            <p class="usage-text">{{ section.settings.step1_text | default: 'Mix 1-2 teaspoons into your favorite smoothie for a nutrient boost' }}</p>
-          </div>
-        </div>
-        <div class="usage-item">
-          <div class="usage-number">2</div>
-          <div class="usage-content">
-            <h3 class="usage-title">{{ section.settings.step2_title | default: 'Mix with Warm Water' }}</h3>
-            <p class="usage-text">{{ section.settings.step2_text | default: 'Stir into a glass of warm water for a quick daily supplement' }}</p>
-          </div>
-        </div>
-        <div class="usage-item">
-          <div class="usage-number">3</div>
-          <div class="usage-content">
-            <h3 class="usage-title">{{ section.settings.step3_title | default: 'Cooking & Baking' }}</h3>
-            <p class="usage-text">{{ section.settings.step3_text | default: 'Incorporate into soups, sauces, or baked goods for added nutrition' }}</p>
-          </div>
-        </div>
-        <div class="usage-item">
-          <div class="usage-number">4</div>
-          <div class="usage-content">
-            <h3 class="usage-title">{{ section.settings.step4_title | default: 'Daily Routine' }}</h3>
-            <p class="usage-text">{{ section.settings.step4_text | default: 'Take consistently for best results - recommended once or twice daily' }}</p>
-          </div>
-        </div>
-      {% endif %}
-    </div>
+        </li>
+      {%- endfor -%}
+    </ol>
   </div>
 </section>
 
 {% stylesheet %}
-  /* Animations */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .fade-in-up {
-    animation: fadeInUp 0.6s ease-out forwards;
-    opacity: 0;
-  }
-
-  .product-how-to-use-compact {
+  .pdp-how {
     width: 100%;
     max-width: 100%;
-    padding: 30px 40px;
-    background: linear-gradient(135deg, rgba(45, 80, 22, 0.02) 0%, rgba(74, 124, 44, 0.03) 100%);
+    padding: 44px var(--container-padding, 20px);
+    background: rgba(0,0,0,0.015);
     box-sizing: border-box;
   }
+  .pdp-how__inner { max-width: 1200px; margin: 0 auto; }
+  .pdp-how__title { margin: 0 0 10px; font-size: 22px; letter-spacing: -0.01em; }
+  .pdp-how__subtitle { margin: 0 0 18px; color: rgba(0,0,0,0.65); font-size: 13px; line-height: 1.6; }
 
-  .product-how-to-use-compact__container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .how-to-use-title {
-    font-family: var(--font-heading);
-    font-size: 32px;
-    font-weight: 700;
-    text-align: center;
-    margin: 0 0 32px 0;
-    background: linear-gradient(135deg, var(--forest-green) 0%, var(--sage-green) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .usage-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-
-  .usage-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-    padding: 24px;
-    background: var(--white);
-    border-radius: 16px;
-    border: 1px solid rgba(74, 124, 44, 0.1);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .usage-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(74, 124, 44, 0.05), transparent);
-    transition: left 0.5s ease;
-  }
-
-  .usage-item:hover::before {
-    left: 100%;
-  }
-
-  .usage-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(45, 80, 22, 0.12);
-    border-color: rgba(74, 124, 44, 0.2);
-  }
-
-  .usage-number {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, var(--forest-green) 0%, var(--sage-green) 100%);
-    border-radius: 12px;
-    color: var(--white);
-    font-size: 20px;
-    font-weight: 700;
-    flex-shrink: 0;
-    font-family: var(--font-heading);
-  }
-
-  .usage-content {
-    flex: 1;
-  }
-
-  .usage-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--text);
-    margin: 0 0 8px 0;
-    font-family: var(--font-heading);
-  }
-
-  .usage-text {
-    font-size: 14px;
-    line-height: 1.6;
-    color: rgba(26, 26, 26, 0.7);
+  .pdp-how__steps {
     margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
   }
 
-  /* Mobile only – high-conversion: compact, scannable, thumb-friendly */
-  @media (max-width: 968px) {
-    .product-how-to-use-compact {
-      padding: 28px 20px;
-    }
-
-    .how-to-use-title {
-      font-size: 26px;
-      margin-bottom: 20px;
-    }
-
-    .usage-grid {
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    .usage-item {
-      padding: 18px 20px;
-      gap: 16px;
-    }
-
-    .usage-number {
-      width: 44px;
-      height: 44px;
-      font-size: 18px;
-    }
-
-    .usage-title {
-      font-size: 17px;
-    }
-
-    .usage-text {
-      font-size: 14px;
-      line-height: 1.55;
-    }
+  .pdp-how__step {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.10);
+    border-radius: 16px;
+    padding: 14px;
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 12px;
   }
+  .pdp-how__step-num {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.06);
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+  }
+  .pdp-how__step-title { font-weight: 900; margin: 2px 0 6px; }
+  .pdp-how__step-text { color: rgba(0,0,0,0.72); font-size: 13px; line-height: 1.45; }
 
-  @media (max-width: 480px) {
-    .product-how-to-use-compact {
-      padding: 20px 16px;
-    }
-
-    .how-to-use-title {
-      font-size: 22px;
-      margin-bottom: 16px;
-    }
-
-    .usage-grid {
-      gap: 10px;
-    }
-
-    .usage-item {
-      padding: 14px 16px;
-      gap: 14px;
-      flex-direction: row;
-      align-items: flex-start;
-    }
-
-    .usage-item:hover {
-      transform: none; /* Avoid accidental taps on mobile */
-    }
-
-    .usage-number {
-      width: 40px;
-      height: 40px;
-      min-width: 40px;
-      font-size: 16px;
-    }
-
-    .usage-content {
-      min-width: 0;
-    }
-
-    .usage-title {
-      font-size: 15px;
-      margin-bottom: 4px;
-    }
-
-    .usage-text {
-      font-size: 13px;
-      line-height: 1.5;
-    }
+  @media (max-width: 900px) {
+    .pdp-how__steps { grid-template-columns: 1fr; }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "How to Use",
+  "name": "PDP How to use",
   "settings": [
-    {
-      "type": "text",
-      "id": "section_title",
-      "label": "Section heading",
-      "default": "How to Use"
-    },
-    {
-      "type": "header",
-      "content": "Default steps (when no blocks added)"
-    },
-    { "type": "text", "id": "step1_title", "label": "Step 1 title", "default": "Add to Smoothies" },
-    { "type": "textarea", "id": "step1_text", "label": "Step 1 text", "default": "Mix 1-2 teaspoons into your favorite smoothie for a nutrient boost" },
-    { "type": "text", "id": "step2_title", "label": "Step 2 title", "default": "Mix with Warm Water" },
-    { "type": "textarea", "id": "step2_text", "label": "Step 2 text", "default": "Stir into a glass of warm water for a quick daily supplement" },
-    { "type": "text", "id": "step3_title", "label": "Step 3 title", "default": "Cooking & Baking" },
-    { "type": "textarea", "id": "step3_text", "label": "Step 3 text", "default": "Incorporate into soups, sauces, or baked goods for added nutrition" },
-    { "type": "text", "id": "step4_title", "label": "Step 4 title", "default": "Daily Routine" },
-    { "type": "textarea", "id": "step4_text", "label": "Step 4 text", "default": "Take consistently for best results - recommended once or twice daily" }
+    { "type": "text", "id": "title", "label": "Heading", "default": "How to use" },
+    { "type": "richtext", "id": "subtitle", "label": "Subheading", "default": "<p>Step-by-step placement guide. You can connect metafields later.</p>" }
   ],
   "blocks": [
     {
-      "type": "usage_step",
-      "name": "Usage step",
+      "type": "step",
+      "name": "Step",
       "settings": [
-        { "type": "text", "id": "step_title", "label": "Step title" },
-        { "type": "textarea", "id": "step_text", "label": "Step description" }
+        { "type": "text", "id": "title", "label": "Title", "default": "Cleanse" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Apply on clean, dry skin." }
       ]
     }
   ],
   "presets": [
     {
-      "name": "How to Use",
+      "name": "PDP How to use",
       "blocks": [
-        { "type": "usage_step", "settings": { "step_title": "Apply to clean skin", "step_text": "Use a small amount on cleansed face and neck." } },
-        { "type": "usage_step", "settings": { "step_title": "Massage gently", "step_text": "Massage in upward motions until absorbed." } },
-        { "type": "usage_step", "settings": { "step_title": "Use daily", "step_text": "Best results with consistent daily use." } }
+        { "type": "step", "settings": { "title": "Cleanse", "text": "Start with a gentle cleanser." } },
+        { "type": "step", "settings": { "title": "Treat", "text": "Apply the product evenly as directed." } },
+        { "type": "step", "settings": { "title": "Moisturize", "text": "Seal with moisturizer + SPF (AM)." } }
       ]
     }
   ]

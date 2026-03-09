@@ -11,6 +11,31 @@
   "sections": {
     "product_main": {
       "type": "product-main-minimalist",
+      "blocks": {
+        "title": { "type": "title", "settings": {} },
+        "concern": { "type": "concern", "settings": { "text": "Acne Marks, Oily Skin" } },
+        "rating": { "type": "rating", "settings": { "rating": "4.5", "count": "2341" } },
+        "price": { "type": "price", "settings": { "sale_badge": "On Sale" } },
+        "variants": { "type": "variants", "settings": { "label": "Size" } },
+        "ctas": { "type": "ctas", "settings": { "atc_text": "Add to Cart", "show_buy_now": true } },
+        "trust": {
+          "type": "trust_badges",
+          "settings": {
+            "badge_1": "Free Shipping",
+            "badge_2": "Earn rewards on every order",
+            "badge_3": "Lab formulated",
+            "badge_4": "100% Authentic"
+          }
+        },
+        "acc_1": { "type": "accordion", "settings": { "title": "What is it?", "content": "<p>Add content (connect metafields later).</p>", "open_by_default": false } },
+        "acc_2": { "type": "accordion", "settings": { "title": "Key Ingredients", "content": "<p>Add content (connect metafields later).</p>", "open_by_default": false } },
+        "acc_3": { "type": "accordion", "settings": { "title": "Who is it for?", "content": "<p>Add content (connect metafields later).</p>", "open_by_default": false } },
+        "acc_4": { "type": "accordion", "settings": { "title": "How to use?", "content": "<p>Add content (connect metafields later).</p>", "open_by_default": false } },
+        "acc_5": { "type": "accordion", "settings": { "title": "Full Ingredient List", "content": "<p>Add content (connect metafields later).</p>", "open_by_default": false } },
+        "acc_6": { "type": "accordion", "settings": { "title": "FAQs", "content": "<p>Add content (connect metafields later).</p>", "open_by_default": false } },
+        "sticky": { "type": "mobile_sticky_bar", "settings": { "atc_text": "Add to Cart" } }
+      },
+      "block_order": ["title","concern","rating","price","variants","ctas","trust","acc_1","acc_2","acc_3","acc_4","acc_5","acc_6","sticky"],
       "settings": {}
     },
     "product_ingredients": {
@@ -18,7 +43,7 @@
       "settings": {}
     },
     "product_how_to_use": {
-      "type": "product-how-to-use-minimalist",
+      "type": "product-how-to-use-compact",
       "settings": {}
     },
     "related_products": {

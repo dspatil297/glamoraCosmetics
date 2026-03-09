@@ -13,10 +13,20 @@
     assign first_collection = product.collections.first
   endif
 
+  assign form_id = 'pdp-form-' | append: section.id
+
   assign has_one_option = false
   if product.variants.size > 1 and product.options.size == 1
     assign has_one_option = true
   endif
+
+  assign has_info_blocks = false
+  for b in section.blocks
+    if b.type != 'mobile_sticky_bar'
+      assign has_info_blocks = true
+      break
+    endif
+  endfor
 -%}
 
 <section class="pdp" id="pdp-{{ section.id }}" {{ section.shopify_attributes }}>
@@ -88,11 +98,12 @@
     </div>
 
     <div class="pdp__info" data-pdp-info>
-      {%- form 'product', product, id: 'pdp-form-' | append: section.id, class: 'pdp__form' -%}
+      {%- form 'product', product, id: form_id, class: 'pdp__form' -%}
         <input type="hidden" name="id" value="{{ current_variant.id }}" data-pdp-variant-id>
 
-        {%- for block in section.blocks -%}
-          {%- case block.type -%}
+        {%- if has_info_blocks -%}
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
             {%- when 'title' -%}
               <div class="pdp__block" {{ block.shopify_attributes }}>
                 <h1 class="pdp__title">{{ product.title }}</h1>
@@ -229,8 +240,44 @@
             {%- when 'mobile_sticky_bar' -%}
               {%- comment -%} Rendered outside the form below {%- endcomment -%}
 
-          {%- endcase -%}
-        {%- endfor -%}
+            {%- endcase -%}
+          {%- endfor -%}
+        {%- else -%}
+          <div class="pdp__block">
+            <h1 class="pdp__title">{{ product.title }}</h1>
+            <div class="pdp__price-row">
+              <span class="pdp__price" data-pdp-price>{{ current_variant.price | money }}</span>
+              {%- if current_variant.compare_at_price > current_variant.price -%}
+                <span class="pdp__compare" data-pdp-compare>{{ current_variant.compare_at_price | money }}</span>
+                <span class="pdp__badge">On Sale</span>
+              {%- endif -%}
+            </div>
+          </div>
+
+          {%- if product.variants.size > 1 -%}
+            <div class="pdp__block">
+              <div class="pdp__variant">
+                <div class="pdp__variant-label">{{ product.options.first }}</div>
+                <select class="pdp__variant-select pdp__variant-select--visible" name="id" data-pdp-variant-select aria-label="Variant selector">
+                  {%- for variant in product.variants -%}
+                    <option value="{{ variant.id }}" {% if variant == current_variant %}selected{% endif %} {% unless variant.available %}disabled{% endunless %} data-price="{{ variant.price }}" data-compare="{{ variant.compare_at_price }}">
+                      {{ variant.title }}
+                    </option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            </div>
+          {%- endif -%}
+
+          <div class="pdp__block">
+            <div class="pdp__ctas">
+              <button type="submit" name="add" class="pdp__btn pdp__btn--primary" data-pdp-atc {% unless current_variant.available %}disabled{% endunless %}>
+                Add to Cart
+              </button>
+              <div class="pdp__buy-now">{{ form | payment_button }}</div>
+            </div>
+          </div>
+        {%- endif -%}
       {%- endform -%}
     </div>
   </div>
