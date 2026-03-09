@@ -55,9 +55,9 @@
         "cta_link": "/collections/all",
         "secondary_cta_text": "Discover Glamora",
         "secondary_cta_link": "/pages/about-us",
-        "carousel_speed": 5,
+        "carousel_speed": 2.5,
         "transition_duration": 800,
-        "overlay_opacity": 85,
+        "overlay_opacity": 10,
         "slide_placeholder_text": "Select image in Theme Customizer → click this slide → Slide image",
         "hero_placeholder_text": "Add a hero image in Theme Customizer"
       }
