@@ -53,11 +53,12 @@
                 >
                 <img
                   class="hero-banner__slide-img"
-                  src="{{ block.settings.image | image_url: width: 1280 }}"
+                  src="{{ block.settings.image | image_url: width: 1600 }}"
                   srcset="
                     {{ block.settings.image | image_url: width: 960 }} 960w,
                     {{ block.settings.image | image_url: width: 1280 }} 1280w,
-                    {{ block.settings.image | image_url: width: 1440 }} 1440w
+                    {{ block.settings.image | image_url: width: 1600 }} 1600w,
+                    {{ block.settings.image | image_url: width: 1920 }} 1920w
                   "
                   sizes="100vw"
                   alt="{{ block.settings.image.alt | default: '' }}"
@@ -80,11 +81,12 @@
           <div class="hero-banner__slide-img-wrap">
             <img
               class="hero-banner__slide-img"
-              src="{{ section.settings.hero_image | image_url: width: 1280 }}"
+              src="{{ section.settings.hero_image | image_url: width: 1600 }}"
               srcset="
                 {{ section.settings.hero_image | image_url: width: 960 }} 960w,
                 {{ section.settings.hero_image | image_url: width: 1280 }} 1280w,
-                {{ section.settings.hero_image | image_url: width: 1440 }} 1440w
+                {{ section.settings.hero_image | image_url: width: 1600 }} 1600w,
+                {{ section.settings.hero_image | image_url: width: 1920 }} 1920w
               "
               sizes="100vw"
               alt="{{ section.settings.hero_image.alt | default: section.settings.heading }}"
@@ -108,6 +110,15 @@
     ></div>
     <div class="hero-banner__gradient-ornament"></div>
   </div>
+
+  {%- if has_carousel_slides and slide_blocks.size > 1 -%}
+    <button type="button" class="hero-banner__arrow hero-banner__arrow--prev" aria-label="Previous slide" data-hero-prev>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button type="button" class="hero-banner__arrow hero-banner__arrow--next" aria-label="Next slide" data-hero-next>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  {%- endif -%}
   
   <div class="hero-banner__content hero-banner__content--minimal">
     {%- if has_carousel_slides and slide_blocks.size > 1 -%}
@@ -132,14 +143,14 @@
 </section>
 
 {% stylesheet %}
+  /* Hero aligned to 1600×400 (4:1) banner – matches hero carousel image size */
   .hero-banner {
     position: relative;
     z-index: 1;
     width: 100%;
     max-width: 100%;
-    height: 65vh;
-    min-height: 380px;
-    max-height: 620px;
+    aspect-ratio: 4 / 1;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -148,16 +159,6 @@
     padding: 0;
     box-sizing: border-box;
     isolation: isolate;
-  }
-
-  /* If your hero images are 9:16 (portrait), this makes the hero container
-     a 9:16 frame on mobile so "cover" behaves predictably. */
-  @media (max-width: 768px) {
-    .hero-banner {
-      height: min(100svh, calc(100vw * 16 / 9));
-      min-height: 0;
-      max-height: none;
-    }
   }
 
   .hero-banner__content--minimal {
@@ -261,8 +262,8 @@
     width: 100%;
     height: 100%;
     transform: none;
-    object-fit: var(--hero-image-fit, cover);
-    object-position: center;
+    object-fit: var(--hero-image-fit, contain);
+    object-position: center center;
     display: block;
     transition: opacity 0.3s ease;
   }
@@ -567,6 +568,64 @@
     filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
   }
 
+  /* Arrows at extreme left/right – z-index above slide link (15) so clicks register */
+  .hero-banner__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    color: #1a1a1a;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .hero-banner__arrow:hover {
+    background: rgba(255, 255, 255, 1);
+    color: #000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .hero-banner__arrow:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .hero-banner__arrow--prev {
+    left: 8px;
+  }
+
+  .hero-banner__arrow--next {
+    right: 8px;
+  }
+
+  .hero-banner__arrow svg {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .hero-banner__arrow {
+      width: 40px;
+      height: 40px;
+    }
+
+    .hero-banner__arrow svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
   .hero-banner__carousel-controls {
     position: absolute;
     bottom: var(--spacing-xl);
@@ -680,12 +739,6 @@
   }
 
   @media (max-width: 768px) {
-    .hero-banner {
-      height: 85vh;
-      min-height: 500px;
-      max-height: 700px;
-    }
-
     .hero-banner__content {
       padding: var(--spacing-xl) var(--spacing-md);
       text-align: center;
@@ -762,12 +815,6 @@
   }
 
   @media (max-width: 480px) {
-    .hero-banner {
-      height: 80vh;
-      min-height: 450px;
-      max-height: 600px;
-    }
-
     .hero-banner__content {
       padding: var(--spacing-lg) var(--spacing-sm);
     }
@@ -811,6 +858,8 @@
 
     var slides = section.querySelectorAll('.hero-banner__slide:not(.hero-banner__slide--empty)');
     var dots = section.querySelectorAll('.hero-banner__carousel-dot');
+    var prevBtn = section.querySelector('[data-hero-prev]');
+    var nextBtn = section.querySelector('[data-hero-next]');
     slides = Array.prototype.slice.call(slides);
     dots = Array.prototype.slice.call(dots);
 
@@ -873,6 +922,13 @@
       (function (idx) {
         dots[idx].addEventListener('click', function () { goToSlide(idx); startAutoplay(); });
       })(k);
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function () { goToSlide(currentIndex - 1); startAutoplay(); });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function () { next(); startAutoplay(); });
     }
 
     startAutoplay();
@@ -999,7 +1055,7 @@
       "settings": [
         {
           "type": "paragraph",
-          "content": "Set 'Slide image (desktop)' for every slide so the carousel can advance (Slide 1 and Slide 2 both need an image). Desktop: 1920×900 px. Mobile: optional; 768×1024 px."
+          "content": "Set 'Slide image (desktop)' for every slide so the carousel can advance (Slide 1 and Slide 2 both need an image). Recommended: 1600×400 px (4:1) to match hero alignment. Mobile: optional; 768×1024 px."
         },
         {
           "type": "image_picker",
