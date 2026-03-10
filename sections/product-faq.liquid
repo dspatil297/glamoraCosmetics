@@ -60,37 +60,22 @@
 {% endif %}
 
 {% if faq_items.size > 0 %}
-<section class="product-faq" id="product-faq">
+<section class="product-faq product-faq--minimal" id="product-faq-{{ section.id }}" {{ section.shopify_attributes }}>
   <div class="product-faq__container">
-    <div class="product-faq__header">
-      <div class="product-faq__icon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"/>
-          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-          <line x1="12" y1="17" x2="12.01" y2="17"/>
-        </svg>
-      </div>
-      <h2 class="product-faq__title">{{ section.settings.section_title | default: 'Frequently Asked Questions' }}</h2>
-    </div>
-    
-    <div class="product-faq__accordion">
+    <h2 class="product-faq__title">{{ section.settings.section_title | default: 'FAQs' }}</h2>
+    <div class="product-faq__list">
       {% for item in faq_items %}
         {% assign qa_parts = item | split: '|||' %}
         {% assign question = qa_parts[0] | strip %}
         {% assign answer = qa_parts[1] | strip %}
-        
         {% if question != blank %}
-          <div class="faq-item" data-faq-index="{{ forloop.index0 }}">
-            <button class="faq-item__button" type="button" aria-expanded="false" aria-controls="faq-answer-{{ forloop.index0 }}">
-              <span class="faq-item__question">{{ question }}</span>
-              <span class="faq-item__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M5 7.5l5 5 5-5"/>
-                </svg>
-              </span>
-            </button>
-            <div class="faq-item__content" id="faq-answer-{{ forloop.index0 }}" role="region">
-              <div class="faq-item__answer">
+          <details class="product-faq__item">
+            <summary class="product-faq__summary">
+              <span class="product-faq__plus" aria-hidden="true">+</span>
+              <span class="product-faq__question-text">{{ question }}</span>
+            </summary>
+            <div class="product-faq__answer-wrap">
+              <div class="product-faq__answer rte">
                 {% if answer != blank %}
                   {{ answer | newline_to_br }}
                 {% else %}
@@ -98,87 +83,112 @@
                 {% endif %}
               </div>
             </div>
-          </div>
+          </details>
         {% endif %}
       {% endfor %}
     </div>
   </div>
 </section>
+<script>
+  (function() {
+    var sectionId = 'product-faq-{{ section.id }}';
+    function initFaqAccordion() {
+      var section = document.getElementById(sectionId);
+      if (!section) return;
+      var items = section.querySelectorAll('.product-faq__item');
+      items.forEach(function(details) {
+        var summary = details.querySelector('.product-faq__summary');
+        if (!summary || summary.dataset.faqInit === '1') return;
+        summary.dataset.faqInit = '1';
+        summary.addEventListener('click', function(e) {
+          e.preventDefault();
+          var isOpening = !details.open;
+          items.forEach(function(d) { d.open = false; });
+          if (isOpening) details.open = true;
+        });
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initFaqAccordion);
+    } else {
+      initFaqAccordion();
+    }
+    document.addEventListener('shopify:section:load', initFaqAccordion);
+  })();
+</script>
 {% endif %}
 
-<script>
-(function() {
-  function initFAQ() {
-    var buttons = document.querySelectorAll('.faq-item__button');
-    
-    for (var i = 0; i < buttons.length; i++) {
-      var btn = buttons[i];
-      
-      // Check if already initialized
-      if (btn.getAttribute('data-initialized') === 'true') {
-        continue;
-      }
-      
-      btn.setAttribute('data-initialized', 'true');
-      
-      // Use closure to capture the button
-      (function(button) {
-        button.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          
-          var item = button.parentElement;
-          
-          // Find faq-item parent
-          while (item && item !== document.body) {
-            if (item.classList && item.classList.contains('faq-item')) {
-              break;
-            }
-            item = item.parentElement;
-          }
-          
-          if (!item || !item.classList.contains('faq-item')) {
-            return;
-          }
-          
-          var isOpen = item.classList.contains('active');
-          
-          // Close all items
-          var allItems = document.querySelectorAll('.faq-item');
-          for (var j = 0; j < allItems.length; j++) {
-            allItems[j].classList.remove('active');
-            var b = allItems[j].querySelector('.faq-item__button');
-            if (b) b.setAttribute('aria-expanded', 'false');
-          }
-          
-          // Toggle current item
-          if (!isOpen) {
-            item.classList.add('active');
-            button.setAttribute('aria-expanded', 'true');
-          }
-        });
-      })(btn);
-    }
-  }
-  
-  // Initialize multiple times to catch dynamic content
-  function runInit() {
-    initFAQ();
-  }
-  
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', runInit);
-  } else {
-    runInit();
-  }
-  
-  setTimeout(runInit, 500);
-  setTimeout(runInit, 1000);
-  setTimeout(runInit, 2000);
-})();
-</script>
-
 {% stylesheet %}
+  /* Minimal FAQ design: FAQs heading, + left of question, thin separators */
+  .product-faq--minimal {
+    width: 100%;
+    max-width: 100%;
+    padding: 44px var(--container-padding, 20px);
+    background: #fff;
+    box-sizing: border-box;
+  }
+  .product-faq--minimal .product-faq__container { max-width: 720px; margin: 0 auto; }
+  .product-faq--minimal .product-faq__title {
+    margin: 0 0 20px;
+    font-size: clamp(22px, 3vw, 28px);
+    font-weight: 700;
+    color: #000;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  .product-faq--minimal .product-faq__list { margin: 0; padding: 0; list-style: none; }
+  .product-faq--minimal .product-faq__item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    margin: 0;
+    padding: 0;
+  }
+  .product-faq--minimal .product-faq__item:first-child { border-top: 1px solid rgba(0, 0, 0, 0.12); }
+  .product-faq--minimal .product-faq__summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 0;
+    cursor: pointer;
+    list-style: none;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    width: 100%;
+    background: none;
+    border: none;
+  }
+  .product-faq--minimal .product-faq__summary::-webkit-details-marker,
+  .product-faq--minimal .product-faq__summary::marker { display: none; }
+  .product-faq--minimal .product-faq__plus {
+    flex-shrink: 0;
+    width: 20px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1;
+    color: #000;
+    transition: transform 0.2s ease;
+  }
+  .product-faq--minimal .product-faq__item[open] .product-faq__plus { transform: rotate(45deg); }
+  .product-faq--minimal .product-faq__question-text {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 400;
+    color: #000;
+    line-height: 1.4;
+  }
+  .product-faq--minimal .product-faq__answer-wrap { padding: 0 0 16px 32px; }
+  .product-faq--minimal .product-faq__answer {
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.75);
+  }
+  .product-faq--minimal .product-faq__answer p { margin: 0 0 8px 0; }
+  .product-faq--minimal .product-faq__answer p:last-child { margin-bottom: 0; }
+  @media (max-width: 768px) {
+    .product-faq--minimal { padding: 32px 16px; }
+    .product-faq--minimal .product-faq__answer-wrap { padding-left: 28px; }
+  }
+
   .product-faq {
     width: 100%;
     max-width: 100%;
@@ -563,7 +573,7 @@
       "type": "text",
       "id": "section_title",
       "label": "Section heading",
-      "default": "Frequently Asked Questions"
+      "default": "FAQs"
     },
     {
       "type": "text",

@@ -143,7 +143,7 @@
     "product_faq": {
       "type": "product-faq",
       "settings": {
-        "section_title": "Frequently Asked Questions"
+        "section_title": "FAQs"
       }
     }
   },
