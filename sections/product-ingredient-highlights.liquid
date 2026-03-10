@@ -9,41 +9,78 @@
       <h2 class="pdp-ingredients__title">{{ section.settings.title }}</h2>
     {%- endif -%}
     {%- if section.settings.subtitle != blank -%}
-      <div class="pdp-ingredients__subtitle rte">{{ section.settings.subtitle }}</div>
+      {%- unless section.settings.subtitle contains 'Add a short line about the formulation' -%}
+        <div class="pdp-ingredients__subtitle rte">{{ section.settings.subtitle }}</div>
+      {%- endunless -%}
     {%- endif -%}
 
-    <div class="pdp-ingredients__grid">
-      {%- for block in section.blocks -%}
-        <div class="pdp-ingredients__card" {{ block.shopify_attributes }}>
-          <div class="pdp-ingredients__media">
-            {%- if block.settings.image != blank -%}
-              <img
-                src="{{ block.settings.image | image_url: width: 160 }}"
-                srcset="{{ block.settings.image | image_url: width: 160 }} 160w, {{ block.settings.image | image_url: width: 240 }} 240w"
-                sizes="80px"
-                alt="{{ block.settings.image.alt | default: block.settings.name | escape }}"
-                width="80"
-                height="80"
-                loading="lazy"
-              >
-            {%- else -%}
-              <div class="pdp-ingredients__icon" aria-hidden="true">✦</div>
-            {%- endif -%}
-          </div>
-          <div class="pdp-ingredients__meta">
-            <div class="pdp-ingredients__name-row">
-              <div class="pdp-ingredients__name">{{ block.settings.name }}</div>
-              {%- if block.settings.percent != blank -%}
-                <div class="pdp-ingredients__percent">{{ block.settings.percent }}</div>
+    {%- liquid
+      assign key_ing_meta = product.metafields.custom.key_ingredients
+      assign key_ing_text = ''
+      if key_ing_meta != blank
+        assign key_ing_text = key_ing_meta | metafield_text | strip
+      endif
+    -%}
+
+    {%- if key_ing_text != blank -%}
+      {%- assign key_ing_html = key_ing_text | newline_to_br -%}
+      {%- assign key_ing_chunks = key_ing_html | split: 'Ing:' -%}
+      <div class="pdp-ingredients__accordion">
+        {%- for raw_chunk in key_ing_chunks -%}
+          {%- assign chunk = raw_chunk | strip -%}
+          {%- if chunk == '' -%}{% continue %}{%- endif -%}
+          {%- assign parts = chunk | split: 'Des:' -%}
+          {%- assign name_raw = parts[0] | strip -%}
+          {%- assign name = name_raw | remove_first: ':' | strip -%}
+          {%- assign desc_raw = parts[1] | default: '' | strip -%}
+          {%- assign desc = desc_raw -%}
+          {%- if name != '' and desc != '' -%}
+            <details class="pdp-ingredients__acc-item">
+              <summary class="pdp-ingredients__acc-summary">
+                <span class="pdp-ingredients__acc-plus" aria-hidden="true">+</span>
+                <span class="pdp-ingredients__acc-title">{{ name }}</span>
+              </summary>
+              <div class="pdp-ingredients__acc-body rte">
+                {{ desc }}
+              </div>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="pdp-ingredients__grid">
+        {%- for block in section.blocks -%}
+          <div class="pdp-ingredients__card" {{ block.shopify_attributes }}>
+            <div class="pdp-ingredients__media">
+              {%- if block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 160 }}"
+                  srcset="{{ block.settings.image | image_url: width: 160 }} 160w, {{ block.settings.image | image_url: width: 240 }} 240w"
+                  sizes="80px"
+                  alt="{{ block.settings.image.alt | default: block.settings.name | escape }}"
+                  width="80"
+                  height="80"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <div class="pdp-ingredients__icon" aria-hidden="true">✦</div>
               {%- endif -%}
             </div>
-            {%- if block.settings.benefit != blank -%}
-              <div class="pdp-ingredients__benefit">{{ block.settings.benefit }}</div>
-            {%- endif -%}
+            <div class="pdp-ingredients__meta">
+              <div class="pdp-ingredients__name-row">
+                <div class="pdp-ingredients__name">{{ block.settings.name }}</div>
+                {%- if block.settings.percent != blank -%}
+                  <div class="pdp-ingredients__percent">{{ block.settings.percent }}</div>
+                {%- endif -%}
+              </div>
+              {%- if block.settings.benefit != blank -%}
+                <div class="pdp-ingredients__benefit">{{ block.settings.benefit }}</div>
+              {%- endif -%}
+            </div>
           </div>
-        </div>
-      {%- endfor -%}
-    </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -69,6 +106,43 @@
     color: rgba(0,0,0,0.65);
     font-size: 13px;
     line-height: 1.6;
+  }
+  .pdp-ingredients__accordion {
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  .pdp-ingredients__acc-item {
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .pdp-ingredients__acc-summary {
+    padding: 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    list-style: none;
+  }
+  .pdp-ingredients__acc-summary::-webkit-details-marker {
+    display: none;
+  }
+  .pdp-ingredients__acc-plus {
+    font-size: 18px;
+    display: inline-block;
+    width: 18px;
+    text-align: center;
+    transition: transform 0.2s ease;
+  }
+  .pdp-ingredients__acc-title {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .pdp-ingredients__acc-body {
+    padding: 0 0 14px 30px;
+    font-size: 13px;
+    color: rgba(0,0,0,0.75);
+    line-height: 1.6;
+  }
+  .pdp-ingredients__acc-item[open] .pdp-ingredients__acc-plus {
+    transform: rotate(45deg);
   }
   .pdp-ingredients__grid {
     display: grid;
@@ -124,7 +198,7 @@
       "type": "richtext",
       "id": "subtitle",
       "label": "Subheading",
-      "default": "<p>Add a short line about the formulation. You can connect metafields later.</p>"
+      "default": "<p></p>"
     }
   ],
   "blocks": [
