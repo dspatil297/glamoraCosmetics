@@ -27,6 +27,9 @@
           The label is the collection title with the prefix removed.
         {%- endcomment -%}
         {%- for collection in collections -%}
+          {%- if collection.products_count == 0 or collection.products_count == blank -%}
+            {%- continue -%}
+          {%- endif -%}
           {%- assign raw_title = collection.title | default: '' -%}
           {%- assign title_down = raw_title | downcase -%}
           {%- assign label = '' -%}
