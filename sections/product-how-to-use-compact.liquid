@@ -9,20 +9,69 @@
       <h2 class="pdp-how__title">{{ section.settings.title }}</h2>
     {%- endif -%}
     {%- if section.settings.subtitle != blank -%}
-      <div class="pdp-how__subtitle rte">{{ section.settings.subtitle }}</div>
+      {%- unless section.settings.subtitle contains 'Step-by-step placement guide. You can connect metafields later.' -%}
+        <div class="pdp-how__subtitle rte">{{ section.settings.subtitle }}</div>
+      {%- endunless -%}
     {%- endif -%}
 
-    <ol class="pdp-how__steps">
-      {%- for block in section.blocks -%}
-        <li class="pdp-how__step" {{ block.shopify_attributes }}>
-          <div class="pdp-how__step-num">{{ forloop.index }}</div>
-          <div class="pdp-how__step-body">
-            <div class="pdp-how__step-title">{{ block.settings.title }}</div>
-            <div class="pdp-how__step-text">{{ block.settings.text }}</div>
-          </div>
-        </li>
-      {%- endfor -%}
-    </ol>
+    {%- liquid
+      assign how_to_meta = product.metafields.custom.how_to_use
+      assign how_to_list = ''
+      if how_to_meta != blank
+        assign how_to_list = how_to_meta.value
+      endif
+    -%}
+
+    {%- if how_to_list != '' and how_to_list.size > 0 -%}
+      <ol class="pdp-how__routine" aria-label="How to use steps">
+        {%- for item in how_to_list -%}
+          {%- assign raw = item | strip -%}
+          {%- if raw == '' -%}{% continue %}{%- endif -%}
+          {%- if raw contains '|' -%}
+            {%- assign parts = raw | split: '|' -%}
+            {%- assign when = parts[0] | default: '' | strip -%}
+            {%- assign step_title = parts[1] | default: '' | strip -%}
+            {%- assign step_text = parts[2] | default: '' | strip -%}
+          {%- else -%}
+            {%- assign when = '' -%}
+            {%- assign title_desc = raw | split: ' - ' -%}
+            {%- assign step_title = title_desc[0] | strip -%}
+            {%- assign step_text = title_desc[1] | default: '' | strip -%}
+          {%- endif -%}
+          <li class="pdp-how__routine-step pdp-how__routine-step--{{ forloop.index0 | modulo: 2 }}" style="--step-i: {{ forloop.index0 }};">
+            <div class="pdp-how__routine-num" aria-hidden="true">
+              <span class="pdp-how__routine-num-inner">{{ forloop.index }}</span>
+            </div>
+            <div class="pdp-how__routine-card">
+              <div class="pdp-how__routine-meta">
+                <span class="pdp-how__routine-label">Step {{ forloop.index }}</span>
+                {%- if when != '' -%}
+                  <span class="pdp-how__routine-when">{{ when }}</span>
+                {%- endif -%}
+              </div>
+              {%- if step_title != '' -%}
+                <h3 class="pdp-how__routine-title">{{ step_title }}</h3>
+              {%- endif -%}
+              {%- if step_text != '' -%}
+                <p class="pdp-how__routine-text">{{ step_text }}</p>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- else -%}
+      <ol class="pdp-how__steps">
+        {%- for block in section.blocks -%}
+          <li class="pdp-how__step" {{ block.shopify_attributes }}>
+            <div class="pdp-how__step-num">{{ forloop.index }}</div>
+            <div class="pdp-how__step-body">
+              <div class="pdp-how__step-title">{{ block.settings.title }}</div>
+              <div class="pdp-how__step-text">{{ block.settings.text }}</div>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
   </div>
 </section>
 
@@ -30,14 +79,28 @@
   .pdp-how {
     width: 100%;
     max-width: 100%;
-    padding: 44px var(--container-padding, 20px);
-    background: rgba(0,0,0,0.015);
+    padding: 56px var(--container-padding, 20px);
+    background: linear-gradient(180deg, #faf9f7 0%, #fff 30%, #fff 100%);
     box-sizing: border-box;
+    overflow: hidden;
   }
-  .pdp-how__inner { max-width: 1200px; margin: 0 auto; }
-  .pdp-how__title { margin: 0 0 10px; font-size: 22px; letter-spacing: -0.01em; }
-  .pdp-how__subtitle { margin: 0 0 18px; color: rgba(0,0,0,0.65); font-size: 13px; line-height: 1.6; }
+  .pdp-how__inner { max-width: 720px; margin: 0 auto; }
+  .pdp-how__title {
+    margin: 0 0 8px;
+    font-size: clamp(24px, 4vw, 32px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+  .pdp-how__subtitle {
+    margin: 0 0 40px;
+    color: rgba(0,0,0,0.6);
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: center;
+  }
 
+  /* Fallback: block-based steps grid */
   .pdp-how__steps {
     margin: 0;
     padding: 0;
@@ -46,7 +109,6 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 14px;
   }
-
   .pdp-how__step {
     background: #fff;
     border: 1px solid rgba(0,0,0,0.10);
@@ -65,8 +127,136 @@
     place-items: center;
     font-weight: 900;
   }
-  .pdp-how__step-title { font-weight: 900; margin: 2px 0 6px; }
+  .pdp-how__step-title { font-weight: 600; margin: 2px 0 6px; }
   .pdp-how__step-text { color: rgba(0,0,0,0.72); font-size: 13px; line-height: 1.45; }
+
+  /* Routine: zigzag timeline with cards + animations */
+  @keyframes pdp-how-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes pdp-how-scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.92);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .pdp-how__routine {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
+  }
+  .pdp-how__routine-step {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: pdp-how-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(0.08s * var(--step-i, 0));
+  }
+  .pdp-how__routine-step:last-child { margin-bottom: 0; }
+
+  .pdp-how__routine-num {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #111;
+    color: #fff;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    animation: pdp-how-scale-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(0.06s * var(--step-i, 0));
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  }
+  .pdp-how__routine-num-inner {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .pdp-how__routine-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 24px;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .pdp-how__routine-step:hover .pdp-how__routine-card {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  .pdp-how__routine-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .pdp-how__routine-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.5);
+  }
+  .pdp-how__routine-when {
+    font-size: 12px;
+    font-weight: 600;
+    color: #111;
+    background: rgba(0,0,0,0.06);
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .pdp-how__routine-title {
+    margin: 0 0 8px;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #111;
+  }
+  .pdp-how__routine-text {
+    margin: 0;
+    font-size: 14px;
+    color: rgba(0,0,0,0.72);
+    line-height: 1.6;
+  }
+
+  /* Alternating layout on larger screens */
+  @media (min-width: 700px) {
+    .pdp-how__routine-step {
+      grid-template-columns: 64px 1fr;
+    }
+    .pdp-how__routine-step--1 {
+      grid-template-columns: 1fr 64px;
+    }
+    .pdp-how__routine-step--1 .pdp-how__routine-num { order: 2; }
+    .pdp-how__routine-step--1 .pdp-how__routine-card { order: 1; text-align: right; }
+    .pdp-how__routine-step--1 .pdp-how__routine-meta { justify-content: flex-end; }
+  }
+
+  @media (max-width: 699px) {
+    .pdp-how__routine-step { gap: 16px; margin-bottom: 20px; }
+    .pdp-how__routine-num { width: 48px; height: 48px; }
+    .pdp-how__routine-num-inner { font-size: 18px; }
+    .pdp-how__routine-card { padding: 16px 18px; }
+  }
 
   @media (max-width: 900px) {
     .pdp-how__steps { grid-template-columns: 1fr; }
@@ -78,7 +268,7 @@
   "name": "PDP How to use",
   "settings": [
     { "type": "text", "id": "title", "label": "Heading", "default": "How to use" },
-    { "type": "richtext", "id": "subtitle", "label": "Subheading", "default": "<p>Step-by-step placement guide. You can connect metafields later.</p>" }
+    { "type": "richtext", "id": "subtitle", "label": "Subheading", "default": "<p>Follow these simple steps for best results.</p>" }
   ],
   "blocks": [
     {

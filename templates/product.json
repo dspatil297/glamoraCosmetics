@@ -150,9 +150,9 @@
   "order": [
     "product_main",
     "product_ingredients",
+    "related_products",
     "product_how_to_use",
     "product_reviews_judge",
-    "related_products",
     "product_faq"
   ]
 }
