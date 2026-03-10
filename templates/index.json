@@ -15,28 +15,32 @@
         "slide_Nq893k": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-03-07_at_16.15.59_1.jpg",
+            "image": "shopify://shop_images/foaming_face_wash_hero_banner.png",
+            "mobile_image": "shopify://shop_images/foaming_face_wash_hero_banner.png",
             "link": ""
           }
         },
         "slide_4NXNRf": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-03-07_at_16.15.59_2.jpg",
+            "image": "shopify://shop_images/Sunscreen_hero_banner.png",
+            "mobile_image": "shopify://shop_images/Sunscreen_hero_banner.png",
             "link": ""
           }
         },
         "slide_hMhcUm": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-03-07_at_16.15.59.jpg",
+            "image": "shopify://shop_images/FACE_WASH_HERO_BANNER.png",
+            "mobile_image": "shopify://shop_images/FACE_WASH_HERO_BANNER.png",
             "link": ""
           }
         },
         "slide_knjxEJ": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-03-07_at_16.16.00.jpg",
+            "image": "shopify://shop_images/moisturizing_spray_hero_banner.png",
+            "mobile_image": "shopify://shop_images/moisturizing_spray_hero_banner.png",
             "link": ""
           }
         }
@@ -48,6 +52,7 @@
         "slide_knjxEJ"
       ],
       "settings": {
+        "hero_image": "shopify://shop_images/FACE_WASH_HERO_BANNER.png",
         "show_content": true,
         "heading": "Advanced anti-pollution skincare for naturally radiant, protected, everyday glowing skin.",
         "subheading": "Hybrid sunscreens, foaming face washes, and moisturizing sprays crafted to defend your skin from urban pollution.",
@@ -55,6 +60,8 @@
         "cta_link": "/collections/all",
         "secondary_cta_text": "Discover Glamora",
         "secondary_cta_link": "/pages/about-us",
+        "image_fit": "contain",
+        "image_bg": "#ffffff",
         "carousel_speed": 2.5,
         "transition_duration": 800,
         "overlay_opacity": 10,
