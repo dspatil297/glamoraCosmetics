@@ -12,6 +12,8 @@
 {% if faq_meta != blank %}
   {% assign faq_text = faq_meta | metafield_text | default: faq_meta | strip %}
   {% if faq_text != blank %}
+    {% comment %} Normalize: ensure Q: and A: with space for consistent splitting {% endcomment %}
+    {% assign faq_text = faq_text | replace: 'Q :', 'Q:' | replace: 'q:', 'Q:' | replace: 'a:', 'A:' %}
     {% assign raw_chunks = faq_text | split: 'Q:' %}
     {% assign faq_items_string = '' %}
 
@@ -20,13 +22,11 @@
       {% if cleaned == '' %}
         {% continue %}
       {% endif %}
-
-      {% assign parts = cleaned | split: 'A:' %}
-      {% assign question_raw = parts[0] | strip %}
-      {% assign answer_raw = parts[1] | default: '' | strip %}
-
-      {% assign question = question_raw | strip %}
-      {% assign answer = answer_raw | strip %}
+      {% comment %} Split on first " A: " so question = before, answer = after (then trim at next " Q: ") {% endcomment %}
+      {% assign parts = cleaned | split: ' A: ' %}
+      {% assign question = parts[0] | strip %}
+      {% assign answer_with_rest = parts[1] | default: '' %}
+      {% assign answer = answer_with_rest | split: ' Q: ' | first | strip %}
 
       {% if question != '' and answer != '' %}
         {% assign qa_pair = question | append: '|||' | append: answer %}

@@ -141,9 +141,9 @@
       }
     },
     "product_faq": {
-      "type": "product-faq-accordion",
+      "type": "product-faq",
       "settings": {
-        "heading": "Frequently Asked Questions"
+        "section_title": "Frequently Asked Questions"
       }
     }
   },
