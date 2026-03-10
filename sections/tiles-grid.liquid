@@ -26,6 +26,7 @@
           - "concern_auto":  use all collections whose title starts with "Concern:"
           The label is the collection title with the prefix removed.
         {%- endcomment -%}
+        {%- assign auto_tiles_count = 0 -%}
         {%- for collection in collections -%}
           {%- if collection.products_count == 0 or collection.products_count == blank -%}
             {%- continue -%}
@@ -41,6 +42,8 @@
           {%- else -%}
             {%- continue -%}
           {%- endif -%}
+
+          {%- assign auto_tiles_count = auto_tiles_count | plus: 1 -%}
 
           <div class="tiles-grid__item">
             <a class="tiles-grid__link" href="{{ collection.url }}">
@@ -68,38 +71,55 @@
             </a>
           </div>
         {%- endfor -%}
+
+        {%- if section.settings.layout == 'carousel' and auto_tiles_count < 3 -%}
+          <div class="tiles-grid__item tiles-grid__item--placeholder">
+            <div class="tiles-grid__media tiles-grid__media--placeholder">
+              <div class="tiles-grid__more-text">More coming soon</div>
+              <div class="tiles-grid__more-sub">New drops are on the way</div>
+            </div>
+          </div>
+        {%- endif -%}
       {%- else -%}
         {%- comment -%} Manual mode: use tiles defined as blocks {%- endcomment -%}
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'tile' -%}
-            {%- assign href = block.settings.href -%}
-            <div class="tiles-grid__item" {{ block.shopify_attributes }}>
-              {%- if href != blank -%}<a class="tiles-grid__link" href="{{ href }}">{%- endif -%}
-                {%- if block.settings.image != blank -%}
-                  <div class="tiles-grid__media">
-                    <img
-                      src="{{ block.settings.image | image_url: width: 600 }}"
-                      srcset="
-                        {{ block.settings.image | image_url: width: 300 }} 300w,
-                        {{ block.settings.image | image_url: width: 450 }} 450w,
-                        {{ block.settings.image | image_url: width: 600 }} 600w
-                      "
-                      sizes="(min-width: 990px) 220px, (min-width: 750px) 180px, 44vw"
-                      alt="{{ block.settings.label | escape }}"
-                      loading="lazy"
-                      class="tiles-grid__img"
-                    >
-                  </div>
-                {%- else -%}
-                  <div class="tiles-grid__media tiles-grid__media--placeholder">
-                    {% render 'unsplash-placeholder', type: 'tile', width: 600, class: 'tiles-grid__img', loading: 'lazy', alt: block.settings.label | default: 'Category' %}
-                  </div>
-                {%- endif -%}
-                <div class="tiles-grid__label">{{ block.settings.label }}</div>
-              {%- if href != blank -%}</a>{%- endif -%}
-            </div>
-          {%- endif -%}
+        {%- assign manual_tiles = section.blocks | where: 'type', 'tile' -%}
+        {%- for block in manual_tiles -%}
+          {%- assign href = block.settings.href -%}
+          <div class="tiles-grid__item" {{ block.shopify_attributes }}>
+            {%- if href != blank -%}<a class="tiles-grid__link" href="{{ href }}">{%- endif -%}
+              {%- if block.settings.image != blank -%}
+                <div class="tiles-grid__media">
+                  <img
+                    src="{{ block.settings.image | image_url: width: 600 }}"
+                    srcset="
+                      {{ block.settings.image | image_url: width: 300 }} 300w,
+                      {{ block.settings.image | image_url: width: 450 }} 450w,
+                      {{ block.settings.image | image_url: width: 600 }} 600w
+                    "
+                    sizes="(min-width: 990px) 220px, (min-width: 750px) 180px, 44vw"
+                    alt="{{ block.settings.label | escape }}"
+                    loading="lazy"
+                    class="tiles-grid__img"
+                  >
+                </div>
+              {%- else -%}
+                <div class="tiles-grid__media tiles-grid__media--placeholder">
+                  {% render 'unsplash-placeholder', type: 'tile', width: 600, class: 'tiles-grid__img', loading: 'lazy', alt: block.settings.label | default: 'Category' %}
+                </div>
+              {%- endif -%}
+              <div class="tiles-grid__label">{{ block.settings.label }}</div>
+            {%- if href != blank -%}</a>{%- endif -%}
+          </div>
         {%- endfor -%}
+
+        {%- if section.settings.layout == 'carousel' and manual_tiles.size < 3 -%}
+          <div class="tiles-grid__item tiles-grid__item--placeholder">
+            <div class="tiles-grid__media tiles-grid__media--placeholder">
+              <div class="tiles-grid__more-text">More coming soon</div>
+              <div class="tiles-grid__more-sub">New drops are on the way</div>
+            </div>
+          </div>
+        {%- endif -%}
       {%- endif -%}
     </div>
     {%- if section.settings.layout == 'carousel' -%}
@@ -302,6 +322,33 @@
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--text);
+  }
+
+  .tiles-grid__item--placeholder .tiles-grid__media {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: radial-gradient(circle at top left, rgba(74, 124, 44, 0.16), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(235, 191, 120, 0.22), transparent 55%),
+                rgba(0, 0, 0, 0.02);
+    border: 1px dashed rgba(0, 0, 0, 0.08);
+  }
+
+  .tiles-grid__more-text {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted, #6b7280);
+  }
+
+  .tiles-grid__more-sub {
+    font-size: 14px;
+    color: rgba(55, 65, 81, 0.9);
+    opacity: 0.85;
   }
 
   @media (max-width: 990px) {
