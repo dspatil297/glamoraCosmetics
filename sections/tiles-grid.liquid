@@ -9,7 +9,15 @@
     </div>
   {%- endif -%}
 
-  <div class="tiles-grid__wrap">
+  <div class="tiles-grid__wrap tiles-grid__wrap--{{ section.settings.layout }}">
+    {%- if section.settings.layout == 'carousel' -%}
+    <div class="tiles-grid__carousel-outer">
+      <button type="button" class="tiles-grid__arrow tiles-grid__arrow--prev" aria-label="Previous" data-tiles-prev>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="tiles-grid__carousel" data-tiles-scroll tabindex="0">
+        <div class="tiles-grid__track">
+    {%- endif -%}
     <div class="tiles-grid__grid" style="--tiles-cols: {{ section.settings.columns }};">
       {%- if section.settings.source == 'category_auto' or section.settings.source == 'concern_auto' -%}
         {%- comment -%}
@@ -91,8 +99,36 @@
         {%- endfor -%}
       {%- endif -%}
     </div>
+    {%- if section.settings.layout == 'carousel' -%}
+        </div>
+      </div>
+      <button type="button" class="tiles-grid__arrow tiles-grid__arrow--next" aria-label="Next" data-tiles-next>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+    {%- endif -%}
   </div>
 </section>
+
+{%- if section.settings.layout == 'carousel' -%}
+<script>
+  (function() {
+    var wrap = document.getElementById('tiles-grid-{{ section.id }}');
+    if (!wrap) return;
+    var scrollEl = wrap.querySelector('[data-tiles-scroll]');
+    var track = wrap.querySelector('.tiles-grid__track');
+    var prevBtn = wrap.querySelector('[data-tiles-prev]');
+    var nextBtn = wrap.querySelector('[data-tiles-next]');
+    if (!scrollEl || !track || !prevBtn || !nextBtn) return;
+    var step = function(direction) {
+      var amount = scrollEl.clientWidth * 0.8;
+      scrollEl.scrollBy({ left: direction * amount, behavior: 'smooth' });
+    };
+    prevBtn.addEventListener('click', function() { step(-1); });
+    nextBtn.addEventListener('click', function() { step(1); });
+  })();
+</script>
+{%- endif -%}
 
 {% stylesheet %}
   .tiles-grid {
@@ -120,6 +156,106 @@
     display: grid;
     grid-template-columns: repeat(var(--tiles-cols, 5), minmax(0, 1fr));
     gap: 18px;
+  }
+
+  /* Carousel layout */
+  .tiles-grid__wrap--carousel .tiles-grid__grid {
+    display: flex;
+    grid-template-columns: unset;
+    gap: 18px;
+    flex-wrap: nowrap;
+  }
+
+  /* Exactly 5 tiles visible in the carousel viewport (gap 18px between) */
+  .tiles-grid__wrap--carousel .tiles-grid__item {
+    flex: 0 0 auto;
+    width: calc((100cqw - 72px) / 5);
+    min-width: calc((100cqw - 72px) / 5);
+  }
+
+  @container tiles-carousel (max-width: 600px) {
+    .tiles-grid__wrap--carousel .tiles-grid__item {
+      width: calc((100cqw - 18px) / 2);
+      min-width: calc((100cqw - 18px) / 2);
+    }
+  }
+
+  .tiles-grid__carousel-outer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .tiles-grid__carousel {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 4px 0;
+    container-type: inline-size;
+    container-name: tiles-carousel;
+  }
+
+  .tiles-grid__carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tiles-grid__track {
+    display: flex;
+    gap: 18px;
+    padding: 0 8px;
+    min-width: min-content;
+  }
+
+  .tiles-grid__wrap--carousel .tiles-grid__track .tiles-grid__grid {
+    display: contents;
+  }
+
+  .tiles-grid__wrap--carousel .tiles-grid__item {
+    scroll-snap-align: start;
+  }
+
+  .tiles-grid__arrow {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.06);
+    color: var(--text, #1a1a1a);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .tiles-grid__arrow:hover {
+    background: rgba(0,0,0,0.12);
+  }
+
+  .tiles-grid__arrow:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .tiles-grid__arrow svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .tiles-grid__arrow {
+      width: 38px;
+      height: 38px;
+    }
+    .tiles-grid__arrow svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 
   .tiles-grid__item {
@@ -169,14 +305,14 @@
     .tiles-grid {
       padding: 48px var(--container-padding);
     }
-    .tiles-grid__grid {
+    .tiles-grid__wrap--grid .tiles-grid__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
     }
   }
 
   @media (max-width: 520px) {
-    .tiles-grid__grid {
+    .tiles-grid__wrap--grid .tiles-grid__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
@@ -187,6 +323,16 @@
   "name": "Tiles grid",
   "settings": [
     { "type": "text", "id": "title", "label": "Heading", "default": "Shop by Category" },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "carousel", "label": "Carousel" },
+        { "value": "grid", "label": "Grid" }
+      ],
+      "default": "carousel"
+    },
     {
       "type": "select",
       "id": "source",
