@@ -12,8 +12,16 @@
 {% if faq_meta != blank %}
   {% assign faq_text = faq_meta | metafield_text | default: faq_meta | strip %}
   {% if faq_text != blank %}
-    {% comment %} Normalize: ensure Q: and A: with space for consistent splitting {% endcomment %}
-    {% assign faq_text = faq_text | replace: 'Q :', 'Q:' | replace: 'q:', 'Q:' | replace: 'a:', 'A:' %}
+    {% comment %} Normalize markers so parser is forgiving {% endcomment %}
+    {% assign faq_text = faq_text
+      | replace: 'Q :', 'Q:'
+      | replace: 'q:', 'Q:'
+      | replace: 'q :', 'Q:'
+      | replace: 'A :', 'A:'
+      | replace: 'a:', 'A:'
+      | replace: 'a :', 'A:'
+    %}
+
     {% assign raw_chunks = faq_text | split: 'Q:' %}
     {% assign faq_items_string = '' %}
 
@@ -22,11 +30,19 @@
       {% if cleaned == '' %}
         {% continue %}
       {% endif %}
-      {% comment %} Split on first " A: " so question = before, answer = after (then trim at next " Q: ") {% endcomment %}
-      {% assign parts = cleaned | split: ' A: ' %}
+
+      {% assign parts = cleaned | split: 'A:' %}
       {% assign question = parts[0] | strip %}
-      {% assign answer_with_rest = parts[1] | default: '' %}
-      {% assign answer = answer_with_rest | split: ' Q: ' | first | strip %}
+      {% assign answer = '' %}
+      {% if parts.size > 1 %}
+        {% assign answer = parts[1] %}
+        {% if parts.size > 2 %}
+          {% for extra in parts offset:2 %}
+            {% assign answer = answer | append: 'A:' | append: extra %}
+          {% endfor %}
+        {% endif %}
+        {% assign answer = answer | strip %}
+      {% endif %}
 
       {% if question != '' and answer != '' %}
         {% assign qa_pair = question | append: '|||' | append: answer %}
