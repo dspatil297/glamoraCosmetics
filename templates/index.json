@@ -77,7 +77,7 @@
         "layout": "carousel",
         "carousel_auto_scroll": true,
         "carousel_auto_scroll_interval": 6,
-        "collection": "frontpage",
+        "collection": "products",
         "products_to_show": 6,
         "show_view_all": true,
         "view_all_text": "View All Products",
@@ -150,6 +150,7 @@
       ],
       "settings": {
         "title": "Shop by Category",
+        "layout": "carousel",
         "source": "category_auto",
         "columns": 4
       }
@@ -218,6 +219,7 @@
       ],
       "settings": {
         "title": "Shop by Concerns",
+        "layout": "carousel",
         "source": "concern_auto",
         "columns": 4
       }
