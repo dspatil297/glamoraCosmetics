@@ -241,12 +241,23 @@
               {%- when 'product_faq_accordion' -%}
                 {%- liquid
                   assign faq_questions = shop.metafields.custom.product_faq_question.value
+
                   assign faq_answers_meta = product.metafields.custom.product_faq
-                  assign faq_answer_lines = ''
+                  assign faq_answers_value = blank
                   if faq_answers_meta != blank
-                    assign faq_answers_text = faq_answers_meta | metafield_text | strip
-                    if faq_answers_text != blank
-                      assign faq_answer_lines = faq_answers_text | newline_to_br | split: '<br />'
+                    assign faq_answers_value = faq_answers_meta.value
+                  endif
+
+                  assign faq_answer_lines = blank
+
+                  if faq_answers_value != blank and faq_answers_meta.type contains 'list.'
+                    assign faq_answer_lines = faq_answers_value
+                  else
+                    if faq_answers_meta != blank
+                      assign faq_answers_text = faq_answers_meta | metafield_text | default: faq_answers_meta | strip
+                      if faq_answers_text != blank
+                        assign faq_answer_lines = faq_answers_text | newline_to_br | split: '<br />'
+                      endif
                     endif
                   endif
                 -%}
@@ -262,7 +273,9 @@
                             <span>{{ q_text }}</span>
                             <span class="pdp__acc-ico" aria-hidden="true">+</span>
                           </summary>
-                          <div class="pdp__acc-body rte">{{ a_text }}</div>
+                          <div class="pdp__acc-body rte">
+                            {{ a_text | newline_to_br }}
+                          </div>
                         </details>
                       {%- endif -%}
                     {%- endfor -%}

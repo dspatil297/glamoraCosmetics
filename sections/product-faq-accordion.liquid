@@ -15,13 +15,21 @@
   endif
 
   if answers_meta != blank
-    assign answers_text = answers_meta | metafield_text | strip
+    assign answers_text = answers_meta | metafield_text | default: answers_meta | strip
   endif
 %}
 
 {% if questions_text != blank and answers_text != blank %}
   {% assign question_lines = questions_text | newline_to_br | split: '<br />' %}
-  {% assign answer_lines = answers_text | newline_to_br | split: '<br />' %}
+  {%- liquid
+    assign answers_value = answers_meta.value
+    assign answer_lines = blank
+    if answers_value != blank and answers_meta.type contains 'list.'
+      assign answer_lines = answers_value
+    else
+      assign answer_lines = answers_text | newline_to_br | split: '<br />'
+    endif
+  -%}
 
   <div class="product-faq-accordion" style="margin: 2rem 0;">
     <h2>{{ section.settings.heading }}</h2>
@@ -37,7 +45,7 @@
             <span class="faq-icon" style="transition: transform 0.3s;">▼</span>
           </summary>
           <div class="faq-answer" style="padding-top: 1rem; color: #666;">
-            {{ answer }}
+            {{ answer | newline_to_br }}
           </div>
         </details>
       {% endif %}
