@@ -28,14 +28,25 @@
       assign answer_lines = answers_value
     else
       assign answers_html = answers_text | newline_to_br | strip
-      if answers_html contains 'a.' and answers_html contains 'b.'
-        assign answers_marked = answers_html
-          | replace: '<br />b.', '###A###b.'
-          | replace: '<br />c.', '###A###c.'
-          | replace: '<br />d.', '###A###d.'
-          | replace: '<br />B.', '###A###B.'
-          | replace: '<br />C.', '###A###C.'
-          | replace: '<br />D.', '###A###D.'
+      if answers_html contains 'a.' and answers_html contains 'b.' or answers_html contains 'a.' and answers_html contains 'B.'
+        assign answers_norm = answers_html
+        assign answers_norm = answers_norm | replace: '<br />', '\n'
+        assign answers_norm = answers_norm | replace: '<br/>', '\n'
+        assign answers_norm = answers_norm | replace: '<br>', '\n'
+
+        assign answers_marked = answers_norm
+        assign answers_marked = answers_marked | replace: '\nb.', '###A###b.'
+        assign answers_marked = answers_marked | replace: '\nc.', '###A###c.'
+        assign answers_marked = answers_marked | replace: '\nd.', '###A###d.'
+        assign answers_marked = answers_marked | replace: '\nB.', '###A###B.'
+        assign answers_marked = answers_marked | replace: '\nC.', '###A###C.'
+        assign answers_marked = answers_marked | replace: '\nD.', '###A###D.'
+        assign answers_marked = answers_marked | replace: ' b.', '###A###b.'
+        assign answers_marked = answers_marked | replace: ' c.', '###A###c.'
+        assign answers_marked = answers_marked | replace: ' d.', '###A###d.'
+        assign answers_marked = answers_marked | replace: ' B.', '###A###B.'
+        assign answers_marked = answers_marked | replace: ' C.', '###A###C.'
+        assign answers_marked = answers_marked | replace: ' D.', '###A###D.'
         assign answer_lines = answers_marked | split: '###A###'
       else
         assign answer_lines_raw = answers_html | split: '<br />'
