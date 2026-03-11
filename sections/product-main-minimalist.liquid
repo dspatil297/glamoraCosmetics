@@ -260,17 +260,17 @@
 
                         if answers_html contains 'a.' and answers_html contains 'b.' or answers_html contains 'a.' and answers_html contains 'B.'
                           assign answers_norm = answers_html
-                          assign answers_norm = answers_norm | replace: '<br />', '\n'
-                          assign answers_norm = answers_norm | replace: '<br/>', '\n'
-                          assign answers_norm = answers_norm | replace: '<br>', '\n'
+                          assign answers_norm = answers_norm | replace: '<br />', '###BR###'
+                          assign answers_norm = answers_norm | replace: '<br/>', '###BR###'
+                          assign answers_norm = answers_norm | replace: '<br>', '###BR###'
 
                           assign answers_marked = answers_norm
-                          assign answers_marked = answers_marked | replace: '\nb.', '###A###b.'
-                          assign answers_marked = answers_marked | replace: '\nc.', '###A###c.'
-                          assign answers_marked = answers_marked | replace: '\nd.', '###A###d.'
-                          assign answers_marked = answers_marked | replace: '\nB.', '###A###B.'
-                          assign answers_marked = answers_marked | replace: '\nC.', '###A###C.'
-                          assign answers_marked = answers_marked | replace: '\nD.', '###A###D.'
+                          assign answers_marked = answers_marked | replace: '###BR###b.', '###A###b.'
+                          assign answers_marked = answers_marked | replace: '###BR###c.', '###A###c.'
+                          assign answers_marked = answers_marked | replace: '###BR###d.', '###A###d.'
+                          assign answers_marked = answers_marked | replace: '###BR###B.', '###A###B.'
+                          assign answers_marked = answers_marked | replace: '###BR###C.', '###A###C.'
+                          assign answers_marked = answers_marked | replace: '###BR###D.', '###A###D.'
                           assign answers_marked = answers_marked | replace: ' b.', '###A###b.'
                           assign answers_marked = answers_marked | replace: ' c.', '###A###c.'
                           assign answers_marked = answers_marked | replace: ' d.', '###A###d.'
@@ -312,6 +312,7 @@
                           | remove_first: 'b.' | remove_first: 'B.'
                           | remove_first: 'c.' | remove_first: 'C.'
                           | remove_first: 'd.' | remove_first: 'D.'
+                          | replace: '###BR###', '<br />'
                           | strip
                         -%}
                       {%- endif -%}
