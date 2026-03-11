@@ -341,6 +341,29 @@
                       {%- endif -%}
                     {%- endfor -%}
                   </div>
+
+                  <script>
+                    (function () {
+                      var root = document.getElementById('pdp-{{ section.id }}');
+                      if (!root) return;
+                      var wrap = root.querySelector('.pdp__faq-accordion-wrap');
+                      if (!wrap) return;
+                      if (wrap.dataset.oneOpenInit === '1') return;
+                      wrap.dataset.oneOpenInit = '1';
+
+                      wrap.addEventListener('toggle', function (e) {
+                        var details = e.target;
+                        if (!details || details.tagName !== 'DETAILS') return;
+                        if (!details.classList.contains('pdp__acc')) return;
+                        if (!details.open) return;
+
+                        var all = wrap.querySelectorAll('details.pdp__acc[open]');
+                        for (var i = 0; i < all.length; i++) {
+                          if (all[i] !== details) all[i].open = false;
+                        }
+                      }, true);
+                    })();
+                  </script>
                 {%- endif -%}
 
               {%- when 'accordion' -%}
