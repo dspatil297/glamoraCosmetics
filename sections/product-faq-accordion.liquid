@@ -27,7 +27,33 @@
     if answers_value != blank and answers_meta.type contains 'list.'
       assign answer_lines = answers_value
     else
-      assign answer_lines = answers_text | newline_to_br | split: '<br />'
+      assign answers_html = answers_text | newline_to_br | strip
+      if answers_html contains 'a.' and answers_html contains 'b.'
+        assign answers_marked = answers_html
+          | replace: '<br />b.', '###A###b.'
+          | replace: '<br />c.', '###A###c.'
+          | replace: '<br />d.', '###A###d.'
+          | replace: '<br />B.', '###A###B.'
+          | replace: '<br />C.', '###A###C.'
+          | replace: '<br />D.', '###A###D.'
+        assign answer_lines = answers_marked | split: '###A###'
+      else
+        assign answer_lines_raw = answers_html | split: '<br />'
+        assign answer_lines_string = ''
+        for raw_line in answer_lines_raw
+          assign cleaned_line = raw_line | strip
+          if cleaned_line == blank
+            continue
+          endif
+          if answer_lines_string != ''
+            assign answer_lines_string = answer_lines_string | append: '###A###'
+          endif
+          assign answer_lines_string = answer_lines_string | append: cleaned_line
+        endfor
+        if answer_lines_string != ''
+          assign answer_lines = answer_lines_string | split: '###A###'
+        endif
+      endif
     endif
   -%}
 
@@ -38,6 +64,15 @@
       {% assign question = raw_q | strip %}
       {% assign answer_raw = answer_lines[forloop.index0] %}
       {% assign answer = answer_raw | strip %}
+      {% if answer != blank %}
+        {% assign answer = answer
+          | remove_first: 'a.' | remove_first: 'A.'
+          | remove_first: 'b.' | remove_first: 'B.'
+          | remove_first: 'c.' | remove_first: 'C.'
+          | remove_first: 'd.' | remove_first: 'D.'
+          | strip
+        %}
+      {% endif %}
       {% if question != blank and answer != blank %}
         <details class="faq-item" style="border-bottom: 1px solid #e0e0e0; padding: 1rem 0;">
           <summary style="cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center;">

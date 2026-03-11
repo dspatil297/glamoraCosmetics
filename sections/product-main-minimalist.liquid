@@ -256,7 +256,35 @@
                     if faq_answers_meta != blank
                       assign faq_answers_text = faq_answers_meta | metafield_text | default: faq_answers_meta | strip
                       if faq_answers_text != blank
-                        assign faq_answer_lines = faq_answers_text | newline_to_br | split: '<br />'
+                        assign answers_html = faq_answers_text | newline_to_br | strip
+
+                        if answers_html contains 'a.' and answers_html contains 'b.'
+                          assign answers_marked = answers_html
+                            | replace: '<br />b.', '###A###b.'
+                            | replace: '<br />c.', '###A###c.'
+                            | replace: '<br />d.', '###A###d.'
+                            | replace: '<br />B.', '###A###B.'
+                            | replace: '<br />C.', '###A###C.'
+                            | replace: '<br />D.', '###A###D.'
+
+                          assign faq_answer_lines = answers_marked | split: '###A###'
+                        else
+                          assign faq_answer_lines_raw = answers_html | split: '<br />'
+                          assign faq_answer_lines_string = ''
+                          for raw_line in faq_answer_lines_raw
+                            assign cleaned_line = raw_line | strip
+                            if cleaned_line == blank
+                              continue
+                            endif
+                            if faq_answer_lines_string != ''
+                              assign faq_answer_lines_string = faq_answer_lines_string | append: '###A###'
+                            endif
+                            assign faq_answer_lines_string = faq_answer_lines_string | append: cleaned_line
+                          endfor
+                          if faq_answer_lines_string != ''
+                            assign faq_answer_lines = faq_answer_lines_string | split: '###A###'
+                          endif
+                        endif
                       endif
                     endif
                   endif
@@ -267,6 +295,15 @@
                       {%- assign q_text = question | strip -%}
                       {%- assign a_raw = faq_answer_lines[forloop.index0] | default: '' -%}
                       {%- assign a_text = a_raw | strip -%}
+                      {%- if a_text != blank -%}
+                        {%- assign a_text = a_text
+                          | remove_first: 'a.' | remove_first: 'A.'
+                          | remove_first: 'b.' | remove_first: 'B.'
+                          | remove_first: 'c.' | remove_first: 'C.'
+                          | remove_first: 'd.' | remove_first: 'D.'
+                          | strip
+                        -%}
+                      {%- endif -%}
                       {%- if q_text != blank -%}
                         <details class="pdp__acc">
                           <summary class="pdp__acc-sum">
