@@ -25,7 +25,11 @@
     {%- if key_ing_text != blank -%}
       {%- assign key_ing_html = key_ing_text | newline_to_br -%}
       {%- assign key_ing_chunks = key_ing_html | split: 'Ing:' -%}
-      <div class="pdp-ingredients__accordion">
+      <div
+        class="pdp-ingredients__accordion pdp-ingredients__accordion--collapsible"
+        id="pdp-ingredients-accordion-{{ section.id }}"
+        data-ingredients-accordion
+      >
         {%- for raw_chunk in key_ing_chunks -%}
           {%- assign chunk = raw_chunk | strip -%}
           {%- if chunk == '' -%}{% continue %}{%- endif -%}
@@ -47,6 +51,16 @@
           {%- endif -%}
         {%- endfor -%}
       </div>
+      <button
+        type="button"
+        class="pdp-ingredients__viewall"
+        data-ingredients-viewall
+        aria-expanded="false"
+        aria-controls="pdp-ingredients-accordion-{{ section.id }}"
+        hidden
+      >
+        View all
+      </button>
     {%- else -%}
       <div class="pdp-ingredients__grid">
         {%- for block in section.blocks -%}
@@ -84,6 +98,30 @@
   </div>
 </section>
 
+<script>
+  (function() {
+    var root = document.getElementById('pdp-ingredients-{{ section.id }}');
+    if (!root) return;
+
+    var acc = root.querySelector('[data-ingredients-accordion]');
+    var btn = root.querySelector('[data-ingredients-viewall]');
+    if (!acc || !btn) return;
+
+    var items = acc.querySelectorAll('.pdp-ingredients__acc-item');
+    if (!items || items.length <= 4) return;
+
+    acc.classList.add('is-collapsed');
+    btn.hidden = false;
+    btn.setAttribute('aria-expanded', 'false');
+
+    btn.addEventListener('click', function() {
+      var isCollapsed = acc.classList.toggle('is-collapsed');
+      btn.textContent = isCollapsed ? 'View all' : 'View less';
+      btn.setAttribute('aria-expanded', String(!isCollapsed));
+    });
+  })();
+</script>
+
 {% stylesheet %}
   .pdp-ingredients {
     width: 100%;
@@ -109,6 +147,9 @@
   }
   .pdp-ingredients__accordion {
     border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  .pdp-ingredients__accordion.is-collapsed .pdp-ingredients__acc-item:nth-child(n+5) {
+    display: none;
   }
   .pdp-ingredients__acc-item {
     border-bottom: 1px solid rgba(0,0,0,0.06);
@@ -143,6 +184,21 @@
   }
   .pdp-ingredients__acc-item[open] .pdp-ingredients__acc-plus {
     transform: rotate(45deg);
+  }
+  .pdp-ingredients__viewall {
+    margin-top: 10px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: rgba(0,0,0,0.75);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+  .pdp-ingredients__viewall:hover {
+    color: rgba(0,0,0,0.95);
   }
   .pdp-ingredients__grid {
     display: grid;
