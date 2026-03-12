@@ -60,9 +60,6 @@
           </li>
         {% endif %}
         <li class="nav-item">
-          <a href="{{ section.settings.link_about | default: '/pages/about-us' }}" class="nav-link {% if request.path == '/pages/about-us' %}active{% endif %}">{{ section.settings.nav_label_about | default: 'About Us' }}</a>
-        </li>
-        <li class="nav-item">
           <a href="{{ section.settings.link_blog | default: '/blogs/news' }}" class="nav-link {% if request.path contains '/blogs' %}active{% endif %}">{{ section.settings.nav_label_blog | default: 'Blog' }}</a>
         </li>
         {% for link in section.settings.menu.links %}
@@ -195,9 +192,6 @@
               <a href="{{ routes.all_products_collection_url }}" class="mobile-nav-link {% if request.path contains '/collections' %}active{% endif %}">{{ section.settings.nav_label_shop | default: 'Shop' }}</a>
             </li>
           {% endif %}
-          <li class="mobile-nav-item">
-            <a href="{{ section.settings.link_about | default: '/pages/about-us' }}" class="mobile-nav-link {% if request.path == '/pages/about-us' %}active{% endif %}">{{ section.settings.nav_label_about | default: 'About Us' }}</a>
-          </li>
           <li class="mobile-nav-item">
             <a href="{{ section.settings.link_blog | default: '/blogs/news' }}" class="mobile-nav-link {% if request.path contains '/blogs' %}active{% endif %}">{{ section.settings.nav_label_blog | default: 'Blog' }}</a>
           </li>
