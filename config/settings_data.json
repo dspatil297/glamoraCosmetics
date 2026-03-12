@@ -26,6 +26,22 @@
         "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
         "disabled": false,
         "settings": {}
+      },
+      "1409715032340194113": {
+        "type": "shopify://apps/gokwik-cart-slide-cart-drawer/blocks/app-embed/531cd8ff-cc36-43b1-9a44-c16d44927215",
+        "disabled": false,
+        "settings": {}
+      },
+      "6089946381803635929": {
+        "type": "shopify://apps/kwik-cod-checkout/blocks/app-embed/74f36c20-677c-4aa2-b179-1769aa61abaa",
+        "disabled": false,
+        "settings": {
+          "gkc_button_text": "Checkout Now",
+          "gkc_button_subtext": "",
+          "gkc_button_bg": "#000000",
+          "gkc_text_color": "#ffffff",
+          "gk_image": true
+        }
       }
     }
   }
