@@ -106,6 +106,44 @@
         "qty_label": "Quantity"
       }
     },
+    "17733065215e870914": {
+      "type": "apps",
+      "blocks": {
+        "kwik_cod_checkout_checkout_button_H4XtTC": {
+          "type": "shopify://apps/kwik-cod-checkout/blocks/checkout_button/74f36c20-677c-4aa2-b179-1769aa61abaa",
+          "settings": {
+            "gkc_button_text": "Checkout Now",
+            "gkc_button_subtext": "",
+            "gkc_button_bg": "#000000",
+            "gkc_text_color": "#ffffff",
+            "gk_image": true
+          }
+        }
+      },
+      "block_order": [
+        "kwik_cod_checkout_checkout_button_H4XtTC"
+      ],
+      "settings": {}
+    },
+    "1773306494f8a7c482": {
+      "type": "apps",
+      "blocks": {
+        "kwik_cod_checkout_buy_now_button_cdPXfd": {
+          "type": "shopify://apps/kwik-cod-checkout/blocks/buy_now_button/74f36c20-677c-4aa2-b179-1769aa61abaa",
+          "settings": {
+            "gkc_button_text": "Buy Now",
+            "gkc_button_subtext": "",
+            "gkc_button_bg": "#000000",
+            "gkc_text_color": "#ffffff",
+            "gk_image": true
+          }
+        }
+      },
+      "block_order": [
+        "kwik_cod_checkout_buy_now_button_cdPXfd"
+      ],
+      "settings": {}
+    },
     "product_ingredients": {
       "type": "product-ingredient-highlights",
       "settings": {
@@ -113,15 +151,8 @@
         "subtitle": "<p>Add a short line about the formulation. You can connect metafields later.</p>"
       }
     },
-    "product_how_to_use": {
-      "type": "product-how-to-use-compact",
-      "settings": {
-        "title": "How to use",
-        "subtitle": "<p>Step-by-step placement guide. You can connect metafields later.</p>"
-      }
-    },
-    "product_reviews_judge": {
-      "type": "product-reviews-judge",
+    "1773306467e14d52eb": {
+      "type": "apps",
       "settings": {}
     },
     "related_products": {
@@ -140,16 +171,31 @@
         "empty_message_no_collection": "Please select a collection to display products."
       }
     },
+    "product_how_to_use": {
+      "type": "product-how-to-use-compact",
+      "settings": {
+        "title": "How to use",
+        "subtitle": "<p>Step-by-step placement guide. You can connect metafields later.</p>"
+      }
+    },
+    "product_reviews_judge": {
+      "type": "product-reviews-judge",
+      "settings": {}
+    },
     "product_faq": {
       "type": "product-faq",
       "settings": {
-        "section_title": "FAQs"
+        "section_title": "FAQs",
+        "empty_answer_text": "No answer provided."
       }
     }
   },
   "order": [
     "product_main",
+    "17733065215e870914",
+    "1773306494f8a7c482",
     "product_ingredients",
+    "1773306467e14d52eb",
     "related_products",
     "product_how_to_use",
     "product_reviews_judge",
