@@ -13,37 +13,26 @@
       "type": "about-intro",
       "settings": {
         "heading": "About Glamora Cosmetics",
-        "subheading": "Advanced anti-pollution skincare for naturally radiant, protected, everyday glowing skin."
+        "subheading": "Advanced anti-pollution skincare for naturally radiant, protected, everyday glowing skin.",
+        "company_story": "<p>Glamora began with a simple question: why does city life have to be so hard on our skin? Between pollution, UV exposure, long commutes, and late nights, we struggled to find products that truly protected and nourished without feeling heavy or complicated.</p><p>Instead of settling, we set out to create something better: city-smart skincare that feels like a ritual of self-love, delivers visible results, and fits seamlessly into a busy, modern life. Every Glamora formula is crafted to protect, hydrate, and enhance your natural glow&mdash;so your skin feels as confident as you do.</p>",
+        "founders_message": "<p>&ldquo;Our vision with Glamora is simple: skincare that keeps up with your city. We combine clinically-backed actives with skin-loving botanicals to defend against pollution and daily stress, while still feeling comforting, luxurious, and easy to use every single day.&rdquo;</p>",
+        "founders_name": "The Glamora Team",
+        "founders_title": "Founders, Glamora Skincare"
       }
     },
     "about_mission": {
       "type": "about-mission",
       "settings": {
         "mission_title": "Our Mission",
+        "mission_text": "<p>Our mission is to create high-performance, anti-pollution skincare that fits effortlessly into everyday rituals and keeps modern, urban skin calm, hydrated, and protected. We design every formula to work hard for your barrier while feeling soft, sensorial, and reassuring on your skin.</p><p>From your first cleanse to your final SPF, Glamora exists to turn daily routines into grounding moments of self-care—backed by science, powered by thoughtful ingredients, and made for real life.</p>",
         "vision_title": "Our Vision",
-        "goals_title": "Our Goals"
-      }
-    },
-    "about_values": {
-      "type": "about-values",
-      "settings": {
-        "title": "Our Core Values"
-      }
-    },
-    "about_impact": {
-      "type": "about-impact",
-      "settings": {
-        "title": "Our Impact",
-        "farmer_stories_title": "Farmer Impact Stories",
-        "community_initiatives_title": "Community Initiatives"
+        "vision_text": "<p>We envision a world where beauty and wellness go hand in hand—where your glow doesn’t come at the cost of your skin’s health or the planet. Glamora aims to be the trusted choice for city dwellers who want skincare that protects, performs, and feels good in every sense.</p><p>Our vision is to make advanced, pollution-defence skincare feel effortless and accessible, so more people can feel confident in their own skin, every single day.</p>",
+        "goals_title": ""
       }
     }
   },
   "order": [
     "about_intro",
-    "about_mission",
-    "about_values",
-    "about_impact"
+    "about_mission"
   ]
 }
-
