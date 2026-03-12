@@ -108,40 +108,10 @@
     },
     "17733065215e870914": {
       "type": "apps",
-      "blocks": {
-        "kwik_cod_checkout_checkout_button_H4XtTC": {
-          "type": "shopify://apps/kwik-cod-checkout/blocks/checkout_button/74f36c20-677c-4aa2-b179-1769aa61abaa",
-          "settings": {
-            "gkc_button_text": "Checkout Now",
-            "gkc_button_subtext": "",
-            "gkc_button_bg": "#000000",
-            "gkc_text_color": "#ffffff",
-            "gk_image": true
-          }
-        }
-      },
-      "block_order": [
-        "kwik_cod_checkout_checkout_button_H4XtTC"
-      ],
       "settings": {}
     },
     "1773306494f8a7c482": {
       "type": "apps",
-      "blocks": {
-        "kwik_cod_checkout_buy_now_button_cdPXfd": {
-          "type": "shopify://apps/kwik-cod-checkout/blocks/buy_now_button/74f36c20-677c-4aa2-b179-1769aa61abaa",
-          "settings": {
-            "gkc_button_text": "Buy Now",
-            "gkc_button_subtext": "",
-            "gkc_button_bg": "#000000",
-            "gkc_text_color": "#ffffff",
-            "gk_image": true
-          }
-        }
-      },
-      "block_order": [
-        "kwik_cod_checkout_buy_now_button_cdPXfd"
-      ],
       "settings": {}
     },
     "product_ingredients": {
