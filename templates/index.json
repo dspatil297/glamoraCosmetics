@@ -88,6 +88,8 @@
     "bundle_promo": {
       "type": "promo-banner",
       "settings": {
+        "image": "shopify://shop_images/2nd_banner.png",
+        "mobile_image": "shopify://shop_images/2nd_banner.png",
         "href": "/collections/all",
         "alt": "Bundle promotion",
         "placeholder_text": "Add a banner image in Theme Customizer for this section."
