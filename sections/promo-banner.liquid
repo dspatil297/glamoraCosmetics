@@ -46,20 +46,24 @@
   .promo-banner {
     width: 100%;
     margin: 0;
+    overflow: hidden;
   }
   .promo-banner__link {
     display: block;
     text-decoration: none;
     color: inherit;
   }
-  .promo-banner__picture,
+  .promo-banner__picture {
+    display: block;
+    width: 100%;
+  }
   .promo-banner__img {
     display: block;
     width: 100%;
     max-width: 100%;
     height: auto;
     max-height: 420px;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
   }
 
