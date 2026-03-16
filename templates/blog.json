@@ -11,7 +11,11 @@
   "sections": {
     "main": {
       "type": "blog",
-      "settings": {}
+      "settings": {
+        "heading": "Knowledge",
+        "subtitle": "Science-backed guides for your skin",
+        "articles_per_page": 9
+      }
     }
   },
   "order": [
