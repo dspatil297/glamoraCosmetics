@@ -226,22 +226,6 @@
         "columns": 4
       }
     },
-    "new_launches": {
-      "type": "product-grid",
-      "settings": {
-        "title": "New Launches",
-        "description": "",
-        "layout": "carousel",
-        "carousel_auto_scroll": true,
-        "carousel_auto_scroll_interval": 6,
-        "collection": "new-launches",
-        "products_to_show": 6,
-        "show_view_all": true,
-        "view_all_text": "View All Products",
-        "empty_message_no_products": "No products found in this collection.",
-        "empty_message_no_collection": "Please select a collection to display products."
-      }
-    },
     "brand_values": {
       "type": "values-strip",
       "blocks": {
@@ -352,7 +336,6 @@
     "ai_split_banner",
     "shop_by_category",
     "shop_by_concerns",
-    "new_launches",
     "brand_values",
     "loyalty_program",
     "app_download",
