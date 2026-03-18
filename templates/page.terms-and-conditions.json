@@ -1,12 +1,77 @@
+/*
+ * ------------------------------------------------------------
+ * Glamora – Terms and Conditions page template
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "policy": {
       "type": "policy-page",
       "settings": {
-        "title": "Terms and Conditions",
-        "last_updated": "January 2024",
+        "title": "Terms & Conditions",
+        "last_updated": "March 2025",
         "policy_type": "terms"
-      }
+      },
+      "blocks": {
+        "use-of-content": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "use-of-content",
+            "label": "Use of Content"
+          }
+        },
+        "acceptable-use": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "acceptable-use",
+            "label": "Acceptable Use of the Website"
+          }
+        },
+        "links-to-third-party-websites": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "links-to-third-party-websites",
+            "label": "Links to Third-Party Websites"
+          }
+        },
+        "indemnity": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "indemnity",
+            "label": "Indemnity"
+          }
+        },
+        "liability-disclaimer": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "liability-disclaimer",
+            "label": "Liability Disclaimer"
+          }
+        },
+        "governing-law": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "governing-law",
+            "label": "Governing Law"
+          }
+        },
+        "changes-to-terms": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "changes-to-terms",
+            "label": "Changes to Terms"
+          }
+        }
+      },
+      "block_order": [
+        "use-of-content",
+        "acceptable-use",
+        "links-to-third-party-websites",
+        "indemnity",
+        "liability-disclaimer",
+        "governing-law",
+        "changes-to-terms"
+      ]
     }
   },
   "order": [

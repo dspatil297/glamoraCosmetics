@@ -1,10 +1,6 @@
 /*
  * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
+ * Glamora – Privacy Policy page template
  * ------------------------------------------------------------
  */
 {
@@ -13,9 +9,125 @@
       "type": "policy-page",
       "settings": {
         "title": "Privacy Policy",
-        "last_updated": "January 2024",
+        "last_updated": "March 2025",
         "policy_type": "privacy"
-      }
+      },
+      "blocks": {
+        "content-ownership": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "content-ownership",
+            "label": "Content Ownership"
+          }
+        },
+        "trademarks": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "trademarks",
+            "label": "Trademarks"
+          }
+        },
+        "registration-accounts-passwords": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "registration-accounts-passwords",
+            "label": "Registration, Accounts, and Passwords"
+          }
+        },
+        "governing-law": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "governing-law",
+            "label": "Governing Law"
+          }
+        },
+        "collecting-information": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "collecting-information",
+            "label": "Collecting Information"
+          }
+        },
+        "use-of-information": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "use-of-information",
+            "label": "Use of Information"
+          }
+        },
+        "sharing-information": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "sharing-information",
+            "label": "Sharing Information"
+          }
+        },
+        "protecting-your-information": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "protecting-your-information",
+            "label": "Protecting Your Information"
+          }
+        },
+        "unsubscribing-modifying-information": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "unsubscribing-modifying-information",
+            "label": "Unsubscribing and Modifying Information"
+          }
+        },
+        "mobile-messaging": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "mobile-messaging",
+            "label": "Mobile Messaging"
+          }
+        },
+        "childrens-privacy": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "childrens-privacy",
+            "label": "Children's Privacy"
+          }
+        },
+        "links-to-other-websites": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "links-to-other-websites",
+            "label": "Links to Other Websites"
+          }
+        },
+        "terms-of-use": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "terms-of-use",
+            "label": "Terms of Use"
+          }
+        },
+        "third-parties-and-links": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "third-parties-and-links",
+            "label": "Third Parties and Links"
+          }
+        }
+      },
+      "block_order": [
+        "content-ownership",
+        "trademarks",
+        "registration-accounts-passwords",
+        "governing-law",
+        "collecting-information",
+        "use-of-information",
+        "sharing-information",
+        "protecting-your-information",
+        "unsubscribing-modifying-information",
+        "mobile-messaging",
+        "childrens-privacy",
+        "links-to-other-websites",
+        "terms-of-use",
+        "third-parties-and-links"
+      ]
     }
   },
   "order": [

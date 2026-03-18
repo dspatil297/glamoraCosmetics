@@ -1,10 +1,6 @@
 /*
  * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
+ * Glamora – Shipping Policy page template
  * ------------------------------------------------------------
  */
 {
@@ -13,9 +9,53 @@
       "type": "policy-page",
       "settings": {
         "title": "Shipping Policy",
-        "last_updated": "January 2024",
+        "last_updated": "March 2025",
         "policy_type": "shipping"
-      }
+      },
+      "blocks": {
+        "delivery-area": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "delivery-area",
+            "label": "Delivery Area"
+          }
+        },
+        "delivery-timeline": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "delivery-timeline",
+            "label": "Delivery Timeline"
+          }
+        },
+        "shipping-charges": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "shipping-charges",
+            "label": "Shipping Charges"
+          }
+        },
+        "delayed-orders": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "delayed-orders",
+            "label": "Delayed Orders"
+          }
+        },
+        "tracking-and-updates": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "tracking-and-updates",
+            "label": "Tracking and Updates"
+          }
+        }
+      },
+      "block_order": [
+        "delivery-area",
+        "delivery-timeline",
+        "shipping-charges",
+        "delayed-orders",
+        "tracking-and-updates"
+      ]
     }
   },
   "order": [

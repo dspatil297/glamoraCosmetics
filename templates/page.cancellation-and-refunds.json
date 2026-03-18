@@ -1,10 +1,6 @@
 /*
  * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
+ * Glamora – Refund and Returns Policy page template
  * ------------------------------------------------------------
  */
 {
@@ -12,10 +8,62 @@
     "policy": {
       "type": "policy-page",
       "settings": {
-        "title": "Cancellation and Refunds",
-        "last_updated": "January 2024",
+        "title": "Refund and Returns Policy",
+        "last_updated": "March 2025",
         "policy_type": "cancellation"
-      }
+      },
+      "blocks": {
+        "return-eligibility": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "return-eligibility",
+            "label": "Return Eligibility"
+          }
+        },
+        "return-process": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "return-process",
+            "label": "Return Process"
+          }
+        },
+        "refund-policy": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "refund-policy",
+            "label": "Refund Policy"
+          }
+        },
+        "special-note": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "special-note",
+            "label": "Special Note"
+          }
+        },
+        "right-to-refuse": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "right-to-refuse-refund",
+            "label": "Right to Refuse Refund"
+          }
+        },
+        "damages-and-issues": {
+          "type": "section_link",
+          "settings": {
+            "anchor_id": "damages-and-issues",
+            "label": "Damages and Issues"
+          }
+        }
+      },
+      "block_order": [
+        "return-eligibility",
+        "return-process",
+        "refund-policy",
+        "special-note",
+        "right-to-refuse",
+        "damages-and-issues"
+      ]
     }
   },
   "order": [
