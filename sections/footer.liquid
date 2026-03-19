@@ -36,6 +36,7 @@
             {% endfor %}
           {% else %}
             <li><a href="{{ routes.root_url }}">{{ section.settings.default_link_home | default: 'Home' }}</a></li>
+            <li><a href="{{ section.settings.about_us_url | default: '/pages/about-us' }}">{{ section.settings.default_link_about_us | default: 'About Us' }}</a></li>
             <li><a href="/pages/terms-and-conditions">{{ section.settings.default_link_terms | default: 'Terms and Conditions' }}</a></li>
             <li><a href="/pages/privacy-policy">{{ section.settings.default_link_privacy | default: 'Privacy Policy' }}</a></li>
             <li><a href="/pages/shipping-policy">{{ section.settings.default_link_shipping | default: 'Shipping Policy' }}</a></li>
@@ -615,6 +616,18 @@
       "id": "default_link_home",
       "label": "Default: Home link text",
       "default": "Home"
+    },
+    {
+      "type": "text",
+      "id": "default_link_about_us",
+      "label": "Default: About Us link text",
+      "default": "About Us"
+    },
+    {
+      "type": "url",
+      "id": "about_us_url",
+      "label": "About Us page URL (when using default links)",
+      "info": "Leave blank for /pages/about-us"
     },
     {
       "type": "text",
