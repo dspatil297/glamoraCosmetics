@@ -95,7 +95,7 @@
           {% if section.settings.legal_manufacturer != blank %}
             <div class="footer__legal-row">
               <dt>{{ section.settings.legal_label_manufacturer | default: 'Manufacturer' }}:</dt>
-              <dd>{{ section.settings.legal_manufacturer }}</dd>
+              <dd>{{ section.settings.legal_manufacturer | default: 'HAMRAJ INDIA' }}</dd>
             </div>
           {% endif %}
           {% if section.settings.legal_mfg != blank %}
@@ -745,7 +745,7 @@
       "type": "text",
       "id": "legal_manufacturer",
       "label": "Manufacturer",
-      "default": "Sarvital Sarvadnya Foodtech Pvt Ltd"
+      "default": "HAMRAJ INDIA"
     },
     {
       "type": "text",

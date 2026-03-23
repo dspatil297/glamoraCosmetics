@@ -387,6 +387,21 @@
     {%- comment -%} Product cards: show quantity only after add-to-cart; +/- updates cart via change.js {%- endcomment -%}
     <script>
       (function() {
+        function setProductCardAddButtonVisibility(form, show) {
+          var addBtn = form.querySelector('.product-card__add-to-cart');
+          if (!addBtn) return;
+          addBtn.style.display = show ? '' : 'none';
+          addBtn.setAttribute('aria-hidden', show ? 'false' : 'true');
+        }
+        function hideProductCardQtyRow(form) {
+          var qtyRow = form.querySelector('.product-card__quantity-row');
+          if (qtyRow) {
+            qtyRow.classList.add('product-card__quantity-row--hidden');
+            qtyRow.style.display = '';
+            qtyRow.style.visibility = '';
+          }
+          setProductCardAddButtonVisibility(form, true);
+        }
         function showProductCardQtyRow(form, lineKey, quantity) {
           if (lineKey) form.setAttribute('data-line-key', lineKey);
           var qtyRow = form.querySelector('.product-card__quantity-row');
@@ -397,6 +412,7 @@
           }
           var qtyInput = form.querySelector('.product-card__qty-input');
           if (qtyInput) qtyInput.value = quantity || 1;
+          setProductCardAddButtonVisibility(form, false);
         }
         function doProductCardAddToCart(form) {
           var idInput = form.querySelector('input[name="id"]');
@@ -485,12 +501,7 @@
                 document.dispatchEvent(new CustomEvent('cart:updated'));
                 if (newQty === 0) {
                   form.removeAttribute('data-line-key');
-                  var qtyRow = form.querySelector('.product-card__quantity-row');
-                  if (qtyRow) {
-                    qtyRow.classList.add('product-card__quantity-row--hidden');
-                    qtyRow.style.display = '';
-                    qtyRow.style.visibility = '';
-                  }
+                  hideProductCardQtyRow(form);
                 }
               } else {
                 alert(result.data && result.data.description ? result.data.description : 'Could not update cart.');
@@ -519,7 +530,12 @@
               var variantId = idInput ? idInput.value : null;
               if (!variantId) continue;
               var item = items.find(function(it) { return String(it.variant_id) === String(variantId) || String(it.id) === String(variantId); });
-              if (item) showProductCardQtyRow(form, item.key, item.quantity);
+              if (item) {
+                showProductCardQtyRow(form, item.key, item.quantity);
+              } else {
+                form.removeAttribute('data-line-key');
+                hideProductCardQtyRow(form);
+              }
             }
           }).catch(function() {});
         }
