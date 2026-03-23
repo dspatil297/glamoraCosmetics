@@ -107,14 +107,15 @@
 
   .contact-info__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--spacing-xl);
     margin-bottom: var(--spacing-4xl);
+    align-items: start;
   }
 
   .contact-info-card {
     background: var(--white);
-    padding: var(--spacing-2xl);
+    padding: clamp(1.1rem, 2vw, var(--spacing-2xl));
     border-radius: var(--radius-xl);
     box-shadow: 0 10px 40px rgba(45, 80, 22, 0.1);
     border-top: 4px solid var(--sage-green);
@@ -149,8 +150,18 @@
 
   .contact-info-card__content {
     font-size: var(--body-normal);
-    line-height: 1.7;
+    line-height: 1.6;
     color: var(--text);
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .contact-info-card__content p {
+    margin: 0;
+  }
+
+  .contact-info-card__content p + p {
+    margin-top: 0.35rem;
   }
 
   .contact-info-card__link {
@@ -158,6 +169,14 @@
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  @media (max-width: 1024px) {
+    .contact-info__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   .contact-info-card__link:hover {
