@@ -868,7 +868,35 @@
     .pdp__grid { grid-template-columns: 1fr; }
     .pdp__main-img { aspect-ratio: 9 / 16; }
     .pdp-sticky { display: block; }
-    body { padding-bottom: 72px; }
+    body { padding-bottom: calc(72px + env(safe-area-inset-bottom, 0)); }
+    .pdp__title {
+      font-size: clamp(1.5rem, 5.5vw, var(--pdp-title-size, 52px));
+      word-break: break-word;
+    }
+    .pdp__cta-row {
+      flex-wrap: wrap;
+    }
+    .pdp__btn {
+      min-width: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .pdp__rating {
+      font-size: clamp(1.125rem, 5vw, 1.75rem);
+    }
+    .pdp__price-line1 {
+      gap: 6px 8px;
+    }
+    .pdp-sticky__inner {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .pdp-sticky__btn {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
   }
 {% endstylesheet %}
 

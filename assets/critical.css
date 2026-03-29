@@ -535,6 +535,10 @@ label {
  * Full-width sections with no side padding/margins
  * All sections span 100% by default
  */
+#main-content {
+  min-width: 0;
+}
+
 .shopify-section {
   position: relative;
   width: 100%;
@@ -1162,6 +1166,12 @@ body > .mobile-menu-drawer {
     padding-left: var(--container-padding);
     padding-right: var(--container-padding);
     box-sizing: border-box;
+  }
+
+  /* Long CTA labels: avoid horizontal overflow */
+  .btn {
+    white-space: normal;
+    text-align: center;
   }
 
   /* Touch-friendly targets (min 44px) for primary actions */

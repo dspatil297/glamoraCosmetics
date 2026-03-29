@@ -161,6 +161,21 @@
     isolation: isolate;
   }
 
+  /* Phones: 4:1 is too short — taller ratio so imagery and carousel controls read clearly */
+  @media (max-width: 768px) {
+    .hero-banner {
+      aspect-ratio: 16 / 9;
+      min-height: 200px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-banner {
+      aspect-ratio: 3 / 2;
+      min-height: 180px;
+    }
+  }
+
   .hero-banner__content--minimal {
     padding-top: 0;
     padding-bottom: 0;
