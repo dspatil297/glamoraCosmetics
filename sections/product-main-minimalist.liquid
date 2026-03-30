@@ -85,15 +85,23 @@
               class="pdp__thumb{% if image == featured %} is-active{% endif %}"
               data-pdp-thumb
               data-image-src="{{ image | image_url: width: 900 }}"
+              data-image-srcset="
+                {{ image | image_url: width: 360 }} 360w,
+                {{ image | image_url: width: 540 }} 540w,
+                {{ image | image_url: width: 720 }} 720w,
+                {{ image | image_url: width: 900 }} 900w
+              "
+              data-image-sizes="(max-width: 900px) 100vw, 50vw"
+              data-image-alt="{{ image.alt | default: product.title | escape }}"
               role="tab"
               aria-selected="{% if image == featured %}true{% else %}false{% endif %}"
               aria-label="Image {{ forloop.index }}"
             >
               <img 
-                src="{{ image | image_url: width: 120, height: 144, crop: 'center' }}" 
+                src="{{ image | image_url: width: 88, height: 106, crop: 'center' }}" 
                 alt="" 
-                width="120" 
-                height="144" 
+                width="88" 
+                height="106" 
                 loading="lazy"
               >
             </button>
@@ -528,7 +536,15 @@
     function setMainImage(btn) {
       if (!btn || !mainImg) return;
       var src = btn.getAttribute('data-image-src');
-      mainImg.src = src;
+      var srcset = btn.getAttribute('data-image-srcset');
+      var sizes = btn.getAttribute('data-image-sizes');
+      var alt = btn.getAttribute('data-image-alt');
+
+      if (src) mainImg.src = src;
+      /* If srcset stays unchanged, browsers may keep rendering the old image */
+      if (srcset) mainImg.setAttribute('srcset', srcset);
+      if (sizes) mainImg.setAttribute('sizes', sizes);
+      if (alt) mainImg.setAttribute('alt', alt);
       for (var i = 0; i < thumbs.length; i++) {
         thumbs[i].classList.toggle('is-active', thumbs[i] === btn);
         thumbs[i].setAttribute('aria-selected', thumbs[i] === btn ? 'true' : 'false');
@@ -585,7 +601,10 @@
     max-width: 100%;
     display: block;
     aspect-ratio: 1;
-    object-fit: cover;
+    /* Show the full product image (no cropping) */
+    object-fit: contain;
+    object-position: center;
+    background: #F1F1F1;
   }
   .pdp__thumbs {
     margin-top: 12px;
@@ -598,8 +617,8 @@
     border: 1px solid rgba(222, 222, 222, 0.8);
     border-radius: 12px;
     padding: 0;
-    width: 120px;
-    height: 144px;
+    width: 88px;
+    height: 106px;
     overflow: hidden;
     background: #ffffff;
     flex: 0 0 auto;
@@ -889,6 +908,7 @@
     .pdp__rating-text { font-size: 14px; }
     .pdp__thumbs { -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; }
     .pdp__thumb { scroll-snap-align: start; }
+    .pdp__thumb { width: 72px; height: 86px; border-radius: 10px; }
 
     /* Hard stop: nothing in media column may overflow viewport */
     .pdp__media,
@@ -912,6 +932,10 @@
 
     /* Sticky bar: avoid forcing a wide button */
     .pdp-sticky__btn { min-width: 0; width: auto; padding-left: 14px; padding-right: 14px; }
+
+    /* Smaller thumbs for small phones */
+    .pdp__thumbs { gap: 8px; }
+    .pdp__thumb { width: 60px; height: 72px; border-radius: 10px; }
   }
 {% endstylesheet %}
 
