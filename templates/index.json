@@ -16,7 +16,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/moisturizing_spray_hero_banner__1x_1.webp",
-            "mobile_image": "shopify://shop_images/moisturizing_spray_hero_banner__1x_1.webp",
+            "mobile_image": "shopify://shop_images/moisturizing_spray.webp",
             "link": "https://glamoracosmetics.in/products/glamora-pollution-control-moisturizing-spray"
           }
         },
@@ -24,7 +24,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/FACE_WASH_HERO_BANNER_1x_1.webp",
-            "mobile_image": "shopify://shop_images/FACE_WASH_HERO_BANNER_1x_1.webp",
+            "mobile_image": "shopify://shop_images/face_wash.webp",
             "link": "https://glamoracosmetics.in/products/glamora-pollution-control-face-wash"
           }
         },
@@ -32,7 +32,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Sunscreen_hero_banner_1x_1.webp",
-            "mobile_image": "shopify://shop_images/Sunscreen_hero_banner_1x_1.webp",
+            "mobile_image": "shopify://shop_images/suscreen.webp",
             "link": "https://glamoracosmetics.in/products/glamora-pollution-control-hybrid-sunscreen"
           }
         },
@@ -40,7 +40,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/foaming_face_wash_hero_banner_1x_1.webp",
-            "mobile_image": "shopify://shop_images/foaming_face_wash_hero_banner_1x_1.webp",
+            "mobile_image": "shopify://shop_images/foaming_face_wash.webp",
             "link": "https://glamoracosmetics.in/products/glamora-pollution-control-foaming-face-wash"
           }
         }
