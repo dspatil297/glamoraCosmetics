@@ -837,12 +837,16 @@
 
   /* Product Title */
   .product-title {
-    font-size: 32px;
+    font-size: calc(36px / 60 * var(--base-headings-primary-size, 60) + 0px);
     line-height: 1.2;
     font-weight: 600;
     margin: 0;
     color: var(--text);
     font-family: var(--font-heading);
+    -webkit-font-smoothing: antialiased;
+    font-style: var(--font-style-headings-primary, normal);
+    letter-spacing: var(--base-headings-spacing, 0em);
+    line-height: calc(var(--base-headings-line, 1) * 1.1);
   }
 
   /* Rating Summary */
