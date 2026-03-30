@@ -161,6 +161,20 @@
     isolation: isolate;
   }
 
+  /* Mobile: increase hero height (desktop stays 4:1) */
+  @media (max-width: 768px) {
+    .hero-banner {
+      aspect-ratio: 1 / 1;
+      min-height: 420px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-banner {
+      min-height: 380px;
+    }
+  }
+
   .hero-banner__content--minimal {
     padding-top: 0;
     padding-bottom: 0;
