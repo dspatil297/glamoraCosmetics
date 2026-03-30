@@ -15,33 +15,33 @@
         "slide_Nq893k": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/foaming_face_wash_hero_banner.png",
-            "mobile_image": "shopify://shop_images/foaming_face_wash_hero_banner.png",
-            "link": "https://shop.glamoracosmetic.in/products/glamora-pollution-control-foaming-face-wash"
+            "image": "shopify://shop_images/moisturizing_spray_hero_banner__1x_1.webp",
+            "mobile_image": "shopify://shop_images/moisturizing_spray_hero_banner__1x_1.webp",
+            "link": "https://glamoracosmetics.in/products/glamora-pollution-control-moisturizing-spray"
           }
         },
         "slide_4NXNRf": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Sunscreen_hero_banner.png",
-            "mobile_image": "shopify://shop_images/Sunscreen_hero_banner.png",
-            "link": "https://shop.glamoracosmetic.in/products/glamora-pollution-control-hybrid-sunscreen"
+            "image": "shopify://shop_images/FACE_WASH_HERO_BANNER_1x_1.webp",
+            "mobile_image": "shopify://shop_images/FACE_WASH_HERO_BANNER_1x_1.webp",
+            "link": "https://glamoracosmetics.in/products/glamora-pollution-control-face-wash"
           }
         },
         "slide_hMhcUm": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/FACE_WASH_HERO_BANNER.png",
-            "mobile_image": "shopify://shop_images/FACE_WASH_HERO_BANNER.png",
-            "link": "https://shop.glamoracosmetic.in/products/glamora-pollution-control-face-wash"
+            "image": "shopify://shop_images/Sunscreen_hero_banner_1x_1.webp",
+            "mobile_image": "shopify://shop_images/Sunscreen_hero_banner_1x_1.webp",
+            "link": "https://glamoracosmetics.in/products/glamora-pollution-control-hybrid-sunscreen"
           }
         },
         "slide_knjxEJ": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/moisturizing_spray_hero_banner.png",
-            "mobile_image": "shopify://shop_images/moisturizing_spray_hero_banner.png",
-            "link": "https://shop.glamoracosmetic.in/products/glamora-pollution-control-moisturizing-spray"
+            "image": "shopify://shop_images/foaming_face_wash_hero_banner_1x_1.webp",
+            "mobile_image": "shopify://shop_images/foaming_face_wash_hero_banner_1x_1.webp",
+            "link": "https://glamoracosmetics.in/products/glamora-pollution-control-foaming-face-wash"
           }
         }
       },
@@ -88,20 +88,11 @@
     "bundle_promo": {
       "type": "promo-banner",
       "settings": {
-        "image": "shopify://shop_images/2nd_banner.png",
-        "mobile_image": "shopify://shop_images/2nd_banner.png",
+        "image": "shopify://shop_images/2nd_banner_1.webp",
+        "mobile_image": "shopify://shop_images/2nd_banner_1.webp",
         "href": "/collections/all",
         "alt": "Bundle promotion",
         "placeholder_text": "Add a banner image in Theme Customizer for this section."
-      }
-    },
-    "ai_split_banner": {
-      "type": "double-banner",
-      "settings": {
-        "href_1": "/pages/skin-insights",
-        "alt_1": "Skin insights",
-        "href_2": "/pages/minimalist-ai-assistant",
-        "alt_2": "AI assistant"
       }
     },
     "shop_by_category": {
@@ -277,24 +268,6 @@
         "subtitle": "Embrace Glamora, where each element is chosen for its scientific merit, offering you authentic, effective skincare solutions."
       }
     },
-    "loyalty_program": {
-      "type": "loyalty-banner",
-      "settings": {
-        "title": "Glamora Glow Circle",
-        "subtitle": "Earn & redeem rewards on every purchase.",
-        "cta_text": "Show more",
-        "cta_link": "/pages/rewards-1",
-        "placeholder_text": "Add a loyalty program image in Theme Customizer."
-      }
-    },
-    "app_download": {
-      "type": "promo-banner",
-      "settings": {
-        "href": "/pages/download-app",
-        "alt": "Download our app",
-        "placeholder_text": "Add a banner image in Theme Customizer for this section."
-      }
-    },
     "177287695271a8ad79": {
       "type": "apps",
       "blocks": {
@@ -333,12 +306,9 @@
     "hero_banner",
     "featured_products",
     "bundle_promo",
-    "ai_split_banner",
     "shop_by_category",
     "shop_by_concerns",
     "brand_values",
-    "loyalty_program",
-    "app_download",
     "177287695271a8ad79",
     "home_faq",
     "gst_notice"
