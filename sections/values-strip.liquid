@@ -79,14 +79,13 @@
 
   .values-strip__grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 32px 24px;
   }
 
   .values-strip__item {
     text-align: center;
     padding: 0 8px;
-    min-width: 0;
   }
 
   .values-strip__icon-wrap {
@@ -131,7 +130,7 @@
     margin: 0;
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 990px) {
     .values-strip {
       padding: 56px var(--container-padding);
     }
@@ -139,69 +138,24 @@
       margin-bottom: 40px;
     }
     .values-strip__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 36px 20px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px 20px;
     }
   }
 
-  @media (max-width: 768px) {
-    .values-strip__title {
-      font-size: clamp(22px, 5vw, 30px);
-      padding: 0 4px;
-    }
-    .values-strip__subtitle {
-      font-size: 15px;
-      line-height: 1.6;
-      padding: 0 8px;
-    }
-  }
-
-  /* Phones: 2×2 grid (not one long column) — balanced, scannable */
   @media (max-width: 520px) {
     .values-strip {
-      padding: 36px var(--container-padding);
+      padding: 40px var(--container-padding);
     }
     .values-strip__intro {
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
     .values-strip__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 22px 12px;
-      align-items: start;
+      grid-template-columns: 1fr;
+      gap: 36px;
     }
     .values-strip__item {
-      padding: 16px 6px;
-      border-radius: var(--radius-lg, 12px);
-      background: rgba(21, 115, 109, 0.04);
-      border: 1px solid rgba(76, 85, 100, 0.08);
-      box-sizing: border-box;
-    }
-    .values-strip__icon-wrap {
-      width: 48px;
-      height: 48px;
-      margin-bottom: 12px;
-    }
-    .values-strip__icon-wrap .trust-factor-icon {
-      width: 40px;
-      height: 40px;
-    }
-    .values-strip__name {
-      font-size: 13px;
-      margin-bottom: 6px;
-      line-height: 1.35;
-    }
-    .values-strip__desc {
-      font-size: 12px;
-      line-height: 1.45;
-    }
-  }
-
-  @media (max-width: 380px) {
-    .values-strip__grid {
-      gap: 16px 8px;
-    }
-    .values-strip__item {
-      padding: 12px 4px;
+      padding: 0 16px;
     }
   }
 {% endstylesheet %}

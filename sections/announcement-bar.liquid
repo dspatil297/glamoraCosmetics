@@ -141,11 +141,6 @@
   }
 
   @media (max-width: 768px) {
-    :root {
-      /* Match mobile inner (32px) + border + safe area — keeps header/main offset aligned */
-      --announcement-bar-height: calc(33px + env(safe-area-inset-top, 0));
-    }
-
     .announcement-bar__inner {
       padding: 6px var(--container-padding);
       min-height: 32px;

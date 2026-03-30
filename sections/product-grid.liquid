@@ -233,12 +233,12 @@
       gap: var(--spacing-sm);
     }
 
-    /* One full-width slide per view — % of scrollport avoids 100vw + scrollbar horizontal overflow */
+    /* Carousel: one card = 100vw (same as 768px) */
     .product-grid-section__carousel-wrap--mobile .product-grid-section__carousel-slide {
-      flex: 0 0 100%;
-      width: 100%;
-      min-width: 100%;
-      max-width: 100%;
+      flex: 0 0 100vw;
+      width: 100vw;
+      min-width: 100vw;
+      max-width: 100vw;
     }
     .product-grid-section__carousel-wrap--mobile .product-grid-section__carousel-track {
       gap: 0;
@@ -288,13 +288,13 @@
     min-height: 420px;
   }
 
-  /* Mobile: full-bleed carousel without 100vw slide widths (prevents horizontal scroll) */
+  /* Mobile: carousel full viewport width so we can center cards with 50vw */
   @media (max-width: 768px) {
     .product-grid-section__carousel-wrap--mobile {
-      width: 100%;
-      max-width: 100%;
-      margin-left: 0;
-      margin-right: 0;
+      width: 100vw;
+      max-width: 100vw;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
       padding-left: 0;
       padding-right: 0;
       box-sizing: border-box;
@@ -304,7 +304,6 @@
       margin-right: 0;
       padding-left: 0;
       padding-right: 0;
-      width: 100%;
     }
   }
 
@@ -399,13 +398,13 @@
     scroll-snap-stop: always;
   }
 
-  /* Mobile: one card per slide — width matches scroll container (not 100vw) */
+  /* Mobile: one card only – each slide = 100vw */
   @media (max-width: 768px) {
     .product-grid-section__carousel-wrap--mobile .product-grid-section__carousel-slide {
-      flex: 0 0 100%;
-      width: 100%;
-      min-width: 100%;
-      max-width: 100%;
+      flex: 0 0 100vw;
+      width: 100vw;
+      min-width: 100vw;
+      max-width: 100vw;
     }
   }
 

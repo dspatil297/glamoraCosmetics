@@ -396,33 +396,3 @@ body.template-index .shopify-section:has([class*="judge-me"]) [class*="jdgm-caro
     right: 0.75rem !important;
   }
 }
-
-@media (max-width: 480px) {
-  body.template-index .shopify-section:has([class*="jdgm"]),
-  body.template-index .shopify-section:has([class*="judge-me"]) [class*="jdgm"] [class*="carousel-item"],
-  body.template-index .shopify-section:has([class*="jdgm"]),
-  body.template-index .shopify-section:has([class*="judge-me"]) [class*="jdgm"] .jdgm-rev,
-  body.template-index .shopify-section:has([class*="jdgm"]),
-  body.template-index .shopify-section:has([class*="judge-me"]) [class*="jdgm-carousel"] [class*="carousel-item"],
-  body.template-index .shopify-section:has([class*="jdgm"]),
-  body.template-index .shopify-section:has([class*="judge-me"]) [class*="jdgm-carousel"] .jdgm-rev,
-  body.template-index .shopify-section:has([class*="jdgm"]),
-  body.template-index .shopify-section:has([class*="judge-me"]) .slick-slide > div {
-    width: min(280px, calc(100vw - 2.5rem)) !important;
-    min-width: min(280px, calc(100vw - 2.5rem)) !important;
-    max-width: 100% !important;
-  }
-
-  body.template-index .shopify-section:has([class*="jdgm"]),
-  body.template-index .shopify-section:has([class*="judge-me"]) [class*="jdgm"] [class*="track"],
-  body.template-index .shopify-section:has([class*="jdgm"]),
-  body.template-index .shopify-section:has([class*="judge-me"]) [class*="jdgm"] .slick-list,
-  body.template-index .shopify-section:has([class*="jdgm"]),
-  body.template-index .shopify-section:has([class*="judge-me"]) [class*="jdgm-carousel"] [class*="track"],
-  body.template-index .shopify-section:has([class*="jdgm"]),
-  body.template-index .shopify-section:has([class*="judge-me"]) [class*="jdgm-carousel"] .slick-list {
-    margin: 0 2rem !important;
-    width: calc(100% - 4rem) !important;
-    max-width: 100% !important;
-  }
-}
