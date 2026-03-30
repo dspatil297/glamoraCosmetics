@@ -59,12 +59,12 @@
       {% assign answer_raw = answer_lines[forloop.index0] | default: '' %}
       {% assign answer = answer_raw | strip %}
       {% if question != blank and answer != blank %}
-        <details class="faq-item" style="border-bottom: 1px solid #e0e0e0; padding: 1rem 0;">
+        <details class="faq-item" style="border-bottom: 1px solid #DEDEDE; padding: 1rem 0;">
           <summary style="cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center;">
             {{ question }}
             <span class="faq-icon" style="transition: transform 0.3s;">▼</span>
           </summary>
-          <div class="faq-answer" style="padding-top: 1rem; color: #666;">
+          <div class="faq-answer" style="padding-top: 1rem; color: #3e3e3e;">
             {{ answer | newline_to_br }}
           </div>
         </details>
