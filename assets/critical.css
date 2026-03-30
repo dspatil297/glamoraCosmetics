@@ -439,6 +439,11 @@ label {
   display: flex;
 }
 
+.flex > *,
+.grid > * {
+  min-width: 0;
+}
+
 .flex-col {
   flex-direction: column;
 }
