@@ -662,6 +662,15 @@
     z-index: 4;
   }
 
+  /* Mobile: hide pagination dots */
+  @media (max-width: 768px) {
+    .hero-banner__carousel-controls,
+    .hero-banner__carousel-dots,
+    .hero-banner__carousel-dot {
+      display: none !important;
+    }
+  }
+
   .hero-banner__carousel-dots {
     display: flex;
     align-items: center;
