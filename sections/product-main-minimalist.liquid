@@ -117,6 +117,10 @@
         {%- if has_info_blocks -%}
           {%- for block in section.blocks -%}
             {%- case block.type -%}
+              {%- when '@app' -%}
+                <div class="pdp__block pdp__app-block" {{ block.shopify_attributes }}>
+                  {% render block %}
+                </div>
               {%- when 'product_title' -%}
                 {%- assign title_size = block.settings.title_font_size | default: section.settings.title_font_size | default: 52 -%}
                 {%- assign title_weight = block.settings.title_font_weight | default: section.settings.title_font_weight | default: 400 -%}
@@ -1056,6 +1060,9 @@
     }
   ],
   "blocks": [
+    {
+      "type": "@app"
+    },
     {
       "type": "product_title",
       "name": "Product title",

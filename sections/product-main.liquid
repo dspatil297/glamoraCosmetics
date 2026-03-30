@@ -360,6 +360,11 @@
       {% assign trust_badges_open = false %}
       {% for block in section.blocks %}
         {% case block.type %}
+          {% when '@app' %}
+            {% if trust_badges_open %}</div>{% assign trust_badges_open = false %}{% endif %}
+            <div class="product-app-block" {{ block.shopify_attributes }}>
+              {% render block %}
+            </div>
           {% when 'link_button' %}
             {% if trust_badges_open %}</div>{% assign trust_badges_open = false %}{% endif %}
             {% assign btn_url = block.settings.url %}
@@ -2298,6 +2303,9 @@
     { "type": "text", "id": "description_heading", "label": "Description section heading", "default": "Product Description" }
   ],
   "blocks": [
+    {
+      "type": "@app"
+    },
     {
       "type": "link_button",
       "name": "Button / Link",
