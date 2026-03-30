@@ -233,17 +233,9 @@
       gap: var(--spacing-sm);
     }
 
-    /* Carousel: one card = 100vw (same as 768px) */
-    .product-grid-section__carousel-wrap--mobile .product-grid-section__carousel-slide {
-      flex: 0 0 100vw;
-      width: 100vw;
-      min-width: 100vw;
-      max-width: 100vw;
-    }
+    /* Carousel: keep comfortable side gutters on small phones */
     .product-grid-section__carousel-wrap--mobile .product-grid-section__carousel-track {
-      gap: 0;
-      padding-left: 0;
-      padding-right: 0;
+      gap: 12px;
     }
   }
 
@@ -302,8 +294,8 @@
     .product-grid-section__carousel-wrap--mobile .product-grid-section__carousel-scroll {
       margin-left: 0;
       margin-right: 0;
-      padding-left: 0;
-      padding-right: 0;
+      padding-left: var(--container-padding);
+      padding-right: var(--container-padding);
     }
   }
 
@@ -379,7 +371,7 @@
   /* Mobile: one card at a time – slide = 100vw, no gap or padding so only one card visible */
   @media (max-width: 768px) {
     .product-grid-section__carousel-wrap--mobile .product-grid-section__carousel-track {
-      gap: 0;
+      gap: 12px;
       padding-left: 0;
       padding-right: 0;
     }
@@ -398,13 +390,14 @@
     scroll-snap-stop: always;
   }
 
-  /* Mobile: one card only – each slide = 100vw */
+  /* Mobile: card width fits within gutters (more premium look) */
   @media (max-width: 768px) {
     .product-grid-section__carousel-wrap--mobile .product-grid-section__carousel-slide {
-      flex: 0 0 100vw;
-      width: 100vw;
-      min-width: 100vw;
-      max-width: 100vw;
+      flex: 0 0 calc(100vw - (2 * var(--container-padding)));
+      width: calc(100vw - (2 * var(--container-padding)));
+      min-width: calc(100vw - (2 * var(--container-padding)));
+      max-width: calc(100vw - (2 * var(--container-padding)));
+      scroll-snap-align: center;
     }
   }
 
