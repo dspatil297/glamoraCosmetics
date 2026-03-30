@@ -650,12 +650,16 @@
   }
   .pdp__rating {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     align-items: center;
-    font-size: 30px;
+    font-size: 14px;
     color: #3e3e3e;
   }
-  .pdp__stars { letter-spacing: 0.08em; }
+  .pdp__stars {
+    letter-spacing: 0.08em;
+    font-size: 18px;
+    line-height: 1;
+  }
 
   .pdp__description-wrap { margin-top: 4px; margin-bottom: 4px; }
   .pdp__description {
@@ -907,9 +911,9 @@
 
     /* Mobile typography + layout tightening */
     .pdp__title { font-size: clamp(22px, 6vw, 34px); line-height: 1.15; }
-    .pdp__rating { font-size: 16px; }
-    .pdp__stars { font-size: 18px; }
-    .pdp__rating-text { font-size: 14px; }
+    .pdp__rating { font-size: 13px; }
+    .pdp__stars { font-size: 15px; }
+    .pdp__rating-text { font-size: 13px; }
     .pdp__thumbs { -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; }
     .pdp__thumb { scroll-snap-align: start; }
     .pdp__thumb { width: 72px; height: 86px; border-radius: 10px; }
