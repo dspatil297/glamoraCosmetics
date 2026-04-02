@@ -1,7 +1,7 @@
 {%- comment -%}
   Product Main (Minimalist-style PDP)
   - Breadcrumb
-  - 2-column: gallery (left) + info (right)
+  - 2-column: beminimalist-style gallery (product-gallery + css-slider + lazy-image) + info (right)
   - Blocks on the right: title, concern, rating, price, variants, CTAs, trust badges, accordions, mobile sticky bar
 {%- endcomment -%}
 
@@ -13,6 +13,22 @@
   endif
 
   assign form_id = 'pdp-form-' | append: section.id
+
+  assign featured = current_variant.featured_image | default: product.featured_image
+  assign featured_index = 0
+  if product.images.size > 0 and featured != blank
+    for image in product.images
+      if image.id == featured.id
+        assign featured_index = forloop.index0
+        break
+      endif
+    endfor
+  endif
+
+  assign slide_count = product.images.size
+  if slide_count == 0
+    assign slide_count = 1
+  endif
 
   assign has_info_blocks = false
   for b in section.blocks
@@ -37,6 +53,7 @@
     --pdp-badge-size: {{ section.settings.badge_font_size | default: 12 }}px;
     --pdp-button-font-size: {{ section.settings.button_font_size | default: 14 }}px;
     --base-headings-primary-size: 60;
+    --pdp-gallery-max-px: {{ section.settings.gallery_max_height_px | default: 520 }}px;
   "
   {{ section.shopify_attributes }}
 >
@@ -53,61 +70,126 @@
   {%- endif -%}
 
   <div class="pdp__grid">
-    <div class="pdp__media" data-pdp-media>
-      {%- assign featured = current_variant.featured_image | default: product.featured_image -%}
-      <div class="pdp__media-main">
-        {%- if featured -%}
-          <img
-            class="pdp__main-img"
-            src="{{ featured | image_url: width: 900 }}"
-            srcset="
-              {{ featured | image_url: width: 540 }} 540w,
-              {{ featured | image_url: width: 720 }} 720w,
-              {{ featured | image_url: width: 900 }} 900w
-            "
-            sizes="(max-width: 900px) 100vw, 50vw"
-            width="{{ featured.width }}"
-            height="{{ featured.height }}"
-            alt="{{ featured.alt | default: product.title }}"
-            loading="eager"
-            fetchpriority="high"
-          >
-        {%- else -%}
-          <div class="pdp__media-empty">
-            {% render 'unsplash-placeholder', type: 'product', width: 900, class: 'pdp__main-img', loading: 'eager', alt: product.title %}
+    <div
+      class="pdp__media product-gallery product-gallery--slider lap--grid--slider-container"
+      data-pdp-media
+      data-js-product-gallery
+      data-initial-index="{{ featured_index }}"
+      style="--gallery-border-radius: 16px; --border-radius: 0px"
+    >
+      <div class="pdp-css-slider css-slider" data-pdp-slider>
+        <div class="css-slider-viewport" data-pdp-slider-viewport>
+          <div class="css-slider-holder">
+            <div class="css-slider-container">
+              <div
+                class="pdp-slider-grid grid grid--slider grid-1 grid--gap-small"
+                data-pdp-slider-track
+                style="--mobile-media-width: 100%; --slide-count: {{ slide_count }}; transform: translateX(calc(-1 * {{ featured_index }} * 100% / {{ slide_count }}));"
+              >
+                {%- if product.images.size > 0 -%}
+                  {%- for image in product.images -%}
+                    <div
+                      id="FeaturedMedia-{{ section.id }}-{{ image.id }}"
+                      class="product-gallery-item element--border-radius css-slide css-slide--snap{% if forloop.index0 == featured_index %} css-slide-active{% endif %}"
+                      data-product-media-type="image"
+                      data-product-single-media-wrapper
+                      data-media-id="{{ image.id }}"
+                      data-index="{{ forloop.index0 }}"
+                      data-image-zoomdata-ratio="{{ image.aspect_ratio }}"
+                      role="group"
+                      aria-roledescription="slide"
+                      aria-label="Image {{ forloop.index }} of {{ product.images.size }}"
+                      aria-hidden="{% if forloop.index0 == featured_index %}false{% else %}true{% endif %}"
+                    >
+                      <figure
+                        class="lazy-image lazy-image--background apply-gallery-animation"
+                        data-crop="false"
+                        data-ratio="{{ image.aspect_ratio }}"
+                      >
+                        <img
+                          class="img"
+                          src="{{ image | image_url: width: 900 }}"
+                          srcset="
+                            {{ image | image_url: width: 360 }} 360w,
+                            {{ image | image_url: width: 540 }} 540w,
+                            {{ image | image_url: width: 720 }} 720w,
+                            {{ image | image_url: width: 900 }} 900w,
+                            {{ image | image_url: width: 1200 }} 1200w
+                          "
+                          sizes="(max-width: 900px) 100vw, 50vw"
+                          width="{{ image.width }}"
+                          height="{{ image.height }}"
+                          alt="{{ image.alt | default: product.title }}"
+                          data-ratio="{{ image.aspect_ratio }}"
+                          loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                          {% if forloop.first %}fetchpriority="high"{% endif %}
+                          decoding="async"
+                        >
+                      </figure>
+                      <button
+                        type="button"
+                        class="product-gallery-item__zoom"
+                        data-pdp-zoom-btn
+                        data-zoom-src="{{ image | image_url: width: 2400 }}"
+                        data-zoom-alt="{{ image.alt | default: product.title | escape }}"
+                        aria-label="Zoom image"
+                      >
+                        <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                          <circle cx="9.08" cy="9" r="8" stroke="currentColor" stroke-width="2" fill="none"></circle>
+                          <rect x="14.3" y="15.9" width="1.99" height="6.65" transform="rotate(-45 14.3 15.9)" fill="currentColor"></rect>
+                          <path d="M8.08 5h2v8h-2V5z" fill="currentColor"></path>
+                          <path d="M13.08 8v2H5.08V8h8z" fill="currentColor"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  {%- endfor -%}
+                {%- else -%}
+                  <div
+                    class="product-gallery-item element--border-radius css-slide css-slide-active css-slide--snap"
+                    data-index="0"
+                    aria-hidden="false"
+                  >
+                    <figure class="lazy-image lazy-image--background" data-crop="false">
+                      {% render 'unsplash-placeholder', type: 'product', width: 900, class: 'img', loading: 'eager', alt: product.title %}
+                    </figure>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
           </div>
-        {%- endif -%}
+        </div>
       </div>
 
       {%- if product.images.size > 1 -%}
-        <div class="pdp__thumbs" role="tablist" aria-label="Product images">
-          {%- for image in product.images -%}
-            <button
-              type="button"
-              class="pdp__thumb{% if image == featured %} is-active{% endif %}"
-              data-pdp-thumb
-              data-image-src="{{ image | image_url: width: 900 }}"
-              data-image-srcset="
-                {{ image | image_url: width: 360 }} 360w,
-                {{ image | image_url: width: 540 }} 540w,
-                {{ image | image_url: width: 720 }} 720w,
-                {{ image | image_url: width: 900 }} 900w
-              "
-              data-image-sizes="(max-width: 900px) 100vw, 50vw"
-              data-image-alt="{{ image.alt | default: product.title | escape }}"
-              role="tab"
-              aria-selected="{% if image == featured %}true{% else %}false{% endif %}"
-              aria-label="Image {{ forloop.index }}"
-            >
-              <img 
-                src="{{ image | image_url: width: 88, height: 106, crop: 'center' }}" 
-                alt="" 
-                width="88" 
-                height="106" 
-                loading="lazy"
+        <div class="product-gallery__thumbnails" aria-label="Product images">
+          <div class="product-gallery__thumbnails-holder">
+            {%- for image in product.images -%}
+              <button
+                type="button"
+                class="thumbnail element--border-radius{% if forloop.index0 == featured_index %} active{% endif %}"
+                data-pdp-thumb
+                data-index="{{ forloop.index0 }}"
+                aria-label="Image {{ forloop.index }}"
+                aria-current="{% if forloop.index0 == featured_index %}true{% else %}false{% endif %}"
               >
-            </button>
-          {%- endfor -%}
+                <figure class="lazy-image lazy-image--small thumbnail__image" style="aspect-ratio: 5 / 6;">
+                  <img
+                    class="img"
+                    src="{{ image | image_url: width: 120, height: 144, crop: 'center' }}"
+                    srcset="
+                      {{ image | image_url: width: 120, height: 144, crop: 'center' }} 120w,
+                      {{ image | image_url: width: 220, height: 264, crop: 'center' }} 220w
+                    "
+                    sizes="120px"
+                    width="{{ image.width }}"
+                    height="{{ image.height }}"
+                    alt=""
+                    loading="lazy"
+                  >
+                </figure>
+              </button>
+            {%- endfor -%}
+          </div>
         </div>
       {%- endif -%}
     </div>
@@ -444,6 +526,21 @@
     </div>
   </div>
 
+  <div
+    class="pdp-zoom-modal"
+    data-pdp-zoom-modal
+    hidden
+    role="dialog"
+    aria-modal="true"
+    aria-label="Enlarged product image"
+  >
+    <button type="button" class="pdp-zoom-modal__backdrop" data-pdp-zoom-close tabindex="-1" aria-label="Close"></button>
+    <div class="pdp-zoom-modal__content">
+      <button type="button" class="pdp-zoom-modal__close" data-pdp-zoom-close aria-label="Close">&times;</button>
+      <img class="pdp-zoom-modal__img" data-pdp-zoom-img src="" alt="" width="1200" height="1200">
+    </div>
+  </div>
+
   {%- assign sticky_block = section.blocks | where: 'type', 'mobile_sticky_bar' | first -%}
   {%- if sticky_block -%}
     <div class="pdp-sticky" {{ sticky_block.shopify_attributes }}>
@@ -470,8 +567,13 @@
     if (root.dataset.inited === '1') return;
     root.dataset.inited = '1';
 
-    var mainImg = root.querySelector('.pdp__main-img');
+    var gallery = root.querySelector('[data-js-product-gallery]');
+    var viewport = root.querySelector('[data-pdp-slider-viewport]');
+    var track = root.querySelector('[data-pdp-slider-track]');
+    var slides = root.querySelectorAll('.product-gallery-item[data-index]');
     var thumbs = root.querySelectorAll('[data-pdp-thumb]');
+    var zoomModal = root.querySelector('[data-pdp-zoom-modal]');
+    var zoomImg = root.querySelector('[data-pdp-zoom-img]');
     var variantSelect = root.querySelector('[data-pdp-variant-select]');
     var priceEl = root.querySelector('[data-pdp-price]');
     var compareEl = root.querySelector('[data-pdp-compare]');
@@ -539,31 +641,107 @@
       }
     }
 
-    function setMainImage(btn) {
-      if (!btn || !mainImg) return;
-      var src = btn.getAttribute('data-image-src');
-      var srcset = btn.getAttribute('data-image-srcset');
-      var sizes = btn.getAttribute('data-image-sizes');
-      var alt = btn.getAttribute('data-image-alt');
+    var currentIndex = 0;
+    var slideCount = slides.length;
+    if (gallery && gallery.getAttribute('data-initial-index')) {
+      var ini = parseInt(gallery.getAttribute('data-initial-index'), 10);
+      if (!isNaN(ini)) currentIndex = ini;
+    }
 
-      if (src) {
-        mainImg.removeAttribute('width');
-        mainImg.removeAttribute('height');
-        mainImg.src = src;
+    function updateSlider() {
+      if (!viewport || !track || slideCount === 0) return;
+      var w = viewport.offsetWidth;
+      track.style.transform = 'translateX(' + (-currentIndex * w) + 'px)';
+      for (var s = 0; s < slides.length; s++) {
+        var on = s === currentIndex;
+        slides[s].setAttribute('aria-hidden', on ? 'false' : 'true');
+        slides[s].classList.toggle('css-slide-active', on);
       }
-      /* If srcset stays unchanged, browsers may keep rendering the old image */
-      if (srcset) mainImg.setAttribute('srcset', srcset);
-      if (sizes) mainImg.setAttribute('sizes', sizes);
-      if (alt) mainImg.setAttribute('alt', alt);
-      for (var i = 0; i < thumbs.length; i++) {
-        thumbs[i].classList.toggle('is-active', thumbs[i] === btn);
-        thumbs[i].setAttribute('aria-selected', thumbs[i] === btn ? 'true' : 'false');
+      for (var h = 0; h < thumbs.length; h++) {
+        var hi = parseInt(thumbs[h].getAttribute('data-index'), 10);
+        var active = hi === currentIndex;
+        thumbs[h].classList.toggle('active', active);
+        thumbs[h].setAttribute('aria-current', active ? 'true' : 'false');
       }
+    }
+
+    if (track && viewport && slideCount > 0) {
+      updateSlider();
+      window.addEventListener('resize', function () {
+        updateSlider();
+      });
     }
 
     for (var t = 0; t < thumbs.length; t++) {
-      thumbs[t].addEventListener('click', function () { setMainImage(this); });
+      thumbs[t].addEventListener('click', function () {
+        var idx = parseInt(this.getAttribute('data-index'), 10);
+        if (isNaN(idx)) return;
+        currentIndex = idx;
+        updateSlider();
+      });
     }
+
+    var touchStartX = null;
+    if (viewport && slideCount > 1) {
+      viewport.addEventListener(
+        'touchstart',
+        function (e) {
+          if (e.touches && e.touches[0]) touchStartX = e.touches[0].clientX;
+        },
+        { passive: true }
+      );
+      viewport.addEventListener(
+        'touchend',
+        function (e) {
+          if (touchStartX == null) return;
+          var dx = e.changedTouches[0].clientX - touchStartX;
+          touchStartX = null;
+          if (Math.abs(dx) < 40) return;
+          if (dx < 0 && currentIndex < slideCount - 1) {
+            currentIndex++;
+            updateSlider();
+          } else if (dx > 0 && currentIndex > 0) {
+            currentIndex--;
+            updateSlider();
+          }
+        },
+        { passive: true }
+      );
+    }
+
+    function openZoomModal(src, alt) {
+      if (!zoomModal || !zoomImg || !src) return;
+      zoomImg.src = src;
+      zoomImg.alt = alt || '';
+      zoomModal.hidden = false;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeZoomModal() {
+      if (!zoomModal || !zoomImg) return;
+      zoomModal.hidden = true;
+      zoomImg.src = '';
+      document.body.style.overflow = '';
+    }
+
+    var zoomBtns = root.querySelectorAll('[data-pdp-zoom-btn]');
+    for (var z = 0; z < zoomBtns.length; z++) {
+      zoomBtns[z].addEventListener('click', function (e) {
+        e.preventDefault();
+        openZoomModal(this.getAttribute('data-zoom-src'), this.getAttribute('data-zoom-alt'));
+      });
+    }
+
+    var closeEls = root.querySelectorAll('[data-pdp-zoom-close]');
+    for (var c = 0; c < closeEls.length; c++) {
+      closeEls[c].addEventListener('click', function () {
+        closeZoomModal();
+      });
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && zoomModal && !zoomModal.hidden) closeZoomModal();
+    });
   })();
 </script>
 
@@ -599,40 +777,221 @@
   /* Prevent grid children from causing horizontal overflow on narrow viewports */
   .pdp__grid > * { min-width: 0; }
 
-  .pdp__media-main {
+  /* —— Minimalist-style product gallery (css-slider + lazy-image) —— */
+  .pdp .product-gallery {
     width: 100%;
     max-width: 100%;
-    border-radius: 16px;
-    overflow: hidden;
-    /* Match section background so no “frame” shows around non-square images */
-    background: #ffffff;
+    --gallery-border-radius: 16px;
   }
-  .pdp__main-img {
+  .pdp-css-slider.css-slider {
     width: 100%;
+  }
+  .pdp .css-slider-viewport {
+    width: 100%;
+    max-height: min(58vh, var(--pdp-gallery-max-px, 520px));
+    overflow: hidden;
+    border-radius: var(--gallery-border-radius, 16px);
+    background: #ffffff;
+    touch-action: manipulation;
+  }
+  .pdp .css-slider-container {
+    width: 100%;
+  }
+  .pdp .grid--gap-small {
+    gap: 0;
+  }
+  .pdp [data-pdp-slider-track].pdp-slider-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: calc(var(--slide-count, 1) * 100%);
+    will-change: transform;
+    transition: transform 0.35s ease;
+  }
+  .pdp .product-gallery-item {
+    position: relative;
+    flex: 0 0 calc(100% / var(--slide-count, 1));
+    max-width: calc(100% / var(--slide-count, 1));
+    max-height: min(58vh, var(--pdp-gallery-max-px, 520px));
+    box-sizing: border-box;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+  }
+  .pdp .product-gallery-item.element--border-radius {
+    border-radius: var(--gallery-border-radius, 16px);
+    overflow: hidden;
+  }
+  .pdp .lazy-image {
+    margin: 0;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+  }
+  .pdp .lazy-image--background {
+    min-height: 0;
+  }
+  .pdp .lazy-image--background > .img {
+    position: static;
+    display: block;
+    width: auto;
     max-width: 100%;
     height: auto;
-    display: block;
+    max-height: min(58vh, var(--pdp-gallery-max-px, 520px));
+    object-fit: contain;
+    object-position: center;
+    margin: 0 auto;
   }
-  .pdp__thumbs {
-    margin-top: 12px;
+  .pdp .product-gallery .lazy-image--background img.img {
+    object-fit: contain !important;
+    max-height: min(58vh, var(--pdp-gallery-max-px, 520px)) !important;
+  }
+  .pdp .product-gallery-item__zoom {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: #111111;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
     display: flex;
-    gap: 10px;
-    overflow: auto;
-    padding-bottom: 6px;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, transform 0.2s ease;
   }
-  .pdp__thumb {
+  .pdp .product-gallery-item__zoom:hover {
+    background: #ffffff;
+    transform: scale(1.04);
+  }
+  .pdp .product-gallery-item__zoom:focus-visible {
+    outline: 2px solid #15736d;
+    outline-offset: 2px;
+  }
+  .pdp .product-gallery__thumbnails {
+    margin-top: 12px;
+    width: 100%;
+  }
+  .pdp .product-gallery__thumbnails-holder {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .pdp .product-gallery__thumbnails .thumbnail {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 0;
     border: 1px solid rgba(222, 222, 222, 0.8);
     border-radius: 12px;
-    padding: 0;
-    width: 88px;
-    height: 106px;
     overflow: hidden;
     background: #ffffff;
-    flex: 0 0 auto;
+    cursor: pointer;
+    width: 88px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .pdp .product-gallery__thumbnails .thumbnail.active {
+    border-color: #15736d;
+    box-shadow: 0 0 0 1px #15736d;
+  }
+  .pdp .product-gallery__thumbnails .thumbnail:focus-visible {
+    outline: 2px solid #15736d;
+    outline-offset: 2px;
+  }
+  .pdp .thumbnail__image {
+    margin: 0;
+    display: block;
+    width: 100%;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+  }
+  .pdp .thumbnail__image .img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .pdp-zoom-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+  .pdp-zoom-modal[hidden] {
+    display: none !important;
+  }
+  .pdp-zoom-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.75);
     cursor: pointer;
   }
-  .pdp__thumb.is-active { border-color: #15736d; }
-  .pdp__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pdp-zoom-modal__content {
+    position: relative;
+    z-index: 1;
+    max-width: min(96vw, 1200px);
+    max-height: 90vh;
+    margin: auto;
+  }
+  .pdp-zoom-modal__img {
+    display: block;
+    max-width: 100%;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    margin: 0 auto;
+    border-radius: 8px;
+  }
+  .pdp-zoom-modal__close {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #111;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+  }
+  .pdp-zoom-modal__close:hover {
+    background: #f5f5f5;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pdp [data-pdp-slider-track] {
+      transition: none !important;
+    }
+  }
 
   .pdp__title-wrap { display: block; }
   .pdp__title {
@@ -906,8 +1265,14 @@
 
   @media (max-width: 900px) {
     .pdp__grid { grid-template-columns: 1fr; }
-    /* Cap only extremely tall images; width fills the column */
-    .pdp__main-img { max-height: min(92vh, 1400px); width: 100%; height: auto; }
+    .pdp .css-slider-viewport,
+    .pdp .product-gallery-item {
+      max-height: min(48vh, var(--pdp-gallery-max-px, 520px));
+    }
+    .pdp .lazy-image--background > .img,
+    .pdp .product-gallery .lazy-image--background img.img {
+      max-height: min(48vh, var(--pdp-gallery-max-px, 520px)) !important;
+    }
     .pdp-sticky { display: block; }
     /* Reserve space for the sticky bar on the PDP only (avoid global body padding). */
     .pdp { padding-bottom: calc(var(--pdp-padding-bottom, 40px) + 72px); }
@@ -917,16 +1282,25 @@
     .pdp__rating { font-size: 13px; }
     .pdp__stars { font-size: 15px; }
     .pdp__rating-text { font-size: 13px; }
-    .pdp__thumbs { -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; }
-    .pdp__thumb { scroll-snap-align: start; }
-    .pdp__thumb { width: 72px; height: 86px; border-radius: 10px; }
+    .pdp .product-gallery__thumbnails-holder {
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .pdp .product-gallery__thumbnails .thumbnail {
+      scroll-snap-align: start;
+      width: 72px;
+      border-radius: 10px;
+    }
 
-    /* Hard stop: nothing in media column may overflow viewport */
     .pdp__media,
-    .pdp__media-main,
-    .pdp__main-img {
+    .pdp .css-slider-viewport {
       max-width: 100%;
       overflow: hidden;
+      box-sizing: border-box;
+    }
+    .pdp [data-pdp-slider-track],
+    .pdp .product-gallery-item {
+      max-width: none;
       box-sizing: border-box;
     }
   }
@@ -938,15 +1312,12 @@
     .pdp__qty-control { width: 100%; min-width: 0; max-width: none; }
     .pdp__btn { width: 100%; }
 
-    /* Small phones: slightly shorter cap only */
-    .pdp__main-img { max-height: min(88vh, 1200px); }
-
     /* Sticky bar: avoid forcing a wide button */
     .pdp-sticky__btn { min-width: 0; width: auto; padding-left: 14px; padding-right: 14px; }
 
     /* Smaller thumbs for small phones */
-    .pdp__thumbs { gap: 8px; }
-    .pdp__thumb { width: 60px; height: 72px; border-radius: 10px; }
+    .pdp .product-gallery__thumbnails-holder { gap: 8px; }
+    .pdp .product-gallery__thumbnails .thumbnail { width: 60px; border-radius: 10px; }
   }
 {% endstylesheet %}
 
@@ -996,6 +1367,16 @@
       "max": 80,
       "step": 4,
       "default": 40
+    },
+    {
+      "type": "range",
+      "id": "gallery_max_height_px",
+      "label": "Gallery image max height (px)",
+      "min": 360,
+      "max": 800,
+      "step": 10,
+      "default": 520,
+      "info": "Main slider images are also limited by viewport height so they do not dominate the page."
     },
     {
       "type": "header",
