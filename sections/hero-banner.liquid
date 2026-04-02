@@ -203,6 +203,12 @@
     pointer-events: none;
   }
 
+  /* Decorative layers should never block slide clicks */
+  .hero-banner__overlay,
+  .hero-banner__gradient-ornament {
+    pointer-events: none;
+  }
+
   .hero-banner__slide {
     position: absolute;
     top: 0;
