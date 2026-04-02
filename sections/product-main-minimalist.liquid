@@ -66,6 +66,8 @@
               {{ featured | image_url: width: 900 }} 900w
             "
             sizes="(max-width: 900px) 100vw, 50vw"
+            width="{{ featured.width }}"
+            height="{{ featured.height }}"
             alt="{{ featured.alt | default: product.title }}"
             loading="eager"
             fetchpriority="high"
@@ -544,7 +546,11 @@
       var sizes = btn.getAttribute('data-image-sizes');
       var alt = btn.getAttribute('data-image-alt');
 
-      if (src) mainImg.src = src;
+      if (src) {
+        mainImg.removeAttribute('width');
+        mainImg.removeAttribute('height');
+        mainImg.src = src;
+      }
       /* If srcset stays unchanged, browsers may keep rendering the old image */
       if (srcset) mainImg.setAttribute('srcset', srcset);
       if (sizes) mainImg.setAttribute('sizes', sizes);
@@ -598,17 +604,14 @@
     max-width: 100%;
     border-radius: 16px;
     overflow: hidden;
-    background: #F1F1F1;
+    /* Match section background so no “frame” shows around non-square images */
+    background: #ffffff;
   }
   .pdp__main-img {
     width: 100%;
     max-width: 100%;
+    height: auto;
     display: block;
-    aspect-ratio: 1;
-    /* Show the full product image (no cropping) */
-    object-fit: contain;
-    object-position: center;
-    background: #F1F1F1;
   }
   .pdp__thumbs {
     margin-top: 12px;
@@ -903,8 +906,8 @@
 
   @media (max-width: 900px) {
     .pdp__grid { grid-template-columns: 1fr; }
-    /* Mobile: reduce main image height (less tall than 9/16) */
-    .pdp__main-img { aspect-ratio: 4 / 5; max-height: 70vh; }
+    /* Cap only extremely tall images; width fills the column */
+    .pdp__main-img { max-height: min(92vh, 1400px); width: 100%; height: auto; }
     .pdp-sticky { display: block; }
     /* Reserve space for the sticky bar on the PDP only (avoid global body padding). */
     .pdp { padding-bottom: calc(var(--pdp-padding-bottom, 40px) + 72px); }
@@ -935,8 +938,8 @@
     .pdp__qty-control { width: 100%; min-width: 0; max-width: none; }
     .pdp__btn { width: 100%; }
 
-    /* Small phones: slightly shorter still */
-    .pdp__main-img { aspect-ratio: 1 / 1.1; max-height: 62vh; }
+    /* Small phones: slightly shorter cap only */
+    .pdp__main-img { max-height: min(88vh, 1200px); }
 
     /* Sticky bar: avoid forcing a wide button */
     .pdp-sticky__btn { min-width: 0; width: auto; padding-left: 14px; padding-right: 14px; }
