@@ -403,6 +403,9 @@
   .hero-banner__content {
     position: relative;
     z-index: 3;
+    /* Sit above the image for layout, but do not capture clicks — those must reach
+       .hero-banner__slide-link under .hero-banner__image (z-index 1). */
+    pointer-events: none;
     width: 100%;
     max-width: 1400px;
     padding: var(--spacing-xl) var(--spacing-lg);
@@ -413,6 +416,11 @@
     justify-content: center;
     min-height: 100%;
     box-sizing: border-box;
+  }
+
+  .hero-banner__content a,
+  .hero-banner__content button {
+    pointer-events: auto;
   }
 
   .hero-banner__text {
