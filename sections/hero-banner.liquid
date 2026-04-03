@@ -27,6 +27,7 @@
   <div class="hero-banner__image">
     {% if has_carousel_slides %}
       {%- assign first_image_done = false -%}
+      {%- assign hero_lcp_assigned = false -%}
       {%- for block in slide_blocks -%}
         {%- assign has_image = false -%}
         {%- if block.settings.image != blank -%}{%- assign has_image = true -%}{%- endif -%}
@@ -62,10 +63,11 @@
                   "
                   sizes="100vw"
                   alt="{{ block.settings.image.alt | default: '' }}"
-                  loading="eager"
-                  fetchpriority="{% if forloop.first %}high{% else %}low{% endif %}"
+                  loading="{% if hero_lcp_assigned %}lazy{% else %}eager{% endif %}"
+                  fetchpriority="{% if hero_lcp_assigned %}low{% else %}high{% endif %}"
                   onerror="this.classList.add('image-error'); this.alt='Image failed to load';"
                 >
+                {%- assign hero_lcp_assigned = true -%}
               </picture>
             </div>
           {%- else -%}

@@ -121,8 +121,8 @@
                           height="{{ image.height }}"
                           alt="{{ image.alt | default: product.title }}"
                           data-ratio="{{ image.aspect_ratio }}"
-                          loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-                          {% if forloop.first %}fetchpriority="high"{% endif %}
+                          loading="{% if forloop.index0 == featured_index %}eager{% else %}lazy{% endif %}"
+                          {% if forloop.index0 == featured_index %}fetchpriority="high"{% endif %}
                           decoding="async"
                         >
                       </figure>

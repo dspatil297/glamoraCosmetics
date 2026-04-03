@@ -2,6 +2,19 @@
   Product Main Section - Conversion-Optimized Design
   Designed for maximum conversions with above-fold CTA, social proof, trust signals
 {% endcomment %}
+{%- liquid
+  assign current_variant_pm = product.selected_or_first_available_variant
+  assign featured_pm = current_variant_pm.featured_image | default: product.featured_image
+  assign featured_index_pm = 0
+  if product.images.size > 0 and featured_pm != blank
+    for image in product.images
+      if image.id == featured_pm.id
+        assign featured_index_pm = forloop.index0
+        break
+      endif
+    endfor
+  endif
+-%}
 
 <section class="product-hero" id="product-hero">
   {%- if section.settings.show_breadcrumb -%}
@@ -35,7 +48,7 @@
                     sizes="(max-width: 768px) 100vw, 50vw"
                     alt="{{ image.alt | default: product.title }}"
                     class="product-image-main__img"
-                    {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
+                    {% if forloop.index0 == featured_index_pm %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
                     width="{{ image.width }}"
                     height="{{ image.height }}"
                     onerror="this.classList.add('image-error'); this.alt='Product image failed to load';"
@@ -69,7 +82,7 @@
         {% if product.images.size > 1 %}
           <div class="product-thumbnails" id="product-thumbnails" role="tablist" aria-label="Image thumbnails">
             {% for image in product.images %}
-              <button type="button" class="product-thumbnail{% if forloop.first %} product-thumbnail--active{% endif %}" data-index="{{ forloop.index0 }}" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="Image {{ forloop.index }}">
+              <button type="button" class="product-thumbnail{% if forloop.index0 == featured_index_pm %} product-thumbnail--active{% endif %}" data-index="{{ forloop.index0 }}" role="tab" aria-selected="{% if forloop.index0 == featured_index_pm %}true{% else %}false{% endif %}" aria-label="Image {{ forloop.index }}">
                 <img src="{{ image | image_url: width: 120 }}" alt="{{ image.alt | default: product.title }}" width="120" height="120" loading="lazy">
               </button>
             {% endfor %}
@@ -86,7 +99,7 @@
               var slides = track.querySelectorAll('.product-carousel-slide');
               var total = slides.length;
               if (total === 0) return;
-              var current = 0;
+              var current = {{ featured_index_pm }};
               function goTo(index) {
                 current = Math.max(0, Math.min(index, total - 1));
                 track.style.transform = 'translate3d(-' + (current * 100) + '%, 0, 0)';
@@ -113,7 +126,7 @@
                 for (var i = 0; i < total; i++) {
                   var dot = document.createElement('button');
                   dot.type = 'button';
-                  dot.className = 'product-carousel-dot' + (i === 0 ? ' active' : '');
+                  dot.className = 'product-carousel-dot' + (i === current ? ' active' : '');
                   dot.setAttribute('aria-label', 'Go to image ' + (i + 1));
                   dot.addEventListener('click', function(ix) { return function() { goTo(ix); }; }(i));
                   dotsEl.appendChild(dot);
@@ -125,6 +138,7 @@
                   thumbBtns[t].addEventListener('click', function(ix) { return function() { goTo(ix); }; }(t));
                 }
               }
+              goTo(current);
               var touchStartX = 0;
               carousel.addEventListener('touchstart', function(e) {
                 if (e.touches.length) touchStartX = e.touches[0].clientX;
