@@ -276,19 +276,31 @@
     padding: 0;
   }
 
+  /* GPU-friendly placeholder: animate transform only (not background-position) */
   .hero-banner__skeleton {
     position: absolute;
     inset: 0;
     z-index: 0;
     pointer-events: none;
+    overflow: hidden;
+    background: rgba(238, 238, 238, 0.96);
+  }
+
+  .hero-banner__skeleton::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 45%;
+    height: 100%;
     background: linear-gradient(
-      110deg,
-      rgba(238, 238, 238, 0.95) 0%,
-      rgba(252, 252, 252, 0.98) 42%,
-      rgba(238, 238, 238, 0.95) 84%
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.65),
+      transparent
     );
-    background-size: 200% 100%;
-    animation: shimmer 1.35s ease-in-out infinite;
+    transform: translate3d(-120%, 0, 0);
+    animation: hero-skeleton-sweep 1.35s ease-in-out infinite;
   }
 
   .hero-banner__slide-img-wrap:has(.hero-banner__slide-img.loaded) .hero-banner__skeleton {
@@ -793,12 +805,12 @@
     }
   }
 
-  @keyframes shimmer {
+  @keyframes hero-skeleton-sweep {
     0% {
-      background-position: 0% center;
+      transform: translate3d(-120%, 0, 0);
     }
     100% {
-      background-position: 200% center;
+      transform: translate3d(280%, 0, 0);
     }
   }
 

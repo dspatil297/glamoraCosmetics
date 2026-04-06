@@ -663,13 +663,14 @@ label {
   }
 }
 
-/* Shimmer Animation */
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
+/* Placeholder pulse (opacity-only — compositor-friendly) */
+@keyframes image-placeholder-pulse {
+  0%,
   100% {
-    background-position: 1000px 0;
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.82;
   }
 }
 
@@ -913,18 +914,8 @@ picture img {
 
 /* Image placeholder for loading states */
 .image-placeholder {
-  background: linear-gradient(90deg, rgba(245, 245, 245, 0.8) 0%, rgba(250, 250, 250, 0.9) 50%, rgba(245, 245, 245, 0.8) 100%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+  background: rgba(245, 245, 245, 0.92);
+  animation: image-placeholder-pulse 1.5s ease-in-out infinite;
 }
 
 /* Smooth Transitions */
