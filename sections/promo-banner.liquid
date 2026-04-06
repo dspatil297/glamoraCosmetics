@@ -28,6 +28,9 @@
         "
         sizes="100vw"
         alt="{{ section.settings.alt | escape }}"
+        width="{{ section.settings.image.width }}"
+        height="{{ section.settings.image.height }}"
+        decoding="async"
         loading="lazy"
       >
     </picture>

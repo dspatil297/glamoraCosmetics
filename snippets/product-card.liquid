@@ -5,6 +5,7 @@
 <div class="product-card" data-product-card>
   <a href="{{ product.url }}" class="product-card__link">
     <div class="product-card__image-wrapper">
+      <span class="product-card__skeleton" aria-hidden="true"></span>
       {% if product.featured_image %}
         <img 
           src="{{ product.featured_image | image_url: width: 400 }}" 
@@ -122,10 +123,32 @@
     background: linear-gradient(135deg, #ffffff 0%, #f1f1f1 100%);
   }
 
+  .product-card__skeleton {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      110deg,
+      rgba(241, 241, 241, 0.9) 0%,
+      rgba(250, 250, 250, 0.95) 45%,
+      rgba(241, 241, 241, 0.9) 90%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.35s ease-in-out infinite;
+    transition: opacity 0.35s ease;
+  }
+
+  .product-card__image-wrapper:has(img.loaded) .product-card__skeleton {
+    opacity: 0;
+    visibility: hidden;
+  }
+
   .product-card__image {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 1;
     width: 100%;
     height: 100%;
     object-fit: cover;

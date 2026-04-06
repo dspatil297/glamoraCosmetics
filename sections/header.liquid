@@ -10,14 +10,16 @@
             width="{{ section.settings.logo.width }}"
             height="{{ section.settings.logo.height }}"
             loading="eager"
+            decoding="async"
           >
         {% else %}
           <img
             src="{{ 'Logo.png' | asset_url }}"
             alt="{{ shop.name }}"
             width="200"
-            height=""
+            height="259"
             loading="eager"
+            decoding="async"
             style="height: auto; max-height: 50px; width: auto;"
           >
         {% endif %}

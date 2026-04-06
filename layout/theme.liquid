@@ -15,11 +15,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <link rel="icon" type="image/png" href="{{ 'Logo.png' | asset_url }}" sizes="any">
     
-    {%- comment -%} Performance: Resource Hints {%- endcomment -%}
+    {%- comment -%} Performance: preconnect to font origins only (avoid redundant dns-prefetch) {%- endcomment -%}
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     
     {%- comment -%} Performance: Font Loading Optimization (Glamora brandkit fonts) {%- endcomment -%}
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -108,33 +106,9 @@
       }
     })();
     </script>
-    {%- comment -%} openCartDrawer for add-to-cart only. Cart icon uses normal link so GoKwik opens on load (no freeze). {%- endcomment -%}
+    {%- comment -%} openCartDrawer for add-to-cart only. lockBodyScroll is defined in the header script below. {%- endcomment -%}
     <script>
     (function() {
-      if (!window.lockBodyScroll) {
-        window.lockBodyScroll = function() {
-          var scrollY = window.pageYOffset || document.documentElement.scrollTop;
-          document.body.style.position = 'fixed';
-          document.body.style.top = '-' + scrollY + 'px';
-          document.body.style.left = '0';
-          document.body.style.right = '0';
-          document.body.style.overflow = 'hidden';
-          document.body.setAttribute('data-scroll-position', String(scrollY));
-        };
-      }
-      if (!window.unlockBodyScroll) {
-        window.unlockBodyScroll = function() {
-          var scrollY = document.body.getAttribute('data-scroll-position') || '0';
-          document.body.style.position = '';
-          document.body.style.top = '';
-          document.body.style.left = '';
-          document.body.style.right = '';
-          document.body.style.overflow = '';
-          document.body.removeAttribute('data-scroll-position');
-          window.scrollTo(0, parseInt(scrollY, 10));
-        };
-      }
-      /** Open GoKwik drawer (after add-to-cart). Navigate to ?open_cart=1 so drawer opens on load. */
       window.openCartDrawer = function() {
         var url = new URL(window.location.href);
         if (!url.searchParams.has('open_cart')) url.searchParams.set('open_cart', '1');
@@ -318,7 +292,7 @@
       })();
     </script>
 
-    {%- comment -%} Base JavaScript. Error at scripts.js:760 is in compiled_assets/scripts.js; theme loads application.js so that file is not used here. {%- endcomment -%}
+    {%- comment -%} Theme JS: assets/application.js (defer). {%- endcomment -%}
     <script src="{{ 'application.js' | asset_url }}" defer></script>
     {%- comment -%} Cart page +/- and remove: event delegation in capture phase so it runs before other handlers {%- endcomment -%}
     <script>

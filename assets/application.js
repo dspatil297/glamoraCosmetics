@@ -1,335 +1,213 @@
 /**
- * Sarvital Theme - Base JavaScript
- * Common interactions and utilities
+ * Glamora theme — base JS (smooth scroll, validation, scroll animations, images).
+ * Native lazy-loaded images are left to the browser; we only observe img[data-src].
  */
-
-(function() {
+(function () {
   'use strict';
 
-  // Initialize when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
+  function debounce(func, wait) {
+    var timeout;
+    return function () {
+      var ctx = this;
+      var args = arguments;
+      clearTimeout(timeout);
+      timeout = setTimeout(function () {
+        func.apply(ctx, args);
+      }, wait);
+    };
   }
 
-  function init() {
-    // Initialize all modules
-    initSmoothScroll();
-    initLazyLoading();
-    initFormValidation();
-    initScrollAnimations();
-    initImageOptimization();
+  function throttle(func, limit) {
+    var inThrottle;
+    return function () {
+      if (!inThrottle) {
+        func.apply(this, arguments);
+        inThrottle = true;
+        setTimeout(function () {
+          inThrottle = false;
+        }, limit);
+      }
+    };
   }
 
-  /**
-   * Smooth scroll for anchor links
-   */
   function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
+    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+      anchor.addEventListener('click', function (e) {
+        var href = this.getAttribute('href');
         if (href === '#' || href === '#!') return;
-        
-        const target = document.querySelector(href);
+        var target = document.querySelector(href);
         if (target) {
           e.preventDefault();
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
     });
   }
 
-  /**
-   * Lazy loading for images
-   */
-  function initLazyLoading() {
-    if ('IntersectionObserver' in window) {
-      const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            if (img.dataset.src) {
-              img.src = img.dataset.src;
-              img.removeAttribute('data-src');
-              img.classList.add('loaded');
-            }
-            observer.unobserve(img);
-          }
-        });
-      });
-
-      document.querySelectorAll('img[data-src]').forEach(img => {
-        imageObserver.observe(img);
-      });
-    }
-  }
-
-  /**
-   * Basic form validation
-   */
   function initFormValidation() {
-    const forms = document.querySelectorAll('form[data-validate]');
-    
-    forms.forEach(form => {
-      form.addEventListener('submit', function(e) {
-        if (!validateForm(this)) {
-          e.preventDefault();
-        }
+    var forms = document.querySelectorAll('form[data-validate]');
+    forms.forEach(function (form) {
+      form.addEventListener('submit', function (e) {
+        if (!validateForm(form)) e.preventDefault();
       });
-
-      // Real-time validation
-      const inputs = form.querySelectorAll('input, textarea, select');
-      inputs.forEach(input => {
-        input.addEventListener('blur', function() {
-          validateField(this);
+      form.querySelectorAll('input, textarea, select').forEach(function (input) {
+        input.addEventListener('blur', function () {
+          validateField(input);
         });
       });
     });
   }
 
   function validateForm(form) {
-    let isValid = true;
-    const inputs = form.querySelectorAll('input[required], textarea[required], select[required]');
-    
-    inputs.forEach(input => {
-      if (!validateField(input)) {
-        isValid = false;
-      }
+    var ok = true;
+    form.querySelectorAll('input[required], textarea[required], select[required]').forEach(function (input) {
+      if (!validateField(input)) ok = false;
     });
-
-    return isValid;
+    return ok;
   }
 
   function validateField(field) {
-    const value = field.value.trim();
-    const type = field.type;
-    let isValid = true;
-    let errorMessage = '';
-
-    // Remove previous error
-    const existingError = field.parentElement.querySelector('.field-error');
-    if (existingError) {
-      existingError.remove();
-    }
+    var value = field.value.trim();
+    var type = field.type;
+    var isValid = true;
+    var errorMessage = '';
+    var existingError = field.parentElement.querySelector('.field-error');
+    if (existingError) existingError.remove();
     field.classList.remove('error');
-
-    // Required validation
     if (field.hasAttribute('required') && !value) {
       isValid = false;
       errorMessage = 'This field is required';
     }
-
-    // Email validation
-    if (type === 'email' && value) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(value)) {
-        isValid = false;
-        errorMessage = 'Please enter a valid email address';
-      }
+    if (type === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      isValid = false;
+      errorMessage = 'Please enter a valid email address';
     }
-
-    // Phone validation
-    if (type === 'tel' && value) {
-      const phoneRegex = /^[\d\s\-\+\(\)]+$/;
-      if (!phoneRegex.test(value) || value.length < 10) {
-        isValid = false;
-        errorMessage = 'Please enter a valid phone number';
-      }
+    if (type === 'tel' && value && (!/^[\d\s\-+()]+$/.test(value) || value.length < 10)) {
+      isValid = false;
+      errorMessage = 'Please enter a valid phone number';
     }
-
-    // Show error
     if (!isValid) {
       field.classList.add('error');
-      const errorElement = document.createElement('span');
-      errorElement.className = 'field-error';
-      errorElement.textContent = errorMessage;
-      field.parentElement.appendChild(errorElement);
+      var err = document.createElement('span');
+      err.className = 'field-error';
+      err.textContent = errorMessage;
+      field.parentElement.appendChild(err);
     }
-
     return isValid;
   }
 
-  /**
-   * Utility: Debounce function
-   */
-  function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
-  }
-
-  /**
-   * Utility: Throttle function
-   */
-  function throttle(func, limit) {
-    let inThrottle;
-    return function(...args) {
-      if (!inThrottle) {
-        func.apply(this, args);
-        inThrottle = true;
-        setTimeout(() => inThrottle = false, limit);
-      }
-    };
-  }
-
-  /**
-   * Scroll-triggered animations
-   */
   function initScrollAnimations() {
-    // Check if user prefers reduced motion
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var sel = '.scroll-animate, .scroll-animate-left, .scroll-animate-right, .scroll-animate-scale';
     if (prefersReducedMotion) {
-      // Remove animation classes and show elements immediately
-      document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right, .scroll-animate-scale').forEach(el => {
+      document.querySelectorAll(sel).forEach(function (el) {
         el.classList.add('animated');
       });
       return;
     }
-
     if ('IntersectionObserver' in window) {
-      const animationObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animated');
-            // Optionally unobserve after animation
-            // animationObserver.unobserve(entry.target);
-          }
-        });
-      }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      });
-
-      // Observe all elements with scroll-animate classes
-      document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right, .scroll-animate-scale').forEach(el => {
+      var animationObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) entry.target.classList.add('animated');
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+      );
+      document.querySelectorAll(sel).forEach(function (el) {
         animationObserver.observe(el);
       });
     } else {
-      // Fallback: show all animations immediately
-      document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right, .scroll-animate-scale').forEach(el => {
+      document.querySelectorAll(sel).forEach(function (el) {
         el.classList.add('animated');
       });
     }
   }
 
-  /**
-   * Enhanced image optimization and lazy loading with error handling
-   */
-  function initImageOptimization() {
-    // Enhanced error handling for all images
+  function markImageLoaded(img) {
+    img.classList.add('loaded');
+    if (img.getAttribute('loading') === 'lazy') img.style.opacity = '1';
+  }
+
+  function initImages() {
     function handleImageError(img) {
       img.classList.add('image-error');
-      if (!img.alt || img.alt === '') {
-        img.alt = 'Image failed to load';
-      }
-      // Try to load a placeholder if available
-      if (!img.dataset.placeholderAttempted) {
-        img.dataset.placeholderAttempted = 'true';
-        // Could add placeholder image logic here if needed
-      }
+      if (!img.alt || img.alt === '') img.alt = 'Image failed to load';
     }
 
-    // Add error handlers to all images
-    document.querySelectorAll('img').forEach(img => {
-      // Skip if already has error handler
+    document.querySelectorAll('img').forEach(function (img) {
       if (img.dataset.errorHandlerAdded) return;
       img.dataset.errorHandlerAdded = 'true';
-      
-      // Add error event listener
-      img.addEventListener('error', function() {
-        handleImageError(this);
-      }, { once: true });
-
-      // Add load event listener for fade-in effect
-      if (img.loading === 'lazy') {
-        img.addEventListener('load', function() {
-          this.classList.add('loaded');
-          this.style.opacity = '1';
-        }, { once: true });
-      }
+      img.addEventListener(
+        'error',
+        function () {
+          handleImageError(this);
+        },
+        { once: true }
+      );
+      img.addEventListener(
+        'load',
+        function () {
+          markImageLoaded(this);
+        },
+        { once: true }
+      );
+      if (img.complete && img.naturalHeight !== 0) markImageLoaded(img);
     });
 
-    // IntersectionObserver for lazy loading
     if ('IntersectionObserver' in window) {
-      const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            
-            // Handle data-src for lazy loading
+      var io = new IntersectionObserver(
+        function (entries, obs) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            var img = entry.target;
             if (img.dataset.src) {
-              const newSrc = img.dataset.src;
-              img.src = newSrc;
+              img.src = img.dataset.src;
               img.removeAttribute('data-src');
             }
-            
-            // Handle srcset for responsive images
             if (img.dataset.srcset) {
               img.srcset = img.dataset.srcset;
               img.removeAttribute('data-srcset');
             }
-            
-            // Add loaded class when image loads
-            if (img.complete && img.naturalHeight !== 0) {
-              img.classList.add('loaded');
-              img.style.opacity = '1';
-            }
-            
-            // Stop observing once loaded
-            observer.unobserve(img);
-          }
-        });
-      }, {
-        rootMargin: '50px'
-      });
-
-      // Observe all images with lazy loading attributes
-      document.querySelectorAll('img[data-src], img[data-srcset], img[loading="lazy"]').forEach(img => {
-        imageObserver.observe(img);
+            obs.unobserve(img);
+          });
+        },
+        { rootMargin: '80px' }
+      );
+      document.querySelectorAll('img[data-src], img[data-srcset]').forEach(function (img) {
+        io.observe(img);
       });
     } else {
-      // Fallback for browsers without IntersectionObserver
-      document.querySelectorAll('img[data-src]').forEach(img => {
-        img.src = img.dataset.src;
-        img.removeAttribute('data-src');
+      document.querySelectorAll('img[data-src]').forEach(function (img) {
+        if (img.dataset.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+        }
       });
-      document.querySelectorAll('img[data-srcset]').forEach(img => {
-        img.srcset = img.dataset.srcset;
-        img.removeAttribute('data-srcset');
+      document.querySelectorAll('img[data-srcset]').forEach(function (img) {
+        if (img.dataset.srcset) {
+          img.srcset = img.dataset.srcset;
+          img.removeAttribute('data-srcset');
+        }
       });
     }
-
-    // Preload critical images (above the fold)
-    const criticalImages = document.querySelectorAll('img[loading="eager"], img[fetchpriority="high"]');
-    criticalImages.forEach(img => {
-      if (img.complete && img.naturalHeight !== 0) {
-        img.classList.add('loaded');
-      }
-    });
   }
 
-  // Initialize image optimization on page load
+  function init() {
+    initSmoothScroll();
+    initFormValidation();
+    initScrollAnimations();
+    initImages();
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initImageOptimization);
+    document.addEventListener('DOMContentLoaded', init);
   } else {
-    initImageOptimization();
+    init();
   }
 
-  // Export utilities to window for global access
   window.SarvitalTheme = {
     debounce: debounce,
     throttle: throttle
   };
-
 })();
-
