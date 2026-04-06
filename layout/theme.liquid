@@ -13,9 +13,6 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <link rel="icon" type="image/png" href="{{ 'logo.png' | asset_url }}" sizes="any">
-    <link rel="apple-touch-icon" href="{{ 'logo.png' | asset_url }}">
-    <link rel="icon" type="image/svg+xml" href="{{ 'glamora-wordmark.svg' | asset_url }}">
     
     {%- comment -%} Performance: preconnect to font origins only (avoid redundant dns-prefetch) {%- endcomment -%}
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
@@ -46,6 +43,13 @@
     {% render 'meta-tags' %}
 
     {{ content_for_header }}
+    {%- comment -%}
+      Favicon must come AFTER content_for_header: Shopify injects favicon links from Admin preferences;
+      the last matching icon wins in most browsers, so our theme icon would otherwise be overridden.
+    {%- endcomment -%}
+    <link rel="icon" type="image/png" href="{{ 'logo.png' | asset_url }}" sizes="32x32">
+    <link rel="icon" type="image/png" href="{{ 'logo.png' | asset_url }}" sizes="16x16">
+    <link rel="apple-touch-icon" href="{{ 'logo.png' | asset_url }}" sizes="180x180">
     {%- comment -%}
       Google Translate (and similar) usually load via an app embed or Additional scripts — not this file.
       To improve FCP/TBT: remove or defer the Translate app in Admin, or load it only after user interaction.

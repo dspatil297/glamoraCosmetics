@@ -17,13 +17,15 @@
         "announcement_bar_message_1": {
           "type": "message",
           "settings": {
-            "text": "Free shipping on orders above ₹999"
+            "text": "Free shipping on orders above ₹999",
+            "href": ""
           }
         },
         "announcement_bar_message_2": {
           "type": "message",
           "settings": {
-            "text": "New Launches: Discover what’s new at Glamora"
+            "text": "New Launches: Discover what’s new at Glamora",
+            "href": ""
           }
         }
       },
@@ -38,11 +40,30 @@
     },
     "header": {
       "type": "header",
-      "settings": {}
+      "settings": {
+        "logo": "shopify://shop_images/logo-Final-1-TP.png",
+        "menu": "main-menu",
+        "enable_sticky_header": true,
+        "nav_label_home": "Home",
+        "nav_label_shop": "Shop",
+        "nav_label_about": "About Us",
+        "link_about": "",
+        "nav_label_blog": "Blog",
+        "link_blog": "",
+        "nav_label_contact": "Contact",
+        "link_contact": "",
+        "mobile_menu_heading": "Menu",
+        "mobile_label_account": "Account",
+        "mobile_label_login": "Login",
+        "search_overlay_title": "Search",
+        "search_placeholder": "Search for products, ingredients…",
+        "search_hint": "Press Enter to see all results",
+        "search_popular_label": "Popular searches"
+      }
     }
   },
   "order": [
     "announcement_bar",
     "header"
-  ],
+  ]
 }
