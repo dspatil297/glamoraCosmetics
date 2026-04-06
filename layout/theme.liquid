@@ -13,7 +13,8 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <link rel="icon" type="image/png" href="{{ 'Logo.png' | asset_url }}" sizes="any">
+    <link rel="icon" href="{{ 'glamora-wordmark.svg' | asset_url }}" type="image/svg+xml">
+    <link rel="alternate icon" type="image/png" href="{{ 'Logo.png' | asset_url }}" sizes="any">
     
     {%- comment -%} Performance: preconnect to font origins only (avoid redundant dns-prefetch) {%- endcomment -%}
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
@@ -43,7 +44,11 @@
     {%- comment -%} SEO Meta Tags {%- endcomment -%}
     {% render 'meta-tags' %}
 
-    {{content_for_header}}
+    {{ content_for_header }}
+    {%- comment -%}
+      Google Translate (and similar) usually load via an app embed or Additional scripts — not this file.
+      To improve FCP/TBT: remove or defer the Translate app in Admin, or load it only after user interaction.
+    {%- endcomment -%}
   </head>
 
   <body class="template-{{ request.page_type | handle }}">

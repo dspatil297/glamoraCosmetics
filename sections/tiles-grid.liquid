@@ -50,13 +50,15 @@
               {%- if collection.image != blank -%}
                 <div class="tiles-grid__media">
                   <img
-                    src="{{ collection.image | image_url: width: 600 }}"
+                    src="{{ collection.image | image_url: width: 360 }}"
                     srcset="
-                      {{ collection.image | image_url: width: 300 }} 300w,
+                      {{ collection.image | image_url: width: 180 }} 180w,
+                      {{ collection.image | image_url: width: 240 }} 240w,
+                      {{ collection.image | image_url: width: 360 }} 360w,
                       {{ collection.image | image_url: width: 450 }} 450w,
                       {{ collection.image | image_url: width: 600 }} 600w
                     "
-                    sizes="(min-width: 990px) 220px, (min-width: 750px) 180px, 44vw"
+                    sizes="(min-width: 990px) 220px, (min-width: 750px) 180px, 230px"
                     alt="{{ label | escape }}"
                     width="450"
                     height="450"
@@ -67,7 +69,7 @@
                 </div>
               {%- else -%}
                 <div class="tiles-grid__media tiles-grid__media--placeholder">
-                  {% render 'unsplash-placeholder', type: 'tile', width: 600, class: 'tiles-grid__img', loading: 'lazy', alt: label | default: 'Collection' %}
+                  {% render 'unsplash-placeholder', type: 'tile', width: 360, class: 'tiles-grid__img', loading: 'lazy', alt: label | default: 'Collection' %}
                 </div>
               {%- endif -%}
               <div class="tiles-grid__label">{{ label }}</div>
@@ -93,13 +95,15 @@
               {%- if block.settings.image != blank -%}
                 <div class="tiles-grid__media">
                   <img
-                    src="{{ block.settings.image | image_url: width: 600 }}"
+                    src="{{ block.settings.image | image_url: width: 360 }}"
                     srcset="
-                      {{ block.settings.image | image_url: width: 300 }} 300w,
+                      {{ block.settings.image | image_url: width: 180 }} 180w,
+                      {{ block.settings.image | image_url: width: 240 }} 240w,
+                      {{ block.settings.image | image_url: width: 360 }} 360w,
                       {{ block.settings.image | image_url: width: 450 }} 450w,
                       {{ block.settings.image | image_url: width: 600 }} 600w
                     "
-                    sizes="(min-width: 990px) 220px, (min-width: 750px) 180px, 44vw"
+                    sizes="(min-width: 990px) 220px, (min-width: 750px) 180px, 230px"
                     alt="{{ block.settings.label | escape }}"
                     width="450"
                     height="450"
@@ -110,7 +114,7 @@
                 </div>
               {%- else -%}
                 <div class="tiles-grid__media tiles-grid__media--placeholder">
-                  {% render 'unsplash-placeholder', type: 'tile', width: 600, class: 'tiles-grid__img', loading: 'lazy', alt: block.settings.label | default: 'Category' %}
+                  {% render 'unsplash-placeholder', type: 'tile', width: 360, class: 'tiles-grid__img', loading: 'lazy', alt: block.settings.label | default: 'Category' %}
                 </div>
               {%- endif -%}
               <div class="tiles-grid__label">{{ block.settings.label }}</div>

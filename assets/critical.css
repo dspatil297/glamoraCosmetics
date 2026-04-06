@@ -895,7 +895,7 @@ img.image-error::after {
   opacity: 0.5;
 }
 
-/* Ensure images don't cause layout shift */
+/* Ensure images don't cause layout shift (logo overrides in header section) */
 img[width][height] {
   aspect-ratio: attr(width) / attr(height);
 }
