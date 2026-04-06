@@ -81,6 +81,18 @@
     ]
   },
   {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "text",
+        "id": "site_brand_title",
+        "label": "Site title",
+        "default": "Glamora Cosmetics",
+        "info": "Homepage browser tab title and the brand name appended to inner pages (e.g. Product – Glamora Cosmetics)."
+      }
+    ]
+  },
+  {
  "name": "Gokwik",
  "settings": [
    {
@@ -209,7 +221,5 @@
      "label": "Enable Banner Text"
    }
  ]
-}
-
-
+  }
 ]
