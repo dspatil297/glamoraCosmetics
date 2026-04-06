@@ -94,8 +94,8 @@
         <dl class="footer__legal-list">
           {% if section.settings.legal_manufacturer != blank %}
             <div class="footer__legal-row">
-              <dt>{{ section.settings.legal_label_manufacturer | default: 'Manufacturer' }}:</dt>
-              <dd>{{ section.settings.legal_manufacturer | default: 'HAMRAJ INDIA' }}</dd>
+              <dt>{{ section.settings.legal_label_manufacturer | default: 'Brand' }}:</dt>
+              <dd>{{ section.settings.legal_manufacturer | default: 'Glamora cosmetics' }}</dd>
             </div>
           {% endif %}
           {% if section.settings.legal_mfg != blank %}
@@ -720,8 +720,8 @@
     {
       "type": "text",
       "id": "legal_label_manufacturer",
-      "label": "Legal: Manufacturer label",
-      "default": "Manufacturer"
+      "label": "Legal: Brand label",
+      "default": "Brand"
     },
     {
       "type": "text",
@@ -744,8 +744,8 @@
     {
       "type": "text",
       "id": "legal_manufacturer",
-      "label": "Manufacturer",
-      "default": "HAMRAJ INDIA"
+      "label": "Brand",
+      "default": "Glamora cosmetics"
     },
     {
       "type": "text",
