@@ -13,8 +13,9 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <link rel="icon" href="{{ 'glamora-wordmark.svg' | asset_url }}" type="image/svg+xml">
-    <link rel="alternate icon" type="image/png" href="{{ 'Logo.png' | asset_url }}" sizes="any">
+    <link rel="icon" type="image/png" href="{{ 'logo.png' | asset_url }}" sizes="any">
+    <link rel="apple-touch-icon" href="{{ 'logo.png' | asset_url }}">
+    <link rel="icon" type="image/svg+xml" href="{{ 'glamora-wordmark.svg' | asset_url }}">
     
     {%- comment -%} Performance: preconnect to font origins only (avoid redundant dns-prefetch) {%- endcomment -%}
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
