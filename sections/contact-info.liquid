@@ -110,10 +110,15 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--spacing-xl);
     margin-bottom: var(--spacing-4xl);
-    align-items: start;
+    align-items: stretch;
   }
 
   .contact-info-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    box-sizing: border-box;
     background: var(--white);
     padding: clamp(1.1rem, 2vw, var(--spacing-2xl));
     border-radius: var(--radius-xl);
@@ -149,6 +154,7 @@
   }
 
   .contact-info-card__content {
+    flex: 1;
     font-size: var(--body-normal);
     line-height: 1.6;
     color: var(--text);
