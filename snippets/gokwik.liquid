@@ -14,7 +14,12 @@
          fbpixel: "{{settings.fbpixel}}",
            snapchatPixels: "{{ settings.snapPixel }}",
          }
-   var productFormSelector = '';
+   {%- comment -%}
+     GoKwik binds Buy Now / addCartBuyNow to the product form. An empty selector skips init,
+     so app embed onclick="window.addCartBuyNow(...)" throws. Cover both PDP sections.
+   {%- endcomment -%}
+   window.productFormSelector = '#product-form, form.pdp__form, form[action*="/cart/add"]';
+   var productFormSelector = window.productFormSelector;
    var cart = {{ cart | json }}
    var templateName = '{{template.name}}'
  </script>
