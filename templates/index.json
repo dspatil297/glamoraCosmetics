@@ -95,128 +95,6 @@
         "placeholder_text": "Add a banner image in Theme Customizer for this section."
       }
     },
-    "shop_by_category": {
-      "type": "tiles-grid",
-      "blocks": {
-        "cat_1": {
-          "type": "tile",
-          "settings": {
-            "label": "Skin",
-            "href": "/collections/all"
-          }
-        },
-        "cat_2": {
-          "type": "tile",
-          "settings": {
-            "label": "Hair",
-            "href": "/collections/all"
-          }
-        },
-        "cat_3": {
-          "type": "tile",
-          "settings": {
-            "label": "Bath & Body",
-            "href": "/collections/all"
-          }
-        },
-        "cat_4": {
-          "type": "tile",
-          "settings": {
-            "label": "Lip",
-            "href": "/collections/all"
-          }
-        },
-        "cat_5": {
-          "type": "tile",
-          "settings": {
-            "label": "Eye",
-            "href": "/collections/all"
-          }
-        }
-      },
-      "block_order": [
-        "cat_1",
-        "cat_2",
-        "cat_3",
-        "cat_4",
-        "cat_5"
-      ],
-      "settings": {
-        "title": "Shop by Category",
-        "layout": "carousel",
-        "source": "category_auto",
-        "columns": 4
-      }
-    },
-    "shop_by_concerns": {
-      "type": "tiles-grid",
-      "blocks": {
-        "con_1": {
-          "type": "tile",
-          "settings": {
-            "label": "Uneven Tone",
-            "href": "/collections/all"
-          }
-        },
-        "con_2": {
-          "type": "tile",
-          "settings": {
-            "label": "Acne Control",
-            "href": "/collections/all"
-          }
-        },
-        "con_3": {
-          "type": "tile",
-          "settings": {
-            "label": "Oiliness",
-            "href": "/collections/all"
-          }
-        },
-        "con_4": {
-          "type": "tile",
-          "settings": {
-            "label": "Fine Lines / Wrinkles",
-            "href": "/collections/all"
-          }
-        },
-        "con_5": {
-          "type": "tile",
-          "settings": {
-            "label": "Dryness",
-            "href": "/collections/all"
-          }
-        },
-        "con_6": {
-          "type": "tile",
-          "settings": {
-            "label": "Hair Fall",
-            "href": "/collections/all"
-          }
-        },
-        "con_7": {
-          "type": "tile",
-          "settings": {
-            "label": "Anti-Dandruff",
-            "href": "/collections/all"
-          }
-        }
-      },
-      "block_order": [
-        "con_1",
-        "con_2",
-        "con_3",
-        "con_4",
-        "con_5",
-        "con_6",
-        "con_7"
-      ],
-      "settings": {
-        "title": "Shop by Concerns",
-        "layout": "carousel",
-        "source": "concern_auto",
-        "columns": 4
-      }
-    },
     "brand_values": {
       "type": "values-strip",
       "blocks": {
@@ -329,8 +207,6 @@
     "hero_banner",
     "featured_products",
     "bundle_promo",
-    "shop_by_category",
-    "shop_by_concerns",
     "brand_values",
     "177287695271a8ad79",
     "home_faq",
