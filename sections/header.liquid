@@ -1100,18 +1100,28 @@
       }
     });
 
-    function updateCartCount() {
-      fetch('/cart.js').then(function(r) { return r.json(); }).then(function(cart) {
-        var el = document.querySelector('[data-cart-count]');
-        if (el) {
-          if (cart.item_count > 0) {
-            el.textContent = cart.item_count;
-            el.style.display = 'block';
-          } else {
-            el.style.display = 'none';
-          }
-        }
-      });
+    function setCartCount(count) {
+      var el = document.querySelector('[data-cart-count]');
+      if (!el) return;
+      if (count > 0) {
+        el.textContent = count;
+        el.style.display = 'block';
+      } else {
+        el.style.display = 'none';
+      }
+    }
+    function updateCartCount(evt) {
+      var delta = evt && evt.detail ? parseInt(evt.detail.itemCountDelta, 10) : NaN;
+      var el = document.querySelector('[data-cart-count]');
+      if (el && !isNaN(delta)) {
+        var current = parseInt(el.textContent || '0', 10);
+        if (isNaN(current)) current = 0;
+        setCartCount(Math.max(0, current + delta));
+      }
+      fetch('/cart.js')
+        .then(function(r) { return r.json(); })
+        .then(function(cart) { setCartCount(cart.item_count || 0); })
+        .catch(function() {});
     }
     document.addEventListener('cart:updated', updateCartCount);
     }
