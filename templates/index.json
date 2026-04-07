@@ -9,207 +9,248 @@
  */
 {
   "sections": {
-    "hero_banner": {
-      "type": "hero-banner",
+    "homepage_pollution_defense": {
+      "type": "home-pollution-defense",
       "blocks": {
-        "slide_Nq893k": {
-          "type": "slide",
+        "trust_1": { "type": "trust_item", "settings": { "text": "Lab Formulated" } },
+        "trust_2": { "type": "trust_item", "settings": { "text": "Dermatologist Tested" } },
+        "trust_3": { "type": "trust_item", "settings": { "text": "Cruelty Free" } },
+        "trust_4": { "type": "trust_item", "settings": { "text": "All Skin Types" } },
+        "trust_5": { "type": "trust_item", "settings": { "text": "Free Shipping 999+" } },
+        "trust_6": { "type": "trust_item", "settings": { "text": "Made in India" } },
+
+        "step_1": {
+          "type": "routine_step",
           "settings": {
-            "image": "shopify://shop_images/4.webp",
-            "mobile_image": "shopify://shop_images/4_135d1c35-3669-4dad-b735-eab46f6d46f8.webp",
-            "link": "https://glamoracosmetics.in/products/glamora-pollution-control-moisturizing-spray"
+            "reverse": false,
+            "image": "shopify://shop_images/facewash1.webp",
+            "label": "Cleanse",
+            "title": "Pollution Control Face Wash",
+            "tagline": "Wash the city off your skin.",
+            "description": "Our cleanser removes PM2.5 particles, dirt, and environmental toxins without stripping your skin barrier.",
+            "price": "Rs. 469",
+            "old_price": "Rs. 599",
+            "button_text": "View Product",
+            "button_link": "/products/glamora-pollution-control-face-wash"
           }
         },
-        "slide_4NXNRf": {
-          "type": "slide",
+        "step_2": {
+          "type": "routine_step",
           "settings": {
-            "image": "shopify://shop_images/5.webp",
-            "mobile_image": "shopify://shop_images/5_af066c50-aeaf-4759-a253-638f55fa6ef4.webp",
-            "link": "https://glamoracosmetics.in/products/glamora-pollution-control-face-wash"
+            "reverse": true,
+            "image": "shopify://shop_images/WhatsAppImage2026-03-14at12.28.49PM.webp",
+            "label": "Hydrate",
+            "title": "Pollution Control Moisturizing Spray",
+            "tagline": "Hydrate. Shield. Glow.",
+            "description": "A lightweight mist that locks in moisture and creates a breathable anti-pollution layer through the day.",
+            "price": "Rs. 649",
+            "old_price": "Rs. 799",
+            "button_text": "View Product",
+            "button_link": "/products/glamora-pollution-control-moisturizing-spray"
           }
         },
-        "slide_hMhcUm": {
-          "type": "slide",
+        "step_3": {
+          "type": "routine_step",
           "settings": {
-            "image": "shopify://shop_images/1_2.webp",
-            "mobile_image": "shopify://shop_images/1_2_8a23e7bb-8d1c-4cad-bb09-5baadd74b631.webp",
-            "link": "https://glamoracosmetics.in/products/glamora-pollution-control-hybrid-sunscreen"
+            "reverse": false,
+            "image": "shopify://shop_images/ofetmglqptowmhrk2agf.webp",
+            "label": "Protect",
+            "title": "Pollution Control Hybrid Sunscreen SPF 50 PA++++",
+            "tagline": "UV + pollution. Blocked.",
+            "description": "Broad-spectrum SPF 50 PA++++ with anti-pollution technology and matte, no-white-cast finish.",
+            "price": "Rs. 669",
+            "old_price": "Rs. 799",
+            "button_text": "View Product",
+            "button_link": "/products/glamora-pollution-control-hybrid-sunscreen"
           }
         },
-        "slide_knjxEJ": {
-          "type": "slide",
+
+        "stat_1": {
+          "type": "stat_card",
           "settings": {
-            "image": "shopify://shop_images/2.webp",
-            "mobile_image": "shopify://shop_images/2_210be3d3-6af3-472a-b305-93b1937f15d9.webp",
-            "link": "https://glamoracosmetics.in/products/glamora-pollution-control-foaming-face-wash"
+            "featured": true,
+            "number": "91%",
+            "description": "of Indians breathe air that exceeds WHO safety limits."
+          }
+        },
+        "stat_2": {
+          "type": "stat_card",
+          "settings": {
+            "featured": false,
+            "number": "30x",
+            "description": "smaller than pores. PM2.5 particles can penetrate deep and trigger inflammation."
+          }
+        },
+        "stat_3": {
+          "type": "stat_card",
+          "settings": {
+            "featured": false,
+            "number": "20%",
+            "description": "faster skin aging in polluted cities when UV and pollution combine."
+          }
+        },
+
+        "exp_1": {
+          "type": "explainer_item",
+          "settings": {
+            "title": "PM2.5 and PM10 particles",
+            "description": "Penetrate pores, trigger inflammation, and cause dullness regular cleansing cannot fully solve."
+          }
+        },
+        "exp_2": {
+          "type": "explainer_item",
+          "settings": {
+            "title": "Free radicals from exhaust",
+            "description": "Break down collagen and elastin while you commute and accelerate visible signs of aging."
+          }
+        },
+        "exp_3": {
+          "type": "explainer_item",
+          "settings": {
+            "title": "UV + pollution synergy",
+            "description": "Pollution amplifies UV damage; SPF alone is often not enough in high-smog environments."
+          }
+        },
+        "exp_4": {
+          "type": "explainer_item",
+          "settings": {
+            "title": "Heavy metals in smog",
+            "description": "Can accumulate on skin over time and contribute to pigmentation and uneven tone."
+          }
+        },
+
+        "prod_1": {
+          "type": "product_card",
+          "settings": {
+            "image": "shopify://shop_images/facewash1.webp",
+            "type": "Face Wash",
+            "title": "Pollution Control Face Wash",
+            "price": "Rs. 469",
+            "old_price": "Rs. 599",
+            "button_text": "View Product",
+            "button_link": "/products/glamora-pollution-control-face-wash"
+          }
+        },
+        "prod_2": {
+          "type": "product_card",
+          "settings": {
+            "image": "shopify://shop_images/foamingfacewash_p.webp",
+            "type": "Face Wash",
+            "title": "Pollution Control Foaming Face Wash",
+            "price": "Rs. 399",
+            "old_price": "Rs. 599",
+            "button_text": "View Product",
+            "button_link": "/products/glamora-pollution-control-foaming-face-wash"
+          }
+        },
+        "prod_3": {
+          "type": "product_card",
+          "settings": {
+            "image": "shopify://shop_images/WhatsAppImage2026-03-14at12.28.49PM.webp",
+            "type": "Moisturizer",
+            "title": "Pollution Control Moisturizing Spray",
+            "price": "Rs. 649",
+            "old_price": "Rs. 799",
+            "button_text": "View Product",
+            "button_link": "/products/glamora-pollution-control-moisturizing-spray"
+          }
+        },
+        "prod_4": {
+          "type": "product_card",
+          "settings": {
+            "image": "shopify://shop_images/ofetmglqptowmhrk2agf.webp",
+            "type": "Sunscreen",
+            "title": "Pollution Control Hybrid Sunscreen SPF 50",
+            "price": "Rs. 669",
+            "old_price": "Rs. 799",
+            "button_text": "View Product",
+            "button_link": "/products/glamora-pollution-control-hybrid-sunscreen"
+          }
+        },
+
+        "ing_1": { "type": "ingredient", "settings": { "symbol": "Gl", "title": "Glutathione", "description": "Master antioxidant that neutralizes pollution-triggered free radicals." } },
+        "ing_2": { "type": "ingredient", "settings": { "symbol": "SA", "title": "Salicylic Acid", "description": "Helps unclog pores from grime buildup and keeps texture clear." } },
+        "ing_3": { "type": "ingredient", "settings": { "symbol": "VC", "title": "Vitamin C (MAP)", "description": "Fights oxidative stress and supports brighter, even-looking skin." } },
+        "ing_4": { "type": "ingredient", "settings": { "symbol": "HA", "title": "Hyaluronic Acid", "description": "Deep hydration that reinforces skin comfort in dry city air." } },
+        "ing_5": { "type": "ingredient", "settings": { "symbol": "AV", "title": "Aloe Vera", "description": "Soothes skin stressed by environmental irritants and heat." } },
+        "ing_6": { "type": "ingredient", "settings": { "symbol": "CW", "title": "Coconut Water", "description": "Lightweight hydration with a fresh, breathable feel." } },
+
+        "test_1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I live in Delhi and my skin was always dull no matter what I tried. After 2 weeks with the full routine, the difference is unreal.",
+            "author": "Priya M.",
+            "location": "Delhi"
+          }
+        },
+        "test_2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Finally a sunscreen that does not feel heavy in humidity and still protects all day.",
+            "author": "Sneha R.",
+            "location": "Mumbai"
+          }
+        },
+        "test_3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I work near dust-heavy roads and this routine keeps my skin calmer and cleaner by evening.",
+            "author": "Anika T.",
+            "location": "Bangalore"
           }
         }
       },
       "block_order": [
-        "slide_Nq893k",
-        "slide_4NXNRf",
-        "slide_hMhcUm",
-        "slide_knjxEJ"
+        "trust_1", "trust_2", "trust_3", "trust_4", "trust_5", "trust_6",
+        "step_1", "step_2", "step_3",
+        "stat_1", "stat_2", "stat_3",
+        "exp_1", "exp_2", "exp_3", "exp_4",
+        "prod_1", "prod_2", "prod_3", "prod_4",
+        "ing_1", "ing_2", "ing_3", "ing_4", "ing_5", "ing_6",
+        "test_1", "test_2", "test_3"
       ],
       "settings": {
-        "hero_image": "shopify://shop_images/FACE_WASH_HERO_BANNER.png",
-        "show_content": true,
-        "heading": "Advanced anti-pollution skincare for naturally radiant, protected, everyday glowing skin.",
-        "subheading": "Hybrid sunscreens, foaming face washes, and moisturizing sprays crafted to defend your skin from urban pollution.",
-        "cta_text": "Shop Skincare",
-        "cta_link": "/collections/all",
-        "secondary_cta_text": "Discover Glamora",
-        "secondary_cta_link": "/pages/about-us",
-        "image_fit": "contain",
-        "image_bg": "#ffffff",
-        "carousel_speed": 2.5,
-        "transition_duration": 800,
-        "overlay_opacity": 10,
-        "slide_placeholder_text": "Select image in Theme Customizer → click this slide → Slide image",
-        "hero_placeholder_text": "Add a hero image in Theme Customizer"
-      }
-    },
-    "featured_products": {
-      "type": "product-grid",
-      "settings": {
-        "title": "Our Best Sellers",
-        "description": "",
-        "layout": "carousel",
-        "carousel_auto_scroll": true,
-        "carousel_auto_scroll_interval": 6,
-        "collection": "products",
-        "products_to_show": 6,
-        "show_view_all": true,
-        "view_all_text": "View All Products",
-        "empty_message_no_products": "No products found in this collection.",
-        "empty_message_no_collection": "Please select a collection to display products."
-      }
-    },
-    "bundle_promo": {
-      "type": "promo-banner",
-      "settings": {
-        "image": "shopify://shop_images/1.webp",
-        "mobile_image": "shopify://shop_images/1_7658d945-b4bb-4941-a861-1337b8cc7058.webp",
-        "href": "/collections/all",
-        "alt": "Bundle promotion",
-        "placeholder_text": "Add a banner image in Theme Customizer for this section."
-      }
-    },
-    "brand_values": {
-      "type": "values-strip",
-      "blocks": {
-        "val_1": {
-          "type": "value",
-          "settings": {
-            "icon_key": "transparency",
-            "icon": "",
-            "title": "Transparency",
-            "description": "Full disclosure of ingredients used & their concentration."
-          }
-        },
-        "val_2": {
-          "type": "value",
-          "settings": {
-            "icon_key": "efficacy",
-            "icon": "",
-            "title": "Efficacy",
-            "description": "Formulations developed with science-backed, effective ingredients."
-          }
-        },
-        "val_3": {
-          "type": "value",
-          "settings": {
-            "icon_key": "affordable",
-            "icon": "",
-            "title": "Affordable",
-            "description": "Skincare, accessible to all."
-          }
-        },
-        "val_4": {
-          "type": "value",
-          "settings": {
-            "icon_key": "globe",
-            "icon": "",
-            "title": "Only the best",
-            "description": "Ingredients sourced from across the world."
-          }
-        }
-      },
-      "block_order": [
-        "val_1",
-        "val_2",
-        "val_3",
-        "val_4"
-      ],
-      "settings": {
-        "title": "The future of personal care is here",
-        "subtitle": "Embrace Glamora, where each element is chosen for its scientific merit, offering you authentic, effective skincare solutions."
-      }
-    },
-    "177287695271a8ad79": {
-      "type": "apps",
-      "blocks": {
-        "judge_me_reviews_cards_carousel_TTVLyr": {
-          "type": "shopify://apps/judge-me-reviews/blocks/cards_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "show_sample_reviews": false,
-            "reviews_selection": "all",
-            "products": [],
-            "star_rating": "4_to_5_star",
-            "show_review_media": true,
-            "display_order": "media_first",
-            "no_image_fallback": "review_text_only",
-            "max_reviews": 20,
-            "review_length": "medium",
-            "text_size": "medium",
-            "image_ratio": "1",
-            "reviews_shown": 4,
-            "show_reviewer_name": true,
-            "show_product_name": true,
-            "hide_arrows_mobile": true,
-            "arrows_position": "sides",
-            "max_width": 1100,
-            "corner_styling": "soft",
-            "header_text_color": "#000000",
-            "text_color": "#000000",
-            "card_color": "#f9f9f9",
-            "stars_color": "",
-            "arrows_color": "#000000",
-            "transition_speed": 5,
-            "header_text": "Customers are saying",
-            "show_average_rating": true
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_cards_carousel_TTVLyr"
-      ],
-      "settings": {}
-    },
-    "home_faq": {
-      "type": "home_faq",
-      "settings": {
-        "title": "Frequently Asked Questions",
-        "empty_answer_text": "No answer provided.",
-        "empty_state_text": "FAQs will appear here once you add them in Shopify: Settings → Custom data → Shop. Create a metafield with namespace \"custom\" and key \"site_faqs\" (Multi-line text). Use the format: Q: Your question? A: Your answer."
-      }
-    },
-    "gst_notice": {
-      "type": "notice-strip",
-      "settings": {
-        "text": "<p><strong>Notice:</strong> Stay updated on launches, offers, and routine tips.</p>",
-        "link_text": "Know More",
-        "link_url": "/blogs/news"
+        "hero_eyebrow": "Pollution Defense Skincare",
+        "hero_title": "Your Skin vs The City.",
+        "hero_title_highlight": "We Pick Your Skin.",
+        "hero_subtext": "India's first 3-step pollution defense routine. Cleanse. Moisturize. Protect. Built for high-pollution city life.",
+        "hero_primary_text": "Shop The Routine",
+        "hero_primary_link": "/collections/all",
+        "hero_secondary_text": "How It Works",
+        "hero_secondary_link": "#routine",
+        "hero_product_1": "shopify://shop_images/facewash1.webp",
+        "hero_product_2": "shopify://shop_images/WhatsAppImage2026-03-14at12.28.49PM.webp",
+        "hero_product_3": "shopify://shop_images/ofetmglqptowmhrk2agf.webp",
+
+        "routine_eyebrow": "The Routine",
+        "routine_title": "3 Steps. Total Pollution Defense.",
+        "routine_subtitle": "Your morning shield against the city. Takes 5 minutes. Lasts all day.",
+        "bundle_title": "Get All 3 for Rs. 1,299",
+        "bundle_subtitle": "Save on the complete routine kit.",
+        "bundle_text": "Shop The Kit",
+        "bundle_link": "/collections/all",
+
+        "stats_eyebrow": "The Problem",
+        "stats_title": "Your City Is Aging Your Skin.",
+        "stats_subtitle": "Here's what happens every time you step outside.",
+
+        "products_eyebrow": "Best Sellers",
+        "products_title": "Built for city skin.",
+        "products_subtitle": "Every product in the range is formulated to cleanse, shield, or repair pollution damage.",
+
+        "ingredients_eyebrow": "What Goes In",
+        "ingredients_title": "Every ingredient earns its place.",
+        "ingredients_subtitle": "No fillers. No compromises. Just actives that fight pollution stress.",
+
+        "news_eyebrow": "Stay Protected",
+        "news_title": "Join the Pollution Defense Movement",
+        "news_subtitle": "Skincare tips, exclusive offers, and early access to launches.",
+        "news_placeholder": "Enter your email",
+        "news_button": "Sign Up"
       }
     }
   },
   "order": [
-    "hero_banner",
-    "featured_products",
-    "bundle_promo",
-    "brand_values",
-    "177287695271a8ad79",
-    "home_faq",
-    "gst_notice"
+    "homepage_pollution_defense"
   ]
 }

@@ -1,0 +1,99 @@
+{% render 'home-pollution-defense-content', section: section %}
+
+{% schema %}
+{
+  "name": "Homepage Defense",
+  "settings": [
+    { "type": "text", "id": "hero_eyebrow", "label": "Hero eyebrow", "default": "Pollution Defense Skincare" },
+    { "type": "text", "id": "hero_title", "label": "Hero title", "default": "Your Skin vs The City." },
+    { "type": "text", "id": "hero_title_highlight", "label": "Hero title highlight", "default": "We Pick Your Skin." },
+    { "type": "textarea", "id": "hero_subtext", "label": "Hero subtext", "default": "India's first 3-step pollution defense routine. Cleanse. Moisturize. Protect." },
+    { "type": "text", "id": "hero_primary_text", "label": "Hero primary button text", "default": "Shop The Routine" },
+    { "type": "url", "id": "hero_primary_link", "label": "Hero primary button link" },
+    { "type": "text", "id": "hero_secondary_text", "label": "Hero secondary button text", "default": "How It Works" },
+    { "type": "url", "id": "hero_secondary_link", "label": "Hero secondary button link" },
+    { "type": "image_picker", "id": "hero_product_1", "label": "Hero product image 1" },
+    { "type": "image_picker", "id": "hero_product_2", "label": "Hero product image 2" },
+    { "type": "image_picker", "id": "hero_product_3", "label": "Hero product image 3" },
+    { "type": "text", "id": "routine_eyebrow", "label": "Routine eyebrow", "default": "The Routine" },
+    { "type": "text", "id": "routine_title", "label": "Routine title", "default": "3 Steps. Total Pollution Defense." },
+    { "type": "textarea", "id": "routine_subtitle", "label": "Routine subtitle", "default": "Your morning shield against the city. Takes 5 minutes. Lasts all day." },
+    { "type": "text", "id": "bundle_title", "label": "Bundle title", "default": "Get All 3 for Rs. 1,299" },
+    { "type": "text", "id": "bundle_subtitle", "label": "Bundle subtitle", "default": "Save big on the complete routine bundle." },
+    { "type": "text", "id": "bundle_text", "label": "Bundle button text", "default": "Shop The Kit" },
+    { "type": "url", "id": "bundle_link", "label": "Bundle button link" },
+    { "type": "text", "id": "stats_eyebrow", "label": "Stats eyebrow", "default": "The Problem" },
+    { "type": "text", "id": "stats_title", "label": "Stats title", "default": "Your City Is Aging Your Skin." },
+    { "type": "textarea", "id": "stats_subtitle", "label": "Stats subtitle", "default": "Here's what happens every time you step outside." },
+    { "type": "text", "id": "products_eyebrow", "label": "Products eyebrow", "default": "Best Sellers" },
+    { "type": "text", "id": "products_title", "label": "Products title", "default": "Built for city skin." },
+    { "type": "textarea", "id": "products_subtitle", "label": "Products subtitle", "default": "Every product is formulated to cleanse, shield, or repair pollution damage." },
+    { "type": "text", "id": "ingredients_eyebrow", "label": "Ingredients eyebrow", "default": "What Goes In" },
+    { "type": "text", "id": "ingredients_title", "label": "Ingredients title", "default": "Every ingredient earns its place." },
+    { "type": "textarea", "id": "ingredients_subtitle", "label": "Ingredients subtitle", "default": "No fillers. No compromises. Just proven actives and botanicals." },
+    { "type": "text", "id": "news_eyebrow", "label": "Newsletter eyebrow", "default": "Stay Protected" },
+    { "type": "text", "id": "news_title", "label": "Newsletter title", "default": "Join the Pollution Defense Movement" },
+    { "type": "textarea", "id": "news_subtitle", "label": "Newsletter subtitle", "default": "Skincare tips, offers, and early access to launches." },
+    { "type": "text", "id": "news_placeholder", "label": "Newsletter input placeholder", "default": "Enter your email" },
+    { "type": "text", "id": "news_button", "label": "Newsletter button text", "default": "Sign Up" }
+  ],
+  "blocks": [
+    { "type": "trust_item", "name": "Trust item", "settings": [{ "type": "text", "id": "text", "label": "Text", "default": "Dermatologist Tested" }] },
+    { "type": "routine_step", "name": "Routine step", "settings": [
+      { "type": "checkbox", "id": "reverse", "label": "Reverse layout", "default": false },
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "text", "id": "label", "label": "Step label", "default": "Cleanse" },
+      { "type": "text", "id": "title", "label": "Title", "default": "Pollution Control Face Wash" },
+      { "type": "text", "id": "tagline", "label": "Tagline", "default": "Wash the city off your skin." },
+      { "type": "textarea", "id": "description", "label": "Description", "default": "Pollution-fighting cleanser for daily use." },
+      { "type": "text", "id": "price", "label": "Price", "default": "Rs. 469" },
+      { "type": "text", "id": "old_price", "label": "Old price", "default": "Rs. 599" },
+      { "type": "text", "id": "button_text", "label": "Button text", "default": "View Product" },
+      { "type": "url", "id": "button_link", "label": "Button link" }
+    ]},
+    { "type": "stat_card", "name": "Stat card", "settings": [
+      { "type": "checkbox", "id": "featured", "label": "Featured (tall card)", "default": false },
+      { "type": "text", "id": "number", "label": "Number", "default": "91%" },
+      { "type": "textarea", "id": "description", "label": "Description", "default": "People breathe unsafe air levels." }
+    ]},
+    { "type": "explainer_item", "name": "Explainer item", "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "PM2.5 and PM10 particles" },
+      { "type": "textarea", "id": "description", "label": "Description", "default": "Penetrate pores and stress skin." }
+    ]},
+    { "type": "product_card", "name": "Product card", "settings": [
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "text", "id": "type", "label": "Type", "default": "Face Wash" },
+      { "type": "text", "id": "title", "label": "Title", "default": "Pollution Control Face Wash" },
+      { "type": "text", "id": "price", "label": "Price", "default": "Rs. 469" },
+      { "type": "text", "id": "old_price", "label": "Old price", "default": "Rs. 599" },
+      { "type": "text", "id": "button_text", "label": "Button text", "default": "Add to Cart" },
+      { "type": "url", "id": "button_link", "label": "Button link" }
+    ]},
+    { "type": "ingredient", "name": "Ingredient", "settings": [
+      { "type": "text", "id": "symbol", "label": "Symbol", "default": "Gl" },
+      { "type": "text", "id": "title", "label": "Title", "default": "Glutathione" },
+      { "type": "textarea", "id": "description", "label": "Description", "default": "Master antioxidant for urban skin stress." }
+    ]},
+    { "type": "testimonial", "name": "Testimonial", "settings": [
+      { "type": "textarea", "id": "quote", "label": "Quote", "default": "My skin feels healthier and brighter in two weeks." },
+      { "type": "text", "id": "author", "label": "Author", "default": "Priya M." },
+      { "type": "text", "id": "location", "label": "Location", "default": "Delhi" }
+    ]}
+  ],
+  "max_blocks": 50,
+  "presets": [
+    {
+      "name": "Homepage Defense",
+      "blocks": [
+        { "type": "trust_item" }, { "type": "trust_item" }, { "type": "trust_item" }, { "type": "trust_item" }, { "type": "trust_item" }, { "type": "trust_item" },
+        { "type": "routine_step" }, { "type": "routine_step" }, { "type": "routine_step" },
+        { "type": "stat_card" }, { "type": "stat_card" }, { "type": "stat_card" },
+        { "type": "explainer_item" }, { "type": "explainer_item" }, { "type": "explainer_item" }, { "type": "explainer_item" },
+        { "type": "product_card" }, { "type": "product_card" }, { "type": "product_card" }, { "type": "product_card" },
+        { "type": "ingredient" }, { "type": "ingredient" }, { "type": "ingredient" }, { "type": "ingredient" }, { "type": "ingredient" }, { "type": "ingredient" },
+        { "type": "testimonial" }, { "type": "testimonial" }, { "type": "testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}

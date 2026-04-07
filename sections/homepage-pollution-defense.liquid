@@ -1,0 +1,455 @@
+{%- liquid
+  assign section_id = 'hpd-' | append: section.id
+-%}
+
+<section id="{{ section_id }}" class="hpd">
+  <style>
+    #{{ section_id }}{
+      --hpd-bg:#FAFAF7;--hpd-bg-alt:#F3F1ED;--hpd-bg-dark:#141413;--hpd-text:#141413;--hpd-text-2:#5C5B57;--hpd-text-3:#8A8985;
+      --hpd-teal:#0D8B7D;--hpd-teal-2:#1A9E8F;--hpd-teal-bg:#EBF5F3;--hpd-gold:#C5A44E;--hpd-border:#E8E6E1;--hpd-border-light:#F0EDE8;
+      --hpd-gap:clamp(80px,10vw,128px);--hpd-container:1360px;
+      color:var(--hpd-text);background:var(--hpd-bg);
+    }
+    #{{ section_id }} *{box-sizing:border-box}
+    #{{ section_id }} .hpd-wrap{max-width:var(--hpd-container);margin:0 auto;padding:0 clamp(20px,4vw,48px)}
+    #{{ section_id }} .hpd-section{padding:var(--hpd-gap) 0}
+    #{{ section_id }} .hpd-head{max-width:640px;margin:0 0 clamp(40px,5vw,64px)}
+    #{{ section_id }} .hpd-head.center{text-align:center;margin-left:auto;margin-right:auto}
+    #{{ section_id }} .hpd-eyebrow{display:inline-block;padding:7px 18px;border-radius:100px;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;margin-bottom:18px;background:var(--hpd-teal-bg);color:var(--hpd-teal)}
+    #{{ section_id }} .hpd-head h2{font-family:Fraunces,Georgia,serif;font-size:clamp(32px,4vw,52px);line-height:1.1;margin:0 0 16px}
+    #{{ section_id }} .hpd-head p{font-size:clamp(16px,1.8vw,20px);line-height:1.7;color:var(--hpd-text-2);margin:0}
+    #{{ section_id }} .hpd-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:999px;font-weight:600;text-decoration:none}
+    #{{ section_id }} .hpd-btn.primary{background:var(--hpd-teal);color:#fff}
+    #{{ section_id }} .hpd-btn.outline{border:1px solid var(--hpd-border);color:var(--hpd-text)}
+    #{{ section_id }} .hpd-hero{padding:clamp(60px,8vw,120px) 0 clamp(80px,10vw,140px)}
+    #{{ section_id }} .hpd-hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(40px,6vw,80px);align-items:center}
+    #{{ section_id }} .hpd-hero h1{font-family:Fraunces,Georgia,serif;font-size:clamp(40px,5.5vw,72px);line-height:1.05;margin:0 0 22px}
+    #{{ section_id }} .hpd-hero h1 span{color:var(--hpd-teal)}
+    #{{ section_id }} .hpd-sub{font-size:clamp(18px,2vw,21px);line-height:1.7;color:var(--hpd-text-2);max-width:52ch;margin:0 0 32px}
+    #{{ section_id }} .hpd-ctas{display:flex;gap:14px;flex-wrap:wrap}
+    #{{ section_id }} .hpd-display{position:relative;padding:48px 24px}
+    #{{ section_id }} .hpd-display-shape{position:absolute;inset:4% 6%;background:linear-gradient(160deg,rgba(13,139,125,.07),rgba(13,139,125,.03));border:1px solid rgba(13,139,125,.06);border-radius:2.5rem;transform:rotate(-2deg)}
+    #{{ section_id }} .hpd-products{position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:center;gap:clamp(12px,2vw,24px)}
+    #{{ section_id }} .hpd-products img{width:clamp(90px,10vw,130px);border-radius:12px;filter:drop-shadow(0 24px 48px rgba(13,139,125,.12))}
+    #{{ section_id }} .hpd-products img:nth-child(2){width:clamp(100px,12vw,150px);transform:translateY(-16px)}
+    #{{ section_id }} .hpd-trust{padding:20px 0;border-top:1px solid var(--hpd-border);border-bottom:1px solid var(--hpd-border);overflow:hidden}
+    #{{ section_id }} .hpd-trust-track{display:flex;gap:30px;align-items:center;white-space:nowrap;animation:hpd-marq 30s linear infinite}
+    #{{ section_id }} .hpd-trust-item{font-size:14px;color:var(--hpd-text-2);font-weight:500}
+    #{{ section_id }} .hpd-trust-dot{width:4px;height:4px;border-radius:50%;background:var(--hpd-border)}
+    @keyframes hpd-marq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    #{{ section_id }} .hpd-routine{display:flex;flex-direction:column;gap:clamp(56px,7vw,92px)}
+    #{{ section_id }} .hpd-row{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,5vw,72px);align-items:center}
+    #{{ section_id }} .hpd-row.reverse{grid-template-columns:.9fr 1.1fr}
+    #{{ section_id }} .hpd-img-shell{background:rgba(13,139,125,.035);border:1px solid rgba(13,139,125,.06);padding:8px;border-radius:2rem;max-width:440px;margin:0 auto}
+    #{{ section_id }} .hpd-img-core{border-radius:calc(2rem - 8px);overflow:hidden;aspect-ratio:4/5;background:var(--hpd-bg-alt)}
+    #{{ section_id }} .hpd-img-core img{width:100%;height:100%;object-fit:cover}
+    #{{ section_id }} .hpd-step{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--hpd-teal);color:#fff;font-family:Fraunces,Georgia,serif;margin-bottom:14px}
+    #{{ section_id }} .hpd-row h3{font-family:Fraunces,Georgia,serif;font-size:clamp(24px,3vw,36px);line-height:1.2;margin:0 0 8px}
+    #{{ section_id }} .hpd-tag{font-family:Fraunces,Georgia,serif;font-style:italic;color:var(--hpd-text-2);margin:0 0 10px}
+    #{{ section_id }} .hpd-desc{color:var(--hpd-text-2);line-height:1.75;margin:0 0 14px}
+    #{{ section_id }} .hpd-price{font-size:22px;font-weight:600;margin:0 0 16px}
+    #{{ section_id }} .hpd-old{font-size:15px;color:var(--hpd-text-3);text-decoration:line-through;margin-left:8px}
+    #{{ section_id }} .hpd-bundle{text-align:center;margin-top:clamp(40px,5vw,72px);padding:clamp(34px,4vw,54px);background:var(--hpd-teal-bg);border-radius:2rem;border:1px solid rgba(13,139,125,.08)}
+    #{{ section_id }} .hpd-bundle h3{font-family:Fraunces,Georgia,serif;font-size:clamp(22px,2.5vw,30px);margin:0 0 8px}
+    #{{ section_id }} .hpd-bundle p{color:var(--hpd-text-2);margin:0 0 22px}
+    #{{ section_id }} .hpd-stats{background:#0A1A18;color:#fff;position:relative}
+    #{{ section_id }} .hpd-stats .hpd-head h2{color:#fff}
+    #{{ section_id }} .hpd-stats .hpd-head p{color:rgba(255,255,255,.55)}
+    #{{ section_id }} .hpd-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    #{{ section_id }} .hpd-stat{padding:clamp(28px,3.8vw,44px);border-radius:1.4rem;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08)}
+    #{{ section_id }} .hpd-stat.big{grid-row:span 2}
+    #{{ section_id }} .hpd-stat .num{font-family:Fraunces,Georgia,serif;font-size:clamp(42px,6vw,78px);line-height:1;color:var(--hpd-gold);margin-bottom:12px}
+    #{{ section_id }} .hpd-stat p{margin:0;color:rgba(255,255,255,.66);line-height:1.6}
+    #{{ section_id }} .hpd-exp{margin-top:40px;display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+    #{{ section_id }} .hpd-exp h4{margin:0 0 6px;font-size:17px}
+    #{{ section_id }} .hpd-exp p{margin:0;color:rgba(255,255,255,.55);line-height:1.65}
+    #{{ section_id }} .hpd-sellers{display:flex;gap:18px;overflow-x:auto;padding-bottom:8px}
+    #{{ section_id }} .hpd-card{min-width:280px;max-width:360px;flex:0 0 auto;border:1px solid var(--hpd-border-light);padding:6px;border-radius:1.6rem;background:rgba(0,0,0,.015)}
+    #{{ section_id }} .hpd-card-core{background:var(--hpd-bg);border-radius:calc(1.6rem - 6px);overflow:hidden}
+    #{{ section_id }} .hpd-card-img{aspect-ratio:3/4;background:var(--hpd-bg-alt);position:relative}
+    #{{ section_id }} .hpd-card-img img{width:100%;height:100%;object-fit:cover}
+    #{{ section_id }} .hpd-qa{position:absolute;bottom:14px;left:14px;right:14px;background:var(--hpd-bg-dark);color:#fff;text-align:center;padding:10px;border-radius:10px;font-size:13px}
+    #{{ section_id }} .hpd-card-body{padding:18px}
+    #{{ section_id }} .hpd-card-type{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--hpd-text-3);margin:0 0 5px}
+    #{{ section_id }} .hpd-card-title{font-family:Fraunces,Georgia,serif;font-size:20px;line-height:1.3;margin:0 0 10px}
+    #{{ section_id }} .hpd-ingredients{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    #{{ section_id }} .hpd-ing{display:flex;gap:14px;padding:22px;border:1px solid var(--hpd-border-light);border-radius:1rem;background:#fff}
+    #{{ section_id }} .hpd-ing-sym{width:42px;height:42px;border-radius:12px;background:var(--hpd-teal-bg);color:var(--hpd-teal);display:grid;place-items:center;font-size:13px;font-weight:700;flex-shrink:0}
+    #{{ section_id }} .hpd-ing h4{margin:0 0 5px}
+    #{{ section_id }} .hpd-ing p{margin:0;color:var(--hpd-text-2);line-height:1.6}
+    #{{ section_id }} .hpd-test{background:var(--hpd-bg-alt)}
+    #{{ section_id }} .hpd-test-inner{max-width:780px;margin:0 auto;text-align:center}
+    #{{ section_id }} .hpd-test-quote{font-family:Fraunces,Georgia,serif;font-size:clamp(24px,3.2vw,36px);line-height:1.5;font-style:italic}
+    #{{ section_id }} .hpd-test-author{font-weight:600;margin-top:18px}
+    #{{ section_id }} .hpd-test-loc{color:var(--hpd-text-3);margin-top:4px}
+    #{{ section_id }} .hpd-news{background:var(--hpd-bg-alt);padding:clamp(80px,10vw,120px) 0;margin:clamp(40px,8vw,80px) 0}
+    #{{ section_id }} .hpd-news-inner{max-width:560px;margin:0 auto;text-align:center}
+    #{{ section_id }} .hpd-news-inner h2{font-family:Fraunces,Georgia,serif;font-size:clamp(28px,3.5vw,42px);line-height:1.15;margin:0 0 10px}
+    #{{ section_id }} .hpd-news-inner p{margin:0;color:var(--hpd-text-2)}
+    #{{ section_id }} .hpd-news-form{display:flex;gap:8px;margin-top:28px;background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.9);padding:8px;border-radius:999px}
+    #{{ section_id }} .hpd-news-form input{flex:1;border:0;background:transparent;padding:14px 18px;outline:none}
+    #{{ section_id }} .hpd-news-form button{border:0;background:var(--hpd-teal);color:#fff;border-radius:999px;padding:14px 24px;font-weight:600}
+    @media (max-width:1024px){
+      #{{ section_id }} .hpd-ingredients{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:768px){
+      #{{ section_id }} .hpd-hero-grid,#{{ section_id }} .hpd-row,#{{ section_id }} .hpd-row.reverse,#{{ section_id }} .hpd-grid,#{{ section_id }} .hpd-exp{grid-template-columns:1fr}
+      #{{ section_id }} .hpd-row.reverse .txt{order:1}
+      #{{ section_id }} .hpd-row.reverse .img{order:2}
+      #{{ section_id }} .hpd-stat.big{grid-row:span 1}
+      #{{ section_id }} .hpd-ingredients{grid-template-columns:1fr}
+      #{{ section_id }} .hpd-news-form{flex-direction:column;border-radius:1rem}
+      #{{ section_id }} .hpd-news-form button{border-radius:.75rem}
+    }
+  </style>
+
+  <div class="hpd-hero">
+    <div class="hpd-wrap">
+      <div class="hpd-hero-grid">
+        <div>
+          <span class="hpd-eyebrow">{{ section.settings.hero_eyebrow }}</span>
+          <h1>{{ section.settings.hero_title }} <span>{{ section.settings.hero_title_highlight }}</span></h1>
+          <p class="hpd-sub">{{ section.settings.hero_subtext }}</p>
+          <div class="hpd-ctas">
+            <a class="hpd-btn primary" href="{{ section.settings.hero_primary_link }}">{{ section.settings.hero_primary_text }}</a>
+            <a class="hpd-btn outline" href="{{ section.settings.hero_secondary_link }}">{{ section.settings.hero_secondary_text }}</a>
+          </div>
+        </div>
+        <div class="hpd-display">
+          <div class="hpd-display-shape"></div>
+          <div class="hpd-products">
+            {% if section.settings.hero_product_1 != blank %}<img src="{{ section.settings.hero_product_1 | image_url: width: 520 }}" alt="Hero product 1">{% endif %}
+            {% if section.settings.hero_product_2 != blank %}<img src="{{ section.settings.hero_product_2 | image_url: width: 520 }}" alt="Hero product 2">{% endif %}
+            {% if section.settings.hero_product_3 != blank %}<img src="{{ section.settings.hero_product_3 | image_url: width: 520 }}" alt="Hero product 3">{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hpd-trust">
+    <div class="hpd-wrap">
+      <div class="hpd-trust-track">
+        {% for block in section.blocks %}
+          {% if block.type == 'trust_item' %}
+            <span class="hpd-trust-item">{{ block.settings.text }}</span><span class="hpd-trust-dot"></span>
+          {% endif %}
+        {% endfor %}
+        {% for block in section.blocks %}
+          {% if block.type == 'trust_item' %}
+            <span class="hpd-trust-item">{{ block.settings.text }}</span><span class="hpd-trust-dot"></span>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="hpd-section" id="routine">
+    <div class="hpd-wrap">
+      <div class="hpd-head">
+        <span class="hpd-eyebrow">{{ section.settings.routine_eyebrow }}</span>
+        <h2>{{ section.settings.routine_title }}</h2>
+        <p>{{ section.settings.routine_subtitle }}</p>
+      </div>
+      <div class="hpd-routine">
+        {% assign step_count = 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'routine_step' %}
+            {% assign step_count = step_count | plus: 1 %}
+            <div class="hpd-row {% if block.settings.reverse %}reverse{% endif %}" {{ block.shopify_attributes }}>
+              <div class="img">
+                <div class="hpd-img-shell">
+                  <div class="hpd-img-core">
+                    {% if block.settings.image != blank %}
+                      <img src="{{ block.settings.image | image_url: width: 900 }}" alt="{{ block.settings.title | escape }}">
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="txt">
+                <div class="hpd-step">{{ step_count }}</div>
+                <p class="hpd-card-type">{{ block.settings.label }}</p>
+                <h3>{{ block.settings.title }}</h3>
+                <p class="hpd-tag">{{ block.settings.tagline }}</p>
+                <p class="hpd-desc">{{ block.settings.description }}</p>
+                <p class="hpd-price">{{ block.settings.price }}{% if block.settings.old_price != blank %}<span class="hpd-old">{{ block.settings.old_price }}</span>{% endif %}</p>
+                <a class="hpd-btn outline" href="{{ block.settings.button_link }}">{{ block.settings.button_text }}</a>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="hpd-bundle">
+        <h3>{{ section.settings.bundle_title }}</h3>
+        <p>{{ section.settings.bundle_subtitle }}</p>
+        <a class="hpd-btn primary" href="{{ section.settings.bundle_link }}">{{ section.settings.bundle_text }}</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hpd-section hpd-stats" id="stats">
+    <div class="hpd-wrap">
+      <div class="hpd-head">
+        <span class="hpd-eyebrow">{{ section.settings.stats_eyebrow }}</span>
+        <h2>{{ section.settings.stats_title }}</h2>
+        <p>{{ section.settings.stats_subtitle }}</p>
+      </div>
+      <div class="hpd-grid">
+        {% for block in section.blocks %}
+          {% if block.type == 'stat_card' %}
+            <div class="hpd-stat {% if block.settings.featured %}big{% endif %}" {{ block.shopify_attributes }}>
+              <div class="num">{{ block.settings.number }}</div>
+              <p>{{ block.settings.description }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="hpd-exp">
+        {% for block in section.blocks %}
+          {% if block.type == 'explainer_item' %}
+            <div {{ block.shopify_attributes }}>
+              <h4>{{ block.settings.title }}</h4>
+              <p>{{ block.settings.description }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="hpd-section" id="sellers">
+    <div class="hpd-wrap">
+      <div class="hpd-head">
+        <span class="hpd-eyebrow">{{ section.settings.products_eyebrow }}</span>
+        <h2>{{ section.settings.products_title }}</h2>
+        <p>{{ section.settings.products_subtitle }}</p>
+      </div>
+      <div class="hpd-sellers">
+        {% for block in section.blocks %}
+          {% if block.type == 'product_card' %}
+            <article class="hpd-card" {{ block.shopify_attributes }}>
+              <div class="hpd-card-core">
+                <div class="hpd-card-img">
+                  {% if block.settings.image != blank %}<img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.title | escape }}">{% endif %}
+                  <a class="hpd-qa" href="{{ block.settings.button_link }}">{{ block.settings.button_text }}</a>
+                </div>
+                <div class="hpd-card-body">
+                  <p class="hpd-card-type">{{ block.settings.type }}</p>
+                  <h3 class="hpd-card-title">{{ block.settings.title }}</h3>
+                  <p class="hpd-price">{{ block.settings.price }}{% if block.settings.old_price != blank %}<span class="hpd-old">{{ block.settings.old_price }}</span>{% endif %}</p>
+                </div>
+              </div>
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="hpd-section" id="ingredients">
+    <div class="hpd-wrap">
+      <div class="hpd-head">
+        <span class="hpd-eyebrow">{{ section.settings.ingredients_eyebrow }}</span>
+        <h2>{{ section.settings.ingredients_title }}</h2>
+        <p>{{ section.settings.ingredients_subtitle }}</p>
+      </div>
+      <div class="hpd-ingredients">
+        {% for block in section.blocks %}
+          {% if block.type == 'ingredient' %}
+            <div class="hpd-ing" {{ block.shopify_attributes }}>
+              <span class="hpd-ing-sym">{{ block.settings.symbol }}</span>
+              <div>
+                <h4>{{ block.settings.title }}</h4>
+                <p>{{ block.settings.description }}</p>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="hpd-section hpd-test">
+    <div class="hpd-wrap">
+      <div class="hpd-test-inner">
+        <div class="hpd-test-quote" id="{{ section_id }}-quote"></div>
+        <div class="hpd-test-author" id="{{ section_id }}-author"></div>
+        <div class="hpd-test-loc" id="{{ section_id }}-loc"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hpd-news" id="newsletter">
+    <div class="hpd-wrap">
+      <div class="hpd-news-inner">
+        <span class="hpd-eyebrow">{{ section.settings.news_eyebrow }}</span>
+        <h2>{{ section.settings.news_title }}</h2>
+        <p>{{ section.settings.news_subtitle }}</p>
+        {%- form 'customer', class: 'hpd-news-form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input type="email" name="contact[email]" placeholder="{{ section.settings.news_placeholder }}" required>
+          <button type="submit">{{ section.settings.news_button }}</button>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const root = document.getElementById('{{ section_id }}');
+      if (!root) return;
+      const reviews = [
+        {% for block in section.blocks %}
+          {% if block.type == 'testimonial' %}
+            {text: {{ block.settings.quote | json }}, author: {{ block.settings.author | json }}, location: {{ block.settings.location | json }}},
+          {% endif %}
+        {% endfor %}
+      ].filter(Boolean);
+      const quote = document.getElementById('{{ section_id }}-quote');
+      const author = document.getElementById('{{ section_id }}-author');
+      const loc = document.getElementById('{{ section_id }}-loc');
+      if (!quote || reviews.length === 0) return;
+      let i = 0;
+      function paint(idx){
+        quote.textContent = reviews[idx].text || '';
+        author.textContent = reviews[idx].author || '';
+        loc.textContent = reviews[idx].location || '';
+      }
+      paint(i);
+      if (reviews.length > 1) {
+        setInterval(function(){ i = (i + 1) % reviews.length; paint(i); }, 6000);
+      }
+    })();
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Homepage Defense",
+  "settings": [
+    { "type": "text", "id": "hero_eyebrow", "label": "Hero eyebrow", "default": "Pollution Defense Skincare" },
+    { "type": "text", "id": "hero_title", "label": "Hero title", "default": "Your Skin vs The City." },
+    { "type": "text", "id": "hero_title_highlight", "label": "Hero title highlight", "default": "We Pick Your Skin." },
+    { "type": "textarea", "id": "hero_subtext", "label": "Hero subtext", "default": "India's first 3-step pollution defense routine. Cleanse. Moisturize. Protect." },
+    { "type": "text", "id": "hero_primary_text", "label": "Hero primary button text", "default": "Shop The Routine" },
+    { "type": "url", "id": "hero_primary_link", "label": "Hero primary button link" },
+    { "type": "text", "id": "hero_secondary_text", "label": "Hero secondary button text", "default": "How It Works" },
+    { "type": "url", "id": "hero_secondary_link", "label": "Hero secondary button link" },
+    { "type": "image_picker", "id": "hero_product_1", "label": "Hero product image 1" },
+    { "type": "image_picker", "id": "hero_product_2", "label": "Hero product image 2" },
+    { "type": "image_picker", "id": "hero_product_3", "label": "Hero product image 3" },
+
+    { "type": "text", "id": "routine_eyebrow", "label": "Routine eyebrow", "default": "The Routine" },
+    { "type": "text", "id": "routine_title", "label": "Routine title", "default": "3 Steps. Total Pollution Defense." },
+    { "type": "textarea", "id": "routine_subtitle", "label": "Routine subtitle", "default": "Your morning shield against the city. Takes 5 minutes. Lasts all day." },
+    { "type": "text", "id": "bundle_title", "label": "Bundle title", "default": "Get All 3 for Rs. 1,299" },
+    { "type": "text", "id": "bundle_subtitle", "label": "Bundle subtitle", "default": "Save big on the complete routine bundle." },
+    { "type": "text", "id": "bundle_text", "label": "Bundle button text", "default": "Shop The Kit" },
+    { "type": "url", "id": "bundle_link", "label": "Bundle button link" },
+
+    { "type": "text", "id": "stats_eyebrow", "label": "Stats eyebrow", "default": "The Problem" },
+    { "type": "text", "id": "stats_title", "label": "Stats title", "default": "Your City Is Aging Your Skin." },
+    { "type": "textarea", "id": "stats_subtitle", "label": "Stats subtitle", "default": "Here's what happens every time you step outside." },
+
+    { "type": "text", "id": "products_eyebrow", "label": "Products eyebrow", "default": "Best Sellers" },
+    { "type": "text", "id": "products_title", "label": "Products title", "default": "Built for city skin." },
+    { "type": "textarea", "id": "products_subtitle", "label": "Products subtitle", "default": "Every product is formulated to cleanse, shield, or repair pollution damage." },
+
+    { "type": "text", "id": "ingredients_eyebrow", "label": "Ingredients eyebrow", "default": "What Goes In" },
+    { "type": "text", "id": "ingredients_title", "label": "Ingredients title", "default": "Every ingredient earns its place." },
+    { "type": "textarea", "id": "ingredients_subtitle", "label": "Ingredients subtitle", "default": "No fillers. No compromises. Just proven actives and botanicals." },
+
+    { "type": "text", "id": "news_eyebrow", "label": "Newsletter eyebrow", "default": "Stay Protected" },
+    { "type": "text", "id": "news_title", "label": "Newsletter title", "default": "Join the Pollution Defense Movement" },
+    { "type": "textarea", "id": "news_subtitle", "label": "Newsletter subtitle", "default": "Skincare tips, offers, and early access to launches." },
+    { "type": "text", "id": "news_placeholder", "label": "Newsletter input placeholder", "default": "Enter your email" },
+    { "type": "text", "id": "news_button", "label": "Newsletter button text", "default": "Sign Up" }
+  ],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust item",
+      "settings": [{ "type": "text", "id": "text", "label": "Text", "default": "Dermatologist Tested" }]
+    },
+    {
+      "type": "routine_step",
+      "name": "Routine step",
+      "settings": [
+        { "type": "checkbox", "id": "reverse", "label": "Reverse layout", "default": false },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "label", "label": "Step label", "default": "Cleanse" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Pollution Control Face Wash" },
+        { "type": "text", "id": "tagline", "label": "Tagline", "default": "Wash the city off your skin." },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Pollution-fighting cleanser for daily use." },
+        { "type": "text", "id": "price", "label": "Price", "default": "Rs. 469" },
+        { "type": "text", "id": "old_price", "label": "Old price", "default": "Rs. 599" },
+        { "type": "text", "id": "button_text", "label": "Button text", "default": "View Product" },
+        { "type": "url", "id": "button_link", "label": "Button link" }
+      ]
+    },
+    {
+      "type": "stat_card",
+      "name": "Stat card",
+      "settings": [
+        { "type": "checkbox", "id": "featured", "label": "Featured (tall card)", "default": false },
+        { "type": "text", "id": "number", "label": "Number", "default": "91%" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "People breathe unsafe air levels." }
+      ]
+    },
+    {
+      "type": "explainer_item",
+      "name": "Explainer item",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "PM2.5 and PM10 particles" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Penetrate pores and stress skin." }
+      ]
+    },
+    {
+      "type": "product_card",
+      "name": "Product card",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "type", "label": "Type", "default": "Face Wash" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Pollution Control Face Wash" },
+        { "type": "text", "id": "price", "label": "Price", "default": "Rs. 469" },
+        { "type": "text", "id": "old_price", "label": "Old price", "default": "Rs. 599" },
+        { "type": "text", "id": "button_text", "label": "Button text", "default": "Add to Cart" },
+        { "type": "url", "id": "button_link", "label": "Button link" }
+      ]
+    },
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        { "type": "text", "id": "symbol", "label": "Symbol", "default": "Gl" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Glutathione" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Master antioxidant for urban skin stress." }
+      ]
+    },
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "My skin feels healthier and brighter in two weeks." },
+        { "type": "text", "id": "author", "label": "Author", "default": "Priya M." },
+        { "type": "text", "id": "location", "label": "Location", "default": "Delhi" }
+      ]
+    }
+  ],
+  "max_blocks": 50,
+  "presets": [
+    {
+      "name": "Homepage Defense",
+      "blocks": [
+        { "type": "trust_item" }, { "type": "trust_item" }, { "type": "trust_item" }, { "type": "trust_item" }, { "type": "trust_item" }, { "type": "trust_item" },
+        { "type": "routine_step" }, { "type": "routine_step" }, { "type": "routine_step" },
+        { "type": "stat_card" }, { "type": "stat_card" }, { "type": "stat_card" },
+        { "type": "explainer_item" }, { "type": "explainer_item" }, { "type": "explainer_item" }, { "type": "explainer_item" },
+        { "type": "product_card" }, { "type": "product_card" }, { "type": "product_card" }, { "type": "product_card" },
+        { "type": "ingredient" }, { "type": "ingredient" }, { "type": "ingredient" }, { "type": "ingredient" }, { "type": "ingredient" }, { "type": "ingredient" },
+        { "type": "testimonial" }, { "type": "testimonial" }, { "type": "testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}
