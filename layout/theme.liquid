@@ -513,6 +513,7 @@
         }, true);
         // On load: if product is already in cart, show quantity row on each product card
         function syncProductCardsWithCart() {
+          if (!document.querySelector('form.product-card__form')) return;
           fetch('/cart.js').then(function(r) { return r.json(); }).then(function(cart) {
             var items = cart.items || [];
             var forms = document.querySelectorAll('form.product-card__form');

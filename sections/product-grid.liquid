@@ -656,13 +656,18 @@
       });
     }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initCarousels);
-    } else {
+    function scheduleInit() {
       initCarousels();
+      requestAnimationFrame(function () {
+        requestAnimationFrame(initCarousels);
+      });
+      setTimeout(initCarousels, 600);
     }
-    setTimeout(initCarousels, 500);
-    setTimeout(initCarousels, 1500);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', scheduleInit);
+    } else {
+      scheduleInit();
+    }
   })();
 </script>
 
