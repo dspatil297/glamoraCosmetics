@@ -16,7 +16,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/4.webp",
-            "mobile_image": "shopify://shop_images/moisturizing_spray.webp",
+            "mobile_image": "shopify://shop_images/4_135d1c35-3669-4dad-b735-eab46f6d46f8.webp",
             "link": "https://glamoracosmetics.in/products/glamora-pollution-control-moisturizing-spray"
           }
         },
@@ -24,7 +24,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/5.webp",
-            "mobile_image": "shopify://shop_images/face_wash.webp",
+            "mobile_image": "shopify://shop_images/5_af066c50-aeaf-4759-a253-638f55fa6ef4.webp",
             "link": "https://glamoracosmetics.in/products/glamora-pollution-control-face-wash"
           }
         },
@@ -32,7 +32,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/1_2.webp",
-            "mobile_image": "shopify://shop_images/suscreen.webp",
+            "mobile_image": "shopify://shop_images/1_2_8a23e7bb-8d1c-4cad-bb09-5baadd74b631.webp",
             "link": "https://glamoracosmetics.in/products/glamora-pollution-control-hybrid-sunscreen"
           }
         },
@@ -40,7 +40,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/2.webp",
-            "mobile_image": "shopify://shop_images/foaming_face_wash.webp",
+            "mobile_image": "shopify://shop_images/2_210be3d3-6af3-472a-b305-93b1937f15d9.webp",
             "link": "https://glamoracosmetics.in/products/glamora-pollution-control-foaming-face-wash"
           }
         }
@@ -89,7 +89,7 @@
       "type": "promo-banner",
       "settings": {
         "image": "shopify://shop_images/1.webp",
-        "mobile_image": "shopify://shop_images/2nd_banner_1_6bad8a0f-8ef9-43b4-acaf-120ef8caaf18.webp",
+        "mobile_image": "shopify://shop_images/1_7658d945-b4bb-4941-a861-1337b8cc7058.webp",
         "href": "/collections/all",
         "alt": "Bundle promotion",
         "placeholder_text": "Add a banner image in Theme Customizer for this section."
@@ -172,7 +172,7 @@
             "corner_styling": "soft",
             "header_text_color": "#000000",
             "text_color": "#000000",
-            "card_color": "#F9F9F9",
+            "card_color": "#f9f9f9",
             "stars_color": "",
             "arrows_color": "#000000",
             "transition_speed": 5,
