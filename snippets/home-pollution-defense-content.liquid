@@ -6,6 +6,9 @@
   assign hero_alt_1 = 'Pollution Control Face Wash'
   assign hero_alt_2 = 'Pollution Control Moisturizing Spray'
   assign hero_alt_3 = 'Pollution Control Hybrid Sunscreen'
+  assign hero_fallback_1 = 'https://cdn.shopify.com/s/files/1/0657/8651/1422/files/facewash1.webp?v=1775141692'
+  assign hero_fallback_2 = 'https://cdn.shopify.com/s/files/1/0657/8651/1422/files/WhatsAppImage2026-03-14at12.28.49PM.webp?v=1775141371'
+  assign hero_fallback_3 = 'https://cdn.shopify.com/s/files/1/0657/8651/1422/files/ofetmglqptowmhrk2agf.webp?v=1775141307'
 
   if hero_img_1 == blank or hero_img_2 == blank or hero_img_3 == blank
     assign routine_index = 0
@@ -92,7 +95,7 @@
       font-size: clamp(18px, 2vw, 21px); line-height: 1.7; color: var(--text-2); margin: 0 0 40px; font-weight: 300; max-width: 52ch;
     }
     #{{ section_id }} .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
-    #{{ section_id }} .hero-display { position: relative; display: flex; justify-content: center; align-items: center; padding: 48px 24px; }
+    #{{ section_id }} .hero-display { position: relative; display: flex; justify-content: center; align-items: center; padding: 48px 24px; min-height: 420px; }
     #{{ section_id }} .hero-display-shape {
       position: absolute; width: 88%; height: 92%; background: linear-gradient(160deg, rgba(13,139,125,0.07), rgba(13,139,125,0.03));
       border: 1px solid rgba(13,139,125,0.06); border-radius: 2.5rem; transform: rotate(-2deg);
@@ -228,9 +231,21 @@
         <div class="hero-display">
           <div class="hero-display-shape"></div>
           <div class="hero-products">
-            {% if hero_img_1 != blank %}<img class="hero-prod" width="520" height="640" src="{{ hero_img_1 | image_url: width: 520 }}" alt="{{ hero_alt_1 | escape }}">{% endif %}
-            {% if hero_img_2 != blank %}<img class="hero-prod" width="520" height="640" src="{{ hero_img_2 | image_url: width: 520 }}" alt="{{ hero_alt_2 | escape }}">{% endif %}
-            {% if hero_img_3 != blank %}<img class="hero-prod" width="520" height="640" src="{{ hero_img_3 | image_url: width: 520 }}" alt="{{ hero_alt_3 | escape }}">{% endif %}
+            {% if hero_img_1 != blank %}
+              <img class="hero-prod" width="520" height="640" src="{{ hero_img_1 | image_url: width: 520 }}" alt="{{ hero_alt_1 | escape }}">
+            {% else %}
+              <img class="hero-prod" width="520" height="640" src="{{ hero_fallback_1 }}" alt="{{ hero_alt_1 | escape }}">
+            {% endif %}
+            {% if hero_img_2 != blank %}
+              <img class="hero-prod" width="520" height="640" src="{{ hero_img_2 | image_url: width: 520 }}" alt="{{ hero_alt_2 | escape }}">
+            {% else %}
+              <img class="hero-prod" width="520" height="640" src="{{ hero_fallback_2 }}" alt="{{ hero_alt_2 | escape }}">
+            {% endif %}
+            {% if hero_img_3 != blank %}
+              <img class="hero-prod" width="520" height="640" src="{{ hero_img_3 | image_url: width: 520 }}" alt="{{ hero_alt_3 | escape }}">
+            {% else %}
+              <img class="hero-prod" width="520" height="640" src="{{ hero_fallback_3 }}" alt="{{ hero_alt_3 | escape }}">
+            {% endif %}
           </div>
         </div>
       </div>
