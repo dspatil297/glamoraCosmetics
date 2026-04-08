@@ -12,18 +12,47 @@
     "homepage_pollution_defense": {
       "type": "home-pollution-defense",
       "blocks": {
-        "trust_1": { "type": "trust_item", "settings": { "text": "Lab Formulated" } },
-        "trust_2": { "type": "trust_item", "settings": { "text": "Dermatologist Tested" } },
-        "trust_3": { "type": "trust_item", "settings": { "text": "Cruelty Free" } },
-        "trust_4": { "type": "trust_item", "settings": { "text": "All Skin Types" } },
-        "trust_5": { "type": "trust_item", "settings": { "text": "Free Shipping 999+" } },
-        "trust_6": { "type": "trust_item", "settings": { "text": "Made in India" } },
-
+        "trust_1": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Lab Formulated"
+          }
+        },
+        "trust_2": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Dermatologist Tested"
+          }
+        },
+        "trust_3": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Cruelty Free"
+          }
+        },
+        "trust_4": {
+          "type": "trust_item",
+          "settings": {
+            "text": "All Skin Types"
+          }
+        },
+        "trust_5": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Free Shipping 999+"
+          }
+        },
+        "trust_6": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Made in India"
+          }
+        },
         "step_1": {
           "type": "routine_step",
           "settings": {
             "reverse": false,
-            "image": "shopify://shop_images/facewash1.webp",
+            "product": "",
             "label": "Cleanse",
             "title": "Pollution Control Face Wash",
             "tagline": "Wash the city off your skin.",
@@ -38,7 +67,7 @@
           "type": "routine_step",
           "settings": {
             "reverse": true,
-            "image": "shopify://shop_images/WhatsAppImage2026-03-14at12.28.49PM.webp",
+            "product": "",
             "label": "Hydrate",
             "title": "Pollution Control Moisturizing Spray",
             "tagline": "Hydrate. Shield. Glow.",
@@ -53,7 +82,7 @@
           "type": "routine_step",
           "settings": {
             "reverse": false,
-            "image": "shopify://shop_images/ofetmglqptowmhrk2agf.webp",
+            "product": "",
             "label": "Protect",
             "title": "Pollution Control Hybrid Sunscreen SPF 50 PA++++",
             "tagline": "UV + pollution. Blocked.",
@@ -64,7 +93,6 @@
             "button_link": "/products/glamora-pollution-control-hybrid-sunscreen"
           }
         },
-
         "stat_1": {
           "type": "stat_card",
           "settings": {
@@ -89,7 +117,6 @@
             "description": "faster skin aging in polluted cities when UV and pollution combine."
           }
         },
-
         "exp_1": {
           "type": "explainer_item",
           "settings": {
@@ -118,11 +145,10 @@
             "description": "Can accumulate on skin over time and contribute to pigmentation and uneven tone."
           }
         },
-
         "prod_1": {
           "type": "product_card",
           "settings": {
-            "image": "shopify://shop_images/facewash1.webp",
+            "product": "",
             "type": "Face Wash",
             "title": "Pollution Control Face Wash",
             "price": "Rs. 469",
@@ -134,7 +160,7 @@
         "prod_2": {
           "type": "product_card",
           "settings": {
-            "image": "shopify://shop_images/foamingfacewash_p.webp",
+            "product": "",
             "type": "Face Wash",
             "title": "Pollution Control Foaming Face Wash",
             "price": "Rs. 399",
@@ -146,7 +172,7 @@
         "prod_3": {
           "type": "product_card",
           "settings": {
-            "image": "shopify://shop_images/WhatsAppImage2026-03-14at12.28.49PM.webp",
+            "product": "",
             "type": "Moisturizer",
             "title": "Pollution Control Moisturizing Spray",
             "price": "Rs. 649",
@@ -158,7 +184,7 @@
         "prod_4": {
           "type": "product_card",
           "settings": {
-            "image": "shopify://shop_images/ofetmglqptowmhrk2agf.webp",
+            "product": "",
             "type": "Sunscreen",
             "title": "Pollution Control Hybrid Sunscreen SPF 50",
             "price": "Rs. 669",
@@ -167,14 +193,54 @@
             "button_link": "/products/glamora-pollution-control-hybrid-sunscreen"
           }
         },
-
-        "ing_1": { "type": "ingredient", "settings": { "symbol": "Gl", "title": "Glutathione", "description": "Master antioxidant that neutralizes pollution-triggered free radicals." } },
-        "ing_2": { "type": "ingredient", "settings": { "symbol": "SA", "title": "Salicylic Acid", "description": "Helps unclog pores from grime buildup and keeps texture clear." } },
-        "ing_3": { "type": "ingredient", "settings": { "symbol": "VC", "title": "Vitamin C (MAP)", "description": "Fights oxidative stress and supports brighter, even-looking skin." } },
-        "ing_4": { "type": "ingredient", "settings": { "symbol": "HA", "title": "Hyaluronic Acid", "description": "Deep hydration that reinforces skin comfort in dry city air." } },
-        "ing_5": { "type": "ingredient", "settings": { "symbol": "AV", "title": "Aloe Vera", "description": "Soothes skin stressed by environmental irritants and heat." } },
-        "ing_6": { "type": "ingredient", "settings": { "symbol": "CW", "title": "Coconut Water", "description": "Lightweight hydration with a fresh, breathable feel." } },
-
+        "ing_1": {
+          "type": "ingredient",
+          "settings": {
+            "symbol": "Gl",
+            "title": "Glutathione",
+            "description": "Master antioxidant that neutralizes pollution-triggered free radicals."
+          }
+        },
+        "ing_2": {
+          "type": "ingredient",
+          "settings": {
+            "symbol": "SA",
+            "title": "Salicylic Acid",
+            "description": "Helps unclog pores from grime buildup and keeps texture clear."
+          }
+        },
+        "ing_3": {
+          "type": "ingredient",
+          "settings": {
+            "symbol": "VC",
+            "title": "Vitamin C (MAP)",
+            "description": "Fights oxidative stress and supports brighter, even-looking skin."
+          }
+        },
+        "ing_4": {
+          "type": "ingredient",
+          "settings": {
+            "symbol": "HA",
+            "title": "Hyaluronic Acid",
+            "description": "Deep hydration that reinforces skin comfort in dry city air."
+          }
+        },
+        "ing_5": {
+          "type": "ingredient",
+          "settings": {
+            "symbol": "AV",
+            "title": "Aloe Vera",
+            "description": "Soothes skin stressed by environmental irritants and heat."
+          }
+        },
+        "ing_6": {
+          "type": "ingredient",
+          "settings": {
+            "symbol": "CW",
+            "title": "Coconut Water",
+            "description": "Lightweight hydration with a fresh, breathable feel."
+          }
+        },
         "test_1": {
           "type": "testimonial",
           "settings": {
@@ -201,13 +267,35 @@
         }
       },
       "block_order": [
-        "trust_1", "trust_2", "trust_3", "trust_4", "trust_5", "trust_6",
-        "step_1", "step_2", "step_3",
-        "stat_1", "stat_2", "stat_3",
-        "exp_1", "exp_2", "exp_3", "exp_4",
-        "prod_1", "prod_2", "prod_3", "prod_4",
-        "ing_1", "ing_2", "ing_3", "ing_4", "ing_5", "ing_6",
-        "test_1", "test_2", "test_3"
+        "trust_1",
+        "trust_2",
+        "trust_3",
+        "trust_4",
+        "trust_5",
+        "trust_6",
+        "step_1",
+        "step_2",
+        "step_3",
+        "stat_1",
+        "stat_2",
+        "stat_3",
+        "exp_1",
+        "exp_2",
+        "exp_3",
+        "exp_4",
+        "prod_1",
+        "prod_2",
+        "prod_3",
+        "prod_4",
+        "ing_1",
+        "ing_2",
+        "ing_3",
+        "ing_4",
+        "ing_5",
+        "ing_6",
+        "test_1",
+        "test_2",
+        "test_3"
       ],
       "settings": {
         "hero_eyebrow": "Pollution Defense Skincare",
@@ -218,10 +306,9 @@
         "hero_primary_link": "/collections/all",
         "hero_secondary_text": "How It Works",
         "hero_secondary_link": "#routine",
-        "hero_product_1": "shopify://shop_images/facewash1.webp",
-        "hero_product_2": "shopify://shop_images/WhatsAppImage2026-03-14at12.28.49PM.webp",
-        "hero_product_3": "shopify://shop_images/ofetmglqptowmhrk2agf.webp",
-
+        "hero_product_1": "glamora-pollution-control-face-wash",
+        "hero_product_2": "glamora-pollution-control-moisturizing-spray",
+        "hero_product_3": "glamora-pollution-control-hybrid-sunscreen",
         "routine_eyebrow": "The Routine",
         "routine_title": "3 Steps. Total Pollution Defense.",
         "routine_subtitle": "Your morning shield against the city. Takes 5 minutes. Lasts all day.",
@@ -229,19 +316,15 @@
         "bundle_subtitle": "Save on the complete routine kit.",
         "bundle_text": "Shop The Kit",
         "bundle_link": "/collections/all",
-
         "stats_eyebrow": "The Problem",
         "stats_title": "Your City Is Aging Your Skin.",
         "stats_subtitle": "Here's what happens every time you step outside.",
-
         "products_eyebrow": "Best Sellers",
         "products_title": "Built for city skin.",
         "products_subtitle": "Every product in the range is formulated to cleanse, shield, or repair pollution damage.",
-
         "ingredients_eyebrow": "What Goes In",
         "ingredients_title": "Every ingredient earns its place.",
         "ingredients_subtitle": "No fillers. No compromises. Just actives that fight pollution stress.",
-
         "news_eyebrow": "Stay Protected",
         "news_title": "Join the Pollution Defense Movement",
         "news_subtitle": "Skincare tips, exclusive offers, and early access to launches.",
