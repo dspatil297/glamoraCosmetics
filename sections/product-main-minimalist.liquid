@@ -11,6 +11,84 @@
     assign has_discount = true
     assign discount_pct = compare | minus: price | times: 100 | divided_by: compare | round
   endif
+
+  assign faq_items = '' | split: ''
+  assign faq_meta = product.metafields.custom.product_page_faq
+  assign how_to_use_meta = product.metafields.custom.how_to_use
+  assign how_to_use_content = how_to_use_meta | metafield_text | default: how_to_use_meta.value | default: how_to_use_meta | strip
+  assign howto_steps_default_string = 'Wet your face|||Splash lukewarm water to open pores and prepare skin for deep cleansing.|||0:00###STEP###Apply and massage|||Coin-sized amount. Massage in circular motions for 45-60 seconds. Focus on T-zone.|||0:15###STEP###Rinse clean|||Wash off with cool water to close pores. Pat dry with a clean towel - never rub.|||1:00###STEP###Continue routine|||While skin is still damp, apply the Moisturizing Spray (Step 2) for maximum absorption.|||1:30'
+  assign howto_steps = howto_steps_default_string | split: '###STEP###'
+  if how_to_use_content != blank
+    assign raw_howto_lines = how_to_use_content | newline_to_br | split: '<br />'
+    assign parsed_steps_string = ''
+    assign parsed_count = 0
+    for raw_line in raw_howto_lines
+      assign cleaned_line = raw_line | strip
+      if cleaned_line == ''
+        continue
+      endif
+      assign line_parts = cleaned_line | split: '|'
+      if line_parts.size >= 3
+        assign parsed_title = line_parts[0] | strip
+        assign parsed_text = line_parts[1] | strip
+        assign parsed_time = line_parts[2] | strip
+        if parsed_title != '' and parsed_text != '' and parsed_time != ''
+          if parsed_steps_string != ''
+            assign parsed_steps_string = parsed_steps_string | append: '###STEP###'
+          endif
+          assign parsed_steps_string = parsed_steps_string | append: parsed_title | append: '|||' | append: parsed_text | append: '|||' | append: parsed_time
+          assign parsed_count = parsed_count | plus: 1
+        endif
+      endif
+      if parsed_count == 4
+        break
+      endif
+    endfor
+    if parsed_count == 4
+      assign howto_steps = parsed_steps_string | split: '###STEP###'
+    endif
+  endif
+  if faq_meta != blank
+    assign faq_text = faq_meta | metafield_text | default: faq_meta | strip
+    if faq_text != blank
+      assign faq_text = faq_text | replace: 'Q :', 'Q:'
+      assign faq_text = faq_text | replace: 'q:', 'Q:'
+      assign faq_text = faq_text | replace: 'q :', 'Q:'
+      assign faq_text = faq_text | replace: 'A :', 'A:'
+      assign faq_text = faq_text | replace: 'a:', 'A:'
+      assign faq_text = faq_text | replace: 'a :', 'A:'
+      assign raw_chunks = faq_text | split: 'Q:'
+      assign faq_items_string = ''
+      for chunk in raw_chunks
+        assign cleaned = chunk | strip
+        if cleaned == ''
+          continue
+        endif
+        assign parts = cleaned | split: 'A:'
+        assign question = parts[0] | strip
+        assign answer = ''
+        if parts.size > 1
+          assign answer = parts[1]
+          if parts.size > 2
+            for extra in parts offset:2
+              assign answer = answer | append: 'A:' | append: extra
+            endfor
+          endif
+          assign answer = answer | strip
+        endif
+        if question != '' and answer != ''
+          assign qa_pair = question | append: '|||' | append: answer
+          if faq_items_string != ''
+            assign faq_items_string = faq_items_string | append: '###FAQ###'
+          endif
+          assign faq_items_string = faq_items_string | append: qa_pair
+        endif
+      endfor
+      if faq_items_string != ''
+        assign faq_items = faq_items_string | split: '###FAQ###'
+      endif
+    endif
+  endif
 -%}
 
 <section class="pdpx" id="pdpx-{{ section.id }}">
@@ -174,13 +252,21 @@
     <div class="container">
       <div class="howto-header reveal">
         <h2>How to use</h2>
-        <p>A 90-second ritual that makes a real difference. Use twice daily — morning and night.</p>
+        <p>A 90-second ritual that makes a real difference. Use twice daily - morning and night.</p>
       </div>
       <div class="howto-grid">
-        <div class="howto-step reveal"><div class="howto-num">1</div><h4>Wet your face</h4><p>Splash lukewarm water to open pores and prepare skin for deep cleansing.</p><span class="howto-timing">0:00</span></div>
-        <div class="howto-step reveal reveal-d1"><div class="howto-num">2</div><h4>Apply and massage</h4><p>Coin-sized amount. Massage in circular motions for 45-60 seconds. Focus on T-zone.</p><span class="howto-timing">0:15</span></div>
-        <div class="howto-step reveal reveal-d2"><div class="howto-num">3</div><h4>Rinse clean</h4><p>Wash off with cool water to close pores. Pat dry with a clean towel — never rub.</p><span class="howto-timing">1:00</span></div>
-        <div class="howto-step reveal reveal-d3"><div class="howto-num">4</div><h4>Continue routine</h4><p>While skin is still damp, apply the Moisturizing Spray (Step 2) for maximum absorption.</p><span class="howto-timing">1:30</span></div>
+        {%- for step in howto_steps limit: 4 -%}
+          {%- assign step_parts = step | split: '|||' -%}
+          {%- assign step_title = step_parts[0] | strip -%}
+          {%- assign step_text = step_parts[1] | strip -%}
+          {%- assign step_time = step_parts[2] | strip -%}
+          <div class="howto-step reveal{% if forloop.index > 1 %} reveal-d{{ forloop.index0 }}{% endif %}">
+            <div class="howto-num">{{ forloop.index }}</div>
+            <h4>{{ step_title }}</h4>
+            <p>{{ step_text }}</p>
+            <span class="howto-timing">{{ step_time }}</span>
+          </div>
+        {%- endfor -%}
       </div>
     </div>
   </section>
@@ -226,7 +312,35 @@
       </div>
     </div>
   </section>
-  <section class="faq-section"><div class="container"><div class="faq-header reveal"><h2>Frequently asked questions</h2></div><div class="faq-list"><div class="faq-item"><button type="button" class="faq-question">How is this different from a regular face wash?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Regular face washes clean surface-level dirt and oil. This one is formulated to specifically target PM2.5 particles and city grime while supporting brighter skin.</p></div></div><div class="faq-item"><button type="button" class="faq-question">Can I use this twice a day?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Yes. The formula is gentle enough for daily morning and evening use across skin types.</p></div></div><div class="faq-item"><button type="button" class="faq-question">Will it dry out my skin?<span class="faq-icon">+</span></button><div class="faq-answer"><p>No. Hydrating ingredients help prevent post-wash tightness.</p></div></div></div></div></section>
+  <section class="faq-section">
+    <div class="container">
+      <div class="faq-header reveal"><h2>Frequently asked questions</h2></div>
+      <div class="faq-list">
+        {%- if faq_items.size > 0 -%}
+          {%- for item in faq_items -%}
+            {%- assign qa_parts = item | split: '|||' -%}
+            {%- assign question = qa_parts[0] | strip | replace: '&amp;', '&' -%}
+            {%- assign answer = qa_parts[1] | strip | replace: '&amp;', '&' -%}
+            {%- if question != blank and answer != blank -%}
+              <div class="faq-item">
+                <button type="button" class="faq-question">
+                  {{ question }}
+                  <span class="faq-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </span>
+                </button>
+                <div class="faq-answer"><p>{{ answer | newline_to_br }}</p></div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          <div class="faq-item"><button type="button" class="faq-question">How is this different from a regular face wash?<span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="faq-answer"><p>Regular face washes clean surface-level dirt and oil. This one is formulated to specifically target PM2.5 particles and city grime while supporting brighter skin.</p></div></div>
+          <div class="faq-item"><button type="button" class="faq-question">Can I use this twice a day?<span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="faq-answer"><p>Yes. The formula is gentle enough for daily morning and evening use across skin types.</p></div></div>
+          <div class="faq-item"><button type="button" class="faq-question">Will it dry out my skin?<span class="faq-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="faq-answer"><p>No. Hydrating ingredients help prevent post-wash tightness.</p></div></div>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
 
   <div class="sticky-bar" id="stickyBar-{{ section.id }}"><div class="container"><div class="sticky-bar-inner"><div class="sticky-bar-info"><span class="sticky-bar-name">{{ product.title }}</span><span class="sticky-bar-price" data-sticky-price>{{ price | money }}</span></div><button class="sticky-bar-cta" type="submit" form="{{ form_id }}" name="add">Add to Cart</button></div></div></div>
 </section>
@@ -306,8 +420,50 @@
   .routine-crosssell{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;} .crosssell-shell{background:rgba(0,0,0,.015);border:1px solid var(--border-light);padding:6px;border-radius:1.75rem;}
   .crosssell-core{background:#fff;border-radius:calc(1.75rem - 6px);overflow:hidden;display:flex;flex-direction:column;} .crosssell-img{aspect-ratio:4/5;background:var(--bg-alt);position:relative;} .crosssell-img img{width:100%;height:100%;object-fit:cover;}
   .crosssell-body{padding:24px 20px;} .crosssell-name{font-family:var(--font-display);font-size:19px;margin:0 0 8px;} .crosssell-price{font-size:18px;font-weight:600;} .current-tag{position:absolute;top:20px;left:20px;padding:5px 12px;background:var(--teal);color:#fff;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
-  .faq-list{max-width:760px;margin:0 auto;} .faq-item{border-bottom:1px solid var(--border);} .faq-question{width:100%;display:flex;align-items:center;justify-content:space-between;padding:24px 0;font-size:16px;font-weight:600;border:0;background:none;text-align:left;cursor:pointer;}
-  .faq-answer{max-height:0;overflow:hidden;transition:max-height .5s var(--ease),padding .5s var(--ease);} .faq-item.open .faq-answer{max-height:300px;padding-bottom:24px;} .faq-answer p{font-size:15px;line-height:1.75;color:var(--text-2);margin:0;}
+  #pdpx-{{ section.id }} .faq-header{text-align:center;max-width:560px;margin:0 auto clamp(40px,5vw,64px);}
+  #pdpx-{{ section.id }} .faq-header h2{font-family:var(--font-display);font-size:clamp(28px,3.5vw,42px);font-weight:600;line-height:1.15;letter-spacing:-.025em;color:var(--text);}
+  #pdpx-{{ section.id }} .faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:10px;}
+  #pdpx-{{ section.id }} .faq-item{
+    border:1px solid var(--border) !important;
+    border-radius:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    transform:none !important;
+    transition:border-color .2s ease !important;
+  }
+  #pdpx-{{ section.id }} .faq-item:hover{
+    border-color:#000 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    transform:none !important;
+  }
+  #pdpx-{{ section.id }} .faq-question{
+    width:100%;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:24px 20px;
+    font-size:16px;font-weight:600;
+    color:var(--text);
+    text-align:left;
+    transition:none;
+    border:0;background:transparent !important;
+    box-shadow:none !important;
+    transform:none !important;
+  }
+  #pdpx-{{ section.id }} .faq-question:hover{color:var(--text);}
+  #pdpx-{{ section.id }} .faq-icon{
+    width:28px;height:28px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    display:grid;place-items:center;
+    flex-shrink:0;
+    transition:all .4s var(--ease);
+  }
+  #pdpx-{{ section.id }} .faq-item.open .faq-icon{background:var(--teal);border-color:var(--teal);color:#fff;transform:rotate(45deg);}
+  #pdpx-{{ section.id }} .faq-answer{max-height:0;overflow:hidden;transition:max-height .5s var(--ease),padding .5s var(--ease);padding:0 20px;}
+  #pdpx-{{ section.id }} .faq-item.open .faq-answer{max-height:300px;padding:0 20px 24px;}
+  #pdpx-{{ section.id }} .faq-answer p{font-size:15px;line-height:1.75;color:var(--text-2);font-weight:300;margin:0;}
   .reviews-summary{display:flex;align-items:center;justify-content:center;gap:40px;margin-bottom:clamp(40px,5vw,64px);flex-wrap:wrap;} .reviews-score{text-align:center;} .big-number{font-family:var(--font-display);font-size:64px;font-weight:700;line-height:1;letter-spacing:-.03em;}
   .star-breakdown{width:240px;} .star-row{display:grid;grid-template-columns:20px 1fr 36px;gap:10px;align-items:center;padding:3px 0;} .star-row-track{height:6px;background:var(--border);border-radius:6px;overflow:hidden;} .star-row-fill{height:100%;background:#F5A623;border-radius:6px;}
   .sticky-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(250,250,247,.95);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:12px 0;z-index:400;transform:translateY(100%);transition:transform .5s var(--ease);}
