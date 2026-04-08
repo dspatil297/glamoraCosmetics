@@ -15,7 +15,13 @@
   assign faq_items = '' | split: ''
   assign faq_meta = product.metafields.custom.product_page_faq
   assign how_to_use_meta = product.metafields.custom.how_to_use
-  assign how_to_use_content = how_to_use_meta | metafield_text | default: how_to_use_meta.value | default: how_to_use_meta | strip
+  assign how_to_use_content = how_to_use_meta | metafield_text | strip
+  if how_to_use_content == blank and how_to_use_meta.value != blank
+    assign how_to_use_content = how_to_use_meta.value | join: '<br />' | strip
+  endif
+  if how_to_use_content == blank
+    assign how_to_use_content = how_to_use_meta.value | default: how_to_use_meta | strip
+  endif
   assign howto_steps_default_string = 'Wet your face|||Splash lukewarm water to open pores and prepare skin for deep cleansing.|||0:00###STEP###Apply and massage|||Coin-sized amount. Massage in circular motions for 45-60 seconds. Focus on T-zone.|||0:15###STEP###Rinse clean|||Wash off with cool water to close pores. Pat dry with a clean towel - never rub.|||1:00###STEP###Continue routine|||While skin is still damp, apply the Moisturizing Spray (Step 2) for maximum absorption.|||1:30'
   assign howto_steps = howto_steps_default_string | split: '###STEP###'
   if how_to_use_content != blank
