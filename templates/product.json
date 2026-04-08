@@ -9,16 +9,323 @@
  */
 {
   "sections": {
-    "product_main": {
+    "product_main_minimalist_NThehR": {
       "type": "product-main-minimalist",
+      "blocks": {
+        "add_to_cart_button_Kb8PaJ": {
+          "type": "add_to_cart_button",
+          "settings": {
+            "label": "Add to Cart",
+            "style": "solid"
+          }
+        },
+        "kwik_cod_checkout_buy_now_button_beBaXm": {
+          "type": "shopify://apps/kwik-cod-checkout/blocks/buy_now_button/74f36c20-677c-4aa2-b179-1769aa61abaa",
+          "settings": {
+            "gkc_button_text": "Buy Now",
+            "gkc_button_subtext": "",
+            "gkc_button_bg": "#0d8b7d",
+            "gkc_text_color": "#ffffff",
+            "gk_image": true
+          }
+        },
+        "love_point_B9XFfq": {
+          "type": "love_point",
+          "settings": {
+            "text": "Removes 99.9% of PM2.5 pollutant particles"
+          }
+        },
+        "love_point_haBrGH": {
+          "type": "love_point",
+          "settings": {
+            "text": "Brightens skin with antioxidant active support"
+          }
+        },
+        "love_point_X6M9pn": {
+          "type": "love_point",
+          "settings": {
+            "text": "Hydrates while cleansing without tightness"
+          }
+        },
+        "love_point_Bnxxaq": {
+          "type": "love_point",
+          "settings": {
+            "text": "Safe for daily use, all skin types"
+          }
+        },
+        "trust_item_7PBhCA": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Dermatologist Tested"
+          }
+        },
+        "trust_item_XJNa4A": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Cruelty Free"
+          }
+        },
+        "trust_item_zpJrMq": {
+          "type": "trust_item",
+          "settings": {
+            "text": "Free Shipping 999+"
+          }
+        },
+        "trust_item_JDwQie": {
+          "type": "trust_item",
+          "settings": {
+            "text": "No Parabens or Sulfates"
+          }
+        },
+        "efficacy_item_jqRBfL": {
+          "type": "efficacy_item",
+          "settings": {
+            "value": "99.9%",
+            "label": "PM2.5 pollutant particles removed after single wash"
+          }
+        },
+        "efficacy_item_BrhCDA": {
+          "type": "efficacy_item",
+          "settings": {
+            "value": "88%",
+            "label": "Users saw brighter skin within 14 days of daily use"
+          }
+        },
+        "efficacy_item_QTEA9w": {
+          "type": "efficacy_item",
+          "settings": {
+            "value": "93%",
+            "label": "Reported no post-wash dryness or tightness"
+          }
+        },
+        "efficacy_item_MxWQtt": {
+          "type": "efficacy_item",
+          "settings": {
+            "value": "4.4",
+            "label": "Average rating across verified reviews"
+          }
+        },
+        "ingredient_item_p9yqqB": {
+          "type": "ingredient_item",
+          "settings": {
+            "symbol": "Gl",
+            "title": "Glutathione",
+            "description": "Master antioxidant. Neutralizes pollution-induced free radicals. Brightens skin from within."
+          }
+        },
+        "ingredient_item_gBeWCr": {
+          "type": "ingredient_item",
+          "settings": {
+            "symbol": "KA",
+            "title": "Kojic Acid",
+            "description": "Fades dark spots and pollution-caused pigmentation. Evens skin tone over consistent use."
+          }
+        },
+        "ingredient_item_iGNgrX": {
+          "type": "ingredient_item",
+          "settings": {
+            "symbol": "VC",
+            "title": "Vitamin C (MAP)",
+            "description": "Stable form of Vitamin C. Fights oxidative stress from city air. Boosts collagen production."
+          }
+        },
+        "ingredient_item_jH87mr": {
+          "type": "ingredient_item",
+          "settings": {
+            "symbol": "HA",
+            "title": "Hyaluronic Acid",
+            "description": "Deep hydration while cleansing. Maintains moisture barrier. Zero post-wash tightness."
+          }
+        },
+        "concern_item_rPT9HR": {
+          "type": "concern_item",
+          "settings": {
+            "text": "Dull, tired-looking skin"
+          }
+        },
+        "concern_item_bdP4Ur": {
+          "type": "concern_item",
+          "settings": {
+            "text": "Acne and clogged pores"
+          }
+        },
+        "concern_item_iCG8V3": {
+          "type": "concern_item",
+          "settings": {
+            "text": "Dark spots and uneven tone"
+          }
+        },
+        "concern_item_TYpfMG": {
+          "type": "concern_item",
+          "settings": {
+            "text": "Post-wash dryness"
+          }
+        },
+        "skin_type_item_rBJMVk": {
+          "type": "skin_type_item",
+          "settings": {
+            "text": "Oily"
+          }
+        },
+        "skin_type_item_DM4YPM": {
+          "type": "skin_type_item",
+          "settings": {
+            "text": "Combination"
+          }
+        },
+        "skin_type_item_hFWVY6": {
+          "type": "skin_type_item",
+          "settings": {
+            "text": "Normal"
+          }
+        },
+        "skin_type_item_Hftg63": {
+          "type": "skin_type_item",
+          "settings": {
+            "text": "Dry"
+          }
+        },
+        "skin_type_item_qxY8t9": {
+          "type": "skin_type_item",
+          "settings": {
+            "text": "Sensitive"
+          }
+        },
+        "skin_type_item_jDDbWA": {
+          "type": "skin_type_item",
+          "settings": {
+            "text": "Acne-Prone"
+          }
+        },
+        "study_item_qP4876": {
+          "type": "study_item",
+          "settings": {
+            "percent": "97%",
+            "label": "Felt skin was cleaner and less congested",
+            "fill": "97%"
+          }
+        },
+        "study_item_4cTbMm": {
+          "type": "study_item",
+          "settings": {
+            "percent": "93%",
+            "label": "Noticed no dryness or tightness after washing",
+            "fill": "93%"
+          }
+        },
+        "study_item_9Djj78": {
+          "type": "study_item",
+          "settings": {
+            "percent": "88%",
+            "label": "Saw visibly brighter skin within 2 weeks",
+            "fill": "88%"
+          }
+        },
+        "review_item_MDDJNr": {
+          "type": "review_item",
+          "settings": {
+            "quote": "\"I live in Delhi and my skin was always dull no matter what I tried. After 2 weeks with this face wash, the difference is genuinely unreal.\"",
+            "author": "Priya M."
+          }
+        },
+        "review_item_C7LePA": {
+          "type": "review_item",
+          "settings": {
+            "quote": "\"I work near a construction site. This actually gets the deep grime off without drying me out. Finally something that works.\"",
+            "author": "Anika T."
+          }
+        },
+        "review_item_hdUUjt": {
+          "type": "review_item",
+          "settings": {
+            "quote": "\"Bought the full kit for commute days. Skin feels clean but not stripped. Love it.\"",
+            "author": "Sneha R."
+          }
+        },
+        "faq_item_TXYfTA": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How is this different from a regular face wash?",
+            "answer": "Regular face washes clean surface-level dirt and oil. This one is formulated to specifically target PM2.5 particles and city grime while supporting brighter skin."
+          }
+        },
+        "faq_item_jTda7R": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I use this twice a day?",
+            "answer": "Yes. The formula is gentle enough for daily morning and evening use across skin types."
+          }
+        },
+        "faq_item_HxzQcE": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Will it dry out my skin?",
+            "answer": "No. Hydrating ingredients help prevent post-wash tightness."
+          }
+        }
+      },
+      "block_order": [
+        "add_to_cart_button_Kb8PaJ",
+        "kwik_cod_checkout_buy_now_button_beBaXm",
+        "love_point_B9XFfq",
+        "love_point_haBrGH",
+        "love_point_X6M9pn",
+        "love_point_Bnxxaq",
+        "trust_item_7PBhCA",
+        "trust_item_XJNa4A",
+        "trust_item_zpJrMq",
+        "trust_item_JDwQie",
+        "efficacy_item_jqRBfL",
+        "efficacy_item_BrhCDA",
+        "efficacy_item_QTEA9w",
+        "efficacy_item_MxWQtt",
+        "ingredient_item_p9yqqB",
+        "ingredient_item_gBeWCr",
+        "ingredient_item_iGNgrX",
+        "ingredient_item_jH87mr",
+        "concern_item_rPT9HR",
+        "concern_item_bdP4Ur",
+        "concern_item_iCG8V3",
+        "concern_item_TYpfMG",
+        "skin_type_item_rBJMVk",
+        "skin_type_item_DM4YPM",
+        "skin_type_item_hFWVY6",
+        "skin_type_item_Hftg63",
+        "skin_type_item_qxY8t9",
+        "skin_type_item_jDDbWA",
+        "study_item_qP4876",
+        "study_item_4cTbMm",
+        "study_item_9Djj78",
+        "review_item_MDDJNr",
+        "review_item_C7LePA",
+        "review_item_hdUUjt",
+        "faq_item_TXYfTA",
+        "faq_item_jTda7R",
+        "faq_item_HxzQcE"
+      ],
+      "name": "Product Main (Minimalist)",
       "settings": {
         "rating_text": "4.4",
         "review_count_text": "839 verified reviews",
-        "tax_text": "Inclusive of all taxes"
+        "tax_text": "Inclusive of all taxes",
+        "love_it_title": "Why you'll love it",
+        "stock_text": "In Stock — Ships within 24 hours",
+        "efficacy_heading": "Proven to protect your skin",
+        "efficacy_subheading": "Numbers that speak louder than claims. Tested on real Indian urban skin.",
+        "efficacy_source": "Based on consumer study with 200 participants over 4 weeks",
+        "ingredients_heading": "Clean science. Real results.",
+        "ingredients_subheading": "Every ingredient earns its place. No fillers. No compromises. Here's what makes this face wash work.",
+        "idealfor_heading": "Is this right for your skin?",
+        "idealfor_subheading": "Designed for anyone who lives, commutes, or works in a polluted city. If your skin feels dull, congested, or breaks out without clear reason - pollution is likely the cause.",
+        "skin_types_heading": "Works for all skin types",
+        "study_heading": "What our users report",
+        "reviews_heading": "Real people. Real city skin.",
+        "faq_heading": "Frequently asked questions",
+        "enable_metafield_faq": false
       }
     }
   },
   "order": [
-    "product_main"
+    "product_main_minimalist_NThehR"
   ]
 }

@@ -201,7 +201,18 @@
                 <input class="qty-val" type="number" name="quantity" value="1" min="1">
                 <button type="button" class="qty-btn" data-qty="plus">+</button>
               </div>
-              <button type="submit" name="add" class="btn-add-cart">Add to Cart</button>
+              {%- assign add_to_cart_blocks = section.blocks | where: 'type', 'add_to_cart_button' -%}
+              {%- if add_to_cart_blocks.size > 0 -%}
+                {%- assign add_to_cart_block = add_to_cart_blocks.first -%}
+                <button
+                  type="submit"
+                  name="add"
+                  class="btn-add-cart {% if add_to_cart_block.settings.style == 'outline' %}btn-add-cart-outline{% endif %}"
+                  {{ add_to_cart_block.shopify_attributes }}
+                >
+                  {{ add_to_cart_block.settings.label }}
+                </button>
+              {%- endif -%}
             </div>
             {%- assign app_blocks = section.blocks | where: 'type', '@app' -%}
             {%- if app_blocks.size > 0 -%}
@@ -514,6 +525,8 @@
   .qty-val::-webkit-outer-spin-button,.qty-val::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
   .btn-add-cart{flex:1 1 auto;min-height:52px;padding:16px 24px;background:var(--text);color:#fff;border-radius:12px;font-size:15px;font-weight:600;letter-spacing:.02em;border:0;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 2px 4px rgba(255,255,255,.1);transition:all .4s var(--ease);cursor:pointer;}
   .btn-add-cart:hover{background:var(--bg-dark);transform:translateY(-2px);box-shadow:0 8px 24px -8px rgba(0,0,0,.5),inset 0 2px 4px rgba(255,255,255,.1);}
+  .btn-add-cart-outline{background:transparent;color:var(--text);border:1px solid var(--border);box-shadow:none;}
+  .btn-add-cart-outline:hover{background:var(--bg-alt);}
   .btn-buy-now{width:100%;padding:16px;background:var(--teal);color:#fff;border-radius:12px;font-size:15px;font-weight:600;letter-spacing:.02em;transition:all .4s var(--ease);box-shadow:inset 0 2px 4px rgba(255,255,255,.2);border:0;cursor:pointer;}
   .btn-buy-now:hover{background:#0B7A6E;transform:translateY(-2px);box-shadow:0 8px 24px -8px rgba(13,139,125,.5),inset 0 2px 4px rgba(255,255,255,.2);}
   .product-trust{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:20px 0;border-top:1px solid var(--border-light);}
@@ -622,6 +635,24 @@
     { "type": "checkbox", "id": "enable_metafield_faq", "label": "Use product metafield FAQs when no FAQ blocks", "default": false }
   ],
   "blocks": [
+    {
+      "type": "add_to_cart_button",
+      "name": "Add to cart button",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Button label", "default": "Add to Cart" },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Style",
+          "default": "solid",
+          "options": [
+            { "value": "solid", "label": "Solid" },
+            { "value": "outline", "label": "Outline" }
+          ]
+        }
+      ]
+    },
     {
       "type": "love_point",
       "name": "Why you'll love it point",
@@ -770,6 +801,7 @@
     {
       "name": "Product Main (Minimalist)",
       "blocks": [
+        { "type": "add_to_cart_button", "settings": { "label": "Add to Cart", "style": "solid" } },
         { "type": "love_point", "settings": { "text": "Removes 99.9% of PM2.5 pollutant particles" } },
         { "type": "love_point", "settings": { "text": "Brightens skin with antioxidant active support" } },
         { "type": "love_point", "settings": { "text": "Hydrates while cleansing without tightness" } },
