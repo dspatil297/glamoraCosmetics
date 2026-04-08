@@ -177,16 +177,9 @@
           <div class="love-it-title">{{ section.settings.love_it_title }}</div>
           <ul class="love-it-list">
             {%- assign love_points = section.blocks | where: 'type', 'love_point' -%}
-            {%- if love_points.size > 0 -%}
-              {%- for block in love_points -%}
-                <li {{ block.shopify_attributes }}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>{{ block.settings.text }}</li>
-              {%- endfor -%}
-            {%- else -%}
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Removes 99.9% of PM2.5 pollutant particles</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Brightens skin with antioxidant active support</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Hydrates while cleansing without tightness</li>
-              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Safe for daily use, all skin types</li>
-            {%- endif -%}
+            {%- for block in love_points -%}
+              <li {{ block.shopify_attributes }}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>{{ block.settings.text }}</li>
+            {%- endfor -%}
           </ul>
         </div>
 
@@ -249,18 +242,11 @@
 
         <div class="product-trust">
           {%- assign trust_items = section.blocks | where: 'type', 'trust_item' -%}
-          {%- if trust_items.size > 0 -%}
-            {%- for block in trust_items -%}
-              <div class="product-trust-item" {{ block.shopify_attributes }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>{{ block.settings.text }}
-              </div>
-            {%- endfor -%}
-          {%- else -%}
-            <div class="product-trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Dermatologist Tested</div>
-            <div class="product-trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"/></svg>Cruelty Free</div>
-            <div class="product-trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>Free Shipping 999+</div>
-            <div class="product-trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 3h7l2 3h9v10a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M14 11l-4 4m0-4l4 4"/></svg>No Parabens or Sulfates</div>
-          {%- endif -%}
+          {%- for block in trust_items -%}
+            <div class="product-trust-item" {{ block.shopify_attributes }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>{{ block.settings.text }}
+            </div>
+          {%- endfor -%}
         </div>
 
         {%- assign has_lower_extra_blocks = false -%}
@@ -308,16 +294,9 @@
       </div>
       <div class="efficacy-grid">
         {%- assign efficacy_items = section.blocks | where: 'type', 'efficacy_item' -%}
-        {%- if efficacy_items.size > 0 -%}
-          {%- for block in efficacy_items -%}
-            <div class="efficacy-card reveal{% if forloop.index > 1 %} reveal-d{{ forloop.index0 }}{% endif %}" {{ block.shopify_attributes }}><div class="efficacy-number">{{ block.settings.value }}</div><div class="efficacy-label">{{ block.settings.label }}</div></div>
-          {%- endfor -%}
-        {%- else -%}
-          <div class="efficacy-card reveal"><div class="efficacy-number">99.9%</div><div class="efficacy-label">PM2.5 pollutant particles removed after single wash</div></div>
-          <div class="efficacy-card reveal reveal-d1"><div class="efficacy-number">88%</div><div class="efficacy-label">Users saw brighter skin within 14 days of daily use</div></div>
-          <div class="efficacy-card reveal reveal-d2"><div class="efficacy-number">93%</div><div class="efficacy-label">Reported no post-wash dryness or tightness</div></div>
-          <div class="efficacy-card reveal reveal-d3"><div class="efficacy-number">{{ section.settings.rating_text }}</div><div class="efficacy-label">Average rating across verified reviews</div></div>
-        {%- endif -%}
+        {%- for block in efficacy_items -%}
+          <div class="efficacy-card reveal{% if forloop.index > 1 %} reveal-d{{ forloop.index0 }}{% endif %}" {{ block.shopify_attributes }}><div class="efficacy-number">{{ block.settings.value }}</div><div class="efficacy-label">{{ block.settings.label }}</div></div>
+        {%- endfor -%}
       </div>
       <p class="efficacy-source reveal">{{ section.settings.efficacy_source }}</p>
     </div>
@@ -330,16 +309,9 @@
       </div>
       <div class="ingredients-grid">
         {%- assign ingredient_items = section.blocks | where: 'type', 'ingredient_item' -%}
-        {%- if ingredient_items.size > 0 -%}
-          {%- for block in ingredient_items -%}
-            <div class="ingredient-card reveal{% if forloop.index > 1 %} reveal-d{{ forloop.index0 }}{% endif %}" {{ block.shopify_attributes }}><div class="ingredient-symbol">{{ block.settings.symbol }}</div><h4>{{ block.settings.title }}</h4><p>{{ block.settings.description }}</p></div>
-          {%- endfor -%}
-        {%- else -%}
-          <div class="ingredient-card reveal"><div class="ingredient-symbol">Gl</div><h4>Glutathione</h4><p>Master antioxidant. Neutralizes pollution-induced free radicals. Brightens skin from within.</p></div>
-          <div class="ingredient-card reveal reveal-d1"><div class="ingredient-symbol">KA</div><h4>Kojic Acid</h4><p>Fades dark spots and pollution-caused pigmentation. Evens skin tone over consistent use.</p></div>
-          <div class="ingredient-card reveal reveal-d2"><div class="ingredient-symbol">VC</div><h4>Vitamin C (MAP)</h4><p>Stable form of Vitamin C. Fights oxidative stress from city air. Boosts collagen production.</p></div>
-          <div class="ingredient-card reveal reveal-d3"><div class="ingredient-symbol">HA</div><h4>Hyaluronic Acid</h4><p>Deep hydration while cleansing. Maintains moisture barrier. Zero post-wash tightness.</p></div>
-        {%- endif -%}
+        {%- for block in ingredient_items -%}
+          <div class="ingredient-card reveal{% if forloop.index > 1 %} reveal-d{{ forloop.index0 }}{% endif %}" {{ block.shopify_attributes }}><div class="ingredient-symbol">{{ block.settings.symbol }}</div><h4>{{ block.settings.title }}</h4><p>{{ block.settings.description }}</p></div>
+        {%- endfor -%}
       </div>
     </div>
   </section>
@@ -351,34 +323,18 @@
           <p>{{ section.settings.idealfor_subheading }}</p>
           <ul class="concern-list">
             {%- assign concern_items = section.blocks | where: 'type', 'concern_item' -%}
-            {%- if concern_items.size > 0 -%}
-              {%- for block in concern_items -%}
-                <li class="concern-item" {{ block.shopify_attributes }}><h4>{{ block.settings.text }}</h4></li>
-              {%- endfor -%}
-            {%- else -%}
-              <li class="concern-item"><h4>Dull, tired-looking skin</h4></li>
-              <li class="concern-item"><h4>Acne and clogged pores</h4></li>
-              <li class="concern-item"><h4>Dark spots and uneven tone</h4></li>
-              <li class="concern-item"><h4>Post-wash dryness</h4></li>
-            {%- endif -%}
+            {%- for block in concern_items -%}
+              <li class="concern-item" {{ block.shopify_attributes }}><h4>{{ block.settings.text }}</h4></li>
+            {%- endfor -%}
           </ul>
         </div>
         <div class="reveal reveal-d1" style="text-align:center;">
           <p style="font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--text);margin-bottom:20px;">{{ section.settings.skin_types_heading }}</p>
           <div class="skin-types">
             {%- assign skin_type_items = section.blocks | where: 'type', 'skin_type_item' -%}
-            {%- if skin_type_items.size > 0 -%}
-              {%- for block in skin_type_items -%}
-                <span class="skin-type-tag active" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
-              {%- endfor -%}
-            {%- else -%}
-              <span class="skin-type-tag active">Oily</span>
-              <span class="skin-type-tag active">Combination</span>
-              <span class="skin-type-tag active">Normal</span>
-              <span class="skin-type-tag active">Dry</span>
-              <span class="skin-type-tag active">Sensitive</span>
-              <span class="skin-type-tag active">Acne-Prone</span>
-            {%- endif -%}
+            {%- for block in skin_type_items -%}
+              <span class="skin-type-tag active" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+            {%- endfor -%}
           </div>
         </div>
       </div>
@@ -432,15 +388,9 @@
       <div class="study-header reveal"><h2>{{ section.settings.study_heading }}</h2></div>
       <div class="study-bars reveal">
         {%- assign study_items = section.blocks | where: 'type', 'study_item' -%}
-        {%- if study_items.size > 0 -%}
-          {%- for block in study_items -%}
-            <div class="study-bar" {{ block.shopify_attributes }}><div class="study-percent">{{ block.settings.percent }}</div><div class="study-bar-info"><h4>{{ block.settings.label }}</h4><div class="study-bar-track"><div class="study-bar-fill" style="--fill:{{ block.settings.fill }}"></div></div></div></div>
-          {%- endfor -%}
-        {%- else -%}
-          <div class="study-bar"><div class="study-percent">97%</div><div class="study-bar-info"><h4>Felt skin was cleaner and less congested</h4><div class="study-bar-track"><div class="study-bar-fill" style="--fill:97%"></div></div></div></div>
-          <div class="study-bar"><div class="study-percent">93%</div><div class="study-bar-info"><h4>Noticed no dryness or tightness after washing</h4><div class="study-bar-track"><div class="study-bar-fill" style="--fill:93%"></div></div></div></div>
-          <div class="study-bar"><div class="study-percent">88%</div><div class="study-bar-info"><h4>Saw visibly brighter skin within 2 weeks</h4><div class="study-bar-track"><div class="study-bar-fill" style="--fill:88%"></div></div></div></div>
-        {%- endif -%}
+        {%- for block in study_items -%}
+          <div class="study-bar" {{ block.shopify_attributes }}><div class="study-percent">{{ block.settings.percent }}</div><div class="study-bar-info"><h4>{{ block.settings.label }}</h4><div class="study-bar-track"><div class="study-bar-fill" style="--fill:{{ block.settings.fill }}"></div></div></div></div>
+        {%- endfor -%}
       </div>
     </div>
   </section>
@@ -459,15 +409,9 @@
       </div>
       <div class="reviews-grid">
         {%- assign review_items = section.blocks | where: 'type', 'review_item' -%}
-        {%- if review_items.size > 0 -%}
-          {%- for block in review_items -%}
-            <div class="review-card reveal{% if forloop.index > 1 %} reveal-d{{ forloop.index0 }}{% endif %}" {{ block.shopify_attributes }}><p class="review-text">{{ block.settings.quote }}</p><div class="review-author">{{ block.settings.author }}</div></div>
-          {%- endfor -%}
-        {%- else -%}
-          <div class="review-card reveal"><p class="review-text">"I live in Delhi and my skin was always dull no matter what I tried. After 2 weeks with this face wash, the difference is genuinely unreal."</p><div class="review-author">Priya M.</div></div>
-          <div class="review-card reveal reveal-d1"><p class="review-text">"I work near a construction site. This actually gets the deep grime off without drying me out. Finally something that works."</p><div class="review-author">Anika T.</div></div>
-          <div class="review-card reveal reveal-d2"><p class="review-text">"Bought the full kit for commute days. Skin feels clean but not stripped. Love it."</p><div class="review-author">Sneha R.</div></div>
-        {%- endif -%}
+        {%- for block in review_items -%}
+          <div class="review-card reveal{% if forloop.index > 1 %} reveal-d{{ forloop.index0 }}{% endif %}" {{ block.shopify_attributes }}><p class="review-text">{{ block.settings.quote }}</p><div class="review-author">{{ block.settings.author }}</div></div>
+        {%- endfor -%}
       </div>
     </div>
   </section>
@@ -488,7 +432,7 @@
               <div class="faq-answer"><p>{{ block.settings.answer }}</p></div>
             </div>
           {%- endfor -%}
-        {%- elsif faq_items.size > 0 -%}
+        {%- elsif section.settings.enable_metafield_faq and faq_items.size > 0 -%}
           {%- for item in faq_items -%}
             {%- assign qa_parts = item | split: '|||' -%}
             {%- assign question = qa_parts[0] | strip | replace: '&amp;', '&' -%}
@@ -674,7 +618,8 @@
     { "type": "text", "id": "skin_types_heading", "label": "Skin types heading", "default": "Works for all skin types" },
     { "type": "text", "id": "study_heading", "label": "Study section heading", "default": "What our users report" },
     { "type": "text", "id": "reviews_heading", "label": "Reviews heading", "default": "Real people. Real city skin." },
-    { "type": "text", "id": "faq_heading", "label": "FAQ heading", "default": "Frequently asked questions" }
+    { "type": "text", "id": "faq_heading", "label": "FAQ heading", "default": "Frequently asked questions" },
+    { "type": "checkbox", "id": "enable_metafield_faq", "label": "Use product metafield FAQs when no FAQ blocks", "default": false }
   ],
   "blocks": [
     {
@@ -832,7 +777,34 @@
         { "type": "trust_item", "settings": { "text": "Dermatologist Tested" } },
         { "type": "trust_item", "settings": { "text": "Cruelty Free" } },
         { "type": "trust_item", "settings": { "text": "Free Shipping 999+" } },
-        { "type": "trust_item", "settings": { "text": "No Parabens or Sulfates" } }
+        { "type": "trust_item", "settings": { "text": "No Parabens or Sulfates" } },
+        { "type": "efficacy_item", "settings": { "value": "99.9%", "label": "PM2.5 pollutant particles removed after single wash" } },
+        { "type": "efficacy_item", "settings": { "value": "88%", "label": "Users saw brighter skin within 14 days of daily use" } },
+        { "type": "efficacy_item", "settings": { "value": "93%", "label": "Reported no post-wash dryness or tightness" } },
+        { "type": "efficacy_item", "settings": { "value": "4.4", "label": "Average rating across verified reviews" } },
+        { "type": "ingredient_item", "settings": { "symbol": "Gl", "title": "Glutathione", "description": "Master antioxidant. Neutralizes pollution-induced free radicals. Brightens skin from within." } },
+        { "type": "ingredient_item", "settings": { "symbol": "KA", "title": "Kojic Acid", "description": "Fades dark spots and pollution-caused pigmentation. Evens skin tone over consistent use." } },
+        { "type": "ingredient_item", "settings": { "symbol": "VC", "title": "Vitamin C (MAP)", "description": "Stable form of Vitamin C. Fights oxidative stress from city air. Boosts collagen production." } },
+        { "type": "ingredient_item", "settings": { "symbol": "HA", "title": "Hyaluronic Acid", "description": "Deep hydration while cleansing. Maintains moisture barrier. Zero post-wash tightness." } },
+        { "type": "concern_item", "settings": { "text": "Dull, tired-looking skin" } },
+        { "type": "concern_item", "settings": { "text": "Acne and clogged pores" } },
+        { "type": "concern_item", "settings": { "text": "Dark spots and uneven tone" } },
+        { "type": "concern_item", "settings": { "text": "Post-wash dryness" } },
+        { "type": "skin_type_item", "settings": { "text": "Oily" } },
+        { "type": "skin_type_item", "settings": { "text": "Combination" } },
+        { "type": "skin_type_item", "settings": { "text": "Normal" } },
+        { "type": "skin_type_item", "settings": { "text": "Dry" } },
+        { "type": "skin_type_item", "settings": { "text": "Sensitive" } },
+        { "type": "skin_type_item", "settings": { "text": "Acne-Prone" } },
+        { "type": "study_item", "settings": { "percent": "97%", "label": "Felt skin was cleaner and less congested", "fill": "97%" } },
+        { "type": "study_item", "settings": { "percent": "93%", "label": "Noticed no dryness or tightness after washing", "fill": "93%" } },
+        { "type": "study_item", "settings": { "percent": "88%", "label": "Saw visibly brighter skin within 2 weeks", "fill": "88%" } },
+        { "type": "review_item", "settings": { "quote": "\"I live in Delhi and my skin was always dull no matter what I tried. After 2 weeks with this face wash, the difference is genuinely unreal.\"", "author": "Priya M." } },
+        { "type": "review_item", "settings": { "quote": "\"I work near a construction site. This actually gets the deep grime off without drying me out. Finally something that works.\"", "author": "Anika T." } },
+        { "type": "review_item", "settings": { "quote": "\"Bought the full kit for commute days. Skin feels clean but not stripped. Love it.\"", "author": "Sneha R." } },
+        { "type": "faq_item", "settings": { "question": "How is this different from a regular face wash?", "answer": "Regular face washes clean surface-level dirt and oil. This one is formulated to specifically target PM2.5 particles and city grime while supporting brighter skin." } },
+        { "type": "faq_item", "settings": { "question": "Can I use this twice a day?", "answer": "Yes. The formula is gentle enough for daily morning and evening use across skin types." } },
+        { "type": "faq_item", "settings": { "question": "Will it dry out my skin?", "answer": "No. Hydrating ingredients help prevent post-wash tightness." } }
       ]
     }
   ]
