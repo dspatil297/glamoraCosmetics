@@ -20,6 +20,12 @@
    {%- endcomment -%}
    window.productFormSelector = '#product-form, form.pdp__form, form[action*="/cart/add"]';
    var productFormSelector = window.productFormSelector;
+  // Backward-compat bridge for app embeds still calling window.addCartBuyNow(...)
+  window.addCartBuyNow = function(triggerEl) {
+    if (typeof window.onBuyNowClick === 'function') {
+      return window.onBuyNowClick(triggerEl);
+    }
+  };
    var cart = {{ cart | json }}
    var templateName = '{{template.name}}'
  </script>
