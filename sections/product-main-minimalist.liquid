@@ -210,7 +210,14 @@
               </div>
               <button type="submit" name="add" class="btn-add-cart">Add to Cart</button>
             </div>
-            <button type="submit" name="checkout" class="btn-buy-now">Buy Now — <span data-buy-now-price>{{ price | money }}</span></button>
+            {%- assign app_blocks = section.blocks | where: 'type', '@app' -%}
+            {%- if app_blocks.size > 0 -%}
+              <div class="gokwik-app-wrap">
+                {%- for block in app_blocks -%}
+                  <div class="product-extra-app" {{ block.shopify_attributes }}>{% render block %}</div>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
           </div>
           {%- assign has_below_cart_content = false -%}
           {%- for block in section.blocks -%}
@@ -264,9 +271,6 @@
           {%- elsif block.type == 'custom_button' and block.settings.placement != 'below_cart' -%}
             {%- assign has_lower_extra_blocks = true -%}
             {%- break -%}
-          {%- elsif block.type == '@app' -%}
-            {%- assign has_lower_extra_blocks = true -%}
-            {%- break -%}
           {%- endif -%}
         {%- endfor -%}
         {%- if has_lower_extra_blocks -%}
@@ -288,8 +292,6 @@
                   {%- endif -%}
                 {%- when 'custom_liquid' -%}
                   <div class="product-extra-liquid" {{ block.shopify_attributes }}>{{ block.settings.liquid }}</div>
-                {%- when '@app' -%}
-                  <div class="product-extra-app" {{ block.shopify_attributes }}>{% render block %}</div>
               {%- endcase -%}
             {%- endfor -%}
           </div>
