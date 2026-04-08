@@ -30,6 +30,10 @@
     {%- comment -%} Performance: Font Loading Optimization (Glamora brandkit fonts) {%- endcomment -%}
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+    {%- comment -%} PDP (Product Main Minimalist): same Outfit + Fraunces as glamora-website product-page.html — must load in head; @import in section CSS is too late (title paints as Georgia). {%- endcomment -%}
+    {%- if request.page_type == 'product' -%}
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" media="all">
+    {%- endif -%}
     
     {%- comment -%} Inlined CSS Variables {%- endcomment -%}
     {% render 'css-variables' %}

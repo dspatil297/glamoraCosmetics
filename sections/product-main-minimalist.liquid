@@ -568,9 +568,9 @@
 </script>
 
 {% stylesheet %}
-  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap');
-  :root { --bg:#FAFAF7; --bg-alt:#F3F1ED; --bg-dark:#141413; --text:#141413; --text-2:#5C5B57; --text-3:#8A8985; --teal:#0D8B7D; --teal-muted:#1A9E8F; --teal-bg:#EBF5F3; --gold:#C5A44E; --border:#E8E6E1; --border-light:#F0EDE8; --font-body:'Outfit',-apple-system,sans-serif; --font-display:'Fraunces',Georgia,serif; --ease:cubic-bezier(0.32,0.72,0,1); --container:1360px; }
-  .pdpx { font-family: var(--font-body); color: var(--text); background: var(--bg); }
+  /* Fonts: loaded in layout/theme.liquid <head> on product pages (avoid @import here — too late for first paint). */
+  :root { --bg:#FAFAF7; --bg-alt:#F3F1ED; --bg-dark:#141413; --text:#141413; --text-2:#5C5B57; --text-3:#8A8985; --teal:#0D8B7D; --teal-muted:#1A9E8F; --teal-bg:#EBF5F3; --teal-dark:#0A6E63; --gold:#C5A44E; --gold-muted:#D4B96A; --border:#E8E6E1; --border-light:#F0EDE8; --red:#D64545; --font-body:'Outfit',-apple-system,sans-serif; --font-display:'Fraunces',Georgia,serif; --ease:cubic-bezier(0.32,0.72,0,1); --container:1360px; }
+  .pdpx { font-family: var(--font-body); color: var(--text); background: var(--bg); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
   .pdpx * { box-sizing: border-box; }
   .container { max-width: var(--container); margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
   .breadcrumb { padding: 20px 0; font-size: 14px; font-weight: 400; color: var(--text-3); } .breadcrumb .sep { margin: 0 8px; opacity: .4; } .breadcrumb a { color: inherit; text-decoration: none; }
@@ -583,8 +583,16 @@
   .gallery-thumb img{width:100%;height:100%;aspect-ratio:1;object-fit:cover;}
   .product-info{padding-top:8px;} .routine-badge{display:inline-flex;align-items:center;gap:10px;padding:8px 18px;border-radius:100px;background:var(--teal-bg);font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--teal);margin-bottom:16px;}
   .routine-badge-num{width:22px;height:22px;background:var(--teal);color:#fff;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;}
-  /* PDP title: beat global critical.css h1 / h1,h2… (Playfair, --h1-size, weight 900) via #id + class */
-  #pdpx-{{ section.id }} h1.pdpx-product-title{font-family:var(--font-display,"Fraunces",Georgia,serif);font-size:clamp(28px,3.5vw,42px);font-weight:600;line-height:1.15;letter-spacing:-.02em;color:var(--text,#141413);margin:0 0 8px;}
+  /* PDP title: match product-page.html .product-info h1 exactly (no text-rendering / font-optical-sizing — those change how outlines look vs static HTML). #pdpx-… beats critical.css h1. */
+  #pdpx-{{ section.id }} h1.pdpx-product-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.5vw, 42px);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
   .product-subtitle{font-size:16px;font-weight:400;color:var(--text-2);margin-bottom:16px;} .product-ratings{display:flex;align-items:center;gap:12px;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border-light);}
   .stars{display:flex;gap:2px;color:#F5A623;} .rating-score{font-size:15px;font-weight:600;color:var(--text);} .rating-count{font-size:14px;font-weight:500;color:var(--teal);text-decoration:none;}
   .pricing{margin-bottom:24px;} .pricing-row{display:flex;align-items:baseline;gap:12px;margin-bottom:4px;} .price-current{font-family:var(--font-display);font-size:38px;font-weight:600;letter-spacing:-.025em;color:var(--text);}
