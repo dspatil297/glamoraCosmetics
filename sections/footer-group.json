@@ -14,26 +14,16 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "show_cta_bar": true,
-        "cta_headline": "Enjoy the best quality cosmetics",
-        "cta_subtitle": "Anti-pollution skincare crafted to protect, hydrate, and enhance your everyday glow.",
-        "cta_button_text": "Shop Now",
-        "cta_button_url": "",
-        "company_description": "Glamora Cosmetics is dedicated to modern, anti-pollution skincare designed for urban lifestyles. We craft clean, conscious formulas to protect, hydrate, and help you glow\u2014every day.",
-        "policies_menu": "",
+        "brand_description": "Advanced anti-pollution skincare for the modern Indian. We combine clinically-tested actives with skin-loving botanicals to cleanse, shield, and repair pollution damage. Every day.",
+        "shop_heading": "Shop",
+        "shop_menu": "shop-footer-menu",
+        "company_heading": "Company",
+        "company_menu": "footer-company-menu",
+        "policies_heading": "Policies",
+        "policies_menu": "footer-policy-menu",
+        "instagram_url": "https://instagram.com/glamoracosmetics.official",
         "email": "support@glamoracosmetics.in",
-        "address": "38, Deputy Gunj, Moradabad \u2013 244001, Uttar Pradesh, India",
-        "working_hours": "Mon\u2013Sat: 10:00 AM \u2013 6:00 PM",
-        "legal_label_manufacturer": "Brand",
-        "legal_manufacturer": "Glamora cosmetics",
-        "legal_mfg": "",
-        "legal_origin": "India",
-        "legal_expiry": "",
-        "disclaimer_text": "Disclaimer: Product information is provided for general knowledge and is not intended to diagnose, treat, cure, or prevent any disease. Please patch test before use and consult a dermatologist if you have concerns.",
-        "company_legal_name": "Glamora Cosmetics",
-        "show_scroll_top": true,
-        "show_chat": true,
-        "chat_url": ""
+        "copyright_text": "2026 Glamora Cosmetics. All rights reserved."
       }
     }
   },

@@ -1,0 +1,337 @@
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign featured = current_variant.featured_image | default: product.featured_image
+  assign product_subtitle = product.metafields.descriptors.subtitle.value | default: product.metafields.custom.card_subtitle.value | strip
+  assign form_id = 'gx-form-' | append: section.id
+  assign compare = current_variant.compare_at_price
+  assign price = current_variant.price
+  assign has_discount = false
+  assign discount_pct = 0
+  if compare != blank and compare > price
+    assign has_discount = true
+    assign discount_pct = compare | minus: price | times: 100 | divided_by: compare | round
+  endif
+-%}
+
+<section class="gx-pdp" id="gx-pdp-{{ section.id }}">
+  <div class="gx-container">
+    <div class="gx-breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span class="gx-sep">/</span>
+      <span>{{ product.title }}</span>
+    </div>
+
+    <div class="gx-product-layout">
+      <div class="gx-gallery">
+        <div class="gx-gallery-main-shell">
+          <div class="gx-gallery-main-core">
+            {%- if featured -%}
+              <img src="{{ featured | image_url: width: 1400 }}" alt="{{ product.title | escape }}" id="gxMainImg-{{ section.id }}" loading="eager">
+            {%- endif -%}
+          </div>
+        </div>
+        {%- if product.images.size > 1 -%}
+          <div class="gx-gallery-thumbs">
+            {%- for image in product.images -%}
+              <button type="button" class="gx-gallery-thumb{% if image.id == featured.id %} active{% elsif featured == blank and forloop.first %} active{% endif %}" data-gx-thumb data-src="{{ image | image_url: width: 1400 }}" aria-label="Image {{ forloop.index }}">
+                <img src="{{ image | image_url: width: 220 }}" alt="" loading="lazy">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="gx-product-info">
+        <div class="gx-routine-badge"><span class="gx-routine-badge-num">1</span>Step 1 of the 3-Step Routine</div>
+        <h1>{{ product.title }}</h1>
+        {%- if product_subtitle != blank -%}<p class="gx-product-subtitle">{{ product_subtitle }}</p>{%- endif -%}
+
+        <div class="gx-product-ratings">
+          <div class="gx-stars">★★★★☆</div>
+          <span class="gx-rating-score">{{ section.settings.rating_text }}</span>
+          <a href="#gx-reviews-{{ section.id }}" class="gx-rating-count">{{ section.settings.review_count_text }}</a>
+        </div>
+
+        <div class="gx-pricing">
+          <div class="gx-pricing-row">
+            <span class="gx-price-current" data-gx-price>{{ price | money }}</span>
+            <span class="gx-price-original{% unless has_discount %} gx-hidden{% endunless %}" data-gx-compare>{% if has_discount %}{{ compare | money }}{% endif %}</span>
+            <span class="gx-price-discount{% unless has_discount %} gx-hidden{% endunless %}" data-gx-discount>{% if has_discount %}{{ discount_pct }}% Off{% endif %}</span>
+          </div>
+          <div class="gx-price-meta">
+            <span class="gx-price-tax">{{ section.settings.tax_text }}</span>
+          </div>
+        </div>
+
+        <div class="gx-love-it">
+          <div class="gx-love-title">Why you'll love it</div>
+          <ul>
+            <li>Removes pollutant particles and deep grime</li>
+            <li>Brightens and evens tone over consistent use</li>
+            <li>Cleanses without post-wash tightness</li>
+            <li>Safe for daily use across skin types</li>
+          </ul>
+        </div>
+
+        <div class="gx-stock"><span class="gx-stock-dot"></span>In stock - ships within 24 hours</div>
+
+        {%- form 'product', product, id: form_id, class: 'gx-form' -%}
+          <input type="hidden" name="id" value="{{ current_variant.id }}" data-gx-variant-id>
+          {%- if product.variants.size > 1 -%}
+            <select name="id" class="gx-variant-select" data-gx-variant-select>
+              {%- for variant in product.variants -%}
+                <option value="{{ variant.id }}" data-price="{{ variant.price }}" data-compare="{{ variant.compare_at_price }}" {% if variant == current_variant %}selected{% endif %} {% unless variant.available %}disabled{% endunless %}>{{ variant.title }}</option>
+              {%- endfor -%}
+            </select>
+          {%- endif -%}
+
+          <div class="gx-quantity-row" id="gxCartActions-{{ section.id }}">
+            <div class="gx-qty-selector">
+              <button type="button" class="gx-qty-btn" data-gx-qty="minus">-</button>
+              <input class="gx-qty-val" type="number" name="quantity" value="1" min="1">
+              <button type="button" class="gx-qty-btn" data-gx-qty="plus">+</button>
+            </div>
+            <button type="submit" name="add" class="gx-btn-add-cart">Add to Cart</button>
+          </div>
+          <div class="gx-buy-now">{{ form | payment_button }}</div>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+
+  <section class="gx-band">
+    <div class="gx-container">
+      <h2>Proven to protect your skin</h2>
+      <div class="gx-stats">
+        <div><strong>99.9%</strong><span>Pollution particles removed</span></div>
+        <div><strong>88%</strong><span>Brighter skin in 14 days</span></div>
+        <div><strong>93%</strong><span>No post-wash dryness</span></div>
+        <div><strong>4.4</strong><span>Average review rating</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gx-section">
+    <div class="gx-container">
+      <h2>Clean science. Real results.</h2>
+      <div class="gx-cards">
+        <article><h4>Glutathione</h4><p>Neutralizes pollution-driven free radicals and supports brighter skin.</p></article>
+        <article><h4>Kojic Acid</h4><p>Targets uneven tone and dark spots caused by environmental stress.</p></article>
+        <article><h4>Vitamin C</h4><p>Helps fight oxidative damage from city exposure and dullness.</p></article>
+        <article><h4>Hyaluronic Acid</h4><p>Maintains hydration while cleansing to avoid tightness.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="gx-section gx-alt">
+    <div class="gx-container">
+      <h2>How to use</h2>
+      <div class="gx-steps">
+        <article><span>1</span><h4>Wet your face</h4></article>
+        <article><span>2</span><h4>Massage for 45-60s</h4></article>
+        <article><span>3</span><h4>Rinse with water</h4></article>
+        <article><span>4</span><h4>Continue routine</h4></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="gx-section" id="gx-reviews-{{ section.id }}">
+    <div class="gx-container">
+      <h2>Real people. Real city skin.</h2>
+      <div class="gx-reviews">
+        <article><p>"Visible brightness in 2 weeks. Skin feels cleaner every evening."</p><strong>Priya M.</strong></article>
+        <article><p>"Removes deep grime without drying me out. Finally a cleanser that works."</p><strong>Anika T.</strong></article>
+        <article><p>"Great daily face wash for commute-heavy city life."</p><strong>Sneha R.</strong></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="gx-section gx-alt">
+    <div class="gx-container gx-faq">
+      <h2>Frequently asked questions</h2>
+      <details><summary>Can I use this twice daily?</summary><p>Yes, this formula is designed for daily AM/PM cleansing.</p></details>
+      <details><summary>Will it dry out my skin?</summary><p>Hydrating actives help prevent the stripped feeling after wash.</p></details>
+      <details><summary>How long before results are visible?</summary><p>Most users notice cleaner feel immediately and visible brightness in 2-4 weeks.</p></details>
+    </div>
+  </section>
+
+  <div class="gx-sticky" id="gxSticky-{{ section.id }}">
+    <div class="gx-container gx-sticky-inner">
+      <div class="gx-sticky-price" data-gx-sticky-price>{{ price | money }}</div>
+      <button type="submit" form="{{ form_id }}" name="add" class="gx-sticky-btn">Add to Cart</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.getElementById('gx-pdp-{{ section.id }}');
+    if (!root) return;
+
+    var mainImg = root.querySelector('#gxMainImg-{{ section.id }}');
+    var thumbs = root.querySelectorAll('[data-gx-thumb]');
+    for (var i = 0; i < thumbs.length; i++) {
+      thumbs[i].addEventListener('click', function () {
+        var src = this.getAttribute('data-src');
+        if (mainImg && src) mainImg.src = src;
+        for (var j = 0; j < thumbs.length; j++) thumbs[j].classList.remove('active');
+        this.classList.add('active');
+      });
+    }
+
+    var qtyBtns = root.querySelectorAll('[data-gx-qty]');
+    for (var k = 0; k < qtyBtns.length; k++) {
+      qtyBtns[k].addEventListener('click', function () {
+        var input = root.querySelector('.gx-qty-val');
+        if (!input) return;
+        var v = parseInt(input.value, 10) || 1;
+        if (this.getAttribute('data-gx-qty') === 'plus') v++;
+        if (this.getAttribute('data-gx-qty') === 'minus') v = Math.max(1, v - 1);
+        input.value = v;
+      });
+    }
+
+    var select = root.querySelector('[data-gx-variant-select]');
+    var hiddenId = root.querySelector('[data-gx-variant-id]');
+    var priceEl = root.querySelector('[data-gx-price]');
+    var compareEl = root.querySelector('[data-gx-compare]');
+    var discountEl = root.querySelector('[data-gx-discount]');
+    var stickyPriceEl = root.querySelector('[data-gx-sticky-price]');
+
+    function formatMoney(cents) {
+      var n = parseInt(cents, 10);
+      if (isNaN(n)) return '';
+      return 'Rs. ' + (n / 100).toFixed(2);
+    }
+
+    function updatePrice(option) {
+      if (!option) return;
+      var p = parseInt(option.getAttribute('data-price') || '0', 10);
+      var c = parseInt(option.getAttribute('data-compare') || '0', 10);
+      if (hiddenId) hiddenId.value = option.value;
+      if (priceEl) priceEl.textContent = formatMoney(p);
+      if (stickyPriceEl) stickyPriceEl.textContent = formatMoney(p);
+      if (c > p) {
+        if (compareEl) {
+          compareEl.textContent = formatMoney(c);
+          compareEl.classList.remove('gx-hidden');
+        }
+        if (discountEl) {
+          discountEl.textContent = Math.round(((c - p) / c) * 100) + '% Off';
+          discountEl.classList.remove('gx-hidden');
+        }
+      } else {
+        if (compareEl) compareEl.classList.add('gx-hidden');
+        if (discountEl) discountEl.classList.add('gx-hidden');
+      }
+    }
+
+    if (select) {
+      updatePrice(select.options[select.selectedIndex]);
+      select.addEventListener('change', function () {
+        updatePrice(this.options[this.selectedIndex]);
+      });
+    }
+
+    var cartAnchor = root.querySelector('#gxCartActions-{{ section.id }}');
+    var sticky = root.querySelector('#gxSticky-{{ section.id }}');
+    if (cartAnchor && sticky && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          sticky.classList.toggle('visible', !entry.isIntersecting);
+        });
+      }, { threshold: 0 });
+      io.observe(cartAnchor);
+    }
+  })();
+</script>
+
+{% stylesheet %}
+  .gx-pdp { background: #fafaf7; color: #141413; }
+  .gx-container { max-width: 1360px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+  .gx-breadcrumb { padding: 20px 0; font-size: 14px; color: #8a8985; }
+  .gx-breadcrumb a { color: #8a8985; text-decoration: none; }
+  .gx-sep { margin: 0 8px; }
+  .gx-product-layout { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(40px, 6vw, 80px); padding-bottom: clamp(60px, 8vw, 100px); align-items: start; }
+  .gx-gallery { position: sticky; top: 100px; }
+  .gx-gallery-main-shell { background: rgba(0,0,0,.015); border: 1px solid #f0ede8; padding: 6px; border-radius: 2rem; margin-bottom: 16px; max-width: 540px; margin-left: auto; margin-right: auto; }
+  .gx-gallery-main-core { border-radius: calc(2rem - 6px); overflow: hidden; aspect-ratio: 1; background: #f3f1ed; }
+  .gx-gallery-main-core img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gx-gallery-thumbs { display: flex; gap: 10px; max-width: 540px; margin: 0 auto; }
+  .gx-gallery-thumb { flex: 1; border: 2px solid transparent; border-radius: .75rem; overflow: hidden; opacity: .55; background: #f3f1ed; cursor: pointer; }
+  .gx-gallery-thumb img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+  .gx-gallery-thumb.active { border-color: #0d8b7d; opacity: 1; }
+  .gx-product-info h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(28px, 3.5vw, 42px); font-weight: 600; line-height: 1.15; margin-bottom: 8px; }
+  .gx-routine-badge { display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px; border-radius: 100px; background: #ebf5f3; color: #0d8b7d; margin-bottom: 16px; font-size: 13px; font-weight: 600; }
+  .gx-routine-badge-num { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: #0d8b7d; color: #fff; font-size: 12px; font-weight: 700; }
+  .gx-product-subtitle { font-size: 16px; color: #5c5b57; margin-bottom: 16px; }
+  .gx-product-ratings { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid #f0ede8; }
+  .gx-stars { color: #f5a623; }
+  .gx-rating-score { font-size: 15px; font-weight: 600; }
+  .gx-rating-count { font-size: 14px; color: #0d8b7d; text-decoration: none; }
+  .gx-pricing-row { display: flex; align-items: baseline; gap: 12px; }
+  .gx-price-current { font-family: "Fraunces", Georgia, serif; font-size: 38px; font-weight: 600; }
+  .gx-price-original { color: #8a8985; text-decoration: line-through; }
+  .gx-price-discount { background: #0d8b7d; color: #fff; border-radius: 999px; padding: 4px 10px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; font-weight: 700; }
+  .gx-price-meta { margin: 6px 0 16px; color: #8a8985; font-size: 14px; }
+  .gx-love-it { padding: 20px 24px; background: #ebf5f3; border: 1px solid rgba(13,139,125,.08); border-radius: 1rem; margin-bottom: 18px; }
+  .gx-love-title { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #0d8b7d; margin-bottom: 10px; }
+  .gx-love-it ul { margin: 0; padding-left: 18px; }
+  .gx-love-it li { margin: 6px 0; color: #141413; }
+  .gx-stock { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; color: #5c5b57; font-size: 14px; }
+  .gx-stock-dot { width: 8px; height: 8px; background: #0d8b7d; border-radius: 50%; }
+  .gx-variant-select { width: 100%; margin: 0 0 12px; border: 1px solid #e8e6e1; border-radius: 10px; padding: 12px; background: #fff; }
+  .gx-quantity-row { display: flex; gap: 12px; }
+  .gx-qty-selector { display: flex; align-items: center; border: 1px solid #e8e6e1; border-radius: 12px; overflow: hidden; }
+  .gx-qty-btn { width: 46px; height: 52px; border: 0; background: #fafaf7; font-size: 18px; cursor: pointer; }
+  .gx-qty-val { width: 58px; height: 52px; border: 0; text-align: center; font-weight: 600; }
+  .gx-btn-add-cart { flex: 1; border: 0; border-radius: 12px; background: #141413; color: #fff; font-size: 15px; font-weight: 600; padding: 14px 20px; cursor: pointer; }
+  .gx-buy-now { margin-top: 10px; }
+  .gx-buy-now > * { width: 100%; }
+  .gx-band { background: #141413; color: #fff; padding: clamp(64px, 8vw, 100px) 0; }
+  .gx-band h2, .gx-section h2 { font-family: "Fraunces", Georgia, serif; font-size: clamp(28px, 3.5vw, 42px); font-weight: 600; margin-bottom: 24px; }
+  .gx-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .gx-stats div { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); border-radius: 1rem; padding: 24px; }
+  .gx-stats strong { display: block; font-size: 38px; color: #c5a44e; font-family: "Fraunces", Georgia, serif; }
+  .gx-stats span { color: rgba(255,255,255,.65); font-size: 14px; }
+  .gx-section { padding: clamp(72px, 9vw, 120px) 0; }
+  .gx-alt { background: #f3f1ed; }
+  .gx-cards, .gx-steps, .gx-reviews { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .gx-cards article, .gx-steps article, .gx-reviews article { background: #fff; border: 1px solid #f0ede8; border-radius: 1rem; padding: 24px; }
+  .gx-steps span { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: #0d8b7d; color: #fff; margin-bottom: 10px; }
+  .gx-reviews { grid-template-columns: repeat(3, 1fr); }
+  .gx-faq { max-width: 780px; }
+  .gx-faq details { border-bottom: 1px solid #e8e6e1; padding: 16px 0; }
+  .gx-faq summary { cursor: pointer; font-weight: 600; }
+  .gx-faq p { margin: 10px 0 0; color: #5c5b57; }
+  .gx-sticky { position: fixed; left: 0; right: 0; bottom: 0; background: rgba(250,250,247,.95); backdrop-filter: blur(10px); border-top: 1px solid #e8e6e1; transform: translateY(100%); transition: transform .35s ease; z-index: 80; }
+  .gx-sticky.visible { transform: translateY(0); }
+  .gx-sticky-inner { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding-top: 10px; padding-bottom: 10px; }
+  .gx-sticky-price { font-size: 18px; font-weight: 700; }
+  .gx-sticky-btn { border: 0; border-radius: 999px; background: #0d8b7d; color: #fff; padding: 12px 20px; font-weight: 600; cursor: pointer; }
+  .gx-hidden { display: none !important; }
+  @media (max-width: 1024px) {
+    .gx-product-layout { grid-template-columns: 1fr; }
+    .gx-gallery { position: static; }
+    .gx-stats, .gx-cards, .gx-steps { grid-template-columns: repeat(2, 1fr); }
+    .gx-reviews { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .gx-quantity-row { flex-direction: column; }
+    .gx-stats, .gx-cards, .gx-steps { grid-template-columns: 1fr; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product Main Exact",
+  "settings": [
+    { "type": "text", "id": "rating_text", "label": "Rating text", "default": "4.4" },
+    { "type": "text", "id": "review_count_text", "label": "Review count text", "default": "839 verified reviews" },
+    { "type": "text", "id": "tax_text", "label": "Tax text", "default": "Inclusive of all taxes" }
+  ],
+  "presets": [
+    { "name": "Product Main Exact" }
+  ]
+}
+{% endschema %}
