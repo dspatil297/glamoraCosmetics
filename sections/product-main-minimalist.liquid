@@ -363,21 +363,32 @@
         {%- if ingredient_items_from_metafield.size > 0 -%}
           {%- for item in ingredient_items_from_metafield -%}
             {%- assign ingredient_parts = item | split: '|||' -%}
-            {%- assign ingredient_title = ingredient_parts[0] | strip -%}
+            {%- assign ingredient_title = ingredient_parts | first | strip -%}
             {%- assign ingredient_description = ingredient_parts[1] | strip -%}
-            {%- assign symbol_parts = ingredient_title | split: ' ' -%}
-            {%- assign ingredient_symbol = '' -%}
-            {%- for symbol_part in symbol_parts -%}
-              {%- assign clean_symbol_part = symbol_part | strip -%}
-              {%- if clean_symbol_part != '' -%}
-                {%- assign ingredient_symbol = ingredient_symbol | append: clean_symbol_part | slice: 0, 1 -%}
-                {%- if ingredient_symbol.size >= 2 -%}
+            {%- assign title_words = ingredient_title | replace: '(', ' ' | replace: ')', ' ' | replace: ',', ' ' | replace: '-', ' ' | split: ' ' -%}
+            {%- assign first_word = '' -%}
+            {%- assign second_word = '' -%}
+            {%- for word in title_words -%}
+              {%- assign clean_word = word | strip -%}
+              {%- if clean_word != '' -%}
+                {%- if first_word == '' -%}
+                  {%- assign first_word = clean_word -%}
+                {%- elsif second_word == '' -%}
+                  {%- assign second_word = clean_word -%}
                   {%- break -%}
                 {%- endif -%}
               {%- endif -%}
             {%- endfor -%}
+            {%- assign second_initial = '' -%}
+            {%- if second_word != '' -%}
+              {%- assign second_initial = second_word | slice: 0, 1 -%}
+            {%- endif -%}
+            {%- assign ingredient_symbol = first_word | slice: 0, 1 | append: second_initial -%}
             {%- if ingredient_symbol == '' -%}
               {%- assign ingredient_symbol = ingredient_title | slice: 0, 2 -%}
+            {%- endif -%}
+            {%- if ingredient_symbol == '' -%}
+              {%- assign ingredient_symbol = 'IN' -%}
             {%- endif -%}
             <div class="ingredient-card reveal{% if forloop.index > 1 %} reveal-d{{ forloop.index0 }}{% endif %}"><div class="ingredient-symbol">{{ ingredient_symbol | upcase }}</div><h4>{{ ingredient_title }}</h4><p>{{ ingredient_description }}</p></div>
           {%- endfor -%}
