@@ -30,11 +30,16 @@
     assign routine_index = 0
     for block in section.blocks
       if block.type == 'routine_step'
-        assign routine_image = block.settings.image
-        assign routine_alt = block.settings.title
         if block.settings.product and block.settings.product.featured_image
           assign routine_image = block.settings.product.featured_image
           assign routine_alt = block.settings.product.title
+        else
+          assign routine_image = blank
+          assign routine_alt = block.settings.title
+        endif
+        if block.settings.image != blank
+          assign routine_image = block.settings.image
+          assign routine_alt = block.settings.title
         endif
         if routine_image != blank
           assign routine_index = routine_index | plus: 1
@@ -349,9 +354,13 @@
         {% for block in section.blocks %}
           {% if block.type == 'routine_step' %}
             {% assign step_count = step_count | plus: 1 %}
-            {% assign step_image = block.settings.image %}
             {% if block.settings.product and block.settings.product.featured_image %}
               {% assign step_image = block.settings.product.featured_image %}
+            {% else %}
+              {% assign step_image = blank %}
+            {% endif %}
+            {% if block.settings.image != blank %}
+              {% assign step_image = block.settings.image %}
             {% endif %}
             <div class="routine-row {% if block.settings.reverse %}reverse{% endif %}" {{ block.shopify_attributes }}>
               <div class="img">
