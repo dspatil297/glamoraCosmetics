@@ -8,6 +8,15 @@
 
 <link rel="dns-prefetch" href="https://pdp.gokwik.co/">
 <link rel="dns-prefetch" href="https://api.gokwik.co">
+<script>
+  // Global GoKwik Buy Now compatibility: older embeds may call window.addCartBuyNow(...)
+  // Ensure the handler always exists and forwards to the supported API.
+  window.addCartBuyNow = window.addCartBuyNow || function(triggerEl) {
+    if (typeof window.onBuyNowClick === 'function') {
+      return window.onBuyNowClick(triggerEl);
+    }
+  };
+</script>
 {% render 'gokwik' %}
 <!-- Gokwik theme code End -->
 
