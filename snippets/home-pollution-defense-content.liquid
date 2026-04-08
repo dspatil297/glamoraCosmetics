@@ -1,14 +1,30 @@
 {%- liquid
   assign section_id = 'hpd-' | append: section.id
-  assign hero_img_1 = section.settings.hero_product_1
-  assign hero_img_2 = section.settings.hero_product_2
-  assign hero_img_3 = section.settings.hero_product_3
+  assign hero_product_1 = section.settings.hero_product_1
+  assign hero_product_2 = section.settings.hero_product_2
+  assign hero_product_3 = section.settings.hero_product_3
+  assign hero_img_1 = blank
+  assign hero_img_2 = blank
+  assign hero_img_3 = blank
   assign hero_alt_1 = 'Pollution Control Face Wash'
   assign hero_alt_2 = 'Pollution Control Moisturizing Spray'
   assign hero_alt_3 = 'Pollution Control Hybrid Sunscreen'
   assign hero_fallback_1 = 'https://cdn.shopify.com/s/files/1/0657/8651/1422/files/facewash1.webp?v=1775141692'
   assign hero_fallback_2 = 'https://cdn.shopify.com/s/files/1/0657/8651/1422/files/WhatsAppImage2026-03-14at12.28.49PM.webp?v=1775141371'
   assign hero_fallback_3 = 'https://cdn.shopify.com/s/files/1/0657/8651/1422/files/ofetmglqptowmhrk2agf.webp?v=1775141307'
+
+  if hero_product_1 and hero_product_1.featured_image
+    assign hero_img_1 = hero_product_1.featured_image
+    assign hero_alt_1 = hero_product_1.title
+  endif
+  if hero_product_2 and hero_product_2.featured_image
+    assign hero_img_2 = hero_product_2.featured_image
+    assign hero_alt_2 = hero_product_2.title
+  endif
+  if hero_product_3 and hero_product_3.featured_image
+    assign hero_img_3 = hero_product_3.featured_image
+    assign hero_alt_3 = hero_product_3.title
+  endif
 
   if hero_img_1 == blank or hero_img_2 == blank or hero_img_3 == blank
     assign routine_index = 0
