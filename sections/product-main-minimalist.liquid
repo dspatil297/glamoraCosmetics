@@ -190,7 +190,7 @@
 
       <div class="product-info reveal" style="transition-delay:0.15s">
         <div class="routine-badge"><span class="routine-badge-num">1</span>Step 1 of the 3-Step Routine</div>
-        <h1>{{ product.title }}</h1>
+        <h1 class="pdpx-product-title">{{ product.title }}</h1>
         {%- if product_subtitle != blank -%}<p class="product-subtitle">{{ product_subtitle }}</p>{%- endif -%}
 
         <div class="product-ratings">
@@ -583,7 +583,8 @@
   .gallery-thumb img{width:100%;height:100%;aspect-ratio:1;object-fit:cover;}
   .product-info{padding-top:8px;} .routine-badge{display:inline-flex;align-items:center;gap:10px;padding:8px 18px;border-radius:100px;background:var(--teal-bg);font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--teal);margin-bottom:16px;}
   .routine-badge-num{width:22px;height:22px;background:var(--teal);color:#fff;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;}
-  .product-info h1{font-family:var(--font-display);font-size:clamp(28px,3.5vw,42px);font-weight:600;line-height:1.15;letter-spacing:-.02em;color:var(--text);margin-bottom:8px;}
+  /* PDP title: beat global critical.css h1 / h1,h2… (Playfair, --h1-size, weight 900) via #id + class */
+  #pdpx-{{ section.id }} h1.pdpx-product-title{font-family:var(--font-display,"Fraunces",Georgia,serif);font-size:clamp(28px,3.5vw,42px);font-weight:600;line-height:1.15;letter-spacing:-.02em;color:var(--text,#141413);margin:0 0 8px;}
   .product-subtitle{font-size:16px;font-weight:400;color:var(--text-2);margin-bottom:16px;} .product-ratings{display:flex;align-items:center;gap:12px;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border-light);}
   .stars{display:flex;gap:2px;color:#F5A623;} .rating-score{font-size:15px;font-weight:600;color:var(--text);} .rating-count{font-size:14px;font-weight:500;color:var(--teal);text-decoration:none;}
   .pricing{margin-bottom:24px;} .pricing-row{display:flex;align-items:baseline;gap:12px;margin-bottom:4px;} .price-current{font-family:var(--font-display);font-size:38px;font-weight:600;letter-spacing:-.025em;color:var(--text);}
