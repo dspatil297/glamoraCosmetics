@@ -169,9 +169,9 @@
     #{{ section_id }} .stats { background: #0A1A18; color: #fff; }
     #{{ section_id }} .stats .section-header h2 { color: #fff; }
     #{{ section_id }} .stats .section-header p { color: rgba(255,255,255,0.55); }
-    #{{ section_id }} .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    #{{ section_id }} .stats-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 24px; }
     #{{ section_id }} .stat-card { padding: clamp(32px, 4vw, 48px); border-radius: 1.5rem; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.06); }
-    #{{ section_id }} .stat-card.featured { grid-row: span 2; }
+    #{{ section_id }} .stat-card.featured { grid-row: span 2; display: flex; flex-direction: column; justify-content: center; }
     #{{ section_id }} .stat-number { font-family: var(--font-display); font-size: clamp(48px, 6vw, 80px); line-height: 1; color: var(--gold); margin-bottom: 16px; }
     #{{ section_id }} .stat-label { font-size: 17px; line-height: 1.6; color: rgba(255,255,255,0.6); margin: 0; font-weight: 300; }
     #{{ section_id }} .stats-explainer { margin-top: clamp(48px, 6vw, 80px); display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
@@ -238,6 +238,7 @@
       #{{ section_id }} .stats-grid,
       #{{ section_id }} .stats-explainer,
       #{{ section_id }} .ingredients-grid { grid-template-columns: 1fr; }
+      #{{ section_id }} .stat-card.featured { grid-row: span 1; }
       #{{ section_id }} .routine-row.reverse .img { order: 2; }
       #{{ section_id }} .routine-row.reverse .txt { order: 1; }
       #{{ section_id }} .newsletter-form { flex-direction: column; border-radius: 1rem; }
