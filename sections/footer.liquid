@@ -1,527 +1,189 @@
-{%- comment -%} CTA Bar (optional) - above footer {%- endcomment -%}
-{% if section.settings.show_cta_bar %}
-  <section class="footer-cta" aria-label="Call to action">
-    <div class="footer-cta__bg"></div>
-    <div class="footer-cta__inner">
-      <h2 class="footer-cta__title">{{ section.settings.cta_headline | default: "Enjoy the best quality cosmetics" }}</h2>
-      <p class="footer-cta__subtitle">{{ section.settings.cta_subtitle | default: "Discover Glamora\u2019s anti-pollution skincare, hybrid sunscreens, and moisturizing sprays crafted for everyday urban living." }}</p>
-      <a href="{{ section.settings.cta_button_url | default: routes.all_products_collection_url }}" class="footer-cta__btn">{{ section.settings.cta_button_text | default: "Shop Now" }}</a>
-      <div class="footer-cta__trust">
-        {% if section.settings.cta_trust_1 != blank %}<span class="footer-cta__trust-item">{{ section.settings.cta_trust_1 }}</span>{% endif %}
-        {% if section.settings.cta_trust_2 != blank %}<span class="footer-cta__trust-item">{{ section.settings.cta_trust_2 }}</span>{% endif %}
-      </div>
-    </div>
-  </section>
-{% endif %}
+{%- assign instagram_url = section.settings.instagram_url | default: 'https://instagram.com/glamoracosmetics.official' -%}
+{%- assign email_url = section.settings.email | default: 'support@glamoracosmetics.in' -%}
 
-<footer class="site-footer" role="contentinfo">
-  <div class="footer-container">
-    {%- comment -%} Four columns: About, Quick links, Contact Us, Legal {%- endcomment -%}
-    <div class="footer__grid">
-      <div class="footer__col footer__about">
-        <h4 class="footer__col-title">{{ section.settings.col_title_about | default: 'About' }} {{ shop.name | upcase }}</h4>
-        <p class="footer__about-text">{{ section.settings.company_description | default: "Glamora Cosmetics creates modern, anti-pollution skincare designed to protect, hydrate, and enhance your natural glow. Our science-backed formulas are crafted for everyday urban life, so your skin feels radiant, refreshed, and confident." }}</p>
+<footer class="g-footer">
+  <div class="g-footer__container">
+    <div class="g-footer__grid">
+      <div class="g-footer__brand">
+        <a href="{{ routes.root_url }}" class="g-footer__logo">{{ shop.name }}</a>
+        <p>{{ section.settings.brand_description }}</p>
       </div>
 
-      <div class="footer__col footer__policies">
-        <h4 class="footer__col-title">{{ section.settings.col_title_quick_links | default: 'Quick links' }}</h4>
-        <ul class="footer__list">
+      <div>
+        <h4>{{ section.settings.shop_heading }}</h4>
+        <ul class="g-footer__links">
+          {% if section.settings.shop_menu != blank %}
+            {% for link in linklists[section.settings.shop_menu].links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+      </div>
+
+      <div>
+        <h4>{{ section.settings.company_heading }}</h4>
+        <ul class="g-footer__links">
+          {% if section.settings.company_menu != blank %}
+            {% for link in linklists[section.settings.company_menu].links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+      </div>
+
+      <div>
+        <h4>{{ section.settings.policies_heading }}</h4>
+        <ul class="g-footer__links">
           {% if section.settings.policies_menu != blank %}
             {% for link in linklists[section.settings.policies_menu].links %}
               <li><a href="{{ link.url }}">{{ link.title }}</a></li>
             {% endfor %}
-          {% elsif section.settings.footer_default_menu != blank %}
-            {% for link in linklists[section.settings.footer_default_menu].links %}
-              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-            {% endfor %}
-          {% else %}
-            <li><a href="{{ routes.root_url }}">{{ section.settings.default_link_home | default: 'Home' }}</a></li>
-            <li><a href="{{ section.settings.about_us_url | default: '/pages/about-us' }}">{{ section.settings.default_link_about_us | default: 'About Us' }}</a></li>
-            <li><a href="/pages/terms-and-conditions">{{ section.settings.default_link_terms | default: 'Terms and Conditions' }}</a></li>
-            <li><a href="/pages/privacy-policy">{{ section.settings.default_link_privacy | default: 'Privacy Policy' }}</a></li>
-            <li><a href="/pages/shipping-policy">{{ section.settings.default_link_shipping | default: 'Shipping Policy' }}</a></li>
-            <li><a href="/pages/cancellation-and-refunds">{{ section.settings.default_link_refunds | default: 'Cancellation and Refunds' }}</a></li>
-            <li><a href="/pages/contact">{{ section.settings.default_link_contact | default: 'Contact Us' }}</a></li>
           {% endif %}
         </ul>
-      </div>
-
-      <div class="footer__col footer__contact">
-        <h4 class="footer__col-title">{{ section.settings.col_title_contact | default: 'Contact Us' }}</h4>
-        <ul class="footer__contact-list">
-          {% if section.settings.email != blank %}
-            <li class="footer__contact-row">
-              <span class="footer__contact-icon footer__contact-icon--email" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
-              </span>
-              <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
-            </li>
-          {% endif %}
-          {% if section.settings.address != blank %}
-            <li class="footer__contact-row">
-              <span class="footer__contact-icon footer__contact-icon--location" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-              </span>
-              <span>{{ section.settings.address }}</span>
-            </li>
-          {% endif %}
-          {% if section.settings.working_hours != blank %}
-            <li class="footer__contact-row">
-              <span class="footer__contact-icon footer__contact-icon--clock" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-              </span>
-              <span class="footer__contact-value">{{ section.settings.working_hours }}</span>
-            </li>
-          {% endif %}
-        </ul>
-        {%- assign instagram_url = section.settings.instagram_url | default: 'https://www.instagram.com/glamoracosmetics.official' -%}
-        {%- assign facebook_url = section.settings.facebook_url | default: 'https://www.facebook.com/share/17GZRJKQPd/' -%}
-        <div class="footer__social">
-          <span class="footer__social-label">{{ section.settings.social_label | default: 'Follow Us' }}</span>
-          <div class="footer__social-links">
-            <a href="{{ instagram_url }}" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Instagram">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            </a>
-            <a href="{{ facebook_url }}" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Facebook">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer__col footer__legal-col">
-        <h4 class="footer__col-title">{{ section.settings.col_title_legal | default: 'Legal' }}</h4>
-        <dl class="footer__legal-list">
-          {% if section.settings.legal_manufacturer != blank %}
-            <div class="footer__legal-row">
-              <dt>{{ section.settings.legal_label_manufacturer | default: 'Brand' }}:</dt>
-              <dd>{{ section.settings.legal_manufacturer | default: 'Glamora cosmetics' }}</dd>
-            </div>
-          {% endif %}
-          {% if section.settings.legal_mfg != blank %}
-            <div class="footer__legal-row">
-              <dt>{{ section.settings.legal_label_mfg | default: 'MFG' }}:</dt>
-              <dd>{{ section.settings.legal_mfg }}</dd>
-            </div>
-          {% endif %}
-          {% if section.settings.legal_origin != blank %}
-            <div class="footer__legal-row">
-              <dt>{{ section.settings.legal_label_origin | default: 'Origin' }}:</dt>
-              <dd>{{ section.settings.legal_origin }}</dd>
-            </div>
-          {% endif %}
-          {% if section.settings.legal_expiry != blank %}
-            <div class="footer__legal-row">
-              <dt>{{ section.settings.legal_label_expiry | default: 'Expiry' }}:</dt>
-              <dd>{{ section.settings.legal_expiry }}</dd>
-            </div>
-          {% endif %}
-        </dl>
       </div>
     </div>
 
-    {%- comment -%} Disclaimer strip {%- endcomment -%}
-    {% if section.settings.disclaimer_text != blank %}
-      <div class="footer__disclaimer">
-        <p>{{ section.settings.disclaimer_text }}</p>
+    <div class="g-footer__bottom">
+      <p>{{ section.settings.copyright_text }}</p>
+      <div class="g-footer__social">
+        <a href="{{ instagram_url }}" aria-label="Instagram" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="mailto:{{ email_url }}" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
       </div>
-    {% endif %}
-
-    {%- comment -%} Copyright {%- endcomment -%}
-    <div class="footer__copyright-bar">
-      <p class="footer__copyright-text">
-        © {{ 'now' | date: '%Y' }} {{ shop.name | upcase }}{% if section.settings.company_legal_name != blank %} - {{ section.settings.company_legal_name }}{% endif %}. All rights reserved.
-      </p>
     </div>
   </div>
 </footer>
 
-{%- comment -%} Floating action buttons {%- endcomment -%}
-{% if section.settings.show_scroll_top %}
-  <button type="button" class="footer-fab footer-fab--scroll" aria-label="{{ section.settings.fab_scroll_label | default: 'Scroll to top' }}" id="footer-scroll-top">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
-  </button>
-{% endif %}
-{% if section.settings.show_chat and section.settings.chat_url != blank %}
-  <a href="{{ section.settings.chat_url }}" class="footer-fab footer-fab--chat" aria-label="{{ section.settings.fab_chat_label | default: 'Chat' }}" target="_blank" rel="noopener noreferrer">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-  </a>
-{% endif %}
-
-<script>
-  (function() {
-    var btn = document.getElementById('footer-scroll-top');
-    if (btn) {
-      btn.addEventListener('click', function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    }
-  })();
-</script>
-
 {% stylesheet %}
-  :root {
-    --footer-bg: #4c5564; /* Dark slate from Glamora palette */
-    --footer-text: #d9d8d7;
-    --footer-text-muted: rgba(217, 216, 215, 0.75);
-    --footer-cta-bg: #15736d; /* Primary teal */
-    --footer-disclaimer-bg: #459592; /* Secondary teal */
-    --footer-disclaimer-border: rgba(217, 216, 215, 0.15);
-  }
-
-  /* CTA Bar */
-  .footer-cta {
+  .g-footer {
+    background: #141413;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 80px 0 40px;
     position: relative;
-    padding: var(--spacing-2xl) var(--container-padding);
-    background: var(--footer-cta-bg);
     overflow: hidden;
   }
-
-  .footer-cta__bg {
+  .g-footer::before {
+    content: '';
     position: absolute;
-    inset: 0;
-    background-image: repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 20px,
-      rgba(0, 0, 0, 0.03) 20px,
-      rgba(0, 0, 0, 0.03) 40px
-    );
+    width: 600px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(13, 139, 125, 0.06) 0%, transparent 70%);
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
     pointer-events: none;
   }
-
-  .footer-cta__inner {
+  .g-footer__container {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 48px);
     position: relative;
-    max-width: var(--container-max-width);
-    margin: 0 auto;
-    text-align: center;
   }
-
-  .footer-cta__title {
-    font-family: var(--font-heading);
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    font-weight: 700;
-    color: #ffffff;
-    margin: 0 0 var(--spacing-sm);
-  }
-
-  .footer-cta__subtitle {
-    font-size: var(--body-normal);
-    color: rgba(255, 255, 255, 0.9);
-    margin: 0 0 var(--spacing-lg);
-  }
-
-  .footer-cta__btn {
-    display: inline-block;
-    padding: var(--spacing-sm) var(--spacing-xl);
-    font-size: var(--body-normal);
-    font-weight: 600;
-    color: var(--white);
-    background: var(--forest-green);
-    border-radius: var(--radius-full);
-    text-decoration: none;
-    transition: background 0.2s, transform 0.2s;
-  }
-
-  .footer-cta__btn:hover {
-    background: var(--sage-green);
-    color: var(--white);
-    transform: translateY(-2px);
-  }
-
-  .footer-cta__trust {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-lg);
-    margin-top: var(--spacing-lg);
-    font-size: var(--body-small);
-    color: rgba(255, 255, 255, 0.85);
-  }
-
-  .footer-cta__trust-item {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-  }
-
-  /* Main footer */
-  .site-footer {
-    margin-top: 0;
-    padding: 0;
-    background: var(--footer-bg);
-    color: var(--footer-text);
-  }
-
-  .footer-container {
-    max-width: var(--container-max-width);
-    margin: 0 auto;
-    padding: var(--spacing-2xl) var(--container-padding) var(--spacing-lg);
-  }
-
-  .footer__grid {
+  .g-footer__grid {
     display: grid;
-    grid-template-columns: 1.2fr 1fr 1fr 1fr;
-    gap: var(--spacing-2xl);
-    align-items: start;
-    padding-bottom: var(--spacing-2xl);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: clamp(32px, 4vw, 64px);
+    margin-bottom: 64px;
   }
-
-  .footer__col-title {
-    font-family: var(--font-heading);
-    font-size: var(--h5-size);
-    font-weight: 700;
-    color: var(--white);
-    margin: 0 0 var(--spacing-md);
-    letter-spacing: 0.02em;
+  .g-footer__logo {
+    color: rgba(255, 255, 255, 0.85);
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 24px;
+    font-weight: 600;
+    text-decoration: none;
   }
-
-  .footer__about-text {
-    font-size: var(--body-small);
-    line-height: 1.65;
-    color: var(--footer-text-muted);
-    margin: 0;
+  .g-footer__brand p {
+    font-size: 16px;
+    line-height: 1.75;
+    margin-top: 20px;
+    font-weight: 300;
+    max-width: 320px;
   }
-
-  .footer__list,
-  .footer__contact-list {
+  .g-footer h4 {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.3);
+    margin: 0 0 20px;
+  }
+  .g-footer__links {
     list-style: none;
     margin: 0;
     padding: 0;
   }
-
-  .footer__list li {
-    margin-bottom: var(--spacing-xs);
+  .g-footer__links li {
+    margin-bottom: 12px;
   }
-
-  .footer__list a {
-    font-size: var(--body-small);
-    color: var(--footer-text-muted);
+  .g-footer__links a {
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.5);
     text-decoration: none;
-    transition: color 0.2s;
+    transition: color 0.3s ease;
   }
-
-  .footer__list a:hover {
-    color: var(--footer-text);
+  .g-footer__links a:hover {
+    color: #fff;
   }
-
-  .footer__contact-list {
+  .g-footer__bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 32px;
     display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-  }
-
-  .footer__contact-row {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--spacing-sm);
-    font-size: var(--body-small);
-    color: var(--footer-text-muted);
-  }
-
-  .footer__contact-row a {
-    color: var(--footer-text-muted);
-    text-decoration: none;
-  }
-
-  .footer__contact-row a:hover {
-    color: var(--footer-text);
-  }
-
-  .footer__contact-icon {
-    flex-shrink: 0;
-    width: 28px;
-    height: 28px;
-    display: inline-flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-sm);
   }
-
-  .footer__contact-icon--email {
-    background: var(--sage-green);
-    color: var(--white);
+  .g-footer__bottom p {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 300;
   }
-
-  .footer__contact-icon--location {
-    background: var(--white);
-    color: var(--forest-green);
+  .g-footer__social {
+    display: flex;
+    gap: 16px;
   }
-
-  .footer__contact-icon--clock {
-    background: var(--sage-green);
-    color: var(--white);
+  .g-footer__social a {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: grid;
+    place-items: center;
+    color: rgba(255, 255, 255, 0.65);
+    transition: all 0.3s ease;
   }
-
-  .footer__contact-icon svg {
+  .g-footer__social a:hover {
+    border-color: #0D8B7D;
+    color: #0D8B7D;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px -4px rgba(13, 139, 125, 0.3);
+  }
+  .g-footer__social svg {
     width: 16px;
     height: 16px;
   }
-
-  .footer__social {
-    margin-top: var(--spacing-lg);
-    display: block;
-  }
-
-  .footer__social-label {
-    display: block;
-    font-size: var(--body-small);
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.95);
-    margin-bottom: var(--spacing-sm);
-  }
-
-  .footer__social-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-sm);
-    align-items: center;
-  }
-
-  .footer__social-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
-    min-height: 44px;
-    border-radius: var(--radius-sm);
-    background: rgba(255, 255, 255, 0.15);
-    color: #ffffff;
-    transition: background 0.2s, color 0.2s, transform 0.2s;
-  }
-
-  .footer__social-link:hover {
-    background: var(--sage-green);
-    color: #ffffff;
-    transform: translateY(-2px);
-  }
-
-  .footer__social-link svg {
-    width: 22px;
-    height: 22px;
-    display: block;
-    fill: currentColor;
-  }
-
-  .footer__legal-list {
-    margin: 0;
-    padding: 0;
-    font-size: var(--body-small);
-    color: var(--footer-text-muted);
-  }
-
-  .footer__legal-row {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: var(--spacing-xs) var(--spacing-sm);
-    margin-bottom: var(--spacing-xs);
-  }
-
-  .footer__legal-row dt {
-    margin: 0;
-    font-weight: 500;
-    color: var(--footer-text);
-  }
-
-  .footer__legal-row dd {
-    margin: 0;
-  }
-
-  /* Disclaimer */
-  .footer__disclaimer {
-    margin: 0 calc(-1 * var(--container-padding));
-    padding: var(--spacing-lg) var(--container-padding);
-    border-top: 1px solid var(--footer-disclaimer-border);
-    border-bottom: 1px solid var(--footer-disclaimer-border);
-    background: var(--footer-disclaimer-bg);
-  }
-
-  .footer__disclaimer p {
-    max-width: var(--container-max-width);
-    margin: 0 auto;
-    font-size: var(--body-xs);
-    line-height: 1.6;
-    color: var(--footer-text-muted);
-    text-align: center;
-  }
-
-  /* Copyright */
-  .footer__copyright-bar {
-    padding-top: var(--spacing-lg);
-    text-align: center;
-  }
-
-  .footer__copyright-text {
-    font-size: var(--body-xs);
-    color: var(--footer-text-muted);
-    margin: 0;
-  }
-
-  /* Floating action buttons */
-  .footer-fab {
-    position: fixed;
-    right: var(--spacing-lg);
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    z-index: 100;
-    transition: transform 0.2s, box-shadow 0.2s;
-    text-decoration: none;
-    color: #fff;
-  }
-
-  .footer-fab:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-  }
-
-  .footer-fab--scroll {
-    bottom: 80px;
-    background: var(--sage-green);
-  }
-
-  .footer-fab--chat {
-    bottom: var(--spacing-lg);
-    background: var(--sage-green);
-  }
-
-  .footer-fab svg {
-    width: 24px;
-    height: 24px;
-  }
-
-  @media (max-width: 1024px) {
-    .footer__grid {
+  @media (max-width: 768px) {
+    .g-footer__grid {
       grid-template-columns: 1fr 1fr;
-      gap: var(--spacing-xl);
+      gap: 32px;
+    }
+    .g-footer__brand {
+      grid-column: span 2;
+    }
+    .g-footer__bottom {
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
     }
   }
-
-  @media (max-width: 767px) {
-    .footer-container {
-      padding-left: var(--container-padding);
-      padding-right: var(--container-padding);
-    }
-    .footer__grid {
+  @media (max-width: 480px) {
+    .g-footer__grid {
       grid-template-columns: 1fr;
-      gap: var(--spacing-xl);
-      padding-bottom: var(--spacing-xl);
     }
-    .footer-fab {
-      right: var(--spacing-md);
-      width: 44px;
-      height: 44px;
-    }
-    .footer-fab--scroll {
-      bottom: 72px;
+    .g-footer__brand {
+      grid-column: span 1;
     }
   }
 {% endstylesheet %}
@@ -531,290 +193,61 @@
   "name": "Footer",
   "settings": [
     {
-      "type": "header",
-      "content": "CTA Bar (above footer)"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_cta_bar",
-      "label": "Show CTA bar",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "cta_headline",
-      "label": "Headline",
-      "default": "Start Your Wellness Journey Today"
-    },
-    {
-      "type": "text",
-      "id": "cta_subtitle",
-      "label": "Subtitle",
-      "default": "Join thousands who have transformed their health with SARVITAL"
-    },
-    {
-      "type": "text",
-      "id": "cta_button_text",
-      "label": "Button text",
-      "default": "Order Now"
-    },
-    {
-      "type": "url",
-      "id": "cta_button_url",
-      "label": "Button link"
-    },
-    {
-      "type": "text",
-      "id": "cta_trust_1",
-      "label": "CTA trust item 1",
-      "default": "✓ Secure Checkout"
-    },
-    {
-      "type": "text",
-      "id": "cta_trust_2",
-      "label": "CTA trust item 2",
-      "default": "✓ Fast Delivery"
-    },
-    {
-      "type": "header",
-      "content": "About"
-    },
-    {
-      "type": "text",
-      "id": "col_title_about",
-      "label": "About column title",
-      "default": "About"
-    },
-    {
       "type": "textarea",
-      "id": "company_description",
-      "label": "About text",
-      "default": "SARVITAL brings you premium, nature-backed wellness products crafted with care. We are committed to quality, purity, and your wellbeing—helping you live healthier, naturally."
+      "id": "brand_description",
+      "label": "Brand description",
+      "default": "Advanced anti-pollution skincare for the modern Indian. We combine clinically-tested actives with skin-loving botanicals to cleanse, shield, and repair pollution damage. Every day."
     },
     {
-      "type": "header",
-      "content": "Quick links"
+      "type": "text",
+      "id": "shop_heading",
+      "label": "Shop heading",
+      "default": "Shop"
+    },
+    {
+      "type": "link_list",
+      "id": "shop_menu",
+      "label": "Shop menu"
+    },
+    {
+      "type": "text",
+      "id": "company_heading",
+      "label": "Company heading",
+      "default": "Company"
+    },
+    {
+      "type": "link_list",
+      "id": "company_menu",
+      "label": "Company menu"
+    },
+    {
+      "type": "text",
+      "id": "policies_heading",
+      "label": "Policies heading",
+      "default": "Policies"
     },
     {
       "type": "link_list",
       "id": "policies_menu",
-      "label": "Quick links menu (blank = default links below)"
-    },
-    {
-      "type": "link_list",
-      "id": "footer_default_menu",
-      "label": "Fallback menu when Quick links menu is blank"
-    },
-    {
-      "type": "text",
-      "id": "col_title_quick_links",
-      "label": "Quick links column title",
-      "default": "Quick links"
-    },
-    {
-      "type": "text",
-      "id": "default_link_home",
-      "label": "Default: Home link text",
-      "default": "Home"
-    },
-    {
-      "type": "text",
-      "id": "default_link_about_us",
-      "label": "Default: About Us link text",
-      "default": "About Us"
-    },
-    {
-      "type": "url",
-      "id": "about_us_url",
-      "label": "About Us page URL (when using default links)",
-      "info": "Leave blank for /pages/about-us"
-    },
-    {
-      "type": "text",
-      "id": "default_link_terms",
-      "label": "Default: Terms link text",
-      "default": "Terms and Conditions"
-    },
-    {
-      "type": "text",
-      "id": "default_link_privacy",
-      "label": "Default: Privacy link text",
-      "default": "Privacy Policy"
-    },
-    {
-      "type": "text",
-      "id": "default_link_shipping",
-      "label": "Default: Shipping link text",
-      "default": "Shipping Policy"
-    },
-    {
-      "type": "text",
-      "id": "default_link_refunds",
-      "label": "Default: Refunds link text",
-      "default": "Cancellation and Refunds"
-    },
-    {
-      "type": "text",
-      "id": "default_link_contact",
-      "label": "Default: Contact link text",
-      "default": "Contact Us"
-    },
-    {
-      "type": "header",
-      "content": "Contact Us"
-    },
-    {
-      "type": "text",
-      "id": "col_title_contact",
-      "label": "Contact column title",
-      "default": "Contact Us"
-    },
-    {
-      "type": "text",
-      "id": "email",
-      "label": "Email"
-    },
-    {
-      "type": "textarea",
-      "id": "address",
-      "label": "Address"
-    },
-    {
-      "type": "text",
-      "id": "working_hours",
-      "label": "Working hours",
-      "default": "Mon-Sat: 9AM - 6PM"
-    },
-    {
-      "type": "header",
-      "content": "Social links"
+      "label": "Policies menu"
     },
     {
       "type": "text",
       "id": "instagram_url",
       "label": "Instagram URL",
-      "default": "https://www.instagram.com/glamoracosmetics.official"
+      "default": "https://instagram.com/glamoracosmetics.official"
     },
     {
       "type": "text",
-      "id": "facebook_url",
-      "label": "Facebook URL",
-      "default": "https://www.facebook.com/share/17GZRJKQPd/"
+      "id": "email",
+      "label": "Support email",
+      "default": "support@glamoracosmetics.in"
     },
     {
       "type": "text",
-      "id": "social_label",
-      "label": "Social links heading",
-      "default": "Follow Us"
-    },
-    {
-      "type": "header",
-      "content": "Legal"
-    },
-    {
-      "type": "text",
-      "id": "col_title_legal",
-      "label": "Legal column title",
-      "default": "Legal"
-    },
-    {
-      "type": "text",
-      "id": "legal_label_manufacturer",
-      "label": "Legal: Brand label",
-      "default": "Brand"
-    },
-    {
-      "type": "text",
-      "id": "legal_label_mfg",
-      "label": "Legal: MFG label",
-      "default": "MFG"
-    },
-    {
-      "type": "text",
-      "id": "legal_label_origin",
-      "label": "Legal: Origin label",
-      "default": "Origin"
-    },
-    {
-      "type": "text",
-      "id": "legal_label_expiry",
-      "label": "Legal: Expiry label",
-      "default": "Expiry"
-    },
-    {
-      "type": "text",
-      "id": "legal_manufacturer",
-      "label": "Brand",
-      "default": "Glamora cosmetics"
-    },
-    {
-      "type": "text",
-      "id": "legal_mfg",
-      "label": "MFG"
-    },
-    {
-      "type": "text",
-      "id": "legal_origin",
-      "label": "Origin",
-      "default": "India"
-    },
-    {
-      "type": "text",
-      "id": "legal_expiry",
-      "label": "Expiry"
-    },
-    {
-      "type": "header",
-      "content": "Disclaimer"
-    },
-    {
-      "type": "textarea",
-      "id": "disclaimer_text",
-      "label": "Disclaimer text",
-      "default": "Disclaimer: This product is a health supplement and is not for medicinal use. Not intended to diagnose, treat, cure, or prevent any disease. Consult your healthcare provider if pregnant, nursing, or on medication."
-    },
-    {
-      "type": "header",
-      "content": "Copyright"
-    },
-    {
-      "type": "text",
-      "id": "company_legal_name",
-      "label": "Company legal name (after ©)",
-      "default": "Sarvital Sarvadnya Foodtech Pvt Ltd"
-    },
-    {
-      "type": "header",
-      "content": "Floating buttons"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_scroll_top",
-      "label": "Show scroll to top button",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_chat",
-      "label": "Show chat button",
-      "default": true
-    },
-    {
-      "type": "url",
-      "id": "chat_url",
-      "label": "Chat link (WhatsApp, live chat, etc.)"
-    },
-    {
-      "type": "text",
-      "id": "fab_scroll_label",
-      "label": "Scroll to top button (accessibility label)",
-      "default": "Scroll to top"
-    },
-    {
-      "type": "text",
-      "id": "fab_chat_label",
-      "label": "Chat button (accessibility label)",
-      "default": "Chat"
+      "id": "copyright_text",
+      "label": "Copyright text",
+      "default": "2026 Glamora Cosmetics. All rights reserved."
     }
   ]
 }

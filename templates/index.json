@@ -148,7 +148,7 @@
         "prod_1": {
           "type": "product_card",
           "settings": {
-            "product": "",
+            "product": "glamora-pollution-control-face-wash",
             "type": "Face Wash",
             "title": "Pollution Control Face Wash",
             "price": "Rs. 469",
@@ -160,7 +160,7 @@
         "prod_2": {
           "type": "product_card",
           "settings": {
-            "product": "",
+            "product": "glamora-pollution-control-foaming-face-wash",
             "type": "Face Wash",
             "title": "Pollution Control Foaming Face Wash",
             "price": "Rs. 399",
@@ -172,7 +172,7 @@
         "prod_3": {
           "type": "product_card",
           "settings": {
-            "product": "",
+            "product": "glamora-pollution-control-moisturizing-spray",
             "type": "Moisturizer",
             "title": "Pollution Control Moisturizing Spray",
             "price": "Rs. 649",
@@ -184,7 +184,7 @@
         "prod_4": {
           "type": "product_card",
           "settings": {
-            "product": "",
+            "product": "glamora-pollution-control-hybrid-sunscreen",
             "type": "Sunscreen",
             "title": "Pollution Control Hybrid Sunscreen SPF 50",
             "price": "Rs. 669",
