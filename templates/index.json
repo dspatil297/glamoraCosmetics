@@ -52,7 +52,7 @@
           "type": "routine_step",
           "settings": {
             "reverse": false,
-            "product": "",
+            "product": "glamora-pollution-control-face-wash",
             "label": "Cleanse",
             "title": "Pollution Control Face Wash",
             "tagline": "Wash the city off your skin.",
@@ -67,7 +67,7 @@
           "type": "routine_step",
           "settings": {
             "reverse": true,
-            "product": "",
+            "product": "glamora-pollution-control-moisturizing-spray",
             "label": "Hydrate",
             "title": "Pollution Control Moisturizing Spray",
             "tagline": "Hydrate. Shield. Glow.",
@@ -82,7 +82,7 @@
           "type": "routine_step",
           "settings": {
             "reverse": false,
-            "product": "",
+            "product": "glamora-pollution-control-hybrid-sunscreen",
             "label": "Protect",
             "title": "Pollution Control Hybrid Sunscreen SPF 50 PA++++",
             "tagline": "UV + pollution. Blocked.",
