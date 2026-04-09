@@ -449,15 +449,15 @@
     </div>
   </section>
   {%- liquid
-    assign defense_blocks = section.blocks | where: 'type', 'defense_routine_product'
+    assign routine_coll = section.settings.routine_defense_collection
     assign defense_count = 0
-    for block in defense_blocks
-      if block.settings.routine_product != blank
+    if routine_coll != blank
+      for p in routine_coll.products limit: 3
         assign defense_count = defense_count | plus: 1
-      endif
-    endfor
+      endfor
+    endif
   -%}
-  {%- if defense_count > 0 -%}
+  {%- if routine_coll != blank and defense_count > 0 -%}
   <section class="routine-section">
     <div class="container">
       <div class="section-header reveal">
@@ -470,9 +470,7 @@
       </div>
       <div class="routine-crosssell routine-crosssell--{{ defense_count }}">
         {%- assign defense_slot = 0 -%}
-        {%- for block in defense_blocks -%}
-          {%- assign p = block.settings.routine_product -%}
-          {%- if p == blank -%}{% continue %}{%- endif -%}
+        {%- for p in routine_coll.products limit: 3 -%}
           {%- assign defense_slot = defense_slot | plus: 1 -%}
           {%- assign reveal_extra = '' -%}
           {%- if defense_slot == 2 -%}{%- assign reveal_extra = ' reveal-d1' -%}
@@ -485,7 +483,7 @@
           {%- assign is_current = false -%}
           {%- if p.id == product.id -%}{%- assign is_current = true -%}{%- endif -%}
           {%- if is_current -%}
-            <article class="crosssell-shell current-product reveal{{ reveal_extra }}" {{ block.shopify_attributes }}>
+            <article class="crosssell-shell current-product reveal{{ reveal_extra }}">
               <div class="crosssell-core">
                 <div class="crosssell-img">
                   {%- if pimg -%}{{ pimg | image_url: width: 900 | image_tag: alt: p.title, loading: 'lazy' }}{%- endif -%}
@@ -501,7 +499,7 @@
               </div>
             </article>
           {%- else -%}
-            <a href="{{ p.url }}" class="crosssell-shell reveal{{ reveal_extra }}" {{ block.shopify_attributes }}>
+            <a href="{{ p.url }}" class="crosssell-shell reveal{{ reveal_extra }}">
               <div class="crosssell-core">
                 <div class="crosssell-img">
                   {%- if pimg -%}{{ pimg | image_url: width: 900 | image_tag: alt: p.title, loading: 'lazy' }}{%- endif -%}
@@ -517,6 +515,21 @@
             </a>
           {%- endif -%}
         {%- endfor -%}
+      </div>
+    </div>
+  </section>
+  {%- elsif request.design_mode -%}
+  <section class="routine-section routine-section--placeholder">
+    <div class="container">
+      <div class="section-header reveal">
+        {%- if section.settings.routine_heading != blank -%}
+          <h2>{{ section.settings.routine_heading }}</h2>
+        {%- endif -%}
+        {%- if routine_coll == blank -%}
+          <p class="routine-placeholder-note">Theme editor: open section settings and choose <strong>3-step defense collection</strong> (under Complete the 3-step defense). The first 3 products in that collection appear here.</p>
+        {%- elsif defense_count == 0 -%}
+          <p class="routine-placeholder-note">This collection has no products yet. Add products in Admin → Products → Collections, or pick a different collection.</p>
+        {%- endif -%}
       </div>
     </div>
   </section>
@@ -798,6 +811,7 @@
   section.pdpx .howto-section { padding: clamp(80px, 10vw, 128px) 0; }
   section.pdpx .study-section { padding: clamp(64px, 8vw, 100px) 0; background: var(--bg-alt); }
   section.pdpx .routine-section { padding: clamp(80px, 10vw, 128px) 0; }
+  section.pdpx .routine-section--placeholder .routine-placeholder-note { font-size: 15px; line-height: 1.65; font-weight: 400; color: var(--text-2); max-width: 52ch; margin: 0 auto; text-align: center; }
   section.pdpx .reviews-section { padding: clamp(80px, 10vw, 128px) 0; background: var(--bg-alt); }
   section.pdpx .faq-section { padding: clamp(80px, 10vw, 128px) 0; }
   section.pdpx .efficacy-header{text-align:center;margin-bottom:clamp(40px,5vw,64px);} section.pdpx .efficacy-header h2,section.pdpx .ingredients-header h2,section.pdpx .idealfor-content h2,section.pdpx .howto-header h2,section.pdpx .study-header h2,section.pdpx .section-header h2,section.pdpx .reviews-header h2,section.pdpx .faq-header h2{font-family:var(--font-display);font-size:clamp(28px,3.5vw,42px);font-weight:600;line-height:1.15;letter-spacing:-.025em;margin:0 0 12px;}
@@ -941,7 +955,12 @@
     },
     {
       "type": "paragraph",
-      "content": "Shown below How to use. Add up to three \"Defense routine product\" blocks (Blocks list). Order of blocks sets left-to-right display."
+      "content": "Shown below How to use. Pick a collection (up to 3 products). Order follows the collection product order."
+    },
+    {
+      "type": "collection",
+      "id": "routine_defense_collection",
+      "label": "3-step defense collection"
     },
     { "type": "text", "id": "routine_heading", "label": "Routine heading", "default": "Complete the 3-step defense" },
     {
@@ -1016,14 +1035,6 @@
       "name": "Skin type tag",
       "settings": [
         { "type": "text", "id": "text", "label": "Skin type", "default": "Oily" }
-      ]
-    },
-    {
-      "type": "defense_routine_product",
-      "name": "Defense routine product",
-      "limit": 3,
-      "settings": [
-        { "type": "product", "id": "routine_product", "label": "Product" }
       ]
     },
     {
