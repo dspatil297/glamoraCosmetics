@@ -74,6 +74,8 @@
     --bp-teal-muted: #1A9E8F;
     --bp-teal-bg: #EBF5F3;
     --bp-teal-dark: #0A6E63;
+    /* Theme primary from :root when set; else bundle teal */
+    --bundle-accent: var(--primary-cta, var(--bp-teal));
     --bp-gold: #C5A44E;
     --bp-gold-muted: #D4B96A;
     --bp-border: #E8E6E1;
@@ -266,29 +268,40 @@
   }
   #shopify-section-{{ section.id }} .btn:active { transform: scale(0.97); }
   #shopify-section-{{ section.id }} .btn--primary {
-    background: var(--bp-teal);
-    color: #fff;
+    background: transparent;
+    color: var(--bundle-accent);
+    border: 2px solid var(--bundle-accent);
+    box-shadow: none;
   }
-  #shopify-section-{{ section.id }} .btn--primary:hover:not(:disabled) { background: #0B7A6E; }
-  #shopify-section-{{ section.id }} .btn--primary:disabled { opacity: 0.65; cursor: not-allowed; }
+  #shopify-section-{{ section.id }} .btn--primary:hover:not(:disabled) {
+    background: var(--bp-teal-bg);
+    color: var(--bundle-accent);
+    border-color: var(--bundle-accent);
+  }
+  #shopify-section-{{ section.id }} .btn--primary:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
   #shopify-section-{{ section.id }} .btn--primary .btn-arrow {
     width: 30px;
     height: 30px;
-    background: rgba(255,255,255,0.18);
+    background: transparent;
+    border: 1.5px solid currentColor;
     border-radius: 50%;
     display: grid;
     place-items: center;
-    transition: transform 0.4s var(--bp-ease), background 0.4s var(--bp-ease);
+    color: inherit;
+    transition: transform 0.4s var(--bp-ease), background 0.4s var(--bp-ease), border-color 0.4s var(--bp-ease);
   }
   #shopify-section-{{ section.id }} .btn--primary:hover:not(:disabled) .btn-arrow {
     transform: translateX(3px);
-    background: rgba(255,255,255,0.28);
+    background: rgba(13, 139, 125, 0.08);
   }
 
   #shopify-section-{{ section.id }} .btn--ghost {
     background: transparent;
-    color: var(--bp-teal);
-    border: 2px solid var(--bp-teal);
+    color: var(--bundle-accent);
+    border: 2px solid var(--bundle-accent);
   }
   #shopify-section-{{ section.id }} .btn--ghost:hover:not(:disabled) {
     background: var(--bp-teal-bg);
@@ -304,11 +317,11 @@
   #shopify-section-{{ section.id }} .bundle-hero-buttons .btn { width: 100%; }
   #shopify-section-{{ section.id }} .bundle-hero-buttons .bundle-gokwik-buynow { width: 100%; }
 
-  /* Gokwik-style buy now (matches theme gokwik.liquid / gokwik-checkout button layout) */
+  /* Buy now: solid theme accent (not Gokwik black); layout still matches Gokwik button structure */
   #shopify-section-{{ section.id }} .bundle-gokwik-buynow {
     width: 100%;
     max-width: 100%;
-    border: none;
+    border: 2px solid var(--bundle-accent);
     border-radius: 100px;
     display: flex;
     justify-content: center;
@@ -322,17 +335,13 @@
     font-weight: 600;
     letter-spacing: 0.02em;
     line-height: 1.2;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    {% if settings.goBuynowEnable %}
-    background: {{ settings.btnBClr }};
-    color: {{ settings.btnTextClr }};
-    {% else %}
-    background: var(--bp-teal-dark);
+    transition: background 0.25s var(--bp-ease), border-color 0.25s var(--bp-ease), opacity 0.2s ease, transform 0.2s ease;
+    background: var(--bundle-accent);
     color: #fff;
-    {% endif %}
   }
   #shopify-section-{{ section.id }} .bundle-gokwik-buynow:hover:not(:disabled) {
-    opacity: 0.92;
+    opacity: 1;
+    filter: brightness(0.94);
   }
   #shopify-section-{{ section.id }} .bundle-gokwik-buynow:disabled {
     opacity: 0.5;
@@ -354,7 +363,7 @@
     line-height: 12px;
     font-weight: 500;
     text-transform: none;
-    opacity: 0.9;
+    color: rgba(255, 255, 255, 0.88);
   }
   #shopify-section-{{ section.id }} .bundle-gokwik-buynow .pay-opt-icon {
     display: flex;
@@ -377,11 +386,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 100px;
-    {% if settings.goBuynowEnable %}
-    background: {{ settings.btnBClr }};
-    {% else %}
-    background: var(--bp-teal-dark);
-    {% endif %}
+    background: var(--bundle-accent);
   }
   #shopify-section-{{ section.id }} .bundle-gokwik-buynow.is-loading .bundle-gokwik-loader {
     display: flex;
