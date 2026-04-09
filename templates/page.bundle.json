@@ -1,0 +1,116 @@
+/*
+ * ------------------------------------------------------------
+ * Bundle landing: assign this template to a page in Admin (Pages → page → Theme template → bundle).
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "bundle_page": {
+      "type": "bundle-page",
+      "blocks": {
+        "why_1": {
+          "type": "why_card",
+          "settings": {
+            "icon": "shield",
+            "title": "Multi-layer defense",
+            "text": "Each step addresses a different threat: particles that clog, UV that burns, free radicals that age. Coverage a single product cannot provide."
+          }
+        },
+        "why_2": {
+          "type": "why_card",
+          "settings": {
+            "icon": "clock",
+            "title": "5 minutes, all-day protection",
+            "text": "The entire routine takes less time than your morning commute. Apply once and your skin is shielded from morning until night."
+          }
+        },
+        "why_3": {
+          "type": "why_card",
+          "settings": {
+            "icon": "layers",
+            "title": "Compounding results",
+            "text": "Each product enhances the next. Clean skin absorbs moisture better. Hydrated skin holds sunscreen longer. The sequence matters."
+          }
+        },
+        "why_4": {
+          "type": "why_card",
+          "settings": {
+            "icon": "stack",
+            "title": "Simpler than you think",
+            "text": "No 10-step routines, no complicated instructions. Three bottles, used in order, every morning. That's the entire system."
+          }
+        },
+        "tl_1": {
+          "type": "timeline_step",
+          "settings": {
+            "time_label": "0:00",
+            "title": "Cleanse with Face Wash",
+            "body": "Wet face. Apply a coin-sized amount, massage 45 seconds. Rinse with cool water. Removes overnight pollutant buildup."
+          }
+        },
+        "tl_2": {
+          "type": "timeline_step",
+          "settings": {
+            "time_label": "1:30",
+            "title": "Mist with Moisturizing Spray",
+            "body": "Hold 6 inches from face, spray evenly while skin is still damp. Pat gently. Creates a hydration shield."
+          }
+        },
+        "tl_3": {
+          "type": "timeline_step",
+          "settings": {
+            "time_label": "3:00",
+            "title": "Apply Sunscreen",
+            "body": "Take a two-finger amount. Dot on forehead, cheeks, nose, chin. Blend outward. The final barrier against UV and pollution."
+          }
+        },
+        "tl_4": {
+          "type": "timeline_step",
+          "settings": {
+            "time_label": "5:00",
+            "title": "You're protected",
+            "body": "Step outside with confidence. Your skin is shielded from PM2.5, UV radiation, and free radical damage all day long."
+          }
+        }
+      },
+      "block_order": [
+        "why_1",
+        "why_2",
+        "why_3",
+        "why_4",
+        "tl_1",
+        "tl_2",
+        "tl_3",
+        "tl_4"
+      ],
+      "settings": {
+        "hero_eyebrow": "Save 27%",
+        "hero_title": "The Pollution Defense Kit",
+        "hero_tagline": "Your complete morning routine in one kit.",
+        "hero_description": "Everything your skin needs to fight the city. Three products, one 5-minute ritual. Cleanse away overnight pollutants, lock in hydration, then block UV and pollution before you step out.",
+        "pricing_note": "Inclusive of all taxes. Free shipping.",
+        "add_to_cart_label": "Add Kit to Cart",
+        "buy_now_label": "Buy Now",
+        "inside_heading": "What's inside the kit",
+        "inside_subheading": "Three products that work in sequence to defend your skin from pollution at every stage.",
+        "step_1_label": "Cleanse",
+        "step_1_description": "Removes PM2.5 particles, dirt, and environmental toxins. Glutathione + Vitamin C brighten while cleansing.",
+        "step_2_label": "Hydrate",
+        "step_2_description": "Locks in moisture, creates a breathable anti-pollution barrier. Coconut Water + Aloe Vera hydrate all day.",
+        "step_3_label": "Protect",
+        "step_3_description": "SPF 50 PA++++ meets anti-pollution technology. Non-greasy, no white cast. The final shield before you step out.",
+        "inside_connector": "Together, they defend against pollution at every stage.",
+        "why_heading": "Why a routine beats single products",
+        "why_subheading": "Pollution attacks your skin from multiple angles. One product can't fight all three threats simultaneously.",
+        "timeline_heading": "Your 5-minute morning shield",
+        "timeline_subheading": "A simple ritual that protects your skin all day.",
+        "bottom_heading": "Ready to fight back?",
+        "bottom_subheading": "Get the complete 3-step pollution defense routine.",
+        "bottom_note": "Free shipping included. 100% secure checkout."
+      }
+    }
+  },
+  "order": [
+    "bundle_page"
+  ]
+}
