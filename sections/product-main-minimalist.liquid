@@ -448,27 +448,160 @@
       </div>
     </div>
   </section>
+  {%- liquid
+    assign defense_p1 = section.settings.defense_product_1
+    assign defense_p2 = section.settings.defense_product_2
+    assign defense_p3 = section.settings.defense_product_3
+    assign defense_count = 0
+    if defense_p1 != blank
+      assign defense_count = defense_count | plus: 1
+    endif
+    if defense_p2 != blank
+      assign defense_count = defense_count | plus: 1
+    endif
+    if defense_p3 != blank
+      assign defense_count = defense_count | plus: 1
+    endif
+  -%}
+  {%- if defense_count > 0 -%}
   <section class="routine-section">
     <div class="container">
       <div class="section-header reveal">
-        <h2>Complete the 3-step defense</h2>
-        <p>One product can't fight pollution from every angle. Complete the routine for multi-layer protection.</p>
+        {%- if section.settings.routine_heading != blank -%}
+          <h2>{{ section.settings.routine_heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.routine_subheading != blank -%}
+          <p>{{ section.settings.routine_subheading }}</p>
+        {%- endif -%}
       </div>
-      <div class="routine-crosssell">
-        <article class="crosssell-shell current-product reveal">
-          <div class="crosssell-core">
-            <div class="crosssell-img">
-              {%- if featured -%}<img src="{{ featured | image_url: width: 900 }}" alt="{{ product.title | escape }}">{%- endif -%}
-              <span class="current-tag">Viewing Now</span>
-            </div>
-            <div class="crosssell-body"><h3 class="crosssell-name">{{ product.title }}</h3><span class="crosssell-price">{{ price | money_without_trailing_zeros }}</span></div>
-          </div>
-        </article>
-        <article class="crosssell-shell reveal reveal-d1"><div class="crosssell-core"><div class="crosssell-img"></div><div class="crosssell-body"><h3 class="crosssell-name">Pollution Control Moisturizing Spray</h3><span class="crosssell-price">Rs. 649</span></div></div></article>
-        <article class="crosssell-shell reveal reveal-d2"><div class="crosssell-core"><div class="crosssell-img"></div><div class="crosssell-body"><h3 class="crosssell-name">Pollution Control Hybrid Sunscreen SPF 50</h3><span class="crosssell-price">Rs. 669</span></div></div></article>
+      <div class="routine-crosssell routine-crosssell--{{ defense_count }}">
+        {%- if defense_p1 != blank -%}
+          {%- assign p = defense_p1 -%}
+          {%- assign pv = p.selected_or_first_available_variant -%}
+          {%- assign pimg = pv.featured_image | default: p.featured_image -%}
+          {%- assign p_price = pv.price -%}
+          {%- assign p_compare = pv.compare_at_price -%}
+          {%- assign is_current = false -%}
+          {%- if p.id == product.id -%}{%- assign is_current = true -%}{%- endif -%}
+          {%- if is_current -%}
+            <article class="crosssell-shell current-product reveal">
+              <div class="crosssell-core">
+                <div class="crosssell-img">
+                  {%- if pimg -%}{{ pimg | image_url: width: 900 | image_tag: alt: p.title, loading: 'lazy' }}{%- endif -%}
+                  <span class="current-tag">Viewing Now</span>
+                </div>
+                <div class="crosssell-body">
+                  <h3 class="crosssell-name">{{ p.title }}</h3>
+                  <span class="crosssell-price">{{ p_price | money_without_trailing_zeros }}</span>
+                  {%- if p_compare != blank and p_compare > p_price -%}
+                    <span class="crosssell-mrp">{{ p_compare | money_without_trailing_zeros }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+            </article>
+          {%- else -%}
+            <a href="{{ p.url }}" class="crosssell-shell reveal">
+              <div class="crosssell-core">
+                <div class="crosssell-img">
+                  {%- if pimg -%}{{ pimg | image_url: width: 900 | image_tag: alt: p.title, loading: 'lazy' }}{%- endif -%}
+                </div>
+                <div class="crosssell-body">
+                  <h3 class="crosssell-name">{{ p.title }}</h3>
+                  <span class="crosssell-price">{{ p_price | money_without_trailing_zeros }}</span>
+                  {%- if p_compare != blank and p_compare > p_price -%}
+                    <span class="crosssell-mrp">{{ p_compare | money_without_trailing_zeros }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+            </a>
+          {%- endif -%}
+        {%- endif -%}
+        {%- if defense_p2 != blank -%}
+          {%- assign p = defense_p2 -%}
+          {%- assign pv = p.selected_or_first_available_variant -%}
+          {%- assign pimg = pv.featured_image | default: p.featured_image -%}
+          {%- assign p_price = pv.price -%}
+          {%- assign p_compare = pv.compare_at_price -%}
+          {%- assign is_current = false -%}
+          {%- if p.id == product.id -%}{%- assign is_current = true -%}{%- endif -%}
+          {%- if is_current -%}
+            <article class="crosssell-shell current-product reveal reveal-d1">
+              <div class="crosssell-core">
+                <div class="crosssell-img">
+                  {%- if pimg -%}{{ pimg | image_url: width: 900 | image_tag: alt: p.title, loading: 'lazy' }}{%- endif -%}
+                  <span class="current-tag">Viewing Now</span>
+                </div>
+                <div class="crosssell-body">
+                  <h3 class="crosssell-name">{{ p.title }}</h3>
+                  <span class="crosssell-price">{{ p_price | money_without_trailing_zeros }}</span>
+                  {%- if p_compare != blank and p_compare > p_price -%}
+                    <span class="crosssell-mrp">{{ p_compare | money_without_trailing_zeros }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+            </article>
+          {%- else -%}
+            <a href="{{ p.url }}" class="crosssell-shell reveal reveal-d1">
+              <div class="crosssell-core">
+                <div class="crosssell-img">
+                  {%- if pimg -%}{{ pimg | image_url: width: 900 | image_tag: alt: p.title, loading: 'lazy' }}{%- endif -%}
+                </div>
+                <div class="crosssell-body">
+                  <h3 class="crosssell-name">{{ p.title }}</h3>
+                  <span class="crosssell-price">{{ p_price | money_without_trailing_zeros }}</span>
+                  {%- if p_compare != blank and p_compare > p_price -%}
+                    <span class="crosssell-mrp">{{ p_compare | money_without_trailing_zeros }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+            </a>
+          {%- endif -%}
+        {%- endif -%}
+        {%- if defense_p3 != blank -%}
+          {%- assign p = defense_p3 -%}
+          {%- assign pv = p.selected_or_first_available_variant -%}
+          {%- assign pimg = pv.featured_image | default: p.featured_image -%}
+          {%- assign p_price = pv.price -%}
+          {%- assign p_compare = pv.compare_at_price -%}
+          {%- assign is_current = false -%}
+          {%- if p.id == product.id -%}{%- assign is_current = true -%}{%- endif -%}
+          {%- if is_current -%}
+            <article class="crosssell-shell current-product reveal reveal-d2">
+              <div class="crosssell-core">
+                <div class="crosssell-img">
+                  {%- if pimg -%}{{ pimg | image_url: width: 900 | image_tag: alt: p.title, loading: 'lazy' }}{%- endif -%}
+                  <span class="current-tag">Viewing Now</span>
+                </div>
+                <div class="crosssell-body">
+                  <h3 class="crosssell-name">{{ p.title }}</h3>
+                  <span class="crosssell-price">{{ p_price | money_without_trailing_zeros }}</span>
+                  {%- if p_compare != blank and p_compare > p_price -%}
+                    <span class="crosssell-mrp">{{ p_compare | money_without_trailing_zeros }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+            </article>
+          {%- else -%}
+            <a href="{{ p.url }}" class="crosssell-shell reveal reveal-d2">
+              <div class="crosssell-core">
+                <div class="crosssell-img">
+                  {%- if pimg -%}{{ pimg | image_url: width: 900 | image_tag: alt: p.title, loading: 'lazy' }}{%- endif -%}
+                </div>
+                <div class="crosssell-body">
+                  <h3 class="crosssell-name">{{ p.title }}</h3>
+                  <span class="crosssell-price">{{ p_price | money_without_trailing_zeros }}</span>
+                  {%- if p_compare != blank and p_compare > p_price -%}
+                    <span class="crosssell-mrp">{{ p_compare | money_without_trailing_zeros }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+            </a>
+          {%- endif -%}
+        {%- endif -%}
       </div>
     </div>
   </section>
+  {%- endif -%}
   <section class="study-section">
     <div class="container">
       <div class="study-header reveal"><h2>{{ section.settings.study_heading }}</h2></div>
@@ -780,7 +913,10 @@
   section.pdpx .skin-types{display:flex;flex-wrap:wrap;gap:10px;} section.pdpx .skin-type-tag{padding:10px 20px;border-radius:100px;border:1px solid var(--border);font-size:14px;font-weight:500;color:var(--text-2);background:var(--bg);} section.pdpx .skin-type-tag.active{border-color:var(--teal);background:var(--teal-bg);color:var(--teal);font-weight:600;}
   section.pdpx .study-bars{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:20px;} section.pdpx .study-bar{display:grid;grid-template-columns:80px 1fr;gap:20px;align-items:center;} section.pdpx .study-percent{font-family:var(--font-display);font-size:32px;font-weight:700;letter-spacing:-.02em;color:var(--teal);text-align:right;} section.pdpx .study-bar-info h4{font-size:15px;font-weight:600;color:var(--text);margin:0 0 8px;}
   section.pdpx .study-bar-track{height:8px;background:var(--border);border-radius:8px;overflow:hidden;} section.pdpx .study-bar-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-muted));border-radius:8px;width:0;} section.pdpx .study-disclaimer{text-align:center;margin-top:32px;font-size:13px;font-style:italic;color:var(--text-3);}
-  section.pdpx .routine-crosssell { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  section.pdpx .routine-crosssell { display: grid; gap: 24px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  section.pdpx .routine-crosssell--1 { grid-template-columns: minmax(0, 1fr); max-width: 400px; margin-left: auto; margin-right: auto; }
+  section.pdpx .routine-crosssell--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  section.pdpx a.crosssell-shell { text-decoration: none; color: inherit; }
   section.pdpx .crosssell-shell { background: rgba(0, 0, 0, 0.015); border: 1px solid var(--border-light); padding: 6px; border-radius: 1.75rem; transition: border-color 0.5s var(--ease); display: flex; flex-direction: column; }
   section.pdpx .crosssell-shell.current-product { border-color: var(--teal); }
   section.pdpx .crosssell-shell:hover { border-color: var(--border); }
@@ -847,7 +983,9 @@
     section.pdpx .product-layout { grid-template-columns: 1fr; }
     section.pdpx .gallery { position: static; }
     section.pdpx .idealfor-inner { grid-template-columns: 1fr; }
-    section.pdpx .routine-crosssell { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+    section.pdpx .routine-crosssell,
+    section.pdpx .routine-crosssell--2,
+    section.pdpx .routine-crosssell--3 { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
     section.pdpx .reviews-grid { grid-template-columns: 1fr; }
     section.pdpx .product-trust { grid-template-columns: 1fr; }
     section.pdpx .sticky-bar-name { display: none; }
@@ -878,6 +1016,24 @@
     { "type": "text", "id": "idealfor_subheading", "label": "Ideal for subheading", "default": "Designed for anyone who lives, commutes, or works in a polluted city. If your skin feels dull, congested, or breaks out without clear reason - pollution is likely the cause." },
     { "type": "text", "id": "skin_types_heading", "label": "Skin types heading", "default": "Works for all skin types" },
     { "type": "text", "id": "study_heading", "label": "Study section heading", "default": "What our users report" },
+    {
+      "type": "header",
+      "content": "Complete the 3-step defense"
+    },
+    {
+      "type": "paragraph",
+      "content": "Shown below How to use. Pick up to three routine products; the card for the product being viewed shows Viewing Now."
+    },
+    { "type": "text", "id": "routine_heading", "label": "Routine heading", "default": "Complete the 3-step defense" },
+    {
+      "type": "textarea",
+      "id": "routine_subheading",
+      "label": "Routine subheading",
+      "default": "One product can't fight pollution from every angle. Complete the routine for multi-layer protection."
+    },
+    { "type": "product", "id": "defense_product_1", "label": "Routine product 1" },
+    { "type": "product", "id": "defense_product_2", "label": "Routine product 2" },
+    { "type": "product", "id": "defense_product_3", "label": "Routine product 3" },
     { "type": "text", "id": "reviews_heading", "label": "Reviews heading", "default": "Real people. Real city skin." },
     { "type": "text", "id": "faq_heading", "label": "FAQ heading", "default": "Frequently asked questions" },
     { "type": "checkbox", "id": "enable_metafield_faq", "label": "Use product metafield FAQs when no FAQ blocks", "default": false }
