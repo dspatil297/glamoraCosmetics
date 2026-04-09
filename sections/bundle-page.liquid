@@ -125,8 +125,9 @@
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    gap: clamp(12px, 2vw, 24px);
-    padding: 40px 20px;
+    gap: clamp(14px, 2.2vw, 28px);
+    padding: clamp(32px, 5vw, 56px) clamp(16px, 3vw, 28px) clamp(28px, 4vw, 48px);
+    min-height: clamp(220px, 32vw, 340px);
   }
   #shopify-section-{{ section.id }} .bundle-hero-bg {
     position: absolute;
@@ -142,15 +143,19 @@
   #shopify-section-{{ section.id }} .bundle-prod {
     position: relative;
     z-index: 2;
-    width: clamp(90px, 11vw, 140px);
+    width: auto;
+    height: clamp(168px, 24vw, 280px);
+    max-width: clamp(130px, 17vw, 200px);
     border-radius: 12px;
     filter: drop-shadow(0 20px 40px rgba(13,139,125,0.1));
     transition: transform 0.6s var(--bp-ease);
-    object-fit: cover;
-    aspect-ratio: 1;
+    object-fit: contain;
+    object-position: center bottom;
+    flex: 0 0 auto;
   }
   #shopify-section-{{ section.id }} .bundle-prod:nth-child(3) {
-    width: clamp(110px, 13vw, 170px);
+    height: clamp(200px, 30vw, 340px);
+    max-width: clamp(150px, 20vw, 240px);
     animation: bp-bundleFloat 5s ease-in-out infinite;
   }
   #shopify-section-{{ section.id }} .bundle-prod:hover { transform: translateY(-8px); }
@@ -634,7 +639,19 @@
 
   @media (max-width: 768px) {
     #shopify-section-{{ section.id }} .bundle-hero-grid { grid-template-columns: 1fr; }
-    #shopify-section-{{ section.id }} .bundle-hero-images { order: -1; padding: 20px 0; }
+    #shopify-section-{{ section.id }} .bundle-hero-images {
+      order: -1;
+      padding: 24px 12px 32px;
+      min-height: clamp(200px, 55vw, 280px);
+    }
+    #shopify-section-{{ section.id }} .bundle-prod {
+      height: clamp(150px, 42vw, 240px);
+      max-width: clamp(100px, 28vw, 160px);
+    }
+    #shopify-section-{{ section.id }} .bundle-prod:nth-child(3) {
+      height: clamp(175px, 48vw, 280px);
+      max-width: clamp(115px, 32vw, 190px);
+    }
     #shopify-section-{{ section.id }} .bundle-hero-content { max-width: 100%; text-align: center; }
     #shopify-section-{{ section.id }} .bundle-hero-content .desc {
       max-width: 100%;
@@ -662,31 +679,31 @@
           <div class="bundle-hero-bg" aria-hidden="true"></div>
           {% if p1 != blank and p1.featured_image %}
             <img
-              src="{{ p1.featured_image | image_url: width: 400 }}"
+              src="{{ p1.featured_image | image_url: width: 700 }}"
               alt="{{ p1.featured_image.alt | default: p1.title | escape }}"
               class="bundle-prod"
-              width="400"
-              height="400"
+              width="600"
+              height="800"
               loading="eager"
             >
           {% endif %}
           {% if p2 != blank and p2.featured_image %}
             <img
-              src="{{ p2.featured_image | image_url: width: 480 }}"
+              src="{{ p2.featured_image | image_url: width: 840 }}"
               alt="{{ p2.featured_image.alt | default: p2.title | escape }}"
               class="bundle-prod"
-              width="480"
-              height="480"
+              width="600"
+              height="800"
               loading="eager"
             >
           {% endif %}
           {% if p3 != blank and p3.featured_image %}
             <img
-              src="{{ p3.featured_image | image_url: width: 400 }}"
+              src="{{ p3.featured_image | image_url: width: 700 }}"
               alt="{{ p3.featured_image.alt | default: p3.title | escape }}"
               class="bundle-prod"
-              width="400"
-              height="400"
+              width="600"
+              height="800"
               loading="eager"
             >
           {% endif %}
