@@ -1,6 +1,7 @@
 {% comment %}
   Full bundle landing layout matching glamora-website/bundle-page.html (hero, what's inside, why, timeline, bottom CTA).
-  Three products via pickers; Add to cart / Buy now add all variants then checkout for buy now.
+  Three products via pickers. Add to cart uses /cart/add.js. Buy now (when theme Gokwik "Enable Checkout Button" is on)
+  adds the same items then calls onCheckoutClick (same flow as gokwik-checkout snippet); otherwise redirects to /checkout.
 {% endcomment %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,6 +54,11 @@
   assign savings_cents = sum_compare | minus: sum_price
   if savings_cents < 0
     assign savings_cents = 0
+  endif
+
+  assign bundle_gokwik_checkout = false
+  if settings.goEnable
+    assign bundle_gokwik_checkout = true
   endif
 -%}
 
@@ -296,6 +302,98 @@
     width: 100%;
   }
   #shopify-section-{{ section.id }} .bundle-hero-buttons .btn { width: 100%; }
+  #shopify-section-{{ section.id }} .bundle-hero-buttons .bundle-gokwik-buynow { width: 100%; }
+
+  /* Gokwik-style buy now (matches theme gokwik.liquid / gokwik-checkout button layout) */
+  #shopify-section-{{ section.id }} .bundle-gokwik-buynow {
+    width: 100%;
+    max-width: 100%;
+    border: none;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    cursor: pointer;
+    padding: 15px 20px;
+    min-height: 52px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    {% if settings.goBuynowEnable %}
+    background: {{ settings.btnBClr }};
+    color: {{ settings.btnTextClr }};
+    {% else %}
+    background: var(--bp-teal-dark);
+    color: #fff;
+    {% endif %}
+  }
+  #shopify-section-{{ section.id }} .bundle-gokwik-buynow:hover:not(:disabled) {
+    opacity: 0.92;
+  }
+  #shopify-section-{{ section.id }} .bundle-gokwik-buynow:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  #shopify-section-{{ section.id }} .bundle-gokwik-buynow .btn-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  #shopify-section-{{ section.id }} .bundle-gokwik-buynow .btn-text > span:first-child {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  #shopify-section-{{ section.id }} .bundle-gokwik-buynow .bundle-gokwik-buynow__sub {
+    padding-top: 2px;
+    font-size: 10px;
+    line-height: 12px;
+    font-weight: 500;
+    text-transform: none;
+    opacity: 0.9;
+  }
+  #shopify-section-{{ section.id }} .bundle-gokwik-buynow .pay-opt-icon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  #shopify-section-{{ section.id }} .bundle-gokwik-buynow .pay-opt-icon img:first-child {
+    margin: 0 10px;
+    height: 18px;
+    width: auto;
+  }
+  #shopify-section-{{ section.id }} .bundle-gokwik-buynow .pay-opt-icon img:last-child {
+    height: 15px;
+    width: auto;
+  }
+  #shopify-section-{{ section.id }} .bundle-gokwik-buynow .bundle-gokwik-loader {
+    display: none;
+    position: absolute;
+    inset: 0;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    {% if settings.goBuynowEnable %}
+    background: {{ settings.btnBClr }};
+    {% else %}
+    background: var(--bp-teal-dark);
+    {% endif %}
+  }
+  #shopify-section-{{ section.id }} .bundle-gokwik-buynow.is-loading .bundle-gokwik-loader {
+    display: flex;
+  }
+  #shopify-section-{{ section.id }} .bundle-gokwik-buynow--cta {
+    padding: 20px 44px;
+    font-size: 16px;
+    min-height: 56px;
+  }
+  #shopify-section-{{ section.id }} .bundle-gokwik-buynow--cta .btn-text > span:first-child {
+    font-size: 16px;
+  }
 
   /* === WHAT'S INSIDE === */
   #shopify-section-{{ section.id }} .inside-section {
@@ -601,6 +699,10 @@
     justify-content: center;
     align-items: center;
   }
+  #shopify-section-{{ section.id }} .bottom-cta-buttons .bundle-gokwik-buynow {
+    flex: 1 1 220px;
+    max-width: 100%;
+  }
   #shopify-section-{{ section.id }} .bottom-note {
     margin-top: 16px;
     font-size: 13px;
@@ -744,9 +846,35 @@
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
               </span>
             </button>
-            <button type="button" class="btn btn--ghost js-bundle-add" data-bundle-action="buy" {% unless v1 and v2 and v3 %}disabled{% endunless %}>
-              {{ section.settings.buy_now_label }}
-            </button>
+            {% if bundle_gokwik_checkout %}
+              <button
+                type="button"
+                class="bundle-gokwik-buynow js-bundle-add"
+                data-bundle-action="buy"
+                data-bundle-gokwik="1"
+                {% unless v1 and v2 and v3 %}disabled{% endunless %}
+              >
+                <span class="btn-text">
+                  <span>{{ section.settings.buy_now_label }}</span>
+                  {% if settings.sub-titile != blank %}
+                    <span class="bundle-gokwik-buynow__sub">{{ settings.sub-titile }}</span>
+                  {% endif %}
+                </span>
+                {% if settings.enableLogo %}
+                  <span class="pay-opt-icon">
+                    <img src="https://cdn.gokwik.co/v4/images/upi-icons.svg" alt="" width="72" height="18" loading="lazy">
+                    <img src="https://cdn.gokwik.co/v4/images/right-arrow.svg" alt="" width="15" height="15" loading="lazy">
+                  </span>
+                {% endif %}
+                <div class="addloadr bundle-gokwik-loader" aria-hidden="true">
+                  <div class="cir-loader">Loading..</div>
+                </div>
+              </button>
+            {% else %}
+              <button type="button" class="btn btn--ghost js-bundle-add" data-bundle-action="buy" {% unless v1 and v2 and v3 %}disabled{% endunless %}>
+                {{ section.settings.buy_now_label }}
+              </button>
+            {% endif %}
           </div>
           <p class="bundle-page-message" id="bundle-msg-{{ section.id }}" role="status"></p>
         </div>
@@ -956,9 +1084,35 @@
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </span>
           </button>
-          <button type="button" class="btn btn--ghost js-bundle-add" data-bundle-action="buy" style="padding:20px 44px;font-size:16px;" {% unless v1 and v2 and v3 %}disabled{% endunless %}>
-            {{ section.settings.buy_now_label }}
-          </button>
+          {% if bundle_gokwik_checkout %}
+            <button
+              type="button"
+              class="bundle-gokwik-buynow bundle-gokwik-buynow--cta js-bundle-add"
+              data-bundle-action="buy"
+              data-bundle-gokwik="1"
+              {% unless v1 and v2 and v3 %}disabled{% endunless %}
+            >
+              <span class="btn-text">
+                <span>{{ section.settings.buy_now_label }}</span>
+                {% if settings.sub-titile != blank %}
+                  <span class="bundle-gokwik-buynow__sub">{{ settings.sub-titile }}</span>
+                {% endif %}
+              </span>
+              {% if settings.enableLogo %}
+                <span class="pay-opt-icon">
+                  <img src="https://cdn.gokwik.co/v4/images/upi-icons.svg" alt="" width="72" height="18" loading="lazy">
+                  <img src="https://cdn.gokwik.co/v4/images/right-arrow.svg" alt="" width="15" height="15" loading="lazy">
+                </span>
+              {% endif %}
+              <div class="addloadr bundle-gokwik-loader" aria-hidden="true">
+                <div class="cir-loader">Loading..</div>
+              </div>
+            </button>
+          {% else %}
+            <button type="button" class="btn btn--ghost js-bundle-add" data-bundle-action="buy" style="padding:20px 44px;font-size:16px;" {% unless v1 and v2 and v3 %}disabled{% endunless %}>
+              {{ section.settings.buy_now_label }}
+            </button>
+          {% endif %}
         </div>
         {% if section.settings.bottom_note != blank %}
           <p class="bottom-note">{{ section.settings.bottom_note }}</p>
@@ -984,6 +1138,7 @@
     if (!root) return;
     var dataEl = document.getElementById('bundle-data-{{ section.id }}');
     var msgEl = document.getElementById('bundle-msg-{{ section.id }}');
+    var useGokwikCheckout = {{ bundle_gokwik_checkout | json }};
     var parsed = { items: [] };
     try {
       parsed = JSON.parse(dataEl.textContent);
@@ -995,11 +1150,54 @@
       msgEl.classList.toggle('is-error', !!isError);
     }
 
+    function getCheckoutClickFn() {
+      if (typeof window.onCheckoutClick === 'function') return window.onCheckoutClick;
+      if (typeof onCheckoutClick === 'function') return onCheckoutClick;
+      return null;
+    }
+
+    function openGokwikAfterCartAdd(triggerBtn) {
+      var fn = getCheckoutClickFn();
+      if (fn) {
+        try {
+          fn.call(window, triggerBtn);
+          return;
+        } catch (e) {}
+      }
+      var attempts = 0;
+      var maxAttempts = 50;
+      var t = setInterval(function () {
+        fn = getCheckoutClickFn();
+        if (fn) {
+          clearInterval(t);
+          try {
+            fn.call(window, triggerBtn);
+          } catch (e) {
+            window.location.href = '/checkout';
+          }
+        } else if (++attempts >= maxAttempts) {
+          clearInterval(t);
+          window.location.href = '/checkout';
+        }
+      }, 100);
+    }
+
+    root.querySelectorAll('.js-bundle-add[data-bundle-action="buy"]').forEach(function (btn) {
+      if (btn.dataset.bundleGokwik === '1' && !btn.dataset.bundleBuynowHtml) {
+        btn.dataset.bundleBuynowHtml = btn.innerHTML;
+      }
+    });
+
     function resetButtons(buttons) {
       buttons.forEach(function (btn) {
         btn.disabled = false;
+        btn.classList.remove('is-loading');
         if (btn.dataset.bundleAction === 'buy') {
-          btn.textContent = {{ section.settings.buy_now_label | json }};
+          if (btn.dataset.bundleBuynowHtml) {
+            btn.innerHTML = btn.dataset.bundleBuynowHtml;
+          } else {
+            btn.textContent = {{ section.settings.buy_now_label | json }};
+          }
         } else {
           btn.innerHTML = {{ section.settings.add_to_cart_label | json }} + '<span class="btn-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>';
         }
@@ -1015,8 +1213,15 @@
       var buttons = root.querySelectorAll('.js-bundle-add');
       buttons.forEach(function (b) { b.disabled = true; });
       if (triggerBtn) {
-        if (action === 'buy') triggerBtn.textContent = 'Processing…';
-        else triggerBtn.textContent = 'Adding…';
+        if (action === 'buy') {
+          if (triggerBtn.dataset.bundleGokwik === '1') {
+            triggerBtn.classList.add('is-loading');
+          } else {
+            triggerBtn.textContent = 'Processing…';
+          }
+        } else {
+          triggerBtn.textContent = 'Adding…';
+        }
       }
 
       fetch('/cart/add.js', {
@@ -1031,7 +1236,11 @@
             throw new Error(desc);
           }
           if (action === 'buy') {
-            window.location.href = '/checkout';
+            if (useGokwikCheckout) {
+              openGokwikAfterCartAdd(triggerBtn);
+            } else {
+              window.location.href = '/checkout';
+            }
             return;
           }
           setMessage('All products added to your cart.', false);
@@ -1141,7 +1350,8 @@
       "type": "text",
       "id": "buy_now_label",
       "label": "Buy now button",
-      "default": "Buy Now"
+      "default": "Buy Now",
+      "info": "When Gokwik is enabled (Theme settings → Enable Checkout Button), this is the main line on the Gokwik-style buy button. Subtext and UPI icons follow global Gokwik settings."
     },
     {
       "type": "header",

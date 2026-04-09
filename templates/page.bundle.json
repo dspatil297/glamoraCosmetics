@@ -1,6 +1,10 @@
 /*
  * ------------------------------------------------------------
- * Bundle landing: assign this template to a page in Admin (Pages → page → Theme template → bundle).
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
 {
@@ -84,11 +88,15 @@
         "tl_4"
       ],
       "settings": {
+        "product_1": "glamora-pollution-control-face-wash",
+        "product_2": "glamora-pollution-control-moisturizing-spray",
+        "product_3": "glamora-pollution-control-hybrid-sunscreen",
         "hero_eyebrow": "Save 27%",
         "hero_title": "The Pollution Defense Kit",
         "hero_tagline": "Your complete morning routine in one kit.",
         "hero_description": "Everything your skin needs to fight the city. Three products, one 5-minute ritual. Cleanse away overnight pollutants, lock in hydration, then block UV and pollution before you step out.",
         "pricing_note": "Inclusive of all taxes. Free shipping.",
+        "discount_badge_override": "",
         "add_to_cart_label": "Add Kit to Cart",
         "buy_now_label": "Buy Now",
         "inside_heading": "What's inside the kit",
