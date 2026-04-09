@@ -17,6 +17,7 @@
   assign faq_meta = product.metafields.custom.product_page_faq
   assign ingredients_meta = product.metafields.custom.key_ingredients
   assign how_to_use_meta = product.metafields.custom.how_to_use
+  assign love_it_meta = product.metafields.custom.why_you_will_love_it
   assign howto_steps_default_string = 'Wet your face|||Splash lukewarm water to open pores and prepare skin for deep cleansing.|||0:00###STEP###Apply and massage|||Coin-sized amount. Massage in circular motions for 45-60 seconds. Focus on T-zone.|||0:15###STEP###Rinse clean|||Wash off with cool water to close pores. Pat dry with a clean towel - never rub.|||1:00###STEP###Continue routine|||While skin is still damp, apply the Moisturizing Spray (Step 2) for maximum absorption.|||1:30'
   assign howto_steps = howto_steps_default_string | split: '###STEP###'
   assign parsed_steps_string = ''
@@ -217,10 +218,25 @@
         <div class="love-it">
           <div class="love-it-title">{{ section.settings.love_it_title }}</div>
           <ul class="love-it-list">
-            {%- assign love_points = section.blocks | where: 'type', 'love_point' -%}
-            {%- for block in love_points -%}
-              <li {{ block.shopify_attributes }}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>{{ block.settings.text }}</li>
-            {%- endfor -%}
+            {%- liquid
+              assign love_from_meta = false
+              if love_it_meta != blank and love_it_meta.value != blank and love_it_meta.value.size > 0
+                assign love_from_meta = true
+              endif
+            -%}
+            {%- if love_from_meta -%}
+              {%- for point in love_it_meta.value limit: 4 -%}
+                {%- assign love_line = point | strip -%}
+                {%- if love_line != '' -%}
+                  <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>{{ love_line }}</li>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- else -%}
+              {%- assign love_points = section.blocks | where: 'type', 'love_point' -%}
+              {%- for block in love_points -%}
+                <li {{ block.shopify_attributes }}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>{{ block.settings.text }}</li>
+              {%- endfor -%}
+            {%- endif -%}
           </ul>
         </div>
 
@@ -938,6 +954,10 @@
     { "type": "text", "id": "rating_text", "label": "Rating text", "default": "4.4" },
     { "type": "text", "id": "review_count_text", "label": "Review count text", "default": "839 verified reviews" },
     { "type": "text", "id": "tax_text", "label": "Tax text", "default": "Inclusive of all taxes" },
+    {
+      "type": "paragraph",
+      "content": "If the product metafield custom.why_you_will_love_it (list: single line text) has values, up to 4 lines show here and theme blocks are ignored."
+    },
     { "type": "text", "id": "love_it_title", "label": "Why you'll love it title", "default": "Why you'll love it" },
     { "type": "text", "id": "stock_text", "label": "Stock text", "default": "In Stock — Ships within 24 hours" },
     { "type": "text", "id": "efficacy_heading", "label": "Efficacy heading", "default": "Proven to protect your skin" },
