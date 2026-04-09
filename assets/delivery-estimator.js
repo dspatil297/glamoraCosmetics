@@ -105,10 +105,11 @@
     }
 
     function runCheck() {
-      var pincode = input.value.trim();
-      if (!pincode) {
+      var pincode = input.value.trim().replace(/[^0-9]/g, '');
+      input.value = pincode;
+      if (pincode.length !== 6) {
         result.className = 'delivery-estimator__result delivery-error';
-        result.textContent = 'Please enter a pincode';
+        result.textContent = 'Please enter a valid 6-digit pincode';
         return;
       }
       var estimate = estimateDelivery(pincode);

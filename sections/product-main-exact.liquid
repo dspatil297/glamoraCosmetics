@@ -26,7 +26,7 @@
         <div class="gx-gallery-main-shell">
           <div class="gx-gallery-main-core">
             {%- if featured -%}
-              <img src="{{ featured | image_url: width: 1400 }}" alt="{{ product.title | escape }}" id="gxMainImg-{{ section.id }}" loading="eager">
+              <img src="{{ featured | image_url: width: 1400 }}" alt="{{ product.title | escape }}" id="gxMainImg-{{ section.id }}" width="{{ featured.width }}" height="{{ featured.height }}" loading="eager" fetchpriority="high" decoding="async">
             {%- endif -%}
           </div>
         </div>
@@ -34,7 +34,7 @@
           <div class="gx-gallery-thumbs">
             {%- for image in product.images -%}
               <button type="button" class="gx-gallery-thumb{% if image.id == featured.id %} active{% elsif featured == blank and forloop.first %} active{% endif %}" data-gx-thumb data-src="{{ image | image_url: width: 1400 }}" aria-label="Image {{ forloop.index }}">
-                <img src="{{ image | image_url: width: 220 }}" alt="" loading="lazy">
+                <img src="{{ image | image_url: width: 220 }}" alt="" width="110" height="110" loading="lazy" decoding="async">
               </button>
             {%- endfor -%}
           </div>

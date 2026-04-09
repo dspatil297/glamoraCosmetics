@@ -118,9 +118,15 @@
         <div class="hpd-display">
           <div class="hpd-display-shape"></div>
           <div class="hpd-products">
-            {% if section.settings.hero_product_1 != blank %}<img src="{{ section.settings.hero_product_1 | image_url: width: 520 }}" alt="Hero product 1">{% endif %}
-            {% if section.settings.hero_product_2 != blank %}<img src="{{ section.settings.hero_product_2 | image_url: width: 520 }}" alt="Hero product 2">{% endif %}
-            {% if section.settings.hero_product_3 != blank %}<img src="{{ section.settings.hero_product_3 | image_url: width: 520 }}" alt="Hero product 3">{% endif %}
+            {% if section.settings.hero_product_1 != blank %}
+              <img src="{{ section.settings.hero_product_1 | image_url: width: 520 }}" alt="Hero product 1" width="260" height="260" loading="eager" fetchpriority="high" decoding="async">
+            {% endif %}
+            {% if section.settings.hero_product_2 != blank %}
+              <img src="{{ section.settings.hero_product_2 | image_url: width: 520 }}" alt="Hero product 2" width="260" height="260" loading="lazy" decoding="async">
+            {% endif %}
+            {% if section.settings.hero_product_3 != blank %}
+              <img src="{{ section.settings.hero_product_3 | image_url: width: 520 }}" alt="Hero product 3" width="260" height="260" loading="lazy" decoding="async">
+            {% endif %}
           </div>
         </div>
       </div>
@@ -161,7 +167,7 @@
                 <div class="hpd-img-shell">
                   <div class="hpd-img-core">
                     {% if block.settings.image != blank %}
-                      <img src="{{ block.settings.image | image_url: width: 900 }}" alt="{{ block.settings.title | escape }}">
+                      <img src="{{ block.settings.image | image_url: width: 900 }}" alt="{{ block.settings.title | escape }}" loading="lazy" decoding="async" sizes="(max-width: 768px) 100vw, 440px">
                     {% endif %}
                   </div>
                 </div>
@@ -230,7 +236,9 @@
             <article class="hpd-card" {{ block.shopify_attributes }}>
               <div class="hpd-card-core">
                 <div class="hpd-card-img">
-                  {% if block.settings.image != blank %}<img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.title | escape }}">{% endif %}
+                  {% if block.settings.image != blank %}
+                    <img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.title | escape }}" loading="lazy" decoding="async" sizes="(max-width: 768px) 85vw, 360px">
+                  {% endif %}
                   <a class="hpd-qa" href="{{ block.settings.button_link }}">{{ block.settings.button_text }}</a>
                 </div>
                 <div class="hpd-card-body">

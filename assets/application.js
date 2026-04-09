@@ -5,31 +5,6 @@
 (function () {
   'use strict';
 
-  function debounce(func, wait) {
-    var timeout;
-    return function () {
-      var ctx = this;
-      var args = arguments;
-      clearTimeout(timeout);
-      timeout = setTimeout(function () {
-        func.apply(ctx, args);
-      }, wait);
-    };
-  }
-
-  function throttle(func, limit) {
-    var inThrottle;
-    return function () {
-      if (!inThrottle) {
-        func.apply(this, arguments);
-        inThrottle = true;
-        setTimeout(function () {
-          inThrottle = false;
-        }, limit);
-      }
-    };
-  }
-
   function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
       anchor.addEventListener('click', function (e) {
@@ -205,9 +180,4 @@
   } else {
     init();
   }
-
-  window.SarvitalTheme = {
-    debounce: debounce,
-    throttle: throttle
-  };
 })();

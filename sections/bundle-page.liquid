@@ -792,6 +792,8 @@
               width="600"
               height="800"
               loading="eager"
+              fetchpriority="high"
+              decoding="async"
             >
           {% endif %}
           {% if p2 != blank and p2.featured_image %}
@@ -801,7 +803,8 @@
               class="bundle-prod"
               width="600"
               height="800"
-              loading="eager"
+              loading="lazy"
+              decoding="async"
             >
           {% endif %}
           {% if p3 != blank and p3.featured_image %}
@@ -811,7 +814,8 @@
               class="bundle-prod"
               width="600"
               height="800"
-              loading="eager"
+              loading="lazy"
+              decoding="async"
             >
           {% endif %}
         </div>
@@ -908,6 +912,7 @@
                     width="800"
                     height="1067"
                     loading="lazy"
+                    decoding="async"
                   >
                 {% endif %}
               </div>
@@ -942,6 +947,7 @@
                     width="800"
                     height="1067"
                     loading="lazy"
+                    decoding="async"
                   >
                 {% endif %}
               </div>
@@ -976,6 +982,7 @@
                     width="800"
                     height="1067"
                     loading="lazy"
+                    decoding="async"
                   >
                 {% endif %}
               </div>
