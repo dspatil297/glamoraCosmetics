@@ -1173,7 +1173,8 @@
   section.pdpx .qty-selector { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; flex: 0 0 144px; }
   section.pdpx .qty-btn { width: 48px; height: 52px; border: 0; background: var(--bg); font-size: 18px; cursor: pointer; transition: background 0.3s var(--ease); display: grid; place-items: center; font-family: inherit; }
   section.pdpx .qty-btn:hover { background: var(--bg-alt); }
-  section.pdpx .qty-val { width: 48px; height: 52px; border: 0; text-align: center; font-size: 15px; font-weight: 600; -moz-appearance: textfield; appearance: textfield; display: grid; place-items: center; font-family: inherit; color: var(--text); background: transparent; }
+  section.pdpx .qty-val { width: 48px; height: 52px; border: 0; text-align: center; font-size: 15px; font-weight: 600; -moz-appearance: textfield; appearance: textfield; display: grid; place-items: center; font-family: inherit; color: var(--text); background: transparent; padding: 0; line-height: 1; }
+  section.pdpx input.qty-val[type="number"] { width: 48px; min-width: 48px; max-width: 48px; height: 52px; min-height: 52px; padding: 0; margin: 0; border: 0; border-radius: 0; box-shadow: none; background: transparent; text-align: center; }
   section.pdpx .qty-val::-webkit-outer-spin-button, section.pdpx .qty-val::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
   section.pdpx .btn-add-cart { flex: 1 1 auto; min-height: 52px; padding: 16px 24px; background: var(--text); color: #fff; border-radius: 12px; font-size: 15px; font-weight: 600; letter-spacing: 0.02em; border: 0; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1); transition: all 0.4s var(--ease); cursor: pointer; font-family: inherit; }
   section.pdpx .btn-add-cart:hover { background: var(--bg-dark); transform: translateY(-2px); box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.1); }
@@ -1419,6 +1420,8 @@
     section.pdpx .ingredients-grid,
     section.pdpx .howto-grid { grid-template-columns: 1fr; }
     section.pdpx .quantity-row { flex-direction: column; }
+    section.pdpx .qty-selector { width: 144px; max-width: 144px; }
+    section.pdpx input.qty-val[type="number"] { width: 44px; min-width: 44px; max-width: 44px; height: 48px; min-height: 48px; }
   }
 {% endstylesheet %}
 
