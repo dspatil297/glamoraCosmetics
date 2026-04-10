@@ -56,24 +56,28 @@
         "trust_item_7PBhCA": {
           "type": "trust_item",
           "settings": {
+            "icon": "shield_check",
             "text": "Dermatologist Tested"
           }
         },
         "trust_item_XJNa4A": {
           "type": "trust_item",
           "settings": {
+            "icon": "heart",
             "text": "Cruelty Free"
           }
         },
         "trust_item_zpJrMq": {
           "type": "trust_item",
           "settings": {
+            "icon": "truck",
             "text": "Free Shipping 999+"
           }
         },
         "trust_item_JDwQie": {
           "type": "trust_item",
           "settings": {
+            "icon": "leaf",
             "text": "No Parabens or Sulfates"
           }
         },

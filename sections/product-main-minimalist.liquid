@@ -451,7 +451,26 @@
           {%- assign trust_items = section.blocks | where: 'type', 'trust_item' -%}
           {%- for block in trust_items -%}
             <div class="product-trust-item" {{ block.shopify_attributes }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>{{ block.settings.text }}
+              {%- assign trust_icon = block.settings.icon | default: 'shield_check' -%}
+              {%- if trust_icon != 'none' -%}
+                <span class="product-trust-item__icon" aria-hidden="true">
+                  {%- case trust_icon -%}
+                    {%- when 'heart' -%}
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    {%- when 'truck' -%}
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+                    {%- when 'leaf' -%}
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.2 2 8.5 0 6-5 11-10 11z"/><path d="M2 22c2-4 6-8 10-8"/></svg>
+                    {%- when 'award' -%}
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                    {%- when 'lock' -%}
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    {%- else -%}
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                  {%- endcase -%}
+                </span>
+              {%- endif -%}
+              <span class="product-trust-item__label">{{ block.settings.text }}</span>
             </div>
           {%- endfor -%}
         </div>
@@ -542,37 +561,12 @@
             {%- assign ingredient_parts = item | split: '|||' -%}
             {%- assign ingredient_title = ingredient_parts | first | strip -%}
             {%- assign ingredient_description = ingredient_parts[1] | strip -%}
-            {%- assign title_words = ingredient_title | replace: '(', ' ' | replace: ')', ' ' | replace: ',', ' ' | replace: '-', ' ' | split: ' ' -%}
-            {%- assign first_word = '' -%}
-            {%- assign second_word = '' -%}
-            {%- for word in title_words -%}
-              {%- assign clean_word = word | strip -%}
-              {%- if clean_word != '' -%}
-                {%- if first_word == '' -%}
-                  {%- assign first_word = clean_word -%}
-                {%- elsif second_word == '' -%}
-                  {%- assign second_word = clean_word -%}
-                  {%- break -%}
-                {%- endif -%}
-              {%- endif -%}
-            {%- endfor -%}
-            {%- assign second_initial = '' -%}
-            {%- if second_word != '' -%}
-              {%- assign second_initial = second_word | slice: 0, 1 -%}
-            {%- endif -%}
-            {%- assign ingredient_symbol = first_word | slice: 0, 1 | append: second_initial -%}
-            {%- if ingredient_symbol == '' -%}
-              {%- assign ingredient_symbol = ingredient_title | slice: 0, 2 -%}
-            {%- endif -%}
-            {%- if ingredient_symbol == '' -%}
-              {%- assign ingredient_symbol = 'IN' -%}
-            {%- endif -%}
-            <div class="ingredient-card reveal{% if forloop.index > 1 %} reveal-d{{ forloop.index0 }}{% endif %}"><div class="ingredient-symbol">{{ ingredient_symbol | upcase }}</div><h4>{{ ingredient_title }}</h4><p>{{ ingredient_description }}</p></div>
+            <div class="ingredient-card reveal{% if forloop.index > 1 %} reveal-d{{ forloop.index0 }}{% endif %}"><div class="ingredient-symbol">{% render 'pdp-ingredient-symbol', title: ingredient_title %}</div><h4>{{ ingredient_title }}</h4><p>{{ ingredient_description }}</p></div>
           {%- endfor -%}
         {%- else -%}
           {%- assign ingredient_items = section.blocks | where: 'type', 'ingredient_item' -%}
           {%- for block in ingredient_items -%}
-            <div class="ingredient-card reveal{% if forloop.index > 1 %} reveal-d{{ forloop.index0 }}{% endif %}" {{ block.shopify_attributes }}><div class="ingredient-symbol">{{ block.settings.symbol }}</div><h4>{{ block.settings.title }}</h4><p>{{ block.settings.description }}</p></div>
+            <div class="ingredient-card reveal{% if forloop.index > 1 %} reveal-d{{ forloop.index0 }}{% endif %}" {{ block.shopify_attributes }}><div class="ingredient-symbol">{% render 'pdp-ingredient-symbol', title: block.settings.title, symbol: block.settings.symbol %}</div><h4>{{ block.settings.title }}</h4><p>{{ block.settings.description }}</p></div>
           {%- endfor -%}
         {%- endif -%}
       </div>
@@ -1212,7 +1206,7 @@
     box-shadow: 0 8px 24px -8px rgba(13, 139, 125, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.2);
   }
   section.pdpx .product-trust{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:20px 0;border-top:1px solid var(--border-light);}
-  section.pdpx .product-trust-item{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;color:var(--text-2);padding:10px 14px;background:var(--bg-alt);border-radius:10px;} section.pdpx .product-trust-item svg{color:var(--teal);flex-shrink:0;}
+  section.pdpx .product-trust-item{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;color:var(--text-2);padding:10px 14px;background:var(--bg-alt);border-radius:10px;} section.pdpx .product-trust-item__icon{display:flex;color:var(--teal);flex-shrink:0;} section.pdpx .product-trust-item__icon svg{display:block;}
   section.pdpx .product-extra-blocks{display:flex;flex-direction:column;gap:10px;margin-top:10px;}
   section.pdpx .below-cart-blocks{display:flex;flex-direction:column;gap:10px;margin-top:12px;}
   section.pdpx .product-extra-text{font-size:14px;line-height:1.6;color:var(--text-2);}
@@ -1504,6 +1498,21 @@
       "type": "trust_item",
       "name": "Trust badge item",
       "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "shield_check",
+          "options": [
+            { "value": "shield_check", "label": "Shield & check (verified)" },
+            { "value": "heart", "label": "Heart (cruelty-free / care)" },
+            { "value": "truck", "label": "Truck (shipping)" },
+            { "value": "leaf", "label": "Leaf (natural / clean)" },
+            { "value": "award", "label": "Award (quality)" },
+            { "value": "lock", "label": "Lock (secure)" },
+            { "value": "none", "label": "None" }
+          ]
+        },
         { "type": "text", "id": "text", "label": "Badge text", "default": "Dermatologist Tested" }
       ]
     },
@@ -1646,10 +1655,10 @@
         { "type": "love_point", "settings": { "text": "Brightens skin with antioxidant active support" } },
         { "type": "love_point", "settings": { "text": "Hydrates while cleansing without tightness" } },
         { "type": "love_point", "settings": { "text": "Safe for daily use, all skin types" } },
-        { "type": "trust_item", "settings": { "text": "Dermatologist Tested" } },
-        { "type": "trust_item", "settings": { "text": "Cruelty Free" } },
-        { "type": "trust_item", "settings": { "text": "Free Shipping 999+" } },
-        { "type": "trust_item", "settings": { "text": "No Parabens or Sulfates" } },
+        { "type": "trust_item", "settings": { "icon": "shield_check", "text": "Dermatologist Tested" } },
+        { "type": "trust_item", "settings": { "icon": "heart", "text": "Cruelty Free" } },
+        { "type": "trust_item", "settings": { "icon": "truck", "text": "Free Shipping 999+" } },
+        { "type": "trust_item", "settings": { "icon": "leaf", "text": "No Parabens or Sulfates" } },
         { "type": "efficacy_item", "settings": { "value": "99.9%", "label": "PM2.5 pollutant particles removed after single wash" } },
         { "type": "efficacy_item", "settings": { "value": "88%", "label": "Users saw brighter skin within 14 days of daily use" } },
         { "type": "efficacy_item", "settings": { "value": "93%", "label": "Reported no post-wash dryness or tightness" } },

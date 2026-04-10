@@ -1,0 +1,33 @@
+{%- comment -%}
+  Monogram for ingredient cards. Non-blank `symbol` wins; otherwise derived from `title`.
+{%- endcomment -%}
+{%- assign out = symbol | default: '' | strip -%}
+{%- if out == blank -%}
+  {%- assign _t = title | strip | newline_to_br | split: '<br />' | join: ' ' -%}
+  {%- assign title_words = _t | replace: '(', ' ' | replace: ')', ' ' | replace: ',', ' ' | replace: '-', ' ' | split: ' ' -%}
+  {%- assign first_word = '' -%}
+  {%- assign second_word = '' -%}
+  {%- for word in title_words -%}
+    {%- assign clean_word = word | strip -%}
+    {%- if clean_word != blank -%}
+      {%- if first_word == blank -%}
+        {%- assign first_word = clean_word -%}
+      {%- elsif second_word == blank -%}
+        {%- assign second_word = clean_word -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign second_initial = '' -%}
+  {%- if second_word != blank -%}
+    {%- assign second_initial = second_word | slice: 0, 1 -%}
+  {%- endif -%}
+  {%- assign out = first_word | slice: 0, 1 | append: second_initial | strip -%}
+  {%- if out == blank -%}
+    {%- assign out = _t | slice: 0, 2 -%}
+  {%- endif -%}
+  {%- if out == blank -%}
+    {%- assign out = 'IN' -%}
+  {%- endif -%}
+{%- endif -%}
+{{- out | upcase -}}
