@@ -1,7 +1,7 @@
 {%- liquid
   assign current_variant = product.selected_or_first_available_variant
   assign featured = current_variant.featured_image | default: product.featured_image
-  assign product_subtitle = product.metafields.descriptors.subtitle.value | default: product.metafields.custom.card_subtitle.value | strip
+  assign product_subtitle = product.metafields.custom.product_subtitle.value | default: product.metafields.descriptors.subtitle.value | default: product.metafields.custom.card_subtitle.value | strip
   assign form_id = 'pdp-form-' | append: section.id
   assign compare = current_variant.compare_at_price
   assign price = current_variant.price
