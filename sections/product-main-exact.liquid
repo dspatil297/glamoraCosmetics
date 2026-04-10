@@ -32,7 +32,8 @@
   assign efficacy_card_4 = ''
 
   if efficacy_raw != blank
-    assign efficacy_lines = efficacy_raw | replace: '\r\n', '\n' | replace: '\r', '\n' | split: '\n'
+    assign efficacy_normalized = efficacy_raw | newline_to_br | replace: '<br>', '<br />' | replace: '<br/>', '<br />' | replace: '• Card', '<br />• Card'
+    assign efficacy_lines = efficacy_normalized | split: '<br />'
     for line in efficacy_lines
       assign clean_line = line | strip
       if clean_line != blank
