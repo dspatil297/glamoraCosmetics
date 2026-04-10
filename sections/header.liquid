@@ -42,7 +42,7 @@
       </a>
     </div>
 
-    <!-- Desktop Navigation (hidden on mobile via CSS) - Order: Home, Shop, About, Blog, Contact -->
+    <!-- Desktop Navigation (hidden on mobile via CSS) - Order: Home, Shop, Routine, Blog -->
     <nav class="header__nav header__nav--desktop" aria-label="Main navigation">
       <ul class="nav-menu">
         <li class="nav-item">
@@ -77,24 +77,25 @@
             <a href="{{ routes.all_products_collection_url }}" class="nav-link {% if request.path contains '/collections' %}active{% endif %}">{{ section.settings.nav_label_shop | default: 'Shop' }}</a>
           </li>
         {% endif %}
-        <li class="nav-item">
-          <a href="{{ section.settings.link_blog | default: '/blogs/news' }}" class="nav-link {% if request.path contains '/blogs' %}active{% endif %}">{{ section.settings.nav_label_blog | default: 'Blog' }}</a>
-        </li>
         {% for link in section.settings.menu.links %}
-          {% if link.title == 'Contact' or link.url contains 'contact' %}
-            {% assign contact_link = link %}
+          {% assign link_title_plain = link.title | strip | downcase %}
+          {% if link_title_plain contains 'routine' or link.url contains 'routine' %}
+            {% assign routine_link = link %}
             {% break %}
           {% endif %}
         {% endfor %}
-        {% if contact_link %}
+        {% if routine_link %}
           <li class="nav-item">
-            <a href="{{ contact_link.url }}" class="nav-link {% if contact_link.active %}active{% endif %}">{{ section.settings.nav_label_contact | default: 'Contact' }}</a>
+            <a href="{{ routine_link.url }}" class="nav-link {% if routine_link.active %}active{% endif %}">{{ section.settings.nav_label_routine | default: 'Routine' }}</a>
           </li>
         {% else %}
           <li class="nav-item">
-            <a href="{{ section.settings.link_contact | default: '/pages/contact' }}" class="nav-link {% if request.path == '/pages/contact' %}active{% endif %}">{{ section.settings.nav_label_contact | default: 'Contact' }}</a>
+            <a href="{{ section.settings.link_routine | default: '/pages/routine' }}" class="nav-link {% if request.path contains 'routine' %}active{% endif %}">{{ section.settings.nav_label_routine | default: 'Routine' }}</a>
           </li>
         {% endif %}
+        <li class="nav-item">
+          <a href="{{ section.settings.link_blog | default: '/blogs/news' }}" class="nav-link {% if request.path contains '/blogs' %}active{% endif %}">{{ section.settings.nav_label_blog | default: 'Blog' }}</a>
+        </li>
       </ul>
     </nav>
 
@@ -210,24 +211,25 @@
               <a href="{{ routes.all_products_collection_url }}" class="mobile-nav-link {% if request.path contains '/collections' %}active{% endif %}">{{ section.settings.nav_label_shop | default: 'Shop' }}</a>
             </li>
           {% endif %}
-          <li class="mobile-nav-item">
-            <a href="{{ section.settings.link_blog | default: '/blogs/news' }}" class="mobile-nav-link {% if request.path contains '/blogs' %}active{% endif %}">{{ section.settings.nav_label_blog | default: 'Blog' }}</a>
-          </li>
           {% for link in section.settings.menu.links %}
-            {% if link.title == 'Contact' or link.url contains 'contact' %}
-              {% assign contact_link_mob = link %}
+            {% assign link_title_plain = link.title | strip | downcase %}
+            {% if link_title_plain contains 'routine' or link.url contains 'routine' %}
+              {% assign routine_link_mob = link %}
               {% break %}
             {% endif %}
           {% endfor %}
-          {% if contact_link_mob %}
+          {% if routine_link_mob %}
             <li class="mobile-nav-item">
-              <a href="{{ contact_link_mob.url }}" class="mobile-nav-link {% if contact_link_mob.active %}active{% endif %}">{{ section.settings.nav_label_contact | default: 'Contact' }}</a>
+              <a href="{{ routine_link_mob.url }}" class="mobile-nav-link {% if routine_link_mob.active %}active{% endif %}">{{ section.settings.nav_label_routine | default: 'Routine' }}</a>
             </li>
           {% else %}
             <li class="mobile-nav-item">
-              <a href="{{ section.settings.link_contact | default: '/pages/contact' }}" class="mobile-nav-link {% if request.path == '/pages/contact' %}active{% endif %}">{{ section.settings.nav_label_contact | default: 'Contact' }}</a>
+              <a href="{{ section.settings.link_routine | default: '/pages/routine' }}" class="mobile-nav-link {% if request.path contains 'routine' %}active{% endif %}">{{ section.settings.nav_label_routine | default: 'Routine' }}</a>
             </li>
           {% endif %}
+          <li class="mobile-nav-item">
+            <a href="{{ section.settings.link_blog | default: '/blogs/news' }}" class="mobile-nav-link {% if request.path contains '/blogs' %}active{% endif %}">{{ section.settings.nav_label_blog | default: 'Blog' }}</a>
+          </li>
         </ul>
       </nav>
       {% if shop.customer_accounts_enabled %}
@@ -1170,6 +1172,17 @@
       "id": "nav_label_shop",
       "label": "Shop label",
       "default": "Shop"
+    },
+    {
+      "type": "text",
+      "id": "nav_label_routine",
+      "label": "Routine label",
+      "default": "Routine"
+    },
+    {
+      "type": "url",
+      "id": "link_routine",
+      "label": "Routine link"
     },
     {
       "type": "text",
