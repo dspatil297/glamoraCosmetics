@@ -14,7 +14,10 @@
             "
             sizes="(min-width: 990px) 60vw, 100vw"
             alt="{{ section.settings.title | escape }}"
+            width="{{ section.settings.image.width }}"
+            height="{{ section.settings.image.height }}"
             loading="lazy"
+            decoding="async"
           >
         {%- else -%}
           <div class="loyalty-banner__placeholder loyalty-banner__placeholder--img">

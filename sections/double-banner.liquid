@@ -32,7 +32,10 @@
                 "
                 sizes="(min-width: 900px) 50vw, 100vw"
                 alt="{{ section.settings[alt_key] | escape }}"
+                width="{{ img.width }}"
+                height="{{ img.height }}"
                 loading="lazy"
+                decoding="async"
               >
             </picture>
           {%- else -%}

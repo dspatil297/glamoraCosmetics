@@ -45,10 +45,10 @@
             {{ settings.logo | image_url: width: 300 | image_tag: alt: shop.name }}
           {% else %}
             <img
-              src="{{ 'logo.png' | asset_url }}"
+              src="{{ 'glamora-wordmark.svg' | asset_url }}"
               alt="{{ shop.name }}"
               width="300"
-              height=""
+              height="80"
               style="height: auto; max-height: 120px;"
             >
           {% endif %}

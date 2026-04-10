@@ -44,6 +44,8 @@
                   sizes="100vw"
                   alt="{{ featured_article.image.alt | default: featured_article.title }}"
                   class="blog-featured__image"
+                  width="{{ featured_article.image.width }}"
+                  height="{{ featured_article.image.height }}"
                   loading="eager"
                   fetchpriority="high"
                   decoding="async"
@@ -80,7 +82,10 @@
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         alt="{{ article.image.alt | default: article.title }}"
                         class="blog-card__image"
+                        width="{{ article.image.width }}"
+                        height="{{ article.image.height }}"
                         loading="lazy"
+                        decoding="async"
                       >
                     </div>
                   {% endif %}

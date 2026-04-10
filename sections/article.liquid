@@ -58,6 +58,8 @@
           sizes="100vw"
           alt="{{ article.image.alt | default: article.title }}"
           class="article-page__hero-img"
+          width="{{ article.image.width }}"
+          height="{{ article.image.height }}"
           loading="eager"
           fetchpriority="high"
           decoding="async"

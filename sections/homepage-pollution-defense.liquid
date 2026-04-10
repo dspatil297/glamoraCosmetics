@@ -174,7 +174,7 @@
                 <div class="hpd-img-shell">
                   <div class="hpd-img-core">
                     {% if block.settings.image != blank %}
-                      <img src="{{ block.settings.image | image_url: width: 900 }}" alt="{{ block.settings.title | escape }}" loading="lazy" decoding="async" sizes="(max-width: 768px) 100vw, 440px">
+                      <img src="{{ block.settings.image | image_url: width: 900 }}" alt="{{ block.settings.title | escape }}" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}" loading="lazy" decoding="async" sizes="(max-width: 768px) 100vw, 440px">
                     {% endif %}
                   </div>
                 </div>
@@ -244,7 +244,7 @@
               <div class="hpd-card-core">
                 <div class="hpd-card-img">
                   {% if block.settings.image != blank %}
-                    <img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.title | escape }}" loading="lazy" decoding="async" sizes="(max-width: 768px) 85vw, 360px">
+                    <img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.title | escape }}" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}" loading="lazy" decoding="async" sizes="(max-width: 768px) 85vw, 360px">
                   {% endif %}
                   <a class="hpd-qa" href="{{ block.settings.button_link }}">{{ block.settings.button_text }}</a>
                 </div>

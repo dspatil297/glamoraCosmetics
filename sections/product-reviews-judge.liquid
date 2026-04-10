@@ -8,11 +8,6 @@
     <h2 class="reviews-title">Customer Reviews</h2>
 
     <!-- Start of Judge.me code -->
-    {% assign has_legacy = false %}
-    {% if product.metafields.judgeme.widget != blank %}
-      {% assign has_legacy = true %}
-    {% endif %}
-
     <div class="judge-me-reviews-wrapper">
       <div
         id="judgeme_product_reviews"
@@ -65,7 +60,7 @@
     border: 2px solid rgba(222, 222, 222, 0.8);
   }
 
-  {% comment %} Judge.me Widget Styling Overrides {% endcomment %}
+  /* Judge.me widget styling overrides */
   .judge-me-reviews-wrapper .jdgm-widget,
   .judge-me-reviews-wrapper .jdgm-review-widget,
   .judge-me-reviews-wrapper .jdgm-rev-widget {

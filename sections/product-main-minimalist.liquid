@@ -320,7 +320,8 @@
           <button type="button" class="gallery-lightbox-close" data-gallery-close aria-label="Close image viewer">✕</button>
           <button type="button" class="gallery-lightbox-nav prev" data-gallery-prev aria-label="Previous image">‹</button>
           <div class="gallery-lightbox-stage" data-gallery-stage>
-            <img src="" alt="{{ product.title | escape }}" data-gallery-lightbox-image>
+            {%- assign lightbox_dims_image = featured | default: product.featured_image | default: product.images.first -%}
+            <img src="" alt="{{ product.title | escape }}" data-gallery-lightbox-image width="{% if lightbox_dims_image %}{{ lightbox_dims_image.width }}{% else %}1200{% endif %}" height="{% if lightbox_dims_image %}{{ lightbox_dims_image.height }}{% else %}1200{% endif %}">
           </div>
           <button type="button" class="gallery-lightbox-nav next" data-gallery-next aria-label="Next image">›</button>
         </div>
