@@ -258,8 +258,11 @@
       #{{ section_id }} .hero-ctas .btn { width: 100%; justify-content: center; min-height: var(--touch-target-min); }
       #{{ section_id }} .trust-item { padding: 0 20px; font-size: 13px; }
       #{{ section_id }} .routine-image-shell { max-width: min(100%, 360px); }
-      #{{ section_id }} .routine-row.reverse .img { order: 2; }
-      #{{ section_id }} .routine-row.reverse .txt { order: 1; }
+      /* Mobile only: keep routine sequence consistent (image -> text) for every step */
+      #{{ section_id }} .routine-row .img,
+      #{{ section_id }} .routine-row.reverse .img { order: 1; }
+      #{{ section_id }} .routine-row .txt,
+      #{{ section_id }} .routine-row.reverse .txt { order: 2; }
       #{{ section_id }} .routine-desc { font-size: 16px; line-height: 1.7; }
       #{{ section_id }} .routine-bundle { padding: clamp(28px, 6vw, 44px) clamp(16px, 4vw, 28px); border-radius: 1.25rem; }
       #{{ section_id }} .routine-bundle .btn { width: 100%; justify-content: center; min-height: var(--touch-target-min); }
