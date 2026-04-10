@@ -187,8 +187,14 @@
     #{{ section_id }} .routine-image-shell {
       background: rgba(13, 139, 125, 0.035); border: 1px solid rgba(13, 139, 125, 0.06); padding: 8px; border-radius: 2rem; max-width: 440px; margin: 0 auto;
     }
-    #{{ section_id }} .routine-image-core { border-radius: calc(2rem - 8px); overflow: hidden; aspect-ratio: 4 / 5; background: var(--bg-alt); }
-    #{{ section_id }} .routine-image-core img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease); }
+    #{{ section_id }} .routine-image-core {
+      border-radius: calc(2rem - 8px); overflow: hidden; aspect-ratio: 4 / 5; background: var(--bg-alt);
+      display: flex; align-items: center; justify-content: center;
+    }
+    #{{ section_id }} .routine-image-core img {
+      max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; object-position: center;
+      transition: transform 0.8s var(--ease);
+    }
     #{{ section_id }} .routine-image-shell:hover .routine-image-core img { transform: scale(1.04); }
     #{{ section_id }} .routine-step {
       width: 48px; height: 48px; border-radius: 50%; background: var(--teal); color: #fff; display: grid; place-items: center;
