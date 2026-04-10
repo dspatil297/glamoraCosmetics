@@ -247,7 +247,7 @@
 </script>
 
 {% stylesheet %}
-  .gx-pdp { background: #fafaf7; color: #141413; }
+  .gx-pdp { --font-body: 'Outfit', -apple-system, sans-serif; background: #fafaf7; color: #141413; }
   .gx-container { max-width: 1360px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
   .gx-breadcrumb { padding: 20px 0; font-size: 14px; color: #8a8985; }
   .gx-breadcrumb a { color: #8a8985; text-decoration: none; }
@@ -261,11 +261,11 @@
   .gx-gallery-thumb { flex: 1; border: 2px solid transparent; border-radius: .75rem; overflow: hidden; opacity: .55; background: #f3f1ed; cursor: pointer; }
   .gx-gallery-thumb img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
   .gx-gallery-thumb.active { border-color: #0d8b7d; opacity: 1; }
-  .gx-product-info h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(28px, 3.5vw, 42px); font-weight: 600; line-height: 1.15; margin-bottom: 10px; }
+  .gx-product-info h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(28px, 3.5vw, 42px); font-weight: 600; line-height: 1.15; margin-bottom: 6px; }
   .gx-routine-badge { display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px; border-radius: 100px; background: #ebf5f3; color: #0d8b7d; margin-bottom: 16px; font-size: 13px; font-weight: 600; }
   .gx-routine-badge-num { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: #0d8b7d; color: #fff; font-size: 12px; font-weight: 700; }
-  .gx-product-subtitle { font-size: 16px; color: #5c5b57; margin-bottom: 10px; line-height: 1.45; }
-  .gx-product-ratings { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid #f0ede8; }
+  .gx-product-subtitle { font-family: var(--font-body); font-size: 16px; color: #5c5b57; margin-bottom: 6px; line-height: 1.4; }
+  .gx-product-ratings { display: flex; align-items: center; gap: 12px; margin-top: 0; margin-bottom: 24px; padding-top: 0; padding-bottom: 24px; border-bottom: 1px solid #f0ede8; }
   .gx-stars { color: #f5a623; }
   .gx-rating-score { font-size: 15px; font-weight: 600; }
   .gx-rating-count { font-size: 14px; color: #0d8b7d; text-decoration: none; }
