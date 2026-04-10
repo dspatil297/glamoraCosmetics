@@ -83,6 +83,7 @@
       --border-light: #F0EDE8;
       --font-body: 'Outfit', -apple-system, sans-serif;
       --font-display: 'Fraunces', Georgia, serif;
+      --ease: cubic-bezier(0.32, 0.72, 0, 1);
       --section-gap: clamp(80px, 10vw, 128px);
       --container: 1360px;
       font-family: var(--font-body);
@@ -129,9 +130,30 @@
       position: absolute; width: 88%; height: 92%; background: linear-gradient(160deg, rgba(13,139,125,0.07), rgba(13,139,125,0.03));
       border: 1px solid rgba(13,139,125,0.06); border-radius: 2.5rem; transform: rotate(-2deg);
     }
+    #{{ section_id }} .hero-display::after {
+      content: '';
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(13,139,125,0.12) 0%, transparent 70%);
+      bottom: -40px;
+      right: -20px;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: hpd-hero-orb 8s ease-in-out infinite;
+    }
     #{{ section_id }} .hero-products { position: relative; z-index: 2; display: flex; align-items: flex-end; gap: clamp(12px, 2vw, 24px); }
-    #{{ section_id }} .hero-products img { width: clamp(90px, 10vw, 130px); border-radius: 12px; filter: drop-shadow(0 24px 48px rgba(13,139,125,0.12)); }
-    #{{ section_id }} .hero-products img:nth-child(2) { width: clamp(100px, 12vw, 150px); transform: translateY(-16px); }
+    #{{ section_id }} .hero-products img { width: clamp(90px, 10vw, 130px); border-radius: 12px; filter: drop-shadow(0 24px 48px rgba(13,139,125,0.12)); transition: transform 0.6s var(--ease); }
+    #{{ section_id }} .hero-products img:hover { transform: translateY(-8px); }
+    #{{ section_id }} .hero-products img:nth-child(2) { width: clamp(100px, 12vw, 150px); animation: hpd-hero-float 5s ease-in-out infinite; }
+    @keyframes hpd-hero-orb {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-15px, -20px) scale(1.1); }
+    }
+    @keyframes hpd-hero-float {
+      0%, 100% { transform: translateY(-16px); }
+      50% { transform: translateY(-28px); }
+    }
 
     #{{ section_id }} .trust {
       padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; position: relative;
@@ -157,7 +179,8 @@
       background: rgba(13, 139, 125, 0.035); border: 1px solid rgba(13, 139, 125, 0.06); padding: 8px; border-radius: 2rem; max-width: 440px; margin: 0 auto;
     }
     #{{ section_id }} .routine-image-core { border-radius: calc(2rem - 8px); overflow: hidden; aspect-ratio: 4 / 5; background: var(--bg-alt); }
-    #{{ section_id }} .routine-image-core img { width: 100%; height: 100%; object-fit: cover; }
+    #{{ section_id }} .routine-image-core img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease); }
+    #{{ section_id }} .routine-image-shell:hover .routine-image-core img { transform: scale(1.04); }
     #{{ section_id }} .routine-step {
       width: 48px; height: 48px; border-radius: 50%; background: var(--teal); color: #fff; display: grid; place-items: center;
       font-family: var(--font-display); font-size: 18px; font-weight: 600; margin-bottom: 20px;
@@ -193,11 +216,14 @@
     }
     #{{ section_id }} .product-core { background: var(--bg); border-radius: calc(1.75rem - 6px); overflow: hidden; }
     #{{ section_id }} .product-image { aspect-ratio: 3 / 4; background: var(--bg-alt); position: relative; }
-    #{{ section_id }} .product-image img { width: 100%; height: 100%; object-fit: cover; }
+    #{{ section_id }} .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease); }
+    #{{ section_id }} .product-shell:hover .product-image img { transform: scale(1.04); }
     #{{ section_id }} .product-quick-add {
       position: absolute; bottom: 16px; left: 16px; right: 16px; padding: 14px; background: var(--bg-dark); color: #fff;
-      border-radius: 12px; font-size: 13px; font-weight: 600; text-align: center;
+      border-radius: 12px; font-size: 13px; font-weight: 600; text-align: center; opacity: 0; transform: translateY(8px);
+      transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
     }
+    #{{ section_id }} .product-shell:hover .product-quick-add { opacity: 1; transform: translateY(0); }
     #{{ section_id }} .product-details { padding: 20px 20px 24px; }
     #{{ section_id }} .product-type { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); margin: 0 0 6px; }
     #{{ section_id }} .product-name { font-family: var(--font-display); font-size: 20px; font-weight: 600; line-height: 1.3; margin: 0 0 12px; }
@@ -219,6 +245,23 @@
     }
     #{{ section_id }} .testimonial-author { font-size: 17px; font-weight: 600; margin: 0; }
     #{{ section_id }} .testimonial-location { font-size: 15px; color: var(--text-3); font-weight: 300; margin: 4px 0 0; }
+    #{{ section_id }} .testimonial-text,
+    #{{ section_id }} .testimonial-author,
+    #{{ section_id }} .testimonial-location {
+      transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+    }
+
+    #{{ section_id }} .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      filter: blur(6px);
+      transition: opacity 1s var(--ease), transform 1s var(--ease), filter 1s var(--ease);
+    }
+    #{{ section_id }} .reveal.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+    #{{ section_id }} .reveal-d1 { transition-delay: 0.1s; }
+    #{{ section_id }} .reveal-d2 { transition-delay: 0.2s; }
+    #{{ section_id }} .reveal-d3 { transition-delay: 0.3s; }
+    #{{ section_id }} .reveal-d4 { transition-delay: 0.4s; }
 
     #{{ section_id }} .newsletter {
       background: var(--bg-alt); padding: clamp(80px, 10vw, 120px) 0; margin: clamp(40px, 8vw, 80px) 0;
@@ -293,12 +336,35 @@
       #{{ section_id }} .newsletter-inner h2 { font-size: clamp(24px, 7.5vw, 30px); }
       #{{ section_id }} .newsletter-inner p { font-size: 15px; }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      #{{ section_id }} .reveal,
+      #{{ section_id }} .testimonial-text,
+      #{{ section_id }} .testimonial-author,
+      #{{ section_id }} .testimonial-location,
+      #{{ section_id }} .product-quick-add,
+      #{{ section_id }} .product-image img,
+      #{{ section_id }} .routine-image-core img,
+      #{{ section_id }} .hero-products img {
+        transition: none !important;
+        animation: none !important;
+      }
+      #{{ section_id }} .reveal {
+        opacity: 1;
+        transform: none;
+        filter: none;
+      }
+      #{{ section_id }} .product-quick-add {
+        opacity: 1;
+        transform: none;
+      }
+    }
   </style>
 
   <div class="hero">
     <div class="container">
       <div class="hero-grid">
-        <div>
+        <div class="reveal">
           <span class="eyebrow">{{ section.settings.hero_eyebrow }}</span>
           <h1>{{ section.settings.hero_title }}<br><span>{{ section.settings.hero_title_highlight }}</span></h1>
           <p class="hero-sub">{{ section.settings.hero_subtext }}</p>
@@ -307,7 +373,7 @@
             <a class="btn btn-outline" href="{{ hero_secondary_href }}">{{ section.settings.hero_secondary_text }}</a>
           </div>
         </div>
-        <div class="hero-display">
+        <div class="hero-display reveal reveal-d2">
           <div class="hero-display-shape"></div>
           <div class="hero-products">
             {% if hero_img_1 != blank %}
@@ -394,7 +460,7 @@
 
   <div class="section" id="step-defence">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header reveal">
         <span class="eyebrow">{{ section.settings.routine_eyebrow }}</span>
         <h2>{{ section.settings.routine_title }}</h2>
         <p>{{ section.settings.routine_subtitle }}</p>
@@ -412,7 +478,7 @@
             {% if block.settings.image != blank %}
               {% assign step_image = block.settings.image %}
             {% endif %}
-            <div class="routine-row {% if block.settings.reverse %}reverse{% endif %}" {{ block.shopify_attributes }}>
+            <div class="routine-row reveal {% if block.settings.reverse %}reverse{% endif %}" {{ block.shopify_attributes }}>
               <div class="img">
                 <div class="routine-image-shell"><div class="routine-image-core">
                   {% if step_image != blank %}<img width="900" height="1125" src="{{ step_image | image_url: width: 900 }}" alt="{{ block.settings.title | escape }}">{% endif %}
@@ -431,7 +497,7 @@
           {% endif %}
         {% endfor %}
       </div>
-      <div class="routine-bundle">
+      <div class="routine-bundle reveal">
         <p class="title">{{ section.settings.bundle_title }}</p>
         <p class="sub">{{ section.settings.bundle_subtitle }}</p>
         <a class="btn btn-primary" href="{{ section.settings.bundle_link }}">{{ section.settings.bundle_text }}</a>
@@ -441,19 +507,19 @@
 
   <div class="section stats" id="stats">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header reveal">
         <span class="eyebrow">{{ section.settings.stats_eyebrow }}</span>
         <h2>{{ section.settings.stats_title }}</h2>
         <p>{{ section.settings.stats_subtitle }}</p>
       </div>
       <div class="stats-grid">
         {% for block in section.blocks %}{% if block.type == 'stat_card' %}
-          <div class="stat-card {% if block.settings.featured %}featured{% endif %}" {{ block.shopify_attributes }}>
+          <div class="stat-card reveal {% if block.settings.featured %}featured{% endif %}" {{ block.shopify_attributes }}>
             <div class="stat-number">{{ block.settings.number }}</div><p class="stat-label">{{ block.settings.description }}</p>
           </div>
         {% endif %}{% endfor %}
       </div>
-      <div class="stats-explainer">
+      <div class="stats-explainer reveal">
         {% for block in section.blocks %}{% if block.type == 'explainer_item' %}
           <div {{ block.shopify_attributes }}><h4>{{ block.settings.title }}</h4><p>{{ block.settings.description }}</p></div>
         {% endif %}{% endfor %}
@@ -463,7 +529,7 @@
 
   <div class="section" id="sellers">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header reveal">
         <span class="eyebrow">{{ section.settings.products_eyebrow }}</span>
         <h2>{{ section.settings.products_title }}</h2>
         <p>{{ section.settings.products_subtitle }}</p>
@@ -475,7 +541,7 @@
             {% if block.settings.product and block.settings.product.featured_image %}
               {% assign card_image = block.settings.product.featured_image %}
             {% endif %}
-            <article class="product-shell" {{ block.shopify_attributes }}>
+            <article class="product-shell reveal" {{ block.shopify_attributes }}>
               <div class="product-core">
                 <div class="product-image">
                   {% if card_image != blank %}<img width="800" height="1067" src="{{ card_image | image_url: width: 800 }}" alt="{{ block.settings.title | escape }}">{% endif %}
@@ -496,14 +562,14 @@
 
   <div class="section" id="ingredients">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header reveal">
         <span class="eyebrow">{{ section.settings.ingredients_eyebrow }}</span>
         <h2>{{ section.settings.ingredients_title }}</h2>
         <p>{{ section.settings.ingredients_subtitle }}</p>
       </div>
       <div class="ingredients-grid">
         {% for block in section.blocks %}{% if block.type == 'ingredient' %}
-          <div class="ingredient-card" {{ block.shopify_attributes }}>
+          <div class="ingredient-card reveal" {{ block.shopify_attributes }}>
             <div class="ingredient-symbol">{{ block.settings.symbol }}</div>
             <div class="ingredient-info"><h4>{{ block.settings.title }}</h4><p>{{ block.settings.description }}</p></div>
           </div>
@@ -514,7 +580,7 @@
 
   <div class="section testimonial">
     <div class="container">
-      <div class="testimonial-inner">
+      <div class="testimonial-inner reveal">
         <p class="testimonial-text" id="{{ section_id }}-quote"></p>
         <p class="testimonial-author" id="{{ section_id }}-author"></p>
         <p class="testimonial-location" id="{{ section_id }}-loc"></p>
@@ -524,7 +590,7 @@
 
   <div class="newsletter" id="newsletter">
     <div class="container">
-      <div class="newsletter-inner">
+      <div class="newsletter-inner reveal">
         <span class="eyebrow">{{ section.settings.news_eyebrow }}</span>
         <h2>{{ section.settings.news_title }}</h2>
         <p>{{ section.settings.news_subtitle }}</p>
@@ -539,6 +605,23 @@
 
   <script>
     (function() {
+      const root = document.getElementById('{{ section_id }}');
+      if (!root) return;
+      const revealEls = root.querySelectorAll('.reveal');
+      if (revealEls.length > 0 && 'IntersectionObserver' in window) {
+        const revealObs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              revealObs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+        revealEls.forEach(function(el) { revealObs.observe(el); });
+      } else {
+        revealEls.forEach(function(el) { el.classList.add('visible'); });
+      }
+
       const reviews = [
         {% for block in section.blocks %}
           {% if block.type == 'testimonial' %}
@@ -558,7 +641,20 @@
       }
       paint(i);
       if (reviews.length > 1) {
-        setInterval(function() { i = (i + 1) % reviews.length; paint(i); }, 6000);
+        setInterval(function() {
+          i = (i + 1) % reviews.length;
+          quote.style.opacity = '0';
+          quote.style.transform = 'translateY(12px)';
+          author.style.opacity = '0';
+          loc.style.opacity = '0';
+          setTimeout(function() {
+            paint(i);
+            quote.style.opacity = '1';
+            quote.style.transform = 'translateY(0)';
+            author.style.opacity = '1';
+            loc.style.opacity = '1';
+          }, 400);
+        }, 6000);
       }
     })();
   </script>
