@@ -1,5 +1,11 @@
 {%- liquid
   assign section_id = 'hpd-' | append: section.id
+  assign hero_secondary_href = section.settings.hero_secondary_link
+  if hero_secondary_href == blank
+    assign hero_secondary_href = '#step-defence'
+  elsif hero_secondary_href == '#routine'
+    assign hero_secondary_href = '#step-defence'
+  endif
 -%}
 
 <section id="{{ section_id }}" class="hpd">
@@ -13,6 +19,7 @@
     #{{ section_id }} *{box-sizing:border-box}
     #{{ section_id }} .hpd-wrap{max-width:var(--hpd-container);margin:0 auto;padding:0 clamp(20px,4vw,48px)}
     #{{ section_id }} .hpd-section{padding:var(--hpd-gap) 0}
+    #{{ section_id }} #step-defence{scroll-margin-top:100px}
     #{{ section_id }} .hpd-head{max-width:640px;margin:0 0 clamp(40px,5vw,64px)}
     #{{ section_id }} .hpd-head.center{text-align:center;margin-left:auto;margin-right:auto}
     #{{ section_id }} .hpd-eyebrow{display:inline-block;padding:7px 18px;border-radius:100px;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;margin-bottom:18px;background:var(--hpd-teal-bg);color:var(--hpd-teal)}
@@ -112,7 +119,7 @@
           <p class="hpd-sub">{{ section.settings.hero_subtext }}</p>
           <div class="hpd-ctas">
             <a class="hpd-btn primary" href="{{ section.settings.hero_primary_link }}">{{ section.settings.hero_primary_text }}</a>
-            <a class="hpd-btn outline" href="{{ section.settings.hero_secondary_link }}">{{ section.settings.hero_secondary_text }}</a>
+            <a class="hpd-btn outline" href="{{ hero_secondary_href }}">{{ section.settings.hero_secondary_text }}</a>
           </div>
         </div>
         <div class="hpd-display">
@@ -150,7 +157,7 @@
     </div>
   </div>
 
-  <div class="hpd-section" id="routine">
+  <div class="hpd-section" id="step-defence">
     <div class="hpd-wrap">
       <div class="hpd-head">
         <span class="hpd-eyebrow">{{ section.settings.routine_eyebrow }}</span>

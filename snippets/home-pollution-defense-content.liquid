@@ -26,6 +26,13 @@
     assign hero_alt_3 = hero_product_3.title
   endif
 
+  assign hero_secondary_href = section.settings.hero_secondary_link
+  if hero_secondary_href == blank
+    assign hero_secondary_href = '#step-defence'
+  elsif hero_secondary_href == '#routine'
+    assign hero_secondary_href = '#step-defence'
+  endif
+
   if hero_img_1 == blank or hero_img_2 == blank or hero_img_3 == blank
     assign routine_index = 0
     for block in section.blocks
@@ -88,6 +95,7 @@
     #{{ section_id }} a { color: inherit; text-decoration: none; }
     #{{ section_id }} .container { max-width: var(--container); margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
     #{{ section_id }} .section { padding: var(--section-gap) 0; }
+    #{{ section_id }} #step-defence { scroll-margin-top: 100px; }
     #{{ section_id }} .section-header { margin-bottom: clamp(40px, 5vw, 64px); max-width: 560px; }
     #{{ section_id }} .section-header h2 {
       font-family: var(--font-display);
@@ -255,7 +263,7 @@
           <p class="hero-sub">{{ section.settings.hero_subtext }}</p>
           <div class="hero-ctas">
             <a class="btn btn-primary" href="{{ section.settings.hero_primary_link }}">{{ section.settings.hero_primary_text }}</a>
-            <a class="btn btn-outline" href="{{ section.settings.hero_secondary_link }}">{{ section.settings.hero_secondary_text }}</a>
+            <a class="btn btn-outline" href="{{ hero_secondary_href }}">{{ section.settings.hero_secondary_text }}</a>
           </div>
         </div>
         <div class="hero-display">
@@ -343,7 +351,7 @@
     </div>
   </div>
 
-  <div class="section" id="routine">
+  <div class="section" id="step-defence">
     <div class="container">
       <div class="section-header">
         <span class="eyebrow">{{ section.settings.routine_eyebrow }}</span>
