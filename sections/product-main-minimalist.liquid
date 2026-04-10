@@ -584,7 +584,7 @@
               {%- assign concern_1_title = concern_1_parts.first | strip -%}
               {%- assign concern_1_desc = ideal_concern_1 | remove_first: concern_1_parts.first | remove_first: '—' | strip -%}
               <li class="concern-item">
-                <div class="concern-icon"></div>
+                <div class="concern-icon">{% render 'pdp-concern-icon', index: 1 %}</div>
                 <div>
                   <h4>{% if concern_1_title != blank %}{{ concern_1_title }}{% else %}Dull, tired-looking skin{% endif %}</h4>
                   {%- if concern_1_desc != blank -%}<p>{{ concern_1_desc }}</p>{%- endif -%}
@@ -595,7 +595,7 @@
               {%- assign concern_2_title = concern_2_parts.first | strip -%}
               {%- assign concern_2_desc = ideal_concern_2 | remove_first: concern_2_parts.first | remove_first: '—' | strip -%}
               <li class="concern-item">
-                <div class="concern-icon"></div>
+                <div class="concern-icon">{% render 'pdp-concern-icon', index: 2 %}</div>
                 <div>
                   <h4>{% if concern_2_title != blank %}{{ concern_2_title }}{% else %}Acne and clogged pores{% endif %}</h4>
                   {%- if concern_2_desc != blank -%}<p>{{ concern_2_desc }}</p>{%- endif -%}
@@ -606,7 +606,7 @@
               {%- assign concern_3_title = concern_3_parts.first | strip -%}
               {%- assign concern_3_desc = ideal_concern_3 | remove_first: concern_3_parts.first | remove_first: '—' | strip -%}
               <li class="concern-item">
-                <div class="concern-icon"></div>
+                <div class="concern-icon">{% render 'pdp-concern-icon', index: 3 %}</div>
                 <div>
                   <h4>{% if concern_3_title != blank %}{{ concern_3_title }}{% else %}Dark spots and uneven tone{% endif %}</h4>
                   {%- if concern_3_desc != blank -%}<p>{{ concern_3_desc }}</p>{%- endif -%}
@@ -617,7 +617,7 @@
               {%- assign concern_4_title = concern_4_parts.first | strip -%}
               {%- assign concern_4_desc = ideal_concern_4 | remove_first: concern_4_parts.first | remove_first: '—' | strip -%}
               <li class="concern-item">
-                <div class="concern-icon"></div>
+                <div class="concern-icon">{% render 'pdp-concern-icon', index: 4 %}</div>
                 <div>
                   <h4>{% if concern_4_title != blank %}{{ concern_4_title }}{% else %}Post-wash dryness{% endif %}</h4>
                   {%- if concern_4_desc != blank -%}<p>{{ concern_4_desc }}</p>{%- endif -%}
@@ -627,7 +627,7 @@
               {%- assign concern_items = section.blocks | where: 'type', 'concern_item' -%}
               {%- for block in concern_items -%}
                 <li class="concern-item" {{ block.shopify_attributes }}>
-                  <div class="concern-icon"></div>
+                  <div class="concern-icon">{% render 'pdp-concern-icon', icon: block.settings.icon, index: forloop.index %}</div>
                   <div><h4>{{ block.settings.text }}</h4></div>
                 </li>
               {%- endfor -%}
@@ -1251,7 +1251,7 @@
   section.pdpx .howto-grid::before { content: ''; position: absolute; top: 32px; left: 10%; right: 10%; border-top: 2px dashed var(--border); z-index: 0; }
   section.pdpx .howto-step h4{font-size:17px;font-weight:600;color:var(--text);margin:0 0 8px;} section.pdpx .howto-step p{font-size:15px;line-height:1.65;color:var(--text-2);font-weight:300;} section.pdpx .howto-timing{display:inline-block;margin-top:12px;padding:4px 12px;border-radius:100px;background:var(--teal-bg);color:var(--teal);font-size:12px;font-weight:600;letter-spacing:.04em;}
   section.pdpx .routine-section .section-header{margin-bottom:clamp(40px,5vw,64px);} section.pdpx .routine-section .section-header h2{margin-bottom:16px;} section.pdpx .routine-section .section-header p{font-size:17px;line-height:1.7;font-weight:300;color:var(--text-2);margin:0;}
-  section.pdpx .idealfor-inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center;} section.pdpx .concern-list{list-style:none;padding:0;margin:0;} section.pdpx .concern-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);} section.pdpx .concern-icon{width:40px;height:40px;border-radius:10px;background:var(--teal-bg);flex-shrink:0;}
+  section.pdpx .idealfor-inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center;} section.pdpx .concern-list{list-style:none;padding:0;margin:0;} section.pdpx .concern-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);} section.pdpx .concern-icon{width:40px;height:40px;border-radius:10px;background:var(--teal-bg);flex-shrink:0;display:flex;align-items:center;justify-content:center;} section.pdpx .concern-icon .pdp-concern-icon__svg{display:flex;color:var(--teal);} section.pdpx .concern-icon svg{display:block;}
   section.pdpx .skin-types{display:flex;flex-wrap:wrap;gap:10px;} section.pdpx .skin-type-tag{padding:10px 20px;border-radius:100px;border:1px solid var(--border);font-size:14px;font-weight:500;color:var(--text-2);background:var(--bg);} section.pdpx .skin-type-tag.active{border-color:var(--teal);background:var(--teal-bg);color:var(--teal);font-weight:600;}
   section.pdpx .ideal-info-box{margin-top:24px;padding:24px;background:var(--bg);border:1px solid var(--border-light);border-radius:1rem;text-align:left;} section.pdpx .ideal-info-box-tight{margin-top:16px;} section.pdpx .ideal-info-title{font-size:14px;font-weight:600;color:var(--text);margin:0 0 4px;} section.pdpx .ideal-info-text{font-size:14px;color:var(--text-2);font-weight:300;line-height:1.6;margin:0;}
   section.pdpx .study-bars{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:20px;} section.pdpx .study-bar{display:grid;grid-template-columns:80px 1fr;gap:20px;align-items:center;} section.pdpx .study-percent{font-family:var(--font-display);font-size:32px;font-weight:700;letter-spacing:-.02em;color:var(--teal);text-align:right;} section.pdpx .study-bar-info h4{font-size:15px;font-weight:600;color:var(--text);margin:0 0 8px;}
@@ -1537,6 +1537,20 @@
       "type": "concern_item",
       "name": "Concern item",
       "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "auto",
+          "options": [
+            { "value": "auto", "label": "Auto (by row order)" },
+            { "value": "sparkles", "label": "Sparkles (dullness / radiance)" },
+            { "value": "activity", "label": "Pulse (breakouts / congestion)" },
+            { "value": "sun", "label": "Sun (spots / uneven tone)" },
+            { "value": "droplet", "label": "Droplet (dryness / hydration)" },
+            { "value": "shield", "label": "Shield (pollution / defense)" }
+          ]
+        },
         { "type": "text", "id": "text", "label": "Concern text", "default": "Dull, tired-looking skin" }
       ]
     },
@@ -1667,10 +1681,10 @@
         { "type": "ingredient_item", "settings": { "symbol": "KA", "title": "Kojic Acid", "description": "Fades dark spots and pollution-caused pigmentation. Evens skin tone over consistent use." } },
         { "type": "ingredient_item", "settings": { "symbol": "VC", "title": "Vitamin C (MAP)", "description": "Stable form of Vitamin C. Fights oxidative stress from city air. Boosts collagen production." } },
         { "type": "ingredient_item", "settings": { "symbol": "HA", "title": "Hyaluronic Acid", "description": "Deep hydration while cleansing. Maintains moisture barrier. Zero post-wash tightness." } },
-        { "type": "concern_item", "settings": { "text": "Dull, tired-looking skin" } },
-        { "type": "concern_item", "settings": { "text": "Acne and clogged pores" } },
-        { "type": "concern_item", "settings": { "text": "Dark spots and uneven tone" } },
-        { "type": "concern_item", "settings": { "text": "Post-wash dryness" } },
+        { "type": "concern_item", "settings": { "icon": "auto", "text": "Dull, tired-looking skin" } },
+        { "type": "concern_item", "settings": { "icon": "auto", "text": "Acne and clogged pores" } },
+        { "type": "concern_item", "settings": { "icon": "auto", "text": "Dark spots and uneven tone" } },
+        { "type": "concern_item", "settings": { "icon": "auto", "text": "Post-wash dryness" } },
         { "type": "skin_type_item", "settings": { "text": "Oily" } },
         { "type": "skin_type_item", "settings": { "text": "Combination" } },
         { "type": "skin_type_item", "settings": { "text": "Normal" } },

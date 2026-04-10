@@ -144,24 +144,28 @@
         "concern_item_rPT9HR": {
           "type": "concern_item",
           "settings": {
+            "icon": "auto",
             "text": "Dull, tired-looking skin"
           }
         },
         "concern_item_bdP4Ur": {
           "type": "concern_item",
           "settings": {
+            "icon": "auto",
             "text": "Acne and clogged pores"
           }
         },
         "concern_item_iCG8V3": {
           "type": "concern_item",
           "settings": {
+            "icon": "auto",
             "text": "Dark spots and uneven tone"
           }
         },
         "concern_item_TYpfMG": {
           "type": "concern_item",
           "settings": {
+            "icon": "auto",
             "text": "Post-wash dryness"
           }
         },
