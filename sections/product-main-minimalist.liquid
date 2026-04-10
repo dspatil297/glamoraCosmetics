@@ -300,22 +300,30 @@
     <div class="product-layout">
       <div class="gallery reveal">
         <div class="gallery-main-shell">
-          <div class="gallery-main-core">
+          <div class="gallery-main-core" data-gallery-open>
             <span class="gallery-badge">Bestseller</span>
             {%- if featured -%}
-              <img src="{{ featured | image_url: width: 1400 }}" alt="{{ product.title | escape }}" id="mainImg-{{ section.id }}">
+              <img src="{{ featured | image_url: width: 1400 }}" alt="{{ product.title | escape }}" id="mainImg-{{ section.id }}" data-current-index="-1">
             {%- endif -%}
           </div>
         </div>
         {%- if product.images.size > 1 -%}
           <div class="gallery-thumbs">
             {%- for image in product.images -%}
-              <button type="button" class="gallery-thumb{% if image.id == featured.id %} active{% elsif featured == blank and forloop.first %} active{% endif %}" data-thumb-src="{{ image | image_url: width: 1400 }}" aria-label="Image {{ forloop.index }}">
+              <button type="button" class="gallery-thumb{% if image.id == featured.id %} active{% elsif featured == blank and forloop.first %} active{% endif %}" data-thumb-src="{{ image | image_url: width: 1400 }}" data-thumb-index="{{ forloop.index0 }}" aria-label="Image {{ forloop.index }}">
                 <img src="{{ image | image_url: width: 260 }}" alt="" loading="lazy">
               </button>
             {%- endfor -%}
           </div>
         {%- endif -%}
+        <div class="gallery-lightbox" data-gallery-lightbox aria-hidden="true">
+          <button type="button" class="gallery-lightbox-close" data-gallery-close aria-label="Close image viewer">✕</button>
+          <button type="button" class="gallery-lightbox-nav prev" data-gallery-prev aria-label="Previous image">‹</button>
+          <div class="gallery-lightbox-stage" data-gallery-stage>
+            <img src="" alt="{{ product.title | escape }}" data-gallery-lightbox-image>
+          </div>
+          <button type="button" class="gallery-lightbox-nav next" data-gallery-next aria-label="Next image">›</button>
+        </div>
       </div>
 
       <div class="product-info reveal" style="transition-delay:0.15s">
@@ -921,8 +929,84 @@
     var root = document.getElementById('pdpx-{{ section.id }}');
     if (!root) return;
     var mainImg = root.querySelector('#mainImg-{{ section.id }}');
+    var galleryOpen = root.querySelector('[data-gallery-open]');
     var thumbs = root.querySelectorAll('.gallery-thumb[data-thumb-src]');
-    for (var i = 0; i < thumbs.length; i++) { thumbs[i].addEventListener('click', function() { var src = this.getAttribute('data-thumb-src'); if (mainImg && src) mainImg.src = src; for (var j = 0; j < thumbs.length; j++) thumbs[j].classList.remove('active'); this.classList.add('active'); }); }
+    var lightbox = root.querySelector('[data-gallery-lightbox]');
+    var lightboxImage = root.querySelector('[data-gallery-lightbox-image]');
+    var lightboxStage = root.querySelector('[data-gallery-stage]');
+    var closeBtn = root.querySelector('[data-gallery-close]');
+    var prevBtn = root.querySelector('[data-gallery-prev]');
+    var nextBtn = root.querySelector('[data-gallery-next]');
+    var currentIndex = 0;
+    var touchStartX = 0;
+    var touchEndX = 0;
+    var images = [];
+    for (var i = 0; i < thumbs.length; i++) {
+      var tSrc = thumbs[i].getAttribute('data-thumb-src');
+      if (tSrc) images.push(tSrc);
+      thumbs[i].addEventListener('click', function() {
+        var src = this.getAttribute('data-thumb-src');
+        var idx = parseInt(this.getAttribute('data-thumb-index') || '0', 10);
+        if (mainImg && src) {
+          mainImg.src = src;
+          mainImg.setAttribute('data-current-index', String(idx));
+        }
+        for (var j = 0; j < thumbs.length; j++) thumbs[j].classList.remove('active');
+        this.classList.add('active');
+      });
+    }
+    if (!images.length && mainImg && mainImg.src) images.push(mainImg.src);
+    function renderLightboxImage() {
+      if (!lightboxImage || !images.length) return;
+      if (currentIndex < 0) currentIndex = images.length - 1;
+      if (currentIndex >= images.length) currentIndex = 0;
+      lightboxImage.src = images[currentIndex];
+    }
+    function openLightbox() {
+      if (!lightbox) return;
+      var mainIdx = parseInt((mainImg && mainImg.getAttribute('data-current-index')) || '0', 10);
+      currentIndex = isNaN(mainIdx) ? 0 : mainIdx;
+      renderLightboxImage();
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      if (!lightbox) return;
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    function showNext() { currentIndex++; renderLightboxImage(); }
+    function showPrev() { currentIndex--; renderLightboxImage(); }
+    var activeThumb = root.querySelector('.gallery-thumb.active[data-thumb-index]');
+    if (mainImg && activeThumb) mainImg.setAttribute('data-current-index', activeThumb.getAttribute('data-thumb-index'));
+    if (galleryOpen) galleryOpen.addEventListener('click', openLightbox);
+    if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+    if (nextBtn) nextBtn.addEventListener('click', showNext);
+    if (prevBtn) prevBtn.addEventListener('click', showPrev);
+    if (lightbox) {
+      lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox) closeLightbox();
+      });
+    }
+    if (lightboxStage) {
+      lightboxStage.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+      lightboxStage.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        if (Math.abs(touchEndX - touchStartX) > 40) {
+          if (touchEndX < touchStartX) showNext(); else showPrev();
+        }
+      }, { passive: true });
+    }
+    document.addEventListener('keydown', function(e) {
+      if (!lightbox || !lightbox.classList.contains('is-open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') showNext();
+      if (e.key === 'ArrowLeft') showPrev();
+    });
     var qtyBtns = root.querySelectorAll('[data-qty]');
     for (var k = 0; k < qtyBtns.length; k++) { qtyBtns[k].addEventListener('click', function() { var input = root.querySelector('.qty-val'); if (!input) return; var v = parseInt(input.value, 10) || 1; if (this.getAttribute('data-qty') === 'plus') v++; if (this.getAttribute('data-qty') === 'minus') v = Math.max(1, v - 1); input.value = v; }); }
     var select = root.querySelector('[data-variant-select]'); var hiddenId = root.querySelector('[data-variant-id-input]'); var priceEl = root.querySelector('[data-pdp-price]'); var compareEl = root.querySelector('[data-pdp-compare]'); var discountEl = root.querySelector('[data-pdp-discount]'); var stickyPriceEl = root.querySelector('[data-sticky-price]'); var buyNowPriceEl = root.querySelector('[data-buy-now-price]');
@@ -992,14 +1076,25 @@
   section.pdpx .gallery { position: sticky; top: 100px; }
   section.pdpx .gallery-main-shell { background: rgba(0, 0, 0, 0.015); border: 1px solid var(--border-light); padding: 6px; border-radius: 2rem; margin-bottom: 16px; max-width: 540px; margin-left: auto; margin-right: auto; }
   section.pdpx .gallery-main-core { border-radius: calc(2rem - 6px); overflow: hidden; aspect-ratio: 1; background: var(--bg-alt); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8); position: relative; cursor: zoom-in; }
-  section.pdpx .gallery-main-core img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease), opacity 0.4s var(--ease); }
-  section.pdpx .gallery-main-shell:hover .gallery-main-core img { transform: scale(1.06); }
+  section.pdpx .gallery-main-core img { width: 100%; height: 100%; object-fit: contain; transition: opacity 0.4s var(--ease); }
+  section.pdpx .gallery-main-shell:hover .gallery-main-core img { transform: none; }
   section.pdpx .gallery-badge { position: absolute; top: 20px; left: 20px; padding: 6px 16px; background: var(--teal); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border-radius: 100px; z-index: 3; }
   section.pdpx .gallery-thumbs { display: flex; gap: 10px; max-width: 540px; margin-left: auto; margin-right: auto; }
   section.pdpx .gallery-thumb { flex: 1; aspect-ratio: 1; border-radius: 0.75rem; overflow: hidden; border: 2px solid transparent; cursor: pointer; transition: all 0.4s var(--ease); opacity: 0.55; background: var(--bg-alt); transform: scale(0.98); padding: 0; margin: 0; font: inherit; color: inherit; }
   section.pdpx .gallery-thumb.active { border-color: var(--teal); opacity: 1; transform: scale(1); box-shadow: 0 4px 12px rgba(13, 139, 125, 0.15); }
   section.pdpx .gallery-thumb:hover { opacity: 0.85; }
-  section.pdpx .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  section.pdpx .gallery-thumb img { width: 100%; height: 100%; object-fit: contain; background: #fff; }
+  section.pdpx .gallery-lightbox { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.9); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 20px; }
+  section.pdpx .gallery-lightbox.is-open { display: flex; }
+  section.pdpx .gallery-lightbox-stage { width: min(92vw, 1080px); height: min(88vh, 860px); display: flex; align-items: center; justify-content: center; }
+  section.pdpx .gallery-lightbox-stage img { max-width: 100%; max-height: 100%; object-fit: contain; user-select: none; -webkit-user-drag: none; }
+  section.pdpx .gallery-lightbox-close,
+  section.pdpx .gallery-lightbox-nav { position: absolute; border: 0; background: rgba(255, 255, 255, 0.14); color: #fff; width: 46px; height: 46px; border-radius: 999px; cursor: pointer; font-size: 28px; line-height: 1; display: grid; place-items: center; }
+  section.pdpx .gallery-lightbox-close { top: 18px; right: 18px; font-size: 20px; }
+  section.pdpx .gallery-lightbox-nav.prev { left: 18px; top: 50%; transform: translateY(-50%); }
+  section.pdpx .gallery-lightbox-nav.next { right: 18px; top: 50%; transform: translateY(-50%); }
+  section.pdpx .gallery-lightbox-close:hover,
+  section.pdpx .gallery-lightbox-nav:hover { background: rgba(255, 255, 255, 0.3); }
   section.pdpx .product-info{padding-top:8px;} section.pdpx .routine-badge{display:inline-flex;align-items:center;gap:10px;padding:8px 18px;border-radius:100px;background:var(--teal-bg);font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--teal);margin-bottom:16px;}
   section.pdpx .routine-badge-num{width:22px;height:22px;background:var(--teal);color:#fff;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;}
   /* Title: matches glamora-website/product-page.html (.product-info h1) */
