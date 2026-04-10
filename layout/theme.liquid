@@ -313,6 +313,59 @@
       })();
     </script>
 
+    {%- comment -%}
+      Header cart badge listens for cart:updated then syncs from /cart.js.
+      Minimalist PDP + GoKwik and bundle page add via fetch without firing that event — patch fetch once so any successful POST to cart AJAX endpoints updates the badge.
+    {%- endcomment -%}
+    <script>
+      (function() {
+        if (window.__glamoraCartAjaxHooks) return;
+        window.__glamoraCartAjaxHooks = true;
+        var cartPostRe = /\/cart\/(add|change|clear|update)\.js/;
+
+        var origFetch = window.fetch;
+        window.fetch = function(input, init) {
+          var url = '';
+          if (typeof input === 'string') {
+            url = input;
+          } else if (input && typeof input.url === 'string') {
+            url = input.url;
+          }
+          var method = 'GET';
+          if (init && init.method) {
+            method = String(init.method).toUpperCase();
+          } else if (input && input.method) {
+            method = String(input.method).toUpperCase();
+          }
+          return origFetch.apply(this, arguments).then(function(response) {
+            if (response.ok && method === 'POST' && cartPostRe.test(url)) {
+              document.dispatchEvent(new CustomEvent('cart:updated'));
+            }
+            return response;
+          });
+        };
+
+        var origXHROpen = XMLHttpRequest.prototype.open;
+        var origXHRSend = XMLHttpRequest.prototype.send;
+        XMLHttpRequest.prototype.open = function(method, url) {
+          this.__glamoraCartMethod = String(method || 'GET').toUpperCase();
+          this.__glamoraCartUrl = typeof url === 'string' ? url : '';
+          return origXHROpen.apply(this, arguments);
+        };
+        XMLHttpRequest.prototype.send = function() {
+          var xhr = this;
+          var url = xhr.__glamoraCartUrl || '';
+          var method = xhr.__glamoraCartMethod || 'GET';
+          xhr.addEventListener('load', function() {
+            if (xhr.status >= 200 && xhr.status < 300 && method === 'POST' && cartPostRe.test(url)) {
+              document.dispatchEvent(new CustomEvent('cart:updated'));
+            }
+          });
+          return origXHRSend.apply(this, arguments);
+        };
+      })();
+    </script>
+
     {%- comment -%} Theme JS: assets/application.js (defer). {%- endcomment -%}
     <script src="{{ 'application.js' | asset_url }}" defer></script>
     {%- comment -%} Cart page +/- and remove: event delegation in capture phase so it runs before other handlers {%- endcomment -%}
