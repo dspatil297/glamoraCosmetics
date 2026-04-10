@@ -62,10 +62,6 @@
           </div>
         {% endif %}
 
-        {% if product.compare_at_price > product.price %}
-          <span class="product-card__badge product-card__badge--sale">Sale</span>
-        {% endif %}
-
         {% if product.tags contains 'new' %}
           <span class="product-card__badge product-card__badge--new">New</span>
         {% endif %}
@@ -243,11 +239,6 @@
     border-radius: 6px;
     z-index: 2;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-  }
-
-  .product-card__badge--sale {
-    background: linear-gradient(135deg, #e92020 0%, #dd1d1d 100%);
-    color: var(--white);
   }
 
   .product-card__badge--new {
