@@ -21,6 +21,41 @@
     when 'glamora-pollution-control-hybrid-sunscreen'
       assign gx_routine_step = 3
   endcase
+
+  assign efficacy_raw = product.metafields.custom.product_efficacy_stats.value | default: product.metafields.custom.product_efficacy_stats | default: '' | strip
+  assign efficacy_heading = 'Proven to protect your skin'
+  assign efficacy_sub = ''
+  assign efficacy_source = ''
+  assign efficacy_card_1 = ''
+  assign efficacy_card_2 = ''
+  assign efficacy_card_3 = ''
+  assign efficacy_card_4 = ''
+
+  if efficacy_raw != blank
+    assign efficacy_lines = efficacy_raw | replace: '\r\n', '\n' | replace: '\r', '\n' | split: '\n'
+    for line in efficacy_lines
+      assign clean_line = line | strip
+      if clean_line != blank
+        if clean_line contains 'Header:'
+          assign efficacy_heading = clean_line | remove_first: 'Header:' | strip
+        elsif clean_line contains 'Sub:'
+          assign efficacy_sub = clean_line | remove_first: 'Sub:' | strip
+        elsif clean_line contains 'Sub title:'
+          assign efficacy_sub = clean_line | remove_first: 'Sub title:' | strip
+        elsif clean_line contains 'Source:'
+          assign efficacy_source = clean_line | remove_first: 'Source:' | strip
+        elsif clean_line contains 'Card 1:'
+          assign efficacy_card_1 = clean_line | remove: '•' | remove_first: 'Card 1:' | strip
+        elsif clean_line contains 'Card 2:'
+          assign efficacy_card_2 = clean_line | remove: '•' | remove_first: 'Card 2:' | strip
+        elsif clean_line contains 'Card 3:'
+          assign efficacy_card_3 = clean_line | remove: '•' | remove_first: 'Card 3:' | strip
+        elsif clean_line contains 'Card 4:'
+          assign efficacy_card_4 = clean_line | remove: '•' | remove_first: 'Card 4:' | strip
+        endif
+      endif
+    endfor
+  endif
 -%}
 
 <section class="gx-pdp" id="gx-pdp-{{ section.id }}">
@@ -113,13 +148,42 @@
 
   <section class="gx-band">
     <div class="gx-container">
-      <h2>Proven to protect your skin</h2>
+      <h2>{{ efficacy_heading }}</h2>
+      {%- if efficacy_sub != blank -%}<p class="gx-efficacy-sub">{{ efficacy_sub }}</p>{%- endif -%}
       <div class="gx-stats">
-        <div><strong>99.9%</strong><span>Pollution particles removed</span></div>
-        <div><strong>88%</strong><span>Brighter skin in 14 days</span></div>
-        <div><strong>93%</strong><span>No post-wash dryness</span></div>
-        <div><strong>4.4</strong><span>Average review rating</span></div>
+        {%- assign card_1_parts = efficacy_card_1 | split: '—' -%}
+        {%- assign card_1_value = card_1_parts.first | strip -%}
+        {%- assign card_1_label = efficacy_card_1 | remove_first: card_1_parts.first | remove_first: '—' | strip -%}
+        <div>
+          <strong>{% if card_1_value != blank %}{{ card_1_value }}{% else %}99.9%{% endif %}</strong>
+          <span>{% if card_1_label != blank %}{{ card_1_label }}{% else %}Pollution particles removed{% endif %}</span>
+        </div>
+
+        {%- assign card_2_parts = efficacy_card_2 | split: '—' -%}
+        {%- assign card_2_value = card_2_parts.first | strip -%}
+        {%- assign card_2_label = efficacy_card_2 | remove_first: card_2_parts.first | remove_first: '—' | strip -%}
+        <div>
+          <strong>{% if card_2_value != blank %}{{ card_2_value }}{% else %}88%{% endif %}</strong>
+          <span>{% if card_2_label != blank %}{{ card_2_label }}{% else %}Brighter skin in 14 days{% endif %}</span>
+        </div>
+
+        {%- assign card_3_parts = efficacy_card_3 | split: '—' -%}
+        {%- assign card_3_value = card_3_parts.first | strip -%}
+        {%- assign card_3_label = efficacy_card_3 | remove_first: card_3_parts.first | remove_first: '—' | strip -%}
+        <div>
+          <strong>{% if card_3_value != blank %}{{ card_3_value }}{% else %}93%{% endif %}</strong>
+          <span>{% if card_3_label != blank %}{{ card_3_label }}{% else %}No post-wash dryness{% endif %}</span>
+        </div>
+
+        {%- assign card_4_parts = efficacy_card_4 | split: '—' -%}
+        {%- assign card_4_value = card_4_parts.first | strip -%}
+        {%- assign card_4_label = efficacy_card_4 | remove_first: card_4_parts.first | remove_first: '—' | strip -%}
+        <div>
+          <strong>{% if card_4_value != blank %}{{ card_4_value }}{% else %}4.4{% endif %}</strong>
+          <span>{% if card_4_label != blank %}{{ card_4_label }}{% else %}Average review rating{% endif %}</span>
+        </div>
       </div>
+      {%- if efficacy_source != blank -%}<p class="gx-efficacy-source">{{ efficacy_source }}</p>{%- endif -%}
     </div>
   </section>
 
@@ -306,6 +370,8 @@
   .gx-stats div { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); border-radius: 1rem; padding: 24px; }
   .gx-stats strong { display: block; font-size: 38px; color: #c5a44e; font-family: "Fraunces", Georgia, serif; }
   .gx-stats span { color: rgba(255,255,255,.65); font-size: 14px; }
+  .gx-efficacy-sub { color: rgba(255,255,255,.7); font-size: 17px; line-height: 1.65; max-width: 72ch; margin: -8px 0 22px; }
+  .gx-efficacy-source { color: rgba(255,255,255,.5); font-size: 13px; margin-top: 18px; }
   .gx-section { padding: clamp(72px, 9vw, 120px) 0; }
   .gx-alt { background: #f3f1ed; }
   .gx-cards, .gx-steps, .gx-reviews { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }

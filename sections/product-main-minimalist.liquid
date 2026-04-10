@@ -28,6 +28,49 @@
   assign ingredients_meta = product.metafields.custom.key_ingredients
   assign how_to_use_meta = product.metafields.custom.how_to_use
   assign love_it_meta = product.metafields.custom.why_you_will_love_it
+  assign efficacy_raw = product.metafields.custom.product_efficacy_stats.value | default: product.metafields.custom.product_efficacy_stats | default: '' | strip
+  assign efficacy_heading = section.settings.efficacy_heading
+  assign efficacy_sub = section.settings.efficacy_subheading
+  assign efficacy_source = section.settings.efficacy_source
+  assign efficacy_card_1 = ''
+  assign efficacy_card_2 = ''
+  assign efficacy_card_3 = ''
+  assign efficacy_card_4 = ''
+  assign efficacy_from_meta = false
+
+  if efficacy_raw != blank
+    assign efficacy_lines = efficacy_raw | replace: '\r\n', '\n' | replace: '\r', '\n' | split: '\n'
+    for line in efficacy_lines
+      assign clean_line = line | strip
+      if clean_line != blank
+        if clean_line contains 'Header:'
+          assign efficacy_heading = clean_line | remove_first: 'Header:' | strip
+          assign efficacy_from_meta = true
+        elsif clean_line contains 'Sub:'
+          assign efficacy_sub = clean_line | remove_first: 'Sub:' | strip
+          assign efficacy_from_meta = true
+        elsif clean_line contains 'Sub title:'
+          assign efficacy_sub = clean_line | remove_first: 'Sub title:' | strip
+          assign efficacy_from_meta = true
+        elsif clean_line contains 'Source:'
+          assign efficacy_source = clean_line | remove_first: 'Source:' | strip
+          assign efficacy_from_meta = true
+        elsif clean_line contains 'Card 1:'
+          assign efficacy_card_1 = clean_line | remove: '•' | remove_first: 'Card 1:' | strip
+          assign efficacy_from_meta = true
+        elsif clean_line contains 'Card 2:'
+          assign efficacy_card_2 = clean_line | remove: '•' | remove_first: 'Card 2:' | strip
+          assign efficacy_from_meta = true
+        elsif clean_line contains 'Card 3:'
+          assign efficacy_card_3 = clean_line | remove: '•' | remove_first: 'Card 3:' | strip
+          assign efficacy_from_meta = true
+        elsif clean_line contains 'Card 4:'
+          assign efficacy_card_4 = clean_line | remove: '•' | remove_first: 'Card 4:' | strip
+          assign efficacy_from_meta = true
+        endif
+      endif
+    endfor
+  endif
   assign howto_steps_default_string = 'Wet your face|||Splash lukewarm water to open pores and prepare skin for deep cleansing.|||0:00###STEP###Apply and massage|||Coin-sized amount. Massage in circular motions for 45-60 seconds. Focus on T-zone.|||0:15###STEP###Rinse clean|||Wash off with cool water to close pores. Pat dry with a clean towel - never rub.|||1:00###STEP###Continue routine|||While skin is still damp, apply the Moisturizing Spray (Step 2) for maximum absorption.|||1:30'
   assign howto_steps = howto_steps_default_string | split: '###STEP###'
   assign parsed_steps_string = ''
@@ -369,16 +412,38 @@
   <section class="efficacy-section">
     <div class="container">
       <div class="efficacy-header reveal">
-        <h2>{{ section.settings.efficacy_heading }}</h2>
-        <p>{{ section.settings.efficacy_subheading }}</p>
+        <h2>{{ efficacy_heading }}</h2>
+        {%- if efficacy_sub != blank -%}<p>{{ efficacy_sub }}</p>{%- endif -%}
       </div>
       <div class="efficacy-grid">
-        {%- assign efficacy_items = section.blocks | where: 'type', 'efficacy_item' -%}
-        {%- for block in efficacy_items -%}
-          <div class="efficacy-card reveal{% if forloop.index > 1 %} reveal-d{{ forloop.index0 }}{% endif %}" {{ block.shopify_attributes }}><div class="efficacy-number">{{ block.settings.value }}</div><div class="efficacy-label">{{ block.settings.label }}</div></div>
-        {%- endfor -%}
+        {%- if efficacy_from_meta -%}
+          {%- assign card_1_parts = efficacy_card_1 | split: '—' -%}
+          {%- assign card_1_value = card_1_parts.first | strip -%}
+          {%- assign card_1_label = efficacy_card_1 | remove_first: card_1_parts.first | remove_first: '—' | strip -%}
+          <div class="efficacy-card reveal"><div class="efficacy-number">{% if card_1_value != blank %}{{ card_1_value }}{% else %}99.9%{% endif %}</div><div class="efficacy-label">{% if card_1_label != blank %}{{ card_1_label }}{% else %}PM2.5 pollutant particles removed after single wash{% endif %}</div></div>
+
+          {%- assign card_2_parts = efficacy_card_2 | split: '—' -%}
+          {%- assign card_2_value = card_2_parts.first | strip -%}
+          {%- assign card_2_label = efficacy_card_2 | remove_first: card_2_parts.first | remove_first: '—' | strip -%}
+          <div class="efficacy-card reveal reveal-d1"><div class="efficacy-number">{% if card_2_value != blank %}{{ card_2_value }}{% else %}88%{% endif %}</div><div class="efficacy-label">{% if card_2_label != blank %}{{ card_2_label }}{% else %}Users saw brighter skin within 14 days of daily use{% endif %}</div></div>
+
+          {%- assign card_3_parts = efficacy_card_3 | split: '—' -%}
+          {%- assign card_3_value = card_3_parts.first | strip -%}
+          {%- assign card_3_label = efficacy_card_3 | remove_first: card_3_parts.first | remove_first: '—' | strip -%}
+          <div class="efficacy-card reveal reveal-d2"><div class="efficacy-number">{% if card_3_value != blank %}{{ card_3_value }}{% else %}93%{% endif %}</div><div class="efficacy-label">{% if card_3_label != blank %}{{ card_3_label }}{% else %}Reported no post-wash dryness or tightness{% endif %}</div></div>
+
+          {%- assign card_4_parts = efficacy_card_4 | split: '—' -%}
+          {%- assign card_4_value = card_4_parts.first | strip -%}
+          {%- assign card_4_label = efficacy_card_4 | remove_first: card_4_parts.first | remove_first: '—' | strip -%}
+          <div class="efficacy-card reveal reveal-d3"><div class="efficacy-number">{% if card_4_value != blank %}{{ card_4_value }}{% else %}4.4{% endif %}</div><div class="efficacy-label">{% if card_4_label != blank %}{{ card_4_label }}{% else %}Average rating across verified reviews{% endif %}</div></div>
+        {%- else -%}
+          {%- assign efficacy_items = section.blocks | where: 'type', 'efficacy_item' -%}
+          {%- for block in efficacy_items -%}
+            <div class="efficacy-card reveal{% if forloop.index > 1 %} reveal-d{{ forloop.index0 }}{% endif %}" {{ block.shopify_attributes }}><div class="efficacy-number">{{ block.settings.value }}</div><div class="efficacy-label">{{ block.settings.label }}</div></div>
+          {%- endfor -%}
+        {%- endif -%}
       </div>
-      <p class="efficacy-source reveal">{{ section.settings.efficacy_source }}</p>
+      {%- if efficacy_source != blank -%}<p class="efficacy-source reveal">{{ efficacy_source }}</p>{%- endif -%}
     </div>
   </section>
   <section class="ingredients-section">
