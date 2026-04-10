@@ -786,13 +786,84 @@
   {%- endif -%}
   <section class="study-section">
     <div class="container">
-      <div class="study-header reveal"><h2>{{ section.settings.study_heading }}</h2></div>
-      <div class="study-bars reveal">
-        {%- assign study_items = section.blocks | where: 'type', 'study_item' -%}
-        {%- for block in study_items -%}
-          <div class="study-bar" {{ block.shopify_attributes }}><div class="study-percent">{{ block.settings.percent }}</div><div class="study-bar-info"><h4>{{ block.settings.label }}</h4><div class="study-bar-track"><div class="study-bar-fill" style="--fill:{{ block.settings.fill }}"></div></div></div></div>
+      {%- assign study_raw = product.metafields.custom.consumer_study.value | default: product.metafields.custom.consumer_study -%}
+      {%- assign study_heading_text = section.settings.study_heading -%}
+      {%- assign study_subtitle_text = '' -%}
+      {%- assign study_disclaimer_text = '' -%}
+      {%- assign study_bar_1 = '' -%}
+      {%- assign study_bar_2 = '' -%}
+      {%- assign study_bar_3 = '' -%}
+      {%- assign study_bar_4 = '' -%}
+      {%- assign has_metafield_study_bars = false -%}
+      {%- if study_raw != blank -%}
+        {%- assign study_lines = study_raw | newline_to_br | split: '<br />' -%}
+        {%- for raw_line in study_lines -%}
+          {%- assign line = raw_line | strip -%}
+          {%- if line == blank -%}{%- continue -%}{%- endif -%}
+          {%- assign line = line | remove_first: '• ' | remove_first: '•' | remove_first: '- ' -%}
+          {%- if line contains ':' -%}
+            {%- assign line_parts = line | split: ':' -%}
+            {%- assign line_key = line_parts[0] | strip | downcase -%}
+            {%- assign line_key_prefix = line_parts[0] | append: ':' -%}
+            {%- assign line_value = line | remove_first: line_key_prefix | strip -%}
+            {%- case line_key -%}
+              {%- when 'header' -%}
+                {%- assign study_heading_text = line_value -%}
+              {%- when 'sub', 'desc', 'subtitle' -%}
+                {%- assign study_subtitle_text = line_value -%}
+              {%- when 'disclaimer' -%}
+                {%- assign study_disclaimer_text = line_value -%}
+              {%- when 'bar 1' -%}
+                {%- assign study_bar_1 = line_value -%}
+              {%- when 'bar 2' -%}
+                {%- assign study_bar_2 = line_value -%}
+              {%- when 'bar 3' -%}
+                {%- assign study_bar_3 = line_value -%}
+              {%- when 'bar 4' -%}
+                {%- assign study_bar_4 = line_value -%}
+            {%- endcase -%}
+          {%- endif -%}
         {%- endfor -%}
+      {%- endif -%}
+      {%- if study_bar_1 != blank or study_bar_2 != blank or study_bar_3 != blank or study_bar_4 != blank -%}
+        {%- assign has_metafield_study_bars = true -%}
+      {%- endif -%}
+      <div class="study-header reveal">
+        <h2>{{ study_heading_text }}</h2>
+        {%- if study_subtitle_text != blank -%}<p>{{ study_subtitle_text }}</p>{%- endif -%}
       </div>
+      <div class="study-bars reveal">
+        {%- if has_metafield_study_bars -%}
+          {%- assign study_bar_rows = study_bar_1 | append: '||' | append: study_bar_2 | append: '||' | append: study_bar_3 | append: '||' | append: study_bar_4 | split: '||' -%}
+          {%- for row in study_bar_rows -%}
+            {%- assign row_text = row | strip -%}
+            {%- if row_text == blank -%}{%- continue -%}{%- endif -%}
+            {%- assign row_percent = row_text | split: '—' | first | strip -%}
+            {%- if row_percent == row_text -%}
+              {%- assign row_percent = row_text | split: '-' | first | strip -%}
+            {%- endif -%}
+            {%- assign row_label = row_text | remove_first: row_percent | remove_first: '—' | remove_first: '-' | strip -%}
+            {%- assign row_fill = row_percent -%}
+            {%- if row_text contains '(--fill:' -%}
+              {%- assign row_fill = row_text | split: '(--fill:' | last | split: ')' | first | strip -%}
+              {%- assign row_label = row_label | split: '(--fill:' | first | strip -%}
+            {%- endif -%}
+            <div class="study-bar">
+              <div class="study-percent">{{ row_percent }}</div>
+              <div class="study-bar-info">
+                <h4>{{ row_label }}</h4>
+                <div class="study-bar-track"><div class="study-bar-fill" style="--fill:{{ row_fill }}"></div></div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          {%- assign study_items = section.blocks | where: 'type', 'study_item' -%}
+          {%- for block in study_items -%}
+            <div class="study-bar" {{ block.shopify_attributes }}><div class="study-percent">{{ block.settings.percent }}</div><div class="study-bar-info"><h4>{{ block.settings.label }}</h4><div class="study-bar-track"><div class="study-bar-fill" style="--fill:{{ block.settings.fill }}"></div></div></div></div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+      {%- if study_disclaimer_text != blank -%}<p class="study-disclaimer reveal">{{ study_disclaimer_text }}</p>{%- endif -%}
     </div>
   </section>
   <section class="reviews-section" id="reviews-{{ section.id }}">
