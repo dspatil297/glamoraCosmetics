@@ -1420,7 +1420,8 @@
     section.pdpx .ingredients-grid,
     section.pdpx .howto-grid { grid-template-columns: 1fr; }
     section.pdpx .quantity-row { flex-direction: column; }
-    section.pdpx .qty-selector { width: 144px; max-width: 144px; }
+    section.pdpx .qty-selector { flex: 0 0 auto; width: 144px; max-width: 144px; min-height: 48px; height: 48px; }
+    section.pdpx .qty-btn { width: 50px; height: 48px; }
     section.pdpx input.qty-val[type="number"] { width: 44px; min-width: 44px; max-width: 44px; height: 48px; min-height: 48px; }
   }
 {% endstylesheet %}
