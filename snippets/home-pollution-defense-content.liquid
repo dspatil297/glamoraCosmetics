@@ -6,6 +6,9 @@
   assign hero_img_1 = blank
   assign hero_img_2 = blank
   assign hero_img_3 = blank
+  assign hero_link_1 = '#'
+  assign hero_link_2 = '#'
+  assign hero_link_3 = '#'
   assign hero_alt_1 = 'Pollution Control Face Wash'
   assign hero_alt_2 = 'Pollution Control Moisturizing Spray'
   assign hero_alt_3 = 'Pollution Control Hybrid Sunscreen'
@@ -16,14 +19,17 @@
   if hero_product_1 and hero_product_1.featured_image
     assign hero_img_1 = hero_product_1.featured_image
     assign hero_alt_1 = hero_product_1.title
+    assign hero_link_1 = hero_product_1.url
   endif
   if hero_product_2 and hero_product_2.featured_image
     assign hero_img_2 = hero_product_2.featured_image
     assign hero_alt_2 = hero_product_2.title
+    assign hero_link_2 = hero_product_2.url
   endif
   if hero_product_3 and hero_product_3.featured_image
     assign hero_img_3 = hero_product_3.featured_image
     assign hero_alt_3 = hero_product_3.title
+    assign hero_link_3 = hero_product_3.url
   endif
 
   assign hero_secondary_href = section.settings.hero_secondary_link
@@ -115,6 +121,7 @@
     #{{ section_id }} .btn-outline { background: transparent; color: var(--text); border: 1.5px solid var(--border); }
 
     #{{ section_id }} .hero { padding: clamp(60px, 8vw, 120px) 0 clamp(80px, 10vw, 140px); }
+    #{{ section_id }} .hero .container { padding-left: clamp(12px, 2vw, 24px); padding-right: clamp(12px, 2vw, 24px); }
     #{{ section_id }} .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(40px, 6vw, 80px); align-items: center; }
     #{{ section_id }} .hero h1 {
       font-family: var(--font-display); font-size: clamp(40px, 5.5vw, 72px); font-weight: 600; line-height: 1.05;
@@ -143,9 +150,11 @@
       animation: hpd-hero-orb 8s ease-in-out infinite;
     }
     #{{ section_id }} .hero-products { position: relative; z-index: 2; display: flex; align-items: flex-end; gap: clamp(12px, 2vw, 24px); }
-    #{{ section_id }} .hero-products img { width: clamp(90px, 10vw, 130px); border-radius: 12px; filter: drop-shadow(0 24px 48px rgba(13,139,125,0.12)); transition: transform 0.6s var(--ease); }
+    #{{ section_id }} .hero-products a { display: block; border-radius: 12px; width: clamp(190px, calc(10vw + 100px), 230px); }
+    #{{ section_id }} .hero-products img { width: 100%; border-radius: 12px; filter: drop-shadow(0 24px 48px rgba(13,139,125,0.12)); transition: transform 0.6s var(--ease); }
     #{{ section_id }} .hero-products img:hover { transform: translateY(-8px); }
-    #{{ section_id }} .hero-products img:nth-child(2) { width: clamp(100px, 12vw, 150px); animation: hpd-hero-float 5s ease-in-out infinite; }
+    #{{ section_id }} .hero-products a:nth-child(2) { width: clamp(200px, calc(12vw + 100px), 250px); }
+    #{{ section_id }} .hero-products a:nth-child(2) img { animation: hpd-hero-float 5s ease-in-out infinite; }
     @keyframes hpd-hero-orb {
       0%, 100% { transform: translate(0, 0) scale(1); }
       50% { transform: translate(-15px, -20px) scale(1.1); }
@@ -286,6 +295,7 @@
       #{{ section_id }} .container { padding: 0 var(--container-padding); }
       #{{ section_id }} .section { padding: clamp(56px, 8vw, 80px) 0; }
       #{{ section_id }} .hero { padding: clamp(44px, 8vw, 72px) 0 clamp(56px, 9vw, 84px); }
+      #{{ section_id }} .hero .container { padding-left: 10px; padding-right: 10px; }
       #{{ section_id }} .hero-grid,
       #{{ section_id }} .routine-row,
       #{{ section_id }} .routine-row.reverse,
@@ -294,8 +304,8 @@
       #{{ section_id }} .ingredients-grid { grid-template-columns: 1fr; }
       #{{ section_id }} .hero-display { order: -1; min-height: 320px; padding: 28px 12px 24px; }
       #{{ section_id }} .hero-products { gap: 10px; }
-      #{{ section_id }} .hero-products img { width: clamp(82px, 26vw, 120px); }
-      #{{ section_id }} .hero-products img:nth-child(2) { width: clamp(92px, 30vw, 140px); }
+      #{{ section_id }} .hero-products a { width: clamp(182px, calc(26vw + 100px), 220px); }
+      #{{ section_id }} .hero-products a:nth-child(2) { width: clamp(192px, calc(30vw + 100px), 240px); }
       #{{ section_id }} .hero-sub { max-width: 100%; }
       #{{ section_id }} .hero-ctas { gap: 12px; }
       #{{ section_id }} .hero-ctas .btn { width: 100%; justify-content: center; min-height: var(--touch-target-min); }
@@ -327,8 +337,8 @@
       #{{ section_id }} .section-header h2 { font-size: clamp(28px, 8vw, 38px); }
       #{{ section_id }} .section-header p { font-size: 15px; line-height: 1.6; }
       #{{ section_id }} .hero-display { min-height: 270px; }
-      #{{ section_id }} .hero-products img { width: clamp(74px, 24vw, 98px); }
-      #{{ section_id }} .hero-products img:nth-child(2) { width: clamp(84px, 28vw, 114px); }
+      #{{ section_id }} .hero-products a { width: clamp(174px, calc(24vw + 100px), 198px); }
+      #{{ section_id }} .hero-products a:nth-child(2) { width: clamp(184px, calc(28vw + 100px), 214px); }
       #{{ section_id }} .product-shell { width: min(88vw, 300px); }
       #{{ section_id }} .product-details { padding: 16px 16px 20px; }
       #{{ section_id }} .product-name { font-size: 18px; }
@@ -376,21 +386,27 @@
         <div class="hero-display reveal reveal-d2">
           <div class="hero-display-shape"></div>
           <div class="hero-products">
-            {% if hero_img_1 != blank %}
-              <img class="hero-prod" width="520" height="640" src="{{ hero_img_1 | image_url: width: 520 }}" alt="{{ hero_alt_1 | escape }}">
-            {% else %}
-              <img class="hero-prod" width="520" height="640" src="{{ hero_fallback_1 }}" alt="{{ hero_alt_1 | escape }}">
-            {% endif %}
-            {% if hero_img_2 != blank %}
-              <img class="hero-prod" width="520" height="640" src="{{ hero_img_2 | image_url: width: 520 }}" alt="{{ hero_alt_2 | escape }}">
-            {% else %}
-              <img class="hero-prod" width="520" height="640" src="{{ hero_fallback_2 }}" alt="{{ hero_alt_2 | escape }}">
-            {% endif %}
-            {% if hero_img_3 != blank %}
-              <img class="hero-prod" width="520" height="640" src="{{ hero_img_3 | image_url: width: 520 }}" alt="{{ hero_alt_3 | escape }}">
-            {% else %}
-              <img class="hero-prod" width="520" height="640" src="{{ hero_fallback_3 }}" alt="{{ hero_alt_3 | escape }}">
-            {% endif %}
+            <a href="{{ hero_link_1 }}" aria-label="{{ hero_alt_1 | escape }}">
+              {% if hero_img_1 != blank %}
+                <img class="hero-prod" width="700" height="860" src="{{ hero_img_1 | image_url: width: 700 }}" alt="{{ hero_alt_1 | escape }}">
+              {% else %}
+                <img class="hero-prod" width="700" height="860" src="{{ hero_fallback_1 }}" alt="{{ hero_alt_1 | escape }}">
+              {% endif %}
+            </a>
+            <a href="{{ hero_link_2 }}" aria-label="{{ hero_alt_2 | escape }}">
+              {% if hero_img_2 != blank %}
+                <img class="hero-prod" width="760" height="940" src="{{ hero_img_2 | image_url: width: 760 }}" alt="{{ hero_alt_2 | escape }}">
+              {% else %}
+                <img class="hero-prod" width="760" height="940" src="{{ hero_fallback_2 }}" alt="{{ hero_alt_2 | escape }}">
+              {% endif %}
+            </a>
+            <a href="{{ hero_link_3 }}" aria-label="{{ hero_alt_3 | escape }}">
+              {% if hero_img_3 != blank %}
+                <img class="hero-prod" width="700" height="860" src="{{ hero_img_3 | image_url: width: 700 }}" alt="{{ hero_alt_3 | escape }}">
+              {% else %}
+                <img class="hero-prod" width="700" height="860" src="{{ hero_fallback_3 }}" alt="{{ hero_alt_3 | escape }}">
+              {% endif %}
+            </a>
           </div>
         </div>
       </div>
