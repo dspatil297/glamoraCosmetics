@@ -240,17 +240,55 @@
     }
 
     @media (max-width: 768px) {
+      #{{ section_id }} .container { padding: 0 var(--container-padding); }
+      #{{ section_id }} .section { padding: clamp(56px, 8vw, 80px) 0; }
+      #{{ section_id }} .hero { padding: clamp(44px, 8vw, 72px) 0 clamp(56px, 9vw, 84px); }
       #{{ section_id }} .hero-grid,
       #{{ section_id }} .routine-row,
       #{{ section_id }} .routine-row.reverse,
       #{{ section_id }} .stats-grid,
       #{{ section_id }} .stats-explainer,
       #{{ section_id }} .ingredients-grid { grid-template-columns: 1fr; }
-      #{{ section_id }} .stat-card.featured { grid-row: span 1; }
+      #{{ section_id }} .hero-display { order: -1; min-height: 320px; padding: 28px 12px 24px; }
+      #{{ section_id }} .hero-products { gap: 10px; }
+      #{{ section_id }} .hero-products img { width: clamp(82px, 26vw, 120px); }
+      #{{ section_id }} .hero-products img:nth-child(2) { width: clamp(92px, 30vw, 140px); }
+      #{{ section_id }} .hero-sub { max-width: 100%; }
+      #{{ section_id }} .hero-ctas { gap: 12px; }
+      #{{ section_id }} .hero-ctas .btn { width: 100%; justify-content: center; min-height: var(--touch-target-min); }
+      #{{ section_id }} .trust-item { padding: 0 20px; font-size: 13px; }
+      #{{ section_id }} .routine-image-shell { max-width: min(100%, 360px); }
       #{{ section_id }} .routine-row.reverse .img { order: 2; }
       #{{ section_id }} .routine-row.reverse .txt { order: 1; }
-      #{{ section_id }} .newsletter-form { flex-direction: column; border-radius: 1rem; }
-      #{{ section_id }} .newsletter-submit { border-radius: 0.75rem; }
+      #{{ section_id }} .routine-desc { font-size: 16px; line-height: 1.7; }
+      #{{ section_id }} .routine-bundle { padding: clamp(28px, 6vw, 44px) clamp(16px, 4vw, 28px); border-radius: 1.25rem; }
+      #{{ section_id }} .routine-bundle .btn { width: 100%; justify-content: center; min-height: var(--touch-target-min); }
+      #{{ section_id }} .stat-card { padding: clamp(24px, 5vw, 32px); }
+      #{{ section_id }} .stat-card.featured { grid-row: span 1; }
+      #{{ section_id }} .sellers-grid { gap: 14px; scroll-padding-inline: var(--container-padding); }
+      #{{ section_id }} .product-shell { width: min(84vw, 320px); }
+      #{{ section_id }} .ingredient-card { padding: 18px; gap: 12px; }
+      #{{ section_id }} .ingredient-symbol { width: 40px; height: 40px; }
+      #{{ section_id }} .testimonial-text { line-height: 1.45; }
+      #{{ section_id }} .newsletter { padding: clamp(56px, 9vw, 80px) 0; margin: clamp(28px, 8vw, 56px) 0 0; }
+      #{{ section_id }} .newsletter-form { flex-direction: column; border-radius: 1rem; padding: 10px; margin-top: 28px; }
+      #{{ section_id }} .newsletter-input { padding: 14px 16px; }
+      #{{ section_id }} .newsletter-submit { border-radius: 0.75rem; min-height: var(--touch-target-min); }
+    }
+
+    @media (max-width: 480px) {
+      #{{ section_id }} .hero h1 { font-size: clamp(30px, 10vw, 42px); }
+      #{{ section_id }} .section-header h2 { font-size: clamp(28px, 8vw, 38px); }
+      #{{ section_id }} .section-header p { font-size: 15px; line-height: 1.6; }
+      #{{ section_id }} .hero-display { min-height: 270px; }
+      #{{ section_id }} .hero-products img { width: clamp(74px, 24vw, 98px); }
+      #{{ section_id }} .hero-products img:nth-child(2) { width: clamp(84px, 28vw, 114px); }
+      #{{ section_id }} .product-shell { width: min(88vw, 300px); }
+      #{{ section_id }} .product-details { padding: 16px 16px 20px; }
+      #{{ section_id }} .product-name { font-size: 18px; }
+      #{{ section_id }} .ingredient-card { padding: 16px; }
+      #{{ section_id }} .newsletter-inner h2 { font-size: clamp(24px, 7.5vw, 30px); }
+      #{{ section_id }} .newsletter-inner p { font-size: 15px; }
     }
   </style>
 
