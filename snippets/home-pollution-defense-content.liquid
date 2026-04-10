@@ -394,23 +394,23 @@
           <div class="hero-products">
             <a href="{{ hero_link_1 }}" aria-label="{{ hero_alt_1 | escape }}">
               {% if hero_img_1 != blank %}
-                <img class="hero-prod" width="700" height="860" src="{{ hero_img_1 | image_url: width: 700 }}" alt="{{ hero_alt_1 | escape }}">
+                <img class="hero-prod" width="700" height="860" src="{{ hero_img_1 | image_url: width: 700 }}" alt="{{ hero_alt_1 | escape }}" loading="eager" fetchpriority="high" decoding="async">
               {% else %}
-                <img class="hero-prod" width="700" height="860" src="{{ hero_fallback_1 }}" alt="{{ hero_alt_1 | escape }}">
+                <img class="hero-prod" width="700" height="860" src="{{ hero_fallback_1 }}" alt="{{ hero_alt_1 | escape }}" loading="eager" fetchpriority="high" decoding="async">
               {% endif %}
             </a>
             <a href="{{ hero_link_2 }}" aria-label="{{ hero_alt_2 | escape }}">
               {% if hero_img_2 != blank %}
-                <img class="hero-prod" width="760" height="940" src="{{ hero_img_2 | image_url: width: 760 }}" alt="{{ hero_alt_2 | escape }}">
+                <img class="hero-prod" width="760" height="940" src="{{ hero_img_2 | image_url: width: 760 }}" alt="{{ hero_alt_2 | escape }}" loading="lazy" decoding="async">
               {% else %}
-                <img class="hero-prod" width="760" height="940" src="{{ hero_fallback_2 }}" alt="{{ hero_alt_2 | escape }}">
+                <img class="hero-prod" width="760" height="940" src="{{ hero_fallback_2 }}" alt="{{ hero_alt_2 | escape }}" loading="lazy" decoding="async">
               {% endif %}
             </a>
             <a href="{{ hero_link_3 }}" aria-label="{{ hero_alt_3 | escape }}">
               {% if hero_img_3 != blank %}
-                <img class="hero-prod" width="700" height="860" src="{{ hero_img_3 | image_url: width: 700 }}" alt="{{ hero_alt_3 | escape }}">
+                <img class="hero-prod" width="700" height="860" src="{{ hero_img_3 | image_url: width: 700 }}" alt="{{ hero_alt_3 | escape }}" loading="lazy" decoding="async">
               {% else %}
-                <img class="hero-prod" width="700" height="860" src="{{ hero_fallback_3 }}" alt="{{ hero_alt_3 | escape }}">
+                <img class="hero-prod" width="700" height="860" src="{{ hero_fallback_3 }}" alt="{{ hero_alt_3 | escape }}" loading="lazy" decoding="async">
               {% endif %}
             </a>
           </div>
@@ -503,7 +503,7 @@
             <div class="routine-row reveal {% if block.settings.reverse %}reverse{% endif %}" {{ block.shopify_attributes }}>
               <div class="img">
                 <div class="routine-image-shell"><div class="routine-image-core">
-                  {% if step_image != blank %}<img width="900" height="1125" src="{{ step_image | image_url: width: 900 }}" alt="{{ block.settings.title | escape }}">{% endif %}
+                  {% if step_image != blank %}<img width="900" height="1125" src="{{ step_image | image_url: width: 900 }}" alt="{{ block.settings.title | escape }}" loading="lazy" decoding="async">{% endif %}
                 </div></div>
               </div>
               <div class="txt">
@@ -566,7 +566,7 @@
             <article class="product-shell reveal" {{ block.shopify_attributes }}>
               <div class="product-core">
                 <div class="product-image">
-                  {% if card_image != blank %}<img width="800" height="1067" src="{{ card_image | image_url: width: 800 }}" alt="{{ block.settings.title | escape }}">{% endif %}
+                  {% if card_image != blank %}<img width="800" height="1067" src="{{ card_image | image_url: width: 800 }}" alt="{{ block.settings.title | escape }}" loading="lazy" decoding="async">{% endif %}
                   <a class="product-quick-add" href="{{ block.settings.button_link }}">{{ block.settings.button_text }}</a>
                 </div>
                 <div class="product-details">

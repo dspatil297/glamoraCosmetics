@@ -1,6 +1,6 @@
 /**
- * Glamora theme — base JS (smooth scroll, validation, scroll animations, images).
- * Native lazy-loaded images are left to the browser; we only observe img[data-src].
+ * Glamora theme — base JS (smooth scroll, validation, image load styling).
+ * Native lazy-loaded images use loading="lazy"; no data-src / lazysizes.
  */
 (function () {
   'use strict';
@@ -71,34 +71,6 @@
     return isValid;
   }
 
-  function initScrollAnimations() {
-    var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var sel = '.scroll-animate, .scroll-animate-left, .scroll-animate-right, .scroll-animate-scale';
-    if (prefersReducedMotion) {
-      document.querySelectorAll(sel).forEach(function (el) {
-        el.classList.add('animated');
-      });
-      return;
-    }
-    if ('IntersectionObserver' in window) {
-      var animationObserver = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) entry.target.classList.add('animated');
-          });
-        },
-        { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-      );
-      document.querySelectorAll(sel).forEach(function (el) {
-        animationObserver.observe(el);
-      });
-    } else {
-      document.querySelectorAll(sel).forEach(function (el) {
-        el.classList.add('animated');
-      });
-    }
-  }
-
   function markImageLoaded(img) {
     img.classList.add('loaded');
     if (img.getAttribute('loading') === 'lazy') img.style.opacity = '1';
@@ -129,49 +101,11 @@
       );
       if (img.complete && img.naturalHeight !== 0) markImageLoaded(img);
     });
-
-    if ('IntersectionObserver' in window) {
-      var io = new IntersectionObserver(
-        function (entries, obs) {
-          entries.forEach(function (entry) {
-            if (!entry.isIntersecting) return;
-            var img = entry.target;
-            if (img.dataset.src) {
-              img.src = img.dataset.src;
-              img.removeAttribute('data-src');
-            }
-            if (img.dataset.srcset) {
-              img.srcset = img.dataset.srcset;
-              img.removeAttribute('data-srcset');
-            }
-            obs.unobserve(img);
-          });
-        },
-        { rootMargin: '80px' }
-      );
-      document.querySelectorAll('img[data-src], img[data-srcset]').forEach(function (img) {
-        io.observe(img);
-      });
-    } else {
-      document.querySelectorAll('img[data-src]').forEach(function (img) {
-        if (img.dataset.src) {
-          img.src = img.dataset.src;
-          img.removeAttribute('data-src');
-        }
-      });
-      document.querySelectorAll('img[data-srcset]').forEach(function (img) {
-        if (img.dataset.srcset) {
-          img.srcset = img.dataset.srcset;
-          img.removeAttribute('data-srcset');
-        }
-      });
-    }
   }
 
   function init() {
     initSmoothScroll();
     initFormValidation();
-    initScrollAnimations();
     initImages();
   }
 

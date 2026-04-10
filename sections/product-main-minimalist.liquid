@@ -303,7 +303,7 @@
           <div class="gallery-main-core" data-gallery-open>
             <span class="gallery-badge">Bestseller</span>
             {%- if featured -%}
-              <img src="{{ featured | image_url: width: 1400 }}" alt="{{ product.title | escape }}" id="mainImg-{{ section.id }}" data-current-index="-1">
+              <img src="{{ featured | image_url: width: 1400 }}" alt="{{ product.title | escape }}" id="mainImg-{{ section.id }}" data-current-index="-1" width="{{ featured.width }}" height="{{ featured.height }}" loading="eager" fetchpriority="high" decoding="async">
             {%- endif -%}
           </div>
         </div>
@@ -311,7 +311,7 @@
           <div class="gallery-thumbs">
             {%- for image in product.images -%}
               <button type="button" class="gallery-thumb{% if image.id == featured.id %} active{% elsif featured == blank and forloop.first %} active{% endif %}" data-thumb-src="{{ image | image_url: width: 1400 }}" data-thumb-index="{{ forloop.index0 }}" aria-label="Image {{ forloop.index }}">
-                <img src="{{ image | image_url: width: 260 }}" alt="" loading="lazy">
+                <img src="{{ image | image_url: width: 260 }}" alt="" width="{{ image.width }}" height="{{ image.height }}" loading="lazy" decoding="async">
               </button>
             {%- endfor -%}
           </div>

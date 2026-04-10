@@ -4,7 +4,9 @@
       <img 
         src="{{ section.settings.background_image | image_url: width: 1280 }}" 
         alt="{{ collection.title }}"
-        loading="lazy"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
         width="1920"
         height="400"
       >

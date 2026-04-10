@@ -10,6 +10,8 @@
           src="{{ section.settings.hero_image | image_url: width: 900 }}" 
           alt="{{ section.settings.hero_image.alt | default: 'About Sarvital' }}"
           loading="eager"
+          fetchpriority="high"
+          decoding="async"
           width="1400"
           height="600"
         >

@@ -1,7 +1,19 @@
+{%- liquid
+  assign custom_bg_loading = 'lazy'
+  assign custom_bg_priority = ''
+  if section.index == 1
+    assign custom_bg_loading = 'eager'
+    assign custom_bg_priority = 'high'
+  endif
+-%}
 <div class="custom-section full-width">
   {% if section.settings.background_image %}
     <div class="custom-section__background">
-      {{ section.settings.background_image | image_url: width: 2000 | image_tag: loading: 'lazy', decoding: 'async', sizes: '100vw' }}
+      {% if custom_bg_priority != '' %}
+        {{ section.settings.background_image | image_url: width: 2000 | image_tag: loading: custom_bg_loading, fetchpriority: custom_bg_priority, decoding: 'async', sizes: '100vw' }}
+      {% else %}
+        {{ section.settings.background_image | image_url: width: 2000 | image_tag: loading: custom_bg_loading, decoding: 'async', sizes: '100vw' }}
+      {% endif %}
     </div>
   {% endif %}
 

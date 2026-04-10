@@ -545,10 +545,20 @@
             }
           }).catch(function() {});
         }
+        function scheduleInitialProductCardSync() {
+          function run() {
+            syncProductCardsWithCart();
+          }
+          if (typeof window.requestIdleCallback === 'function') {
+            window.requestIdleCallback(run, { timeout: 3000 });
+          } else {
+            window.setTimeout(run, 1);
+          }
+        }
         if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', syncProductCardsWithCart);
+          document.addEventListener('DOMContentLoaded', scheduleInitialProductCardSync);
         } else {
-          syncProductCardsWithCart();
+          scheduleInitialProductCardSync();
         }
         document.addEventListener('cart:updated', syncProductCardsWithCart);
       })();
