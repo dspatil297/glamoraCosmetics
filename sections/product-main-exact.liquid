@@ -11,6 +11,16 @@
     assign has_discount = true
     assign discount_pct = compare | minus: price | times: 100 | divided_by: compare | round
   endif
+
+  assign gx_routine_step = 0
+  case product.handle
+    when 'glamora-pollution-control-face-wash', 'glamora-pollution-control-foaming-face-wash'
+      assign gx_routine_step = 1
+    when 'glamora-pollution-control-moisturizing-spray'
+      assign gx_routine_step = 2
+    when 'glamora-pollution-control-hybrid-sunscreen'
+      assign gx_routine_step = 3
+  endcase
 -%}
 
 <section class="gx-pdp" id="gx-pdp-{{ section.id }}">
@@ -42,7 +52,9 @@
       </div>
 
       <div class="gx-product-info">
-        <div class="gx-routine-badge"><span class="gx-routine-badge-num">1</span>Step 1 of the 3-Step Routine</div>
+        {%- if gx_routine_step > 0 -%}
+          <div class="gx-routine-badge"><span class="gx-routine-badge-num">{{ gx_routine_step }}</span>Step {{ gx_routine_step }} of the 3-Step Routine</div>
+        {%- endif -%}
         <h1>{{ product.title }}</h1>
         {%- if product_subtitle != blank -%}<p class="gx-product-subtitle">{{ product_subtitle }}</p>{%- endif -%}
 
