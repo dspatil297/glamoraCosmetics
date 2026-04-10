@@ -44,7 +44,12 @@
     </div>
 
     <div class="g-footer__bottom">
-      <p>{{ section.settings.copyright_text }}</p>
+      <div class="g-footer__bottom-copy">
+        <p class="g-footer__copyright">{{ section.settings.copyright_text }}</p>
+        <p class="g-footer__attribution">
+          Marketed by <a href="https://www.digitalsupremacy.in/" target="_blank" rel="noopener noreferrer">Digital Supremacy</a><span class="g-footer__attribution-sep" aria-hidden="true"> | </span>Designed and Developed by <a href="https://firefist.co.in/" target="_blank" rel="noopener noreferrer">Firefist Solutions</a>
+        </p>
+      </div>
       <div class="g-footer__social">
         <a href="{{ instagram_url }}" aria-label="Instagram" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
@@ -134,11 +139,31 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 24px;
   }
-  .g-footer__bottom p {
+  .g-footer__bottom-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+  .g-footer__bottom-copy p {
     margin: 0;
     font-size: 15px;
     font-weight: 300;
+    line-height: 1.5;
+  }
+  .g-footer__attribution {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.42);
+  }
+  .g-footer__attribution a {
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    transition: color 0.25s ease;
+  }
+  .g-footer__attribution a:hover {
+    color: #0d8b7d;
   }
   .g-footer__social {
     display: flex;
@@ -247,7 +272,7 @@
       "type": "text",
       "id": "copyright_text",
       "label": "Copyright text",
-      "default": "2026 Glamora Cosmetics. All rights reserved."
+      "default": "© 2026 Glamora Cosmetics. All rights reserved."
     }
   ]
 }
