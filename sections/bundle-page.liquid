@@ -56,6 +56,16 @@
     assign savings_cents = 0
   endif
 
+  assign bundle_display_price_text = section.settings.bundle_display_price | strip
+  assign bundle_display_mrp_text = section.settings.bundle_display_mrp | strip
+  assign bundle_display_save_text = section.settings.bundle_display_save | strip
+  assign bundle_show_mrp = false
+  if bundle_display_mrp_text != blank
+    assign bundle_show_mrp = true
+  elsif sum_compare > sum_price
+    assign bundle_show_mrp = true
+  endif
+
   assign bundle_gokwik_checkout = false
   if settings.goEnable
     assign bundle_gokwik_checkout = true
@@ -835,11 +845,25 @@
 
           <div class="bundle-pricing">
             <div class="bundle-pricing-row">
-              <span class="bundle-price" data-bundle-live-price>{{ sum_price | money }}</span>
-              {% if sum_compare > sum_price %}
-                <span class="bundle-mrp" data-bundle-live-mrp>{{ sum_compare | money }}</span>
+              <span class="bundle-price">
+                {%- if bundle_display_price_text != blank -%}
+                  {{- bundle_display_price_text -}}
+                {%- else -%}
+                  {{- sum_price | money -}}
+                {%- endif -%}
+              </span>
+              {% if bundle_show_mrp %}
+                <span class="bundle-mrp">
+                  {%- if bundle_display_mrp_text != blank -%}
+                    {{- bundle_display_mrp_text -}}
+                  {%- else -%}
+                    {{- sum_compare | money -}}
+                  {%- endif -%}
+                </span>
               {% endif %}
-              {% if savings_cents > 0 %}
+              {% if bundle_display_save_text != blank %}
+                <span class="bundle-discount">{{ bundle_display_save_text }}</span>
+              {% elsif savings_cents > 0 %}
                 <span class="bundle-discount">Save {{ savings_cents | money }}</span>
               {% elsif section.settings.discount_badge_override != blank %}
                 <span class="bundle-discount">{{ section.settings.discount_badge_override }}</span>
@@ -1086,9 +1110,21 @@
           <p class="bottom-cta-sub">{{ section.settings.bottom_subheading }}</p>
         {% endif %}
         <div class="price-block">
-          <span class="big-price" data-bundle-live-price>{{ sum_price | money }}</span>
-          {% if sum_compare > sum_price %}
-            <span class="big-mrp" data-bundle-live-mrp>{{ sum_compare | money }}</span>
+          <span class="big-price">
+            {%- if bundle_display_price_text != blank -%}
+              {{- bundle_display_price_text -}}
+            {%- else -%}
+              {{- sum_price | money -}}
+            {%- endif -%}
+          </span>
+          {% if bundle_show_mrp %}
+            <span class="big-mrp">
+              {%- if bundle_display_mrp_text != blank -%}
+                {{- bundle_display_mrp_text -}}
+              {%- else -%}
+                {{- sum_compare | money -}}
+              {%- endif -%}
+            </span>
           {% endif %}
         </div>
         <div class="bottom-cta-buttons">
@@ -1347,6 +1383,30 @@
       "id": "pricing_note",
       "label": "Pricing note",
       "default": "Inclusive of all taxes. Free shipping."
+    },
+    {
+      "type": "header",
+      "content": "Displayed bundle prices"
+    },
+    {
+      "type": "paragraph",
+      "content": "Optional. Type exactly what shoppers should see (e.g. ₹1,599). Cart and checkout still use real product prices. Leave blank to show the sum of the three products."
+    },
+    {
+      "type": "text",
+      "id": "bundle_display_price",
+      "label": "Bundle price (hero and bottom)"
+    },
+    {
+      "type": "text",
+      "id": "bundle_display_mrp",
+      "label": "MRP / compare-at (optional)"
+    },
+    {
+      "type": "text",
+      "id": "bundle_display_save",
+      "label": "Savings badge (optional)",
+      "info": "Full text, e.g. Save ₹188. If set, it replaces the automatic “Save …” from product compare-at prices."
     },
     {
       "type": "text",
