@@ -2,6 +2,32 @@
   assign current_variant = product.selected_or_first_available_variant
   assign featured = current_variant.featured_image | default: product.featured_image
   assign product_subtitle = product.metafields.custom.product_subtitle.value | default: product.metafields.descriptors.subtitle.value | default: product.metafields.custom.card_subtitle.value | strip
+  assign ui_rating_value = product.metafields.reviews.rating.value.rating | default: product.metafields.reviews.rating.value | default: product.metafields.judgeme.average_rating | default: product.metafields.judgeme.rating | default: product.metafields.judgeme.all_reviews_rating
+  assign ui_review_count = product.metafields.reviews.rating_count.value | default: product.metafields.reviews.rating_count | default: product.metafields.judgeme.reviews_count | default: product.metafields.judgeme.review_count | default: product.metafields.judgeme.all_reviews_count
+  assign ui_star_5_pct = product.metafields.judgeme.star_5_percentage | default: product.metafields.reviews.star_5_percentage.value | default: ''
+  assign ui_star_4_pct = product.metafields.judgeme.star_4_percentage | default: product.metafields.reviews.star_4_percentage.value | default: ''
+  assign ui_star_3_pct = product.metafields.judgeme.star_3_percentage | default: product.metafields.reviews.star_3_percentage.value | default: ''
+  assign ui_star_2_pct = product.metafields.judgeme.star_2_percentage | default: product.metafields.reviews.star_2_percentage.value | default: ''
+  assign ui_star_1_pct = product.metafields.judgeme.star_1_percentage | default: product.metafields.reviews.star_1_percentage.value | default: ''
+  assign ui_rating_value = ui_rating_value | strip | replace: ',', '.'
+  assign ui_review_count = ui_review_count | strip | remove: ','
+  assign ui_star_5_pct = ui_star_5_pct | strip | remove: '%' | remove: ','
+  assign ui_star_4_pct = ui_star_4_pct | strip | remove: '%' | remove: ','
+  assign ui_star_3_pct = ui_star_3_pct | strip | remove: '%' | remove: ','
+  assign ui_star_2_pct = ui_star_2_pct | strip | remove: '%' | remove: ','
+  assign ui_star_1_pct = ui_star_1_pct | strip | remove: '%' | remove: ','
+  assign ui_show_star_breakdown = false
+  if ui_star_5_pct != blank and ui_star_4_pct != blank and ui_star_3_pct != blank and ui_star_2_pct != blank and ui_star_1_pct != blank
+    assign ui_show_star_breakdown = true
+  endif
+  if ui_rating_value == blank
+    assign ui_rating_value = section.settings.rating_text | default: 4.4
+  endif
+  if ui_review_count == blank
+    assign ui_review_count_text = section.settings.review_count_text | default: '839 verified reviews'
+  else
+    assign ui_review_count_text = ui_review_count | append: ' reviews'
+  endif
   assign form_id = 'pdp-form-' | append: section.id
   assign compare = current_variant.compare_at_price
   assign price = current_variant.price
@@ -333,6 +359,17 @@
         {%- endif -%}
         <h1 class="pdpx-product-title">{{ product.title }}</h1>
         {%- if product_subtitle != blank -%}<p class="product-subtitle">{{ product_subtitle }}</p>{%- endif -%}
+        <div class="product-answer-summary" aria-label="Product quick summary">
+          <p class="product-answer-summary__line product-answer-summary__line--intro">
+            {{ section.settings.summary_intro | default: product.description | strip_html | truncatewords: 18 }}
+          </p>
+          <p class="product-answer-summary__line">
+            {{ section.settings.summary_audience | default: 'Best for daily routines and users looking for simple, repeatable results.' }}
+          </p>
+          <p class="product-answer-summary__line">
+            {{ section.settings.summary_outcome | default: 'Key benefit: helps deliver consistent visible improvement with regular use.' }}
+          </p>
+        </div>
 
         <div class="product-ratings">
           <div class="stars">
@@ -342,8 +379,8 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" opacity="0.3"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </div>
-          <span class="rating-score">{{ section.settings.rating_text }}</span>
-          <a href="#reviews-{{ section.id }}" class="rating-count">{{ section.settings.review_count_text }}</a>
+          <span class="rating-score">{{ ui_rating_value }}</span>
+          <a href="#reviews-{{ section.id }}" class="rating-count">{{ ui_review_count_text }}</a>
         </div>
 
         <div class="pricing">
@@ -873,14 +910,16 @@
     <div class="container">
       <div class="reviews-header reveal"><h2>{{ section.settings.reviews_heading }}</h2></div>
       <div class="reviews-summary reveal">
-        <div class="reviews-score"><div class="big-number">{{ section.settings.rating_text }}</div><div class="total">Based on {{ section.settings.review_count_text }}</div></div>
+        <div class="reviews-score"><div class="big-number">{{ ui_rating_value }}</div><div class="total">Based on {{ ui_review_count_text }}</div></div>
+        {%- if ui_show_star_breakdown -%}
         <div class="star-breakdown">
-          <div class="star-row"><span>5</span><div class="star-row-track"><div class="star-row-fill" style="width:58%"></div></div><span>58%</span></div>
-          <div class="star-row"><span>4</span><div class="star-row-track"><div class="star-row-fill" style="width:26%"></div></div><span>26%</span></div>
-          <div class="star-row"><span>3</span><div class="star-row-track"><div class="star-row-fill" style="width:10%"></div></div><span>10%</span></div>
-          <div class="star-row"><span>2</span><div class="star-row-track"><div class="star-row-fill" style="width:4%"></div></div><span>4%</span></div>
-          <div class="star-row"><span>1</span><div class="star-row-track"><div class="star-row-fill" style="width:2%"></div></div><span>2%</span></div>
+          <div class="star-row"><span>5</span><div class="star-row-track"><div class="star-row-fill" style="width:{{ ui_star_5_pct }}%"></div></div><span>{{ ui_star_5_pct }}%</span></div>
+          <div class="star-row"><span>4</span><div class="star-row-track"><div class="star-row-fill" style="width:{{ ui_star_4_pct }}%"></div></div><span>{{ ui_star_4_pct }}%</span></div>
+          <div class="star-row"><span>3</span><div class="star-row-track"><div class="star-row-fill" style="width:{{ ui_star_3_pct }}%"></div></div><span>{{ ui_star_3_pct }}%</span></div>
+          <div class="star-row"><span>2</span><div class="star-row-track"><div class="star-row-fill" style="width:{{ ui_star_2_pct }}%"></div></div><span>{{ ui_star_2_pct }}%</span></div>
+          <div class="star-row"><span>1</span><div class="star-row-track"><div class="star-row-fill" style="width:{{ ui_star_1_pct }}%"></div></div><span>{{ ui_star_1_pct }}%</span></div>
         </div>
+        {%- endif -%}
       </div>
       <div class="reviews-grid">
         {%- assign review_items = section.blocks | where: 'type', 'review_item' -%}
@@ -915,6 +954,34 @@
       </div>
     </div>
   </section>
+  {%- if faq_items.size > 0 -%}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {%- assign faq_schema_items = 0 -%}
+          {%- for item in faq_items -%}
+            {%- assign qa_parts = item | split: '|||' -%}
+            {%- assign question = qa_parts[0] | strip | replace: '&amp;', '&' -%}
+            {%- assign answer = qa_parts[1] | strip | replace: '&amp;', '&' -%}
+            {%- if question != blank and answer != blank -%}
+              {%- if faq_schema_items > 0 -%},{%- endif -%}
+              {
+                "@type": "Question",
+                "name": {{ question | strip_html | json }},
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": {{ answer | strip_html | json }}
+                }
+              }
+              {%- assign faq_schema_items = faq_schema_items | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        ]
+      }
+    </script>
+  {%- endif -%}
 
   <div class="sticky-bar" id="stickyBar-{{ section.id }}"><div class="container"><div class="sticky-bar-inner"><div class="sticky-bar-info"><span class="sticky-bar-name">{{ product.title }}</span><span class="sticky-bar-price" data-sticky-price>{{ price | money_without_trailing_zeros }}</span></div><button class="sticky-bar-cta" type="submit" form="{{ form_id }}" name="add">Add to Cart</button></div></div></div>
 </section>
@@ -1103,6 +1170,26 @@
     margin: 0 0 6px;
   }
   section.pdpx .product-subtitle { font-family: var(--font-body); font-size: 16px; font-weight: 400; color: var(--text-2); margin: 0 0 6px; line-height: 1.4; }
+  section.pdpx .product-answer-summary {
+    margin: 10px 0 16px;
+    padding: 14px 16px;
+    background: rgba(13, 139, 125, 0.08);
+    border: 1px solid rgba(13, 139, 125, 0.2);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  section.pdpx .product-answer-summary__line {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text);
+    font-family: var(--font-body);
+  }
+  section.pdpx .product-answer-summary__line--intro {
+    font-weight: 600;
+  }
   section.pdpx .product-ratings { display: flex; align-items: center; gap: 12px; margin-top: 0; margin-bottom: 24px; padding-top: 0; padding-bottom: 24px; border-bottom: 1px solid var(--border-light); }
   section.pdpx .stars { display: flex; gap: 2px; color: #f5a623; }
   section.pdpx .rating-score { font-size: 15px; font-weight: 600; color: var(--text); }
@@ -1425,6 +1512,10 @@
 {
   "name": "Product Main (Minimalist)",
   "settings": [
+    { "type": "header", "content": "Answer-first summary (AEO/GEO)" },
+    { "type": "textarea", "id": "summary_intro", "label": "What is it? (short answer)", "default": "A targeted daily skincare product created for high-pollution, high-stress city routines." },
+    { "type": "textarea", "id": "summary_audience", "label": "Who is it for?", "default": "Best for people who want effective daily care without adding complexity to their routine." },
+    { "type": "textarea", "id": "summary_outcome", "label": "What result can users expect?", "default": "Key benefit: supports clearer, fresher, more balanced-looking skin with regular use." },
     { "type": "text", "id": "rating_text", "label": "Rating text", "default": "4.4" },
     { "type": "text", "id": "review_count_text", "label": "Review count text", "default": "839 verified reviews" },
     { "type": "text", "id": "tax_text", "label": "Tax text", "default": "Inclusive of all taxes" },

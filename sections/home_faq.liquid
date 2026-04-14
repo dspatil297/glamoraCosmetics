@@ -181,6 +181,32 @@
 </section>
 
 {% if faq_items.size > 0 %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% assign faq_schema_items = 0 %}
+    {% for item in faq_items %}
+      {% assign qa_parts = item | split: '|||' %}
+      {% assign question = qa_parts[0] | strip %}
+      {% assign answer = qa_parts[1] | strip %}
+      {% if question != blank and answer != blank %}
+        {% if faq_schema_items > 0 %},{% endif %}
+        {
+          "@type": "Question",
+          "name": {{ question | strip_html | json }},
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": {{ answer | strip_html | json }}
+          }
+        }
+        {% assign faq_schema_items = faq_schema_items | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+  ]
+}
+</script>
 <script>
 (function() {
   function handleHomeFaqClick(e) {

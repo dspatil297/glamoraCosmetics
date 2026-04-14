@@ -6,6 +6,19 @@
   assign current_variant_pm = product.selected_or_first_available_variant
   assign featured_pm = current_variant_pm.featured_image | default: product.featured_image
   assign featured_index_pm = 0
+  assign ui_rating_value = product.metafields.reviews.rating.value.rating | default: product.metafields.reviews.rating.value | default: product.metafields.judgeme.average_rating | default: product.metafields.judgeme.rating | default: product.metafields.judgeme.all_reviews_rating | default: 4.8
+  assign ui_review_count = product.metafields.reviews.rating_count.value | default: product.metafields.reviews.rating_count | default: product.metafields.judgeme.reviews_count | default: product.metafields.judgeme.review_count | default: product.metafields.judgeme.all_reviews_count | default: 127
+  assign ui_rating_value = ui_rating_value | strip | replace: ',', '.'
+  assign ui_review_count = ui_review_count | strip | remove: ','
+  if ui_rating_value == blank
+    assign ui_rating_value = 4.8
+  endif
+  if ui_review_count == blank
+    assign ui_review_count = 127
+  endif
+  assign ui_rating_floor = ui_rating_value | floor
+  assign ui_next_star = ui_rating_floor | plus: 1
+  assign ui_rating_decimal = ui_rating_value | minus: ui_rating_floor
   if product.images.size > 0 and featured_pm != blank
     for image in product.images
       if image.id == featured_pm.id
@@ -174,6 +187,17 @@
     <div class="product-info fade-in-up" style="animation-delay: 0.2s;">
       <!-- Product Title (h1) -->
       <h1 class="product-title">{{ product.title }}</h1>
+      <div class="product-answer-summary" aria-label="Product quick summary">
+        <p class="product-answer-summary__line product-answer-summary__line--intro">
+          {{ section.settings.summary_intro | default: product.description | strip_html | truncatewords: 18 }}
+        </p>
+        <p class="product-answer-summary__line">
+          {{ section.settings.summary_audience | default: 'Best for daily use and people looking for a practical routine-friendly option.' }}
+        </p>
+        <p class="product-answer-summary__line">
+          {{ section.settings.summary_outcome | default: 'Key benefit: designed to deliver clear, consistent results with regular use.' }}
+        </p>
+      </div>
 
       <!-- Start of Judge.me code -->
       <div
@@ -203,17 +227,12 @@
       {% if section.settings.show_rating %}
       <div class="product-rating-summary">
         <div class="rating-stars">
-          {% assign avg_rating = 4.8 %}
-          {% assign review_count = 127 %}
-          {% assign rating_floor = avg_rating | floor %}
-          {% assign next_star = rating_floor | plus: 1 %}
-          {% assign rating_decimal = avg_rating | minus: rating_floor %}
           {% for i in (1..5) %}
-            {% if i <= rating_floor %}
+            {% if i <= ui_rating_floor %}
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="star-filled">
                 <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
               </svg>
-            {% elsif i == next_star and rating_decimal >= 0.5 %}
+            {% elsif i == ui_next_star and ui_rating_decimal >= 0.5 %}
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="star-half">
                 <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
               </svg>
@@ -225,8 +244,8 @@
           {% endfor %}
         </div>
         <span class="rating-text">
-          <strong>{{ avg_rating }}</strong> 
-          <a href="#product-reviews" class="rating-link">({{ review_count }} reviews)</a>
+          <strong>{{ ui_rating_value }}</strong> 
+          <a href="#product-reviews" class="rating-link">({{ ui_review_count }} reviews)</a>
         </span>
       </div>
       {% endif %}
@@ -584,6 +603,29 @@
     font-size: 14px;
     color: #707070;
     line-height: 1.4;
+  }
+
+  .product-answer-summary {
+    margin: 10px 0 14px;
+    padding: 14px 16px;
+    background: rgba(21, 115, 109, 0.06);
+    border: 1px solid rgba(21, 115, 109, 0.16);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .product-answer-summary__line {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #2b2b2b;
+  }
+
+  .product-answer-summary__line--intro {
+    font-weight: 600;
+    color: #1c1c1c;
   }
 
   .product-image-zoom-hint {
@@ -2255,6 +2297,10 @@
     { "type": "text", "id": "delivery_button_text", "label": "Check button text", "default": "Check" },
     { "type": "text", "id": "delivery_button_label", "label": "Check button (accessibility)", "default": "Check" },
     { "type": "header", "content": "Description" },
+    { "type": "header", "content": "Answer-first summary (AEO/GEO)" },
+    { "type": "textarea", "id": "summary_intro", "label": "What is it? (short answer)", "default": "A focused skincare product built for everyday use, with a lightweight feel and practical results-driven formulation." },
+    { "type": "textarea", "id": "summary_audience", "label": "Who is it for?", "default": "Best for people who want a simple routine and visible consistency over time." },
+    { "type": "textarea", "id": "summary_outcome", "label": "What result can users expect?", "default": "Key benefit: supports cleaner, healthier-looking skin when used consistently." },
     { "type": "text", "id": "description_heading", "label": "Description section heading", "default": "Product Description" }
   ],
   "blocks": [

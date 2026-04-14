@@ -111,6 +111,31 @@
 
 {%- comment -%} Structured Data (JSON-LD) {%- endcomment -%}
 {%- if request.page_type == 'product' -%}
+  {%- liquid
+    assign sd_rating_value = blank
+    assign sd_review_count = blank
+
+    comment
+      Prefer strongly-typed review metafields first.
+    endcomment
+    if product.metafields.reviews.rating.value != blank
+      assign sd_rating_value = product.metafields.reviews.rating.value.rating | default: product.metafields.reviews.rating.value
+      assign sd_review_count = product.metafields.reviews.rating_count | default: product.metafields.reviews.rating_count.value
+    endif
+
+    comment
+      Judge.me common keys (availability can vary by app setup).
+    endcomment
+    if sd_rating_value == blank
+      assign sd_rating_value = product.metafields.judgeme.average_rating | default: product.metafields.judgeme.rating | default: product.metafields.judgeme.all_reviews_rating
+    endif
+    if sd_review_count == blank
+      assign sd_review_count = product.metafields.judgeme.reviews_count | default: product.metafields.judgeme.review_count | default: product.metafields.judgeme.all_reviews_count
+    endif
+
+    assign sd_rating_value = sd_rating_value | strip | replace: ',', '.'
+    assign sd_review_count = sd_review_count | strip | remove: ','
+  -%}
   <script type="application/ld+json">
     {
       "@context": "https://schema.org/",
@@ -136,18 +161,20 @@
           "@type": "Organization",
           "name": {{ site_brand | json }}
         }
-      },
+      }
       {%- if product.selected_or_first_available_variant.sku != blank -%}
-      "sku": {{ product.selected_or_first_available_variant.sku | json }},
+      ,"sku": {{ product.selected_or_first_available_variant.sku | json }}
       {%- endif -%}
       {%- if product.selected_or_first_available_variant.barcode != blank -%}
-      "gtin": {{ product.selected_or_first_available_variant.barcode | json }},
+      ,"gtin": {{ product.selected_or_first_available_variant.barcode | json }}
       {%- endif -%}
-      "aggregateRating": {
+      {%- if sd_rating_value != blank and sd_review_count != blank and sd_review_count != '0' -%}
+      ,"aggregateRating": {
         "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "reviewCount": "127"
+        "ratingValue": {{ sd_rating_value | json }},
+        "reviewCount": {{ sd_review_count | json }}
       }
+      {%- endif -%}
     }
   </script>
 {%- elsif request.page_type == 'collection' -%}
