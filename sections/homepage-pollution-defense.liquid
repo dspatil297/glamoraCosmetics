@@ -56,6 +56,19 @@
     #{{ section_id }} .hpd-desc{color:var(--hpd-text-2);line-height:1.75;margin:0 0 14px}
     #{{ section_id }} .hpd-price{font-size:22px;font-weight:600;margin:0 0 16px}
     #{{ section_id }} .hpd-old{font-size:15px;color:var(--hpd-text-3);text-decoration:line-through;margin-left:8px}
+    #{{ section_id }} .hpd-routine .hpd-btn{
+      background:var(--hpd-teal);
+      color:#fff;
+      border:1px solid transparent;
+      transition:transform .24s ease,box-shadow .24s ease,background-color .24s ease;
+    }
+    #{{ section_id }} .hpd-routine .hpd-btn:hover,
+    #{{ section_id }} .hpd-routine .hpd-btn:focus-visible{
+      background:var(--hpd-teal-2);
+      color:#fff;
+      transform:translateY(-2px);
+      box-shadow:0 12px 24px rgba(13,139,125,.28);
+    }
     #{{ section_id }} .hpd-bundle{text-align:center;margin-top:clamp(40px,5vw,72px);padding:clamp(34px,4vw,54px);background:var(--hpd-teal-bg);border-radius:2rem;border:1px solid rgba(13,139,125,.08)}
     #{{ section_id }} .hpd-bundle h3{font-family:Fraunces,Georgia,serif;font-size:clamp(22px,2.5vw,30px);margin:0 0 8px}
     #{{ section_id }} .hpd-bundle p{color:var(--hpd-text-2);margin:0 0 22px}
@@ -186,7 +199,7 @@
                 <p class="hpd-tag">{{ block.settings.tagline }}</p>
                 <p class="hpd-desc">{{ block.settings.description }}</p>
                 <p class="hpd-price">{{ block.settings.price }}{% if block.settings.old_price != blank %}<span class="hpd-old">{{ block.settings.old_price }}</span>{% endif %}</p>
-                <a class="hpd-btn outline" href="{{ block.settings.button_link }}">{{ block.settings.button_text }}</a>
+                <a class="hpd-btn" href="{{ block.settings.button_link }}">{{ block.settings.button_text }}</a>
               </div>
             </div>
           {% endif %}
