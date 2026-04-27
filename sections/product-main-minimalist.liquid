@@ -31,6 +31,39 @@
   assign form_id = 'pdp-form-' | append: section.id
   assign compare = current_variant.compare_at_price
   assign price = current_variant.price
+  assign product_coupons_meta = current_variant.metafields.custom.product_coupons
+  if product_coupons_meta == blank
+    assign product_coupons_meta = current_variant.metafields.custom.product_coupon
+  endif
+  if product_coupons_meta == blank
+    assign product_coupons_meta = current_variant.metafields.custom.coupons
+  endif
+  if product_coupons_meta == blank
+    assign product_coupons_meta = product.metafields.custom.product_coupons
+  endif
+  if product_coupons_meta == blank
+    assign product_coupons_meta = product.metafields.custom.product_coupon
+  endif
+  if product_coupons_meta == blank
+    assign product_coupons_meta = product.metafields.custom.coupons
+  endif
+  assign product_coupon_list = product_coupons_meta.value
+  assign product_coupons_raw = ''
+  assign has_product_coupons = false
+  if product_coupon_list != blank and product_coupon_list.size > 0
+    assign has_product_coupons = true
+  else
+    assign product_coupons_raw = product_coupons_meta.value | default: product_coupons_meta | strip
+    if product_coupons_raw != blank
+      assign has_product_coupons = true
+    endif
+  endif
+  if has_product_coupons == false and product_coupons_meta != blank
+    assign product_coupons_raw = product_coupons_meta | metafield_tag | strip_html | strip
+    if product_coupons_raw != blank
+      assign has_product_coupons = true
+    endif
+  endif
   assign has_discount = false
   assign discount_pct = 0
   if compare != blank and compare > price
@@ -384,6 +417,27 @@
         </div>
 
         <div class="pricing">
+          {%- if has_product_coupons -%}
+            <div class="product-coupons" aria-label="Available coupons">
+              {%- if product_coupon_list != blank and product_coupon_list.size > 0 -%}
+                {%- for coupon_code in product_coupon_list limit: 4 -%}
+                  {%- assign coupon_code_clean = coupon_code | strip -%}
+                  {%- if coupon_code_clean != blank -%}
+                    <span class="product-coupon-chip">{{ coupon_code_clean }}</span>
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- else -%}
+                {%- assign coupon_normalized = product_coupons_raw | replace: ',', '<br />' | newline_to_br | replace: '<br>', '<br />' | replace: '<br/>', '<br />' -%}
+                {%- assign coupon_lines = coupon_normalized | split: '<br />' -%}
+                {%- for coupon_line in coupon_lines limit: 4 -%}
+                  {%- assign coupon_code_clean = coupon_line | strip -%}
+                  {%- if coupon_code_clean != blank -%}
+                    <span class="product-coupon-chip">{{ coupon_code_clean }}</span>
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
           <div class="pricing-row">
             <span class="price-current" data-pdp-price>{{ price | money_without_trailing_zeros }}</span>
             <span class="price-original{% unless has_discount %} is-hidden{% endunless %}" data-pdp-compare>{% if has_discount %}{{ compare | money_without_trailing_zeros }}{% endif %}</span>
@@ -1198,6 +1252,25 @@
   /* Pricing — same as glamora-website/product-page.html. section.pdpx scopes PDP only; global .price-current (e.g. quick-view) must not apply here. */
   section.pdpx .pricing {
     margin-bottom: 24px;
+  }
+  section.pdpx .product-coupons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  section.pdpx .product-coupon-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px dashed var(--teal);
+    background: var(--teal-bg);
+    color: var(--teal-dark);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
   }
   section.pdpx .pricing-row {
     display: flex;
