@@ -9,6 +9,64 @@
  */
 {
   "sections": {
+    "177753360545a8b2cd": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_6265ae0_6qErJi": {
+          "type": "ai_gen_block_6265ae0",
+          "disabled": true,
+          "settings": {
+            "sale_start_date": "2026-05-04",
+            "sale_start_time": "",
+            "badge_text": "Limited Time",
+            "before_headline": "Clearance Sale Starts In",
+            "discount_text": "40% OFF EVERYTHING",
+            "before_subtext": "Don't miss out on incredible savings!",
+            "live_message": "🎉 Clearance Sale is Live! 🎉",
+            "background_gradient_start": "#2ac59e",
+            "background_gradient_end": "#e9fff7",
+            "accent_color": "#D4AF37",
+            "text_color": "#2C2C2C",
+            "discount_color": "#C41E3A",
+            "subtext_color": "#4A4A4A",
+            "badge_bg_color": "#2C2C2C",
+            "badge_text_color": "#FFFFFF",
+            "badge_border_color": "#D4AF37",
+            "badge_size": 12,
+            "live_bg_color": "#008060",
+            "live_text_color": "#FFFFFF",
+            "live_size": 28,
+            "padding_vertical": 50,
+            "padding_horizontal": 20,
+            "content_max_width": 1000,
+            "spacing_between_elements": 20,
+            "headline_size": 42,
+            "headline_weight": "700",
+            "headline_letter_spacing": 1,
+            "discount_size": 56,
+            "subtext_size": 16,
+            "timer_box_bg": "#FFFFFF",
+            "timer_box_radius": 8,
+            "timer_box_width": 100,
+            "timer_box_padding": 20,
+            "timer_gap": 15,
+            "timer_number_color": "#2C2C2C",
+            "timer_number_size": 48,
+            "timer_number_weight": "700",
+            "timer_label_color": "#666666",
+            "timer_label_size": 12,
+            "timer_label_weight": "500",
+            "timer_label_transform": "uppercase",
+            "timer_label_spacing": 1.5
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_6265ae0_6qErJi"
+      ],
+      "settings": {}
+    },
     "homepage_pollution_defense": {
       "type": "home-pollution-defense",
       "blocks": {
@@ -334,6 +392,7 @@
     }
   },
   "order": [
+    "177753360545a8b2cd",
     "homepage_pollution_defense"
   ]
 }

@@ -344,6 +344,10 @@
       endif
     endif
   endif
+  assign pdp_ar_img = featured
+  if pdp_ar_img == blank and product.images.size > 0
+    assign pdp_ar_img = product.images.first
+  endif
 -%}
 
 <section class="pdpx" id="pdpx-{{ section.id }}">
@@ -359,7 +363,7 @@
     <div class="product-layout">
       <div class="gallery reveal">
         <div class="gallery-main-shell">
-          <div class="gallery-main-core" data-gallery-open>
+          <div class="gallery-main-core" data-gallery-open{% if pdp_ar_img and pdp_ar_img.width > 0 and pdp_ar_img.height > 0 %} style="aspect-ratio: {{ pdp_ar_img.width }} / {{ pdp_ar_img.height }};"{% endif %}>
             <span class="gallery-badge">Bestseller</span>
             {%- if featured -%}
               <img src="{{ featured | image_url: width: 1400 }}" alt="{{ product.title | escape }}" id="mainImg-{{ section.id }}" data-current-index="-1" width="{{ featured.width }}" height="{{ featured.height }}" loading="eager" fetchpriority="high" decoding="async">
@@ -1190,27 +1194,27 @@
   section.pdpx .breadcrumb a:hover { color: var(--teal); }
   section.pdpx .product-layout { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 14px; padding-bottom: clamp(60px, 8vw, 100px); align-items: start; }
   section.pdpx .gallery { position: sticky; top: 100px; }
-  section.pdpx .gallery-main-shell { background: rgba(0, 0, 0, 0.015); border: 1px solid var(--border-light); padding: 6px; border-radius: 2rem; margin-bottom: 16px; max-width: 540px; margin-left: auto; margin-right: auto; }
-  section.pdpx .gallery-main-core { border-radius: calc(2rem - 6px); overflow: hidden; aspect-ratio: 1; background: var(--bg-alt); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8); position: relative; cursor: zoom-in; }
+  section.pdpx .gallery-main-shell { background: transparent; border: 1px solid var(--border-light); padding: 6px; border-radius: 2rem; margin-bottom: 16px; max-width: min(420px, 100%); margin-left: auto; margin-right: auto; }
+  section.pdpx .gallery-main-core { border-radius: calc(2rem - 6px); overflow: hidden; aspect-ratio: 1; background: transparent; position: relative; cursor: zoom-in; }
   section.pdpx .gallery-main-core img { width: 100%; height: 100%; object-fit: contain; transition: opacity 0.4s var(--ease); }
   section.pdpx .gallery-main-shell:hover .gallery-main-core img { transform: none; }
   section.pdpx .gallery-badge { position: absolute; top: 20px; left: 20px; padding: 6px 16px; background: var(--teal); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; border-radius: 100px; z-index: 3; }
-  section.pdpx .gallery-thumbs { display: flex; gap: 10px; max-width: 540px; margin-left: auto; margin-right: auto; }
-  section.pdpx .gallery-thumb { flex: 1; aspect-ratio: 1; border-radius: 0.75rem; overflow: hidden; border: 2px solid transparent; cursor: pointer; transition: all 0.4s var(--ease); opacity: 0.55; background: var(--bg-alt); transform: scale(0.98); padding: 0; margin: 0; font: inherit; color: inherit; }
+  section.pdpx .gallery-thumbs { display: flex; gap: 10px; max-width: min(420px, 100%); margin-left: auto; margin-right: auto; }
+  section.pdpx .gallery-thumb { flex: 1; aspect-ratio: 1; border-radius: 0.75rem; overflow: hidden; border: 2px solid transparent; cursor: pointer; transition: all 0.4s var(--ease); opacity: 0.55; background: transparent; transform: scale(0.98); padding: 0; margin: 0; font: inherit; color: inherit; }
   section.pdpx .gallery-thumb.active { border-color: var(--teal); opacity: 1; transform: scale(1); box-shadow: 0 4px 12px rgba(13, 139, 125, 0.15); }
   section.pdpx .gallery-thumb:hover { opacity: 0.85; }
-  section.pdpx .gallery-thumb img { width: 100%; height: 100%; object-fit: contain; background: #fff; }
-  section.pdpx .gallery-lightbox { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.9); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 20px; }
+  section.pdpx .gallery-thumb img { width: 100%; height: 100%; object-fit: contain; background: transparent; }
+  section.pdpx .gallery-lightbox { position: fixed; inset: 0; background: rgba(250, 250, 247, 0.94); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 20px; }
   section.pdpx .gallery-lightbox.is-open { display: flex; }
   section.pdpx .gallery-lightbox-stage { width: min(92vw, 1080px); height: min(88vh, 860px); display: flex; align-items: center; justify-content: center; }
-  section.pdpx .gallery-lightbox-stage img { max-width: 100%; max-height: 100%; object-fit: contain; user-select: none; -webkit-user-drag: none; }
+  section.pdpx .gallery-lightbox-stage img { max-width: 100%; max-height: 100%; object-fit: contain; user-select: none; -webkit-user-drag: none; filter: drop-shadow(0 8px 32px rgba(20, 20, 19, 0.08)); }
   section.pdpx .gallery-lightbox-close,
-  section.pdpx .gallery-lightbox-nav { position: absolute; border: 0; background: rgba(255, 255, 255, 0.14); color: #fff; width: 46px; height: 46px; border-radius: 999px; cursor: pointer; font-size: 28px; line-height: 1; display: grid; place-items: center; }
+  section.pdpx .gallery-lightbox-nav { position: absolute; border: 1px solid var(--border-light); background: rgba(255, 255, 255, 0.85); color: var(--text); width: 46px; height: 46px; border-radius: 999px; cursor: pointer; font-size: 28px; line-height: 1; display: grid; place-items: center; box-shadow: 0 2px 12px rgba(20, 20, 19, 0.06); }
   section.pdpx .gallery-lightbox-close { top: 18px; right: 18px; font-size: 20px; }
   section.pdpx .gallery-lightbox-nav.prev { left: 18px; top: 50%; transform: translateY(-50%); }
   section.pdpx .gallery-lightbox-nav.next { right: 18px; top: 50%; transform: translateY(-50%); }
   section.pdpx .gallery-lightbox-close:hover,
-  section.pdpx .gallery-lightbox-nav:hover { background: rgba(255, 255, 255, 0.3); }
+  section.pdpx .gallery-lightbox-nav:hover { background: var(--bg); border-color: var(--border); color: var(--teal); }
   section.pdpx .product-info{padding-top:8px;} section.pdpx .routine-badge{display:inline-flex;align-items:center;gap:10px;padding:8px 18px;border-radius:100px;background:var(--teal-bg);font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--teal);margin-bottom:16px;}
   section.pdpx .routine-badge-num{width:22px;height:22px;background:var(--teal);color:#fff;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;}
   /* Title: matches glamora-website/product-page.html (.product-info h1) */

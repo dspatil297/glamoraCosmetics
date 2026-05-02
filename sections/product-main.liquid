@@ -27,6 +27,10 @@
       endif
     endfor
   endif
+  assign pdp_ar_img = featured_pm
+  if pdp_ar_img == blank and product.images.size > 0
+    assign pdp_ar_img = product.images.first
+  endif
 -%}
 
 <section class="product-hero" id="product-hero">
@@ -46,7 +50,7 @@
     <!-- Left Column - Image gallery: main image + thumbnails (beminimalist) -->
     <div class="product-images fade-in-up" style="animation-delay: 0.1s;">
       {% if product.featured_image or product.images.size > 0 %}
-        <div class="product-image-main product-image-carousel-wrapper">
+        <div class="product-image-main product-image-carousel-wrapper"{% if pdp_ar_img and pdp_ar_img.width > 0 and pdp_ar_img.height > 0 %} style="aspect-ratio: {{ pdp_ar_img.width }} / {{ pdp_ar_img.height }};"{% endif %}>
           <div class="product-image-carousel" id="product-image-carousel">
             <div class="product-carousel-track" id="product-carousel-track">
               {% for image in product.images %}
@@ -655,7 +659,7 @@
     border: 2px solid transparent;
     border-radius: 8px;
     overflow: hidden;
-    background: var(--bg);
+    background: transparent;
     cursor: pointer;
     flex-shrink: 0;
     transition: border-color 0.2s, opacity 0.2s;
@@ -686,10 +690,9 @@
   .product-image-main {
     position: relative;
     width: 100%;
-    aspect-ratio: 1;
     border-radius: 16px;
     overflow: hidden;
-    background: var(--bg);
+    background: transparent;
     margin-bottom: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -700,16 +703,20 @@
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
   }
 
-  /* Carousel */
+  /* Carousel — aspect-ratio from featured/first image via inline style; square fallback */
+  .product-image-carousel-wrapper.product-image-main {
+    aspect-ratio: 1;
+  }
+
   .product-image-carousel-wrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: unset; /* Let slides control aspect ratio */
   }
 
   .product-image-carousel {
     position: relative;
     width: 100%;
+    height: 100%;
     overflow: hidden;
     border-radius: 16px;
     touch-action: pan-y pinch-zoom;
@@ -718,7 +725,7 @@
   .product-image-placeholder {
     width: 100%;
     aspect-ratio: 1;
-    background: var(--bg);
+    background: transparent;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -734,6 +741,7 @@
   .product-carousel-track {
     display: flex;
     width: 100%;
+    height: 100%;
     transition: transform 0.35s ease-out;
     will-change: transform;
   }
@@ -741,12 +749,13 @@
   .product-carousel-slide {
     flex: 0 0 100%;
     width: 100%;
-    aspect-ratio: 1;
+    height: 100%;
+    min-height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: var(--bg);
+    background: transparent;
   }
 
   .product-carousel-slide .product-image-main__img {
@@ -1574,12 +1583,6 @@
 
     .product-image-carousel {
       border-radius: 12px;
-    }
-
-    /* Larger carousel images on mobile - taller aspect ratio */
-    .product-carousel-slide {
-      aspect-ratio: 4/3; /* Taller than square for better product visibility */
-      min-height: 60vh; /* Ensure images take up significant screen space */
     }
 
     .product-carousel-slide .product-image-main__img {
