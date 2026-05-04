@@ -1,6 +1,20 @@
 {%- comment -%} Full-width image banner (desktop + mobile) {%- endcomment -%}
 
-<section class="promo-banner" id="promo-banner-{{ section.id }}">
+{%- assign desktop_image = section.settings.image -%}
+{%- assign desktop_ratio = '1920 / 533' -%}
+{%- if desktop_image != blank and desktop_image.width and desktop_image.height -%}
+  {%- assign desktop_ratio = desktop_image.width | append: ' / ' | append: desktop_image.height -%}
+{%- endif -%}
+{%- assign mobile_ratio = desktop_ratio -%}
+{%- if mobile_img != blank and mobile_img.width and mobile_img.height -%}
+  {%- assign mobile_ratio = mobile_img.width | append: ' / ' | append: mobile_img.height -%}
+{%- endif -%}
+
+<section
+  class="promo-banner"
+  id="promo-banner-{{ section.id }}"
+  style="--promo-banner-desktop-ratio: {{ desktop_ratio }}; --promo-banner-mobile-ratio: {{ mobile_ratio }};"
+>
   {%- assign mobile_img = section.settings.mobile_image | default: section.settings.image -%}
   {%- assign href = section.settings.href -%}
 
@@ -47,10 +61,10 @@
 
 {% stylesheet %}
   .promo-banner {
-    --promo-banner-height: 200px;
     width: 100vw;
     max-width: 100%;
-    height: var(--promo-banner-height);
+    aspect-ratio: var(--promo-banner-desktop-ratio, 1920 / 533);
+    height: auto;
     margin: 0;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
@@ -90,7 +104,7 @@
 
   .promo-banner__placeholder {
     width: 100%;
-    height: var(--promo-banner-height);
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -115,6 +129,12 @@
     height: 100%;
     max-height: 100%;
     object-fit: contain;
+  }
+
+  @media (max-width: 768px) {
+    .promo-banner {
+      aspect-ratio: var(--promo-banner-mobile-ratio, 1920 / 533);
+    }
   }
 {% endstylesheet %}
 

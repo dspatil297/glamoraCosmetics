@@ -9,6 +9,17 @@
  */
 {
   "sections": {
+    "promo_banner_kwAGCy": {
+      "type": "promo-banner",
+      "name": "Promo banner (image)",
+      "settings": {
+        "image": "shopify://shop_images/Offer_Banner.jpg",
+        "mobile_image": "shopify://shop_images/Offer_Banner.jpg",
+        "href": "",
+        "alt": "Promotion",
+        "placeholder_text": "Add a banner image in Theme Customizer for this section."
+      }
+    },
     "177753360545a8b2cd": {
       "type": "_blocks",
       "blocks": {
@@ -142,9 +153,9 @@
             "reverse": false,
             "product": "glamora-pollution-control-hybrid-sunscreen",
             "label": "Protect",
-            "title": "Pollution Control Hybrid Sunscreen SPF 50 PA++++",
+            "title": "Pollution Control Hybrid Sunscreen SPF 50 PA+++",
             "tagline": "UV + pollution. Blocked.",
-            "description": "Broad-spectrum SPF 50 PA++++ with anti-pollution technology and matte, no-white-cast finish.",
+            "description": "Broad-spectrum SPF 50 PA+++ with anti-pollution technology and matte, no-white-cast finish.",
             "price": "Rs. 669",
             "old_price": "Rs. 799",
             "button_text": "View Product",
@@ -392,6 +403,7 @@
     }
   },
   "order": [
+    "promo_banner_kwAGCy",
     "177753360545a8b2cd",
     "homepage_pollution_defense"
   ]
