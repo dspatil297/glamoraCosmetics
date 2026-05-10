@@ -1,6 +1,7 @@
 {%- comment -%} Full-width image banner (desktop + mobile) {%- endcomment -%}
 
 {%- assign desktop_image = section.settings.image -%}
+{%- assign mobile_img = section.settings.mobile_image | default: section.settings.image -%}
 {%- assign desktop_ratio = '1920 / 533' -%}
 {%- if desktop_image != blank and desktop_image.width and desktop_image.height -%}
   {%- assign desktop_ratio = desktop_image.width | append: ' / ' | append: desktop_image.height -%}
@@ -13,9 +14,8 @@
 <section
   class="promo-banner"
   id="promo-banner-{{ section.id }}"
-  style="--promo-banner-desktop-ratio: {{ desktop_ratio }}; --promo-banner-mobile-ratio: {{ mobile_ratio }};"
+  style="--promo-banner-desktop-ratio: {{ desktop_ratio }}; --promo-banner-mobile-ratio: {{ mobile_ratio }}; --promo-banner-max-height: {{ section.settings.max_height_desktop }}px; --promo-banner-max-height-mobile: {{ section.settings.max_height_mobile }}px;"
 >
-  {%- assign mobile_img = section.settings.mobile_image | default: section.settings.image -%}
   {%- assign href = section.settings.href -%}
 
   {%- if href != blank -%}
@@ -64,6 +64,7 @@
     width: 100vw;
     max-width: 100%;
     aspect-ratio: var(--promo-banner-desktop-ratio, 1920 / 533);
+    max-height: var(--promo-banner-max-height, 420px);
     height: auto;
     margin: 0;
     margin-left: calc(50% - 50vw);
@@ -134,6 +135,7 @@
   @media (max-width: 768px) {
     .promo-banner {
       aspect-ratio: var(--promo-banner-mobile-ratio, 1920 / 533);
+      max-height: var(--promo-banner-max-height-mobile, 280px);
     }
   }
 {% endstylesheet %}
@@ -144,6 +146,8 @@
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Desktop image" },
     { "type": "image_picker", "id": "mobile_image", "label": "Mobile image (optional)" },
+    { "type": "range", "id": "max_height_desktop", "label": "Desktop max height", "min": 120, "max": 900, "step": 10, "unit": "px", "default": 420 },
+    { "type": "range", "id": "max_height_mobile", "label": "Mobile max height", "min": 80, "max": 500, "step": 10, "unit": "px", "default": 220 },
     { "type": "url", "id": "href", "label": "Link (optional)" },
     { "type": "text", "id": "alt", "label": "Alt text", "default": "Promotion" },
     { "type": "text", "id": "placeholder_text", "label": "Placeholder (no image)", "default": "Add a banner image in Theme Customizer for this section." }

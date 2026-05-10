@@ -24,7 +24,7 @@
         "announcement_bar_message_2": {
           "type": "message",
           "settings": {
-            "text": "New Launches: Discover what’s new at Glamora",
+            "text": "Clearance Sale LIVE – Flat 40% Off!",
             "href": ""
           }
         }
@@ -34,7 +34,7 @@
         "announcement_bar_message_2"
       ],
       "custom_css": [
-        "*{background-color: black;}"
+        "* {background-color: black;}"
       ],
       "settings": {
         "enabled": true,
@@ -49,6 +49,8 @@
         "enable_sticky_header": true,
         "nav_label_home": "Home",
         "nav_label_shop": "Shop",
+        "nav_label_routine": "Routine",
+        "link_routine": "",
         "nav_label_about": "About Us",
         "link_about": "",
         "nav_label_blog": "Blog",
