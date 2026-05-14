@@ -107,6 +107,13 @@
   assign ideal_info_box_1 = ''
   assign ideal_info_box_2 = ''
   assign ideal_from_meta = false
+  assign testimonial_videos = section.blocks | where: 'type', 'ideal_testimonial_video'
+  assign testimonial_video_count = 0
+  for tb in testimonial_videos
+    if tb.settings.video != blank
+      assign testimonial_video_count = testimonial_video_count | plus: 1
+    endif
+  endfor
 
   if efficacy_raw != blank
     assign efficacy_normalized = efficacy_raw | newline_to_br | replace: '<br>', '<br />' | replace: '<br/>', '<br />' | replace: '• Card', '<br />• Card'
@@ -789,6 +796,13 @@
           {%- endif -%}
         </div>
       </div>
+      {%- if testimonial_video_count > 0 -%}
+        {% render 'testimonial-videos-carousel',
+          heading: section.settings.ideal_testimonial_videos_heading,
+          video_blocks: testimonial_videos,
+          embed: true
+        %}
+      {%- endif -%}
     </div>
   </section>
   <section class="howto-section">
@@ -1449,7 +1463,8 @@
   section.pdpx .howto-grid::before { content: ''; position: absolute; top: 32px; left: 10%; right: 10%; border-top: 2px dashed var(--border); z-index: 0; }
   section.pdpx .howto-step h4{font-size:17px;font-weight:600;color:var(--text);margin:0 0 8px;} section.pdpx .howto-step p{font-size:15px;line-height:1.65;color:var(--text-2);font-weight:300;} section.pdpx .howto-timing{display:inline-block;margin-top:12px;padding:4px 12px;border-radius:100px;background:var(--teal-bg);color:var(--teal);font-size:12px;font-weight:600;letter-spacing:.04em;}
   section.pdpx .routine-section .section-header{margin-bottom:clamp(40px,5vw,64px);} section.pdpx .routine-section .section-header h2{margin-bottom:16px;} section.pdpx .routine-section .section-header p{font-size:17px;line-height:1.7;font-weight:300;color:var(--text-2);margin:0;}
-  section.pdpx .idealfor-inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center;} section.pdpx .concern-list{list-style:none;padding:0;margin:0;} section.pdpx .concern-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);} section.pdpx .concern-icon{width:40px;height:40px;border-radius:10px;background:var(--teal-bg);flex-shrink:0;display:flex;align-items:center;justify-content:center;} section.pdpx .concern-icon .pdp-concern-icon__svg{display:flex;color:var(--teal);} section.pdpx .concern-icon svg{display:block;}
+  section.pdpx .idealfor-inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center;}
+  section.pdpx .concern-list{list-style:none;padding:0;margin:0;} section.pdpx .concern-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);} section.pdpx .concern-icon{width:40px;height:40px;border-radius:10px;background:var(--teal-bg);flex-shrink:0;display:flex;align-items:center;justify-content:center;} section.pdpx .concern-icon .pdp-concern-icon__svg{display:flex;color:var(--teal);} section.pdpx .concern-icon svg{display:block;}
   section.pdpx .skin-types{display:flex;flex-wrap:wrap;gap:10px;} section.pdpx .skin-type-tag{padding:10px 20px;border-radius:100px;border:1px solid var(--border);font-size:14px;font-weight:500;color:var(--text-2);background:var(--bg);} section.pdpx .skin-type-tag.active{border-color:var(--teal);background:var(--teal-bg);color:var(--teal);font-weight:600;}
   section.pdpx .ideal-info-box{margin-top:24px;padding:24px;background:var(--bg);border:1px solid var(--border-light);border-radius:1rem;text-align:left;} section.pdpx .ideal-info-box-tight{margin-top:16px;} section.pdpx .ideal-info-title{font-size:14px;font-weight:600;color:var(--text);margin:0 0 4px;} section.pdpx .ideal-info-text{font-size:14px;color:var(--text-2);font-weight:300;line-height:1.6;margin:0;}
   section.pdpx .study-bars{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:20px;} section.pdpx .study-bar{display:grid;grid-template-columns:80px 1fr;gap:20px;align-items:center;} section.pdpx .study-percent{font-family:var(--font-display);font-size:32px;font-weight:700;letter-spacing:-.02em;color:var(--teal);text-align:right;} section.pdpx .study-bar-info h4{font-size:15px;font-weight:600;color:var(--text);margin:0 0 8px;}
@@ -1645,6 +1660,20 @@
     { "type": "text", "id": "idealfor_heading", "label": "Fallback: ideal for heading", "default": "Is this right for your skin?" },
     { "type": "text", "id": "idealfor_subheading", "label": "Fallback: ideal for subheading", "default": "Designed for anyone who lives, commutes, or works in a polluted city. If your skin feels dull, congested, or breaks out without clear reason - pollution is likely the cause." },
     { "type": "text", "id": "skin_types_heading", "label": "Fallback: skin types heading", "default": "Works for all skin types" },
+    {
+      "type": "header",
+      "content": "Testimonial videos (below ideal-for)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Shown on every product using this section. Add Testimonial video blocks and pick a file from Shopify Content then Files. Autoplay is muted (browser requirement)."
+    },
+    {
+      "type": "text",
+      "id": "ideal_testimonial_videos_heading",
+      "label": "Videos strip heading",
+      "default": "Tried & trusted"
+    },
     { "type": "text", "id": "study_heading", "label": "Study section heading", "default": "What our users report" },
     {
       "type": "header",
@@ -1761,6 +1790,18 @@
       "name": "Skin type tag",
       "settings": [
         { "type": "text", "id": "text", "label": "Skin type", "default": "Oily" }
+      ]
+    },
+    {
+      "type": "ideal_testimonial_video",
+      "name": "Testimonial video",
+      "limit": 12,
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        }
       ]
     },
     {

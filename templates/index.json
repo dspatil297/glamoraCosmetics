@@ -13,9 +13,10 @@
       "type": "promo-banner",
       "name": "Promo banner (image)",
       "settings": {
-        "image": "shopify://shop_images/Glm_web_banner_F.png",
-        "max_height_desktop": 420,
-        "max_height_mobile": 220,
+        "image": "shopify://shop_images/Gemini_Generated_Image_v6i8iav6i8iav6i8.png",
+        "mobile_image": "shopify://shop_images/ChatGPT_Image_May_14_2026_07_18_34_PM.png",
+        "max_height_desktop": 540,
+        "max_height_mobile": 480,
         "href": "",
         "alt": "Promotion",
         "placeholder_text": "Add a banner image in Theme Customizer for this section."
@@ -116,6 +117,66 @@
           "type": "trust_item",
           "settings": {
             "text": "Made in India"
+          }
+        },
+        "ideal_testimonial_video_9wtFkG": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/@glamoracosmetics.official - R⤓Download(1).mp4"
+          }
+        },
+        "ideal_testimonial_video_WD9Rgr": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/@kanishkabhatia_06 - R⤓Download.mp4"
+          }
+        },
+        "ideal_testimonial_video_pC39bg": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/@glamoracosmetics.official - R⤓Download(3).mp4"
+          }
+        },
+        "ideal_testimonial_video_4tVR9C": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/@r07qxo  - R⤓Download.mp4"
+          }
+        },
+        "ideal_testimonial_video_VdETAC": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/@glamoracosmetics.official - R⤓Download(4).mp4"
+          }
+        },
+        "ideal_testimonial_video_eQm7RW": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/@glamoracosmetics.official - R⤓Download(5).mp4"
+          }
+        },
+        "ideal_testimonial_video_HTYnLR": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/@glamoracosmetics.official - R⤓Download(2).mp4"
+          }
+        },
+        "ideal_testimonial_video_dLhbKy": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/@kanishkabhatia_06 - R⤓Download(1).mp4"
+          }
+        },
+        "ideal_testimonial_video_YHDbzP": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/@glamoracosmetics.official - R⤓Download.mp4"
+          }
+        },
+        "ideal_testimonial_video_GqWYTK": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/6FB6179A-5DAA-4268-9D9D-1BB4DA5FB40A.mp4"
           }
         },
         "step_1": {
@@ -343,6 +404,16 @@
         "trust_4",
         "trust_5",
         "trust_6",
+        "ideal_testimonial_video_9wtFkG",
+        "ideal_testimonial_video_WD9Rgr",
+        "ideal_testimonial_video_pC39bg",
+        "ideal_testimonial_video_4tVR9C",
+        "ideal_testimonial_video_VdETAC",
+        "ideal_testimonial_video_eQm7RW",
+        "ideal_testimonial_video_HTYnLR",
+        "ideal_testimonial_video_dLhbKy",
+        "ideal_testimonial_video_YHDbzP",
+        "ideal_testimonial_video_GqWYTK",
         "step_1",
         "step_2",
         "step_3",
@@ -399,7 +470,8 @@
         "news_title": "Join the Pollution Defense Movement",
         "news_subtitle": "Skincare tips, exclusive offers, and early access to launches.",
         "news_placeholder": "Enter your email",
-        "news_button": "Sign Up"
+        "news_button": "Sign Up",
+        "testimonial_videos_heading": "Tried & trusted"
       }
     }
   },

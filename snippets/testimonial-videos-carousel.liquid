@@ -1,0 +1,280 @@
+{% doc %}
+  Vertical testimonial video strip: arrow navigation, hidden scrollbar, muted autoplay.
+
+  @param {string} [heading] - Optional title above the strip
+  @param {object[]} video_blocks - Blocks with settings.video (Shopify-hosted)
+  @param {boolean} [embed] - True when nested in PDP ideal-for (adds top divider spacing)
+{% enddoc %}
+
+{%- liquid
+  assign tvc = 0
+  for vb in video_blocks
+    if vb.settings.video != blank
+      assign tvc = tvc | plus: 1
+    endif
+  endfor
+-%}
+{%- if tvc > 0 -%}
+  <div
+    class="testimonial-videos-scope{% if embed %} testimonial-videos-scope--embed{% endif %}"
+    data-ideal-testimonial-videos
+  >
+    <div class="idealtest-videos reveal">
+      {%- if heading != blank -%}
+        <h3 class="idealtest-videos__title">{{ heading }}</h3>
+      {%- endif -%}
+      <div class="idealtest-videos__frame">
+        <button
+          type="button"
+          class="idealtest-videos__nav idealtest-videos__nav--prev"
+          data-ideal-videos-prev
+          aria-label="{{ 'sections.product_main_minimalist.ideal_videos_previous' | t }}"
+        >
+          <span class="idealtest-videos__chev" aria-hidden="true"></span>
+        </button>
+        <div class="idealtest-videos__viewport" data-ideal-videos-viewport tabindex="-1">
+          <div class="idealtest-videos__track{% if tvc < 5 %} idealtest-videos__track--few{% endif %}">
+            {%- for block in video_blocks -%}
+              {%- if block.settings.video != blank -%}
+                <div class="idealtest-videos__cell" {{ block.shopify_attributes }}>
+                  <div class="idealtest-videos__cell-inner">
+                    {{ block.settings.video | video_tag: autoplay: true, muted: true, loop: true, controls: false, playsinline: true, image_size: '720x' }}
+                  </div>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+        <button
+          type="button"
+          class="idealtest-videos__nav idealtest-videos__nav--next"
+          data-ideal-videos-next
+          aria-label="{{ 'sections.product_main_minimalist.ideal_videos_next' | t }}"
+        >
+          <span class="idealtest-videos__chev idealtest-videos__chev--next" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .testimonial-videos-scope .idealtest-videos__title {
+    text-align: center;
+    font-family: var(--font-display, Georgia, serif);
+    font-size: clamp(20px, 2.2vw, 28px);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0 0 clamp(20px, 2.5vw, 32px);
+    color: var(--text, #141413);
+  }
+  .testimonial-videos-scope .idealtest-videos__frame {
+    position: relative;
+  }
+  .testimonial-videos-scope .idealtest-videos__viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    touch-action: pan-x;
+  }
+  .testimonial-videos-scope .idealtest-videos__viewport::-webkit-scrollbar {
+    display: none;
+  }
+  .testimonial-videos-scope .idealtest-videos__track {
+    display: flex;
+    flex-direction: row;
+    gap: clamp(8px, 1.2vw, 14px);
+    padding: 2px 0;
+    align-items: stretch;
+  }
+  .testimonial-videos-scope .idealtest-videos__track--few {
+    justify-content: center;
+  }
+  .testimonial-videos-scope .idealtest-videos__cell {
+    flex: 0 0 calc((100% - 4 * 14px) / 5);
+    min-width: 0;
+    max-width: 200px;
+    scroll-snap-align: start;
+  }
+  .testimonial-videos-scope .idealtest-videos__cell-inner {
+    aspect-ratio: 9 / 16;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #0a0a0a;
+  }
+  .testimonial-videos-scope .idealtest-videos__cell-inner video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .testimonial-videos-scope .idealtest-videos__nav {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--text, #141413);
+    cursor: pointer;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-50%);
+    transition: opacity 0.2s var(--ease, ease), transform 0.2s var(--ease, ease), box-shadow 0.2s var(--ease, ease);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .testimonial-videos-scope .idealtest-videos__nav:hover {
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.16);
+    transform: translateY(-50%) scale(1.04);
+  }
+  .testimonial-videos-scope .idealtest-videos__nav:focus-visible {
+    outline: 2px solid var(--teal, #0d8b7d);
+    outline-offset: 2px;
+  }
+  .testimonial-videos-scope .idealtest-videos__nav[hidden] {
+    display: none;
+  }
+  .testimonial-videos-scope .idealtest-videos__nav--prev {
+    left: clamp(4px, 1vw, 12px);
+  }
+  .testimonial-videos-scope .idealtest-videos__nav--next {
+    right: clamp(4px, 1vw, 12px);
+  }
+  .testimonial-videos-scope .idealtest-videos__chev {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-left: 2.5px solid currentColor;
+    border-bottom: 2.5px solid currentColor;
+    transform: rotate(45deg) translate(1px, -1px);
+  }
+  .testimonial-videos-scope .idealtest-videos__chev--next {
+    transform: rotate(-135deg) translate(-1px, -1px);
+  }
+  .testimonial-videos-scope--embed .idealtest-videos {
+    margin-top: clamp(40px, 5vw, 64px);
+    padding-top: clamp(32px, 4vw, 48px);
+    border-top: 1px solid var(--border-light, #f0ede8);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .testimonial-videos-scope .idealtest-videos__viewport {
+      scroll-behavior: auto;
+    }
+  }
+  @media (max-width: 768px) {
+    .testimonial-videos-scope .idealtest-videos__cell {
+      flex-basis: calc((100% - 2 * 14px) / 3);
+      max-width: none;
+    }
+  }
+  @media (max-width: 480px) {
+    .testimonial-videos-scope .idealtest-videos__cell {
+      flex-basis: calc((100% - 14px) / 2);
+    }
+    .testimonial-videos-scope .idealtest-videos__nav {
+      width: 40px;
+      height: 40px;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+(function () {
+  function cellStep(viewport) {
+    var track = viewport.querySelector('.idealtest-videos__track');
+    var first = viewport.querySelector('.idealtest-videos__cell');
+    if (!first) return 0;
+    var gap = 14;
+    if (track) {
+      var g = parseFloat(window.getComputedStyle(track).columnGap || window.getComputedStyle(track).gap);
+      if (!isNaN(g)) gap = g;
+    }
+    return first.getBoundingClientRect().width + gap;
+  }
+
+  function updateNav(viewport, prev, next) {
+    if (!viewport || !prev || !next) return;
+    var maxScroll = Math.max(0, viewport.scrollWidth - viewport.clientWidth - 2);
+    if (maxScroll <= 2) {
+      prev.hidden = true;
+      next.hidden = true;
+      return;
+    }
+    prev.hidden = viewport.scrollLeft <= 2;
+    next.hidden = viewport.scrollLeft >= maxScroll - 2;
+  }
+
+  function initIdealTestimonialVideos(root) {
+    if (!root || root.getAttribute('data-ideal-videos-bound') === '1') return;
+    root.setAttribute('data-ideal-videos-bound', '1');
+    var viewport = root.querySelector('[data-ideal-videos-viewport]');
+    var prev = root.querySelector('[data-ideal-videos-prev]');
+    var next = root.querySelector('[data-ideal-videos-next]');
+    if (!viewport || !prev || !next) return;
+
+    function onScrollOrResize() {
+      updateNav(viewport, prev, next);
+    }
+
+    prev.addEventListener('click', function () {
+      viewport.scrollBy({ left: -cellStep(viewport), behavior: 'smooth' });
+    });
+    next.addEventListener('click', function () {
+      viewport.scrollBy({ left: cellStep(viewport), behavior: 'smooth' });
+    });
+    viewport.addEventListener('scroll', onScrollOrResize);
+    window.addEventListener('resize', onScrollOrResize);
+    if (typeof ResizeObserver !== 'undefined') {
+      var ro = new ResizeObserver(onScrollOrResize);
+      ro.observe(viewport);
+    }
+
+    var videos = root.querySelectorAll('video');
+    if (typeof IntersectionObserver !== 'undefined' && videos.length) {
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (en) {
+            var v = en.target;
+            if (en.isIntersecting && en.intersectionRatio > 0.2) {
+              v.play().catch(function () {});
+            } else {
+              v.pause();
+            }
+          });
+        },
+        { root: viewport, threshold: [0, 0.15, 0.35, 0.6, 1] }
+      );
+      for (var i = 0; i < videos.length; i++) {
+        io.observe(videos[i]);
+      }
+    }
+
+    onScrollOrResize();
+  }
+
+  function initAll() {
+    document.querySelectorAll('[data-ideal-testimonial-videos]').forEach(initIdealTestimonialVideos);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
+  }
+
+  document.addEventListener('shopify:section:load', function (ev) {
+    if (!ev.target || !ev.target.querySelectorAll) return;
+    ev.target.querySelectorAll('[data-ideal-testimonial-videos]').forEach(initIdealTestimonialVideos);
+  });
+})();
+{% endjavascript %}

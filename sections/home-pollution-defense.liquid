@@ -35,9 +35,26 @@
     { "type": "text", "id": "news_title", "label": "Newsletter title", "default": "Join the Pollution Defense Movement" },
     { "type": "textarea", "id": "news_subtitle", "label": "Newsletter subtitle", "default": "Skincare tips, offers, and early access to launches." },
     { "type": "text", "id": "news_placeholder", "label": "Newsletter input placeholder", "default": "Enter your email" },
-    { "type": "text", "id": "news_button", "label": "Newsletter button text", "default": "Sign Up" }
+    { "type": "text", "id": "news_button", "label": "Newsletter button text", "default": "Sign Up" },
+    { "type": "header", "content": "Tried & trusted video carousel" },
+    {
+      "type": "paragraph",
+      "content": "Shown above the 3-step routine. Add testimonial video blocks below (same layout as the product page strip)."
+    },
+    {
+      "type": "text",
+      "id": "testimonial_videos_heading",
+      "label": "Carousel heading",
+      "default": "Tried & trusted"
+    }
   ],
   "blocks": [
+    {
+      "type": "ideal_testimonial_video",
+      "name": "Testimonial video",
+      "limit": 12,
+      "settings": [{ "type": "video", "id": "video", "label": "Video" }]
+    },
     { "type": "trust_item", "name": "Trust item", "settings": [{ "type": "text", "id": "text", "label": "Text", "default": "Dermatologist Tested" }] },
     { "type": "routine_step", "name": "Routine step", "settings": [
       { "type": "checkbox", "id": "reverse", "label": "Reverse layout", "default": false },

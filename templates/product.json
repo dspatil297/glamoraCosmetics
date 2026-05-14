@@ -131,6 +131,66 @@
             "description": "Deep hydration while cleansing. Maintains moisture barrier. Zero post-wash tightness."
           }
         },
+        "ideal_testimonial_video_HXxrqK": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/@kanishkabhatia_06 - R⤓Download(1).mp4"
+          }
+        },
+        "ideal_testimonial_video_TVHYfn": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/@glamoracosmetics.official - R⤓Download(4).mp4"
+          }
+        },
+        "ideal_testimonial_video_xY8LdM": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/@glamoracosmetics.official - R⤓Download(3).mp4"
+          }
+        },
+        "ideal_testimonial_video_jen373": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/@kanishkabhatia_06 - R⤓Download.mp4"
+          }
+        },
+        "ideal_testimonial_video_4bwN3K": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/@glamoracosmetics.official - R⤓Download(1).mp4"
+          }
+        },
+        "ideal_testimonial_video_dqWMc9": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/@glamoracosmetics.official - R⤓Download(5).mp4"
+          }
+        },
+        "ideal_testimonial_video_HXiBFP": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/@r07qxo  - R⤓Download.mp4"
+          }
+        },
+        "ideal_testimonial_video_9TPFJG": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/@glamoracosmetics.official - R⤓Download(2).mp4"
+          }
+        },
+        "ideal_testimonial_video_xQMkHg": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/@glamoracosmetics.official - R⤓Download.mp4"
+          }
+        },
+        "ideal_testimonial_video_HAEHnA": {
+          "type": "ideal_testimonial_video",
+          "settings": {
+            "video": "shopify://files/videos/6FB6179A-5DAA-4268-9D9D-1BB4DA5FB40A.mp4"
+          }
+        },
         "concern_item_hpU3Vz": {
           "type": "concern_item",
           "settings": {
@@ -280,6 +340,16 @@
         "ingredient_item_kyYD36",
         "ingredient_item_rdmQKE",
         "ingredient_item_jnpVmP",
+        "ideal_testimonial_video_HXxrqK",
+        "ideal_testimonial_video_TVHYfn",
+        "ideal_testimonial_video_xY8LdM",
+        "ideal_testimonial_video_jen373",
+        "ideal_testimonial_video_4bwN3K",
+        "ideal_testimonial_video_dqWMc9",
+        "ideal_testimonial_video_HXiBFP",
+        "ideal_testimonial_video_9TPFJG",
+        "ideal_testimonial_video_xQMkHg",
+        "ideal_testimonial_video_HAEHnA",
         "concern_item_hpU3Vz",
         "concern_item_D8xAAf",
         "concern_item_tmimtW",
@@ -318,6 +388,7 @@
         "idealfor_heading": "Is this right for your skin?",
         "idealfor_subheading": "Designed for anyone who lives, commutes, or works in a polluted city. If your skin feels dull, congested, or breaks out without clear reason - pollution is likely the cause.",
         "skin_types_heading": "Works for all skin types",
+        "ideal_testimonial_videos_heading": "Tried & trusted",
         "study_heading": "What our users report",
         "routine_defense_collection": "",
         "routine_heading": "Complete the 3-step defense",

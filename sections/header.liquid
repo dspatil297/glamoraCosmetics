@@ -42,7 +42,7 @@
       </a>
     </div>
 
-    <!-- Desktop Navigation (hidden on mobile via CSS) - Order: Home, Shop, Routine, Blog -->
+    <!-- Desktop Navigation (hidden on mobile via CSS) - Order: Home, Shop, Routine -->
     <nav class="header__nav header__nav--desktop" aria-label="Main navigation">
       <ul class="nav-menu">
         <li class="nav-item">
@@ -93,33 +93,11 @@
             <a href="{{ section.settings.link_routine | default: '/pages/routine' }}" class="nav-link {% if request.path contains 'routine' %}active{% endif %}">{{ section.settings.nav_label_routine | default: 'Routine' }}</a>
           </li>
         {% endif %}
-        <li class="nav-item">
-          <a href="{{ section.settings.link_blog | default: '/blogs/news' }}" class="nav-link {% if request.path contains '/blogs' %}active{% endif %}">{{ section.settings.nav_label_blog | default: 'Blog' }}</a>
-        </li>
       </ul>
     </nav>
 
-    <!-- Header Actions: Search, Account, Cart -->
+    <!-- Header Actions: Search, Cart -->
     <div class="header__actions">
-      <!-- Account / Login -->
-      {% if shop.customer_accounts_enabled %}
-        {% if customer %}
-          <a href="/pages/kp-account/profile" class="header__account" aria-label="Account">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 10C12.7614 10 15 7.76142 15 5C15 2.23858 12.7614 0 10 0C7.23858 0 5 2.23858 5 5C5 7.76142 7.23858 10 10 10Z" fill="currentColor"/>
-              <path d="M10 12C5.58172 12 2 14.2386 2 17V20H18V17C18 14.2386 14.4183 12 10 12Z" fill="currentColor"/>
-            </svg>
-          </a>
-        {% else %}
-          <a href="/pages/kp-account/profile" class="header__account" aria-label="Account">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 10C12.7614 10 15 7.76142 15 5C15 2.23858 12.7614 0 10 0C7.23858 0 5 2.23858 5 5C5 7.76142 7.23858 10 10 10Z" fill="currentColor"/>
-              <path d="M10 12C5.58172 12 2 14.2386 2 17V20H18V17C18 14.2386 14.4183 12 10 12Z" fill="currentColor"/>
-            </svg>
-          </a>
-        {% endif %}
-      {% endif %}
-
       <!-- Search (opens global search overlay) -->
       <button
         type="button"
@@ -227,20 +205,8 @@
               <a href="{{ section.settings.link_routine | default: '/pages/routine' }}" class="mobile-nav-link {% if request.path contains 'routine' %}active{% endif %}">{{ section.settings.nav_label_routine | default: 'Routine' }}</a>
             </li>
           {% endif %}
-          <li class="mobile-nav-item">
-            <a href="{{ section.settings.link_blog | default: '/blogs/news' }}" class="mobile-nav-link {% if request.path contains '/blogs' %}active{% endif %}">{{ section.settings.nav_label_blog | default: 'Blog' }}</a>
-          </li>
         </ul>
       </nav>
-      {% if shop.customer_accounts_enabled %}
-        <div class="mobile-menu-footer">
-          {% if customer %}
-            <a href="/pages/kp-account/profile" class="btn btn-outline">{{ section.settings.mobile_label_account | default: 'Account' }}</a>
-          {% else %}
-            <a href="/pages/kp-account/profile" class="btn btn-outline">{{ section.settings.mobile_label_login | default: 'Login' }}</a>
-          {% endif %}
-        </div>
-      {% endif %}
     </div>
   </div>
 </header>
@@ -1197,17 +1163,6 @@
     },
     {
       "type": "text",
-      "id": "nav_label_blog",
-      "label": "Blog label",
-      "default": "Blog"
-    },
-    {
-      "type": "url",
-      "id": "link_blog",
-      "label": "Blog link"
-    },
-    {
-      "type": "text",
       "id": "nav_label_contact",
       "label": "Contact label",
       "default": "Contact"
@@ -1226,18 +1181,6 @@
       "id": "mobile_menu_heading",
       "label": "Mobile menu heading",
       "default": "Menu"
-    },
-    {
-      "type": "text",
-      "id": "mobile_label_account",
-      "label": "Account button label",
-      "default": "Account"
-    },
-    {
-      "type": "text",
-      "id": "mobile_label_login",
-      "label": "Login button label",
-      "default": "Login"
     },
     {
       "type": "header",

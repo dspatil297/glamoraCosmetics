@@ -70,6 +70,14 @@
       endif
     endfor
   endif
+
+  assign home_testimonial_videos = section.blocks | where: 'type', 'ideal_testimonial_video'
+  assign home_testimonial_video_count = 0
+  for htb in home_testimonial_videos
+    if htb.settings.video != blank
+      assign home_testimonial_video_count = home_testimonial_video_count | plus: 1
+    endif
+  endfor
 -%}
 
 <section id="{{ section_id }}" class="hpd-home">
@@ -501,6 +509,18 @@
       </div>
     </div>
   </div>
+
+  {% if home_testimonial_video_count > 0 %}
+    <div class="section">
+      <div class="container">
+        {% render 'testimonial-videos-carousel',
+          heading: section.settings.testimonial_videos_heading,
+          video_blocks: home_testimonial_videos,
+          embed: false
+        %}
+      </div>
+    </div>
+  {% endif %}
 
   <div class="section" id="step-defence">
     <div class="container">
